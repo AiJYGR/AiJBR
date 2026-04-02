@@ -1,0 +1,14 @@
+{
+    "item.aijbr.syringe": "注射器",
+    "item.aijbr.badage": "绷带",
+    "item.aijbr.medkit": "医疗包",
+    "item.aijbr.iron_armor": "一级护甲",
+    "item.aijbr.diamond_armor": "二级护甲",
+    "item.aijbr.loot_container": "战利品箱",
+
+    "block.aijbr.loot_container": "战利品箱",
+
+    "aijbr.command.err.game_started":"游戏已经开始!",
+    "aijbr.command.err.game_ended":"游戏未开始!",
+    "aijbr.command.executed":"已成功执行指令"
+}

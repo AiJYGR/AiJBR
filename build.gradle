@@ -1,4 +1,17 @@
 //file:noinspection SpellCheckingInspection
+
+buildscript {
+    repositories {
+        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
+
 plugins {
     id 'eclipse'
     id 'idea'
@@ -6,6 +19,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
+apply plugin: 'org.spongepowered.mixin'
 
 version = mod_version
 group = mod_group_id
@@ -34,6 +48,7 @@ minecraft {
     // Simply re-run your setup task after changing the mappings to update your workspace.
     mappings channel: 'parchment', version: '2023.09.03-1.20.1'
 
+
     // When true, this property will have all Eclipse/IntelliJ IDEA run configurations run the "prepareX" task for the given run configuration before launching the game.
     // In most cases, it is not necessary to enable.
     // enableEclipsePrepareRuns = true
@@ -43,7 +58,13 @@ minecraft {
     // It is REQUIRED to be set to true for this template to function.
     // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
     copyIdeResources = true
+    mixin {
+        add sourceSets.main, "${mod_id}.refmap.json"
 
+        config "${mod_id}.mixins.json"
+        debug.export = true
+
+    }
     // When true, this property will add the folder name of all declared run configurations to generated IDE run configurations.
     // The folder name can be set on a run configuration using the "folderName" property.
     // By default, the folder name of a run configuration is the name of the Gradle project containing it.
@@ -123,9 +144,10 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 //     //     dir 'libs'
 //     // }
 // }
+
 repositories {
     maven {
-        url "https://www.cursemaven.com"
+        url "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
@@ -154,8 +176,12 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    implementation fg.deobf("curse.maven:configured-457570:5180902")
-    runtimeOnly fg.deobf("curse.maven:configured-457570:5180902")
+
+
+    //runtimeOnly "curse.maven:configured-457570:5096828"
+    //runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
+    runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 }
 

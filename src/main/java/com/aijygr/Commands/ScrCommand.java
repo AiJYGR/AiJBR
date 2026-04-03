@@ -1,6 +1,6 @@
 package com.aijygr.Commands;
 
-import com.aijygr.Scr.Scr;
+import com.aijygr.Screen.Scr;
 import com.mojang.brigadier.CommandDispatcher;
 
 import net.minecraft.client.Minecraft;

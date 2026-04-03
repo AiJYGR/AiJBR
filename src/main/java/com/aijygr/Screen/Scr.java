@@ -1,4 +1,4 @@
-package com.aijygr.Scr;
+package com.aijygr.Screen;
 
 import com.aijygr.Config;
 import com.aijygr.Main;
@@ -16,7 +16,7 @@ public class Scr extends Screen {
         super(title);
     }
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/gui/test.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Main.MODID,"textures/gui/test.png");
 
     private Button button;
 
@@ -30,7 +30,7 @@ public class Scr extends Screen {
         
         button = new Builder(Component.translatable("CLICK"), (btn) -> {
             this.minecraft.player.sendSystemMessage(title);
-            var list = Config.SERVER_AIJBR_CFG_ARRAY.get();
+            var list = Config.SERVERCFG_BACKPACK_SLOTS.get();
             System.out.println("Slots Defined:"+list.size());
             for(var it = list.iterator(); it.hasNext();)
             {

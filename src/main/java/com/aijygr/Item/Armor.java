@@ -3,16 +3,24 @@ package com.aijygr.Item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
+import org.jetbrains.annotations.NotNull;
 
 public class Armor extends ArmorItem
 {
-    public Armor(ArmorMaterials_override material,Item.Properties properties)
+    public Armor(ArmorMaterials_override material, Item.Properties properties)
     {
         super(material,ArmorItem.Type.CHESTPLATE, properties);
     }
+
+//    public Armor(Item.Properties properties)
+//    {
+//        super(ArmorMaterials_override.DIAMOND,ArmorItem.Type.CHESTPLATE,properties);
+//    }
+
     @Override
     public int getMaxStackSize(ItemStack stack)
     {

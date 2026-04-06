@@ -6,24 +6,25 @@ import com.aijygr.Events.Game.Game;
 
 public class RingGeneration {
     public enum GenerationMode {
-        UNIFORM,    // 完全随机
-        EDGE_WEIGHTED,   // 加权
-        MID_WEIGHTED,
-        TANGENT,    // 切角
-        RANDOM
+        UNIFORM,            // 完全随机
+        EDGE_WEIGHTED,      // 边缘加权
+        MID_WEIGHTED,       // 中心加权
+        TANGENT,            // 切角
+        RANDOM              // 随机模式
     }
     public enum WeightedMode{
         AVG2,
         MUL2
     }
-    public RingGeneration(int curr_x, int curr_z, double curr_size,double next_size)
+
+    public static Game.VecIntXZ Generate(int curr_x, int curr_z, double curr_size, double next_size)
     {
-        RingGeneration(curr_x,curr_z,curr_size,next_size,GenerationMode.RANDOM);
+        return Generate(curr_x,curr_z,curr_size,next_size,GenerationMode.RANDOM);
     }
-    public Game.VecIntXZ RingGeneration(int curr_x, int curr_z, double curr_size,double next_size, GenerationMode MODE)
+    public static Game.VecIntXZ Generate(int curr_x, int curr_z, double curr_size, double next_size, GenerationMode MODE)
     {
-        int next_x=0, next_z=0;
-        int range_xz = (int)Math.floor(curr_size - next_size);
+        int next_x = curr_x, next_z = curr_z;
+        float range_xz = (int)((curr_size - next_size)/2);
         if(MODE==GenerationMode.RANDOM)
         {
             int randomNum = (int)(Math.random() * 4) + 1;
@@ -43,17 +44,52 @@ public class RingGeneration {
                     MODE = GenerationMode.UNIFORM;
             }
         }
-
+        double ix=0.0d,iz=0.0d;
         switch (MODE) {
             case UNIFORM:
-                next_x = (int)((Math.random()*2-1)*range_xz)+curr_x;
-                next_z = (int)((Math.random()*2-1)*range_xz)+curr_z;
+                next_x = (int)Math.round((Math.random()*2-1)*range_xz)+curr_x;
+                next_z = (int)Math.round((Math.random()*2-1)*range_xz)+curr_z;
                 break;
+            case MID_WEIGHTED:
             case EDGE_WEIGHTED:
+                switch(Game.r_weighted_mode){
+                    case AVG2:
+                        ix = ((Math.random()*2-1)+(Math.random()*2-1))/2;
+                        iz = ((Math.random()*2-1)+(Math.random()*2-1))/2;
+                        break;
+                    case MUL2:
+                        ix = ((Math.random()*2-1)*(Math.random()*2-1));
+                        iz = ((Math.random()*2-1)*(Math.random()*2-1));
+                        break;
+                }
+                switch(MODE){
+                    case MID_WEIGHTED:
+                        break;
+                    case EDGE_WEIGHTED:
+                        if(ix<=0)
+                            ix = (-1.0d -ix);
+                        else ix = (1.0d -ix);
+                        if(iz<=0)
+                            iz = (-1.0d-iz);
+                        else iz = (1.0d-iz);
+                        break;
+                }
+                next_x = (int)Math.round((ix*range_xz)+curr_x);
+                next_z = (int)Math.round((iz*range_xz)+curr_z);
                 break;
             case TANGENT:
+                ix = ((Math.random()*2-1)<=0? -1.0d : +1.0d);
+                iz = (Math.random()*2-1);
+                if((Math.random()*2-1)<=0){
+                    double temp =ix;
+                    ix = iz;
+                    iz = temp;
+                } //swap(ix,iz);
+                next_x = (int)Math.round((ix*range_xz)+curr_x);
+                next_z = (int)Math.round((iz*range_xz)+curr_z);
                 break;
         }
-        return new Game.VecIntXZ(0,0);
+        System.out.println(MODE.name()+":("+curr_size+","+next_size+")");
+        return new Game.VecIntXZ(next_x,next_z).sout();
     }
 }

@@ -7,44 +7,71 @@ import java.util.List;
 import com.aijygr.Events.Game.Ring.RingGeneration;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class Config {
+
+public abstract class Config {
     //public static ForgeConfigSpec COMMON_CONFIG;
     public static ForgeConfigSpec SERVER_CONFIG;
-    public static ForgeConfigSpec.DoubleValue CFGDOUBLE;    //获取值
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> SERVERCFG_BACKPACK_SLOTS;
-    public static ForgeConfigSpec.ConfigValue<List<? extends Integer>> SERVERCFG_RING_INITIAL_ATTRUBUTES;
-    public static ForgeConfigSpec.ConfigValue<Integer> SERVERCFG_DAMAGE_TICKING_TIME;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> SERVERCFG_RING_PHASE_ATTRIBUTES;
 
-    public static final ArrayList<Integer> DEFALUTCFG_RING_INITIAL_ATTRUBUTES =  new ArrayList<>(List.of(512,300));
-    public static final ArrayList<String> DEFAUTLCFG_BACKPACK_SLOTS = new ArrayList<String>(List.of(
-            "0,0,+mainwpn",
-            "1,0,+mainwpn",
-            "2,0,+subwpn",
-            "3,0,+melee",
-            "4,0,+nades",
-            "5,0,+supplies",
-            "6,0,+supplies",
-            "7,1,+supplies",
-            "8,1,+supplies"
-    ));
-    public static final ArrayList<String> DEFAULTCFG_RING_ATTRIBUTES = new ArrayList<>(List.of(
-            "256,200,0.2,0.005,200,0.2,0.005",
-            "128,200,0.5,0.005,200,0.5,0.005",
-            "64,200,0.5,0.01 ,100,1  ,0.01",
-            "32 ,100,1  ,0.01 ,100,1.5,0.01",
-            "16 ,100,2  ,0.05 ,100,2.5  ,0.05",
-            "0.1,100,3  ,0.1  ,500,3    ,0.1"
-    ));
-    public static final int DEFAULTCFG_DAMAGE_TICKING_TIME = 30;
-    public static final ArrayList<RingGeneration.GenerationMode> DEFAULTCFG_GENERATIONMODES = new ArrayList<>(List.of(
-            RingGeneration.GenerationMode.RANDOM,
-            RingGeneration.GenerationMode.EDGE_WEIGHTED,
-            RingGeneration.GenerationMode.UNIFORM,
-            RingGeneration.GenerationMode.MID_WEIGHTED,
-            RingGeneration.GenerationMode.RANDOM,
-            RingGeneration.GenerationMode.UNIFORM
+    public static class ServerConfig {
+
+        public static ForgeConfigSpec.EnumValue<RingGeneration.WeightedMode> WEIGHTEDMODE;
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> BACKPACK_SLOTS;
+        public static ForgeConfigSpec.ConfigValue<List<? extends Integer>> RING_INITIAL_ATTRUBUTES;
+        public static ForgeConfigSpec.ConfigValue<Integer> DAMAGE_TICKING_TIME;
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> RING_ATTRIBUTES;
+        //public static ForgeConfigSpec.ConfigValue<List<? extends RingGeneration.GenerationMode>> GENERATIONMODES;
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> GENERATIONMODES;
+        public static ForgeConfigSpec.ConfigValue<Integer> ITEM_SYRINGE_USEDURATION;
+        public static ForgeConfigSpec.ConfigValue<Integer> ITEM_SYRINGE_MAXSTACKSIZE;
+        public static ForgeConfigSpec.DoubleValue ITEM_SYRINGE_HEALAMOUNT;
+        public static ForgeConfigSpec.ConfigValue<Integer> ITEM_MEDKIT_USEDURATION;
+        public static ForgeConfigSpec.ConfigValue<Integer> ITEM_MEDKIT_MAXSTACKSIZE;
+        public static ForgeConfigSpec.DoubleValue ITEM_MEDKIT_HEALAMOUNT;
+        public static final class Default {
+            public static final List<Integer> RING_INITIAL_ATTRUBUTES =  new ArrayList<>(List.of(512,300));
+            public static final List<String> BACKPACK_SLOTS = new ArrayList<>(List.of(
+                    "0,0,+mainwpn",
+                    "1,0,+mainwpn",
+                    "2,0,+subwpn",
+                    "3,0,+melee",
+                    "4,0,+nades",
+                    "5,0,+supplies",
+                    "6,0,+supplies",
+                    "7,1,+supplies",
+                    "8,1,+supplies"
             ));
+            public static final List<String> RING_ATTRIBUTES = new ArrayList<>(List.of(
+                    "256,200,0.2,0.005,200,0.2,0.005",
+                    "128,200,0.5,0.005,200,0.5,0.005",
+                    "64,200,0.5,0.01 ,100,1  ,0.01",
+                    "32 ,100,1  ,0.01 ,100,1.5,0.01",
+                    "16 ,100,2  ,0.05 ,100,2.5  ,0.05",
+                    "0.1,100,3  ,0.1  ,500,3    ,0.1"
+            ));
+            public static final int DAMAGE_TICKING_TIME = 10;
+            public static final List<String> GENERATIONMODES = new ArrayList<>(List.of(
+                    RingGeneration.GenerationMode.TANGENT.name(),
+                    RingGeneration.GenerationMode.EDGE_WEIGHTED.name(),
+                    RingGeneration.GenerationMode.UNIFORM.name(),
+                    RingGeneration.GenerationMode.MID_WEIGHTED.name(),
+                    RingGeneration.GenerationMode.RANDOM.name(),
+                    RingGeneration.GenerationMode.UNIFORM.name()
+            ));
+            public static final RingGeneration.WeightedMode WEIGHTEDMODE = RingGeneration.WeightedMode.MUL2;
+
+            public static final int ITEM_SYRINGE_USEDURATION = 50;
+            public static final int ITEM_SYRINGE_MAXSTACKSIZE = 5;
+            public static final double ITEM_SYRINGE_HEALAMOUNT = 5.0f;
+            public static final int ITEM_MEDKIT_USEDURATION = 120;
+            public static final int ITEM_MEDKIT_MAXSTACKSIZE = 2;
+            public static final double ITEM_MEDKIT_HEALAMOUNT = 10.0f;
+        }
+    }
+
+
+
+    public static ForgeConfigSpec.DoubleValue CFGDOUBLE;    //获取值
+
 
 
     static {
@@ -60,21 +87,16 @@ public class Config {
                 "- Example:  \"0,0,+mainwpn\"",
                 "- It represents that Slot 0 has PermissionLevel of 0, its type is \"+mainwpn\"."
         );
-        SERVERCFG_BACKPACK_SLOTS = server_builder.defineList("BackPackSlotsAttributes", DEFAUTLCFG_BACKPACK_SLOTS, (obj)->{return obj instanceof String;});
+        ServerConfig.BACKPACK_SLOTS = server_builder.defineList("BackPackSlotsAttributes", ServerConfig.Default.BACKPACK_SLOTS, (obj)->{return obj instanceof String;});
         server_builder.pop();
 
         server_builder.push("Ring");
         server_builder.comment(
-                "# Ring Damage Ticking Time",
-                "- Interval ticks between between 2 ring damages."
-        );
-        SERVERCFG_DAMAGE_TICKING_TIME = server_builder.defineInRange("DamageTickingTime", DEFAULTCFG_DAMAGE_TICKING_TIME,1,Integer.MAX_VALUE);
-        server_builder.comment(
                 "# Ring Initial Setting",
                 "- Format: InitialRingSize, WaitingTick",
-                "- Default: 1024, 300   Must be Integer."
+                "- Default: 512, 300   Must be Integer."
         );
-        SERVERCFG_RING_INITIAL_ATTRUBUTES = server_builder.defineList("RingInitialAttributes",DEFALUTCFG_RING_INITIAL_ATTRUBUTES,(obj)->{return obj instanceof Integer;});
+        ServerConfig.RING_INITIAL_ATTRUBUTES = server_builder.defineList("RingInitialAttributes",ServerConfig.Default.RING_INITIAL_ATTRUBUTES,(obj)->{return obj instanceof Integer;});
 
         server_builder.comment(
                 "# Rings Phase Attributes",
@@ -86,38 +108,79 @@ public class Config {
                 "- DamagePerBlock: Penalties for being very far from the ring.",
                 "- ClosingTick: Ticks for the ring to close."
         );
-        SERVERCFG_RING_PHASE_ATTRIBUTES = server_builder.defineList("RingPhaseAttributes", DEFAULTCFG_RING_ATTRIBUTES,(obj)->{return obj instanceof String;});
+        ServerConfig.RING_ATTRIBUTES =  server_builder.defineList("RingAttributes",ServerConfig.Default.RING_ATTRIBUTES,(obj)->{return obj instanceof String;});
 
-        CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);
-
-
-
-        StringBuilder strmodes = new StringBuilder();
-        RingGeneration.GenerationMode[] modes = RingGeneration.GenerationMode.values();
-        for(int i = 0; i < modes.length; i++) {
-            strmodes.append(modes[i].name());
-            strmodes.append(" ");
-        }
+        server_builder.comment(
+                "# Ring Damage Ticking Time",
+                "- Interval ticks between between 2 ring damages."
+        );
+        ServerConfig.DAMAGE_TICKING_TIME = server_builder.defineInRange("DamageTickingTime", ServerConfig.Default.DAMAGE_TICKING_TIME,1,Short.MAX_VALUE);
         server_builder.comment(
                 "# Ring Generation Mode",
                 "- For each String, it decides the method used in generation of the next ring.",
                 "- UNIFORM: Possibilities of every points in the map are equal",
                 "- EDGE_WEIGHTED: The next ring has more possibility to be at the edge" ,
                 "- MID_WEIGHTED: The next ring has more possibility to be at the middle" ,
-                "- TANGENT: The next ring must touch the edge" ,
-                "- RANDOM: Randomly choose one of above method to generate");
-        server_builder.comment("Allowed Values: "+strmodes.toString());
-        server_builder.defineList("GenerationMode",DEFAULTCFG_GENERATIONMODES ,(obj)->{return obj instanceof RingGeneration.WeightedMode;});
-
+                "- TANGENT: The next ring must touch the edge. Possibilities of every points on the edge are equal" ,
+                "- RANDOM: Randomly choose one of above methods to generate");
+        StringBuilder strmodes = new StringBuilder();
+        RingGeneration.GenerationMode[] modes = RingGeneration.GenerationMode.values();
+        for (RingGeneration.GenerationMode it : modes) {
+            strmodes.append(it.name());
+            strmodes.append(" ");
+        }
+        server_builder.comment(("Allowed Values: "+strmodes.toString()));
+        ServerConfig.GENERATIONMODES =  server_builder.defineList("GenerationModes", ServerConfig.Default.GENERATIONMODES,(obj)->{
+            boolean f = false;
+            if (!(obj instanceof String)) {
+                System.out.println("[AiJBR][WARN]Generation Mode Config ERR: "+obj.toString()+" is not a String");
+                return false;
+            }
+            for (RingGeneration.GenerationMode mode : modes) {
+                if (obj.equals(mode.name())) {
+                    f = true;
+                    break;
+                }
+            }
+            if(!f){
+                System.out.println("[AiJBR][WARN]Generation Mode Config ERR: Incorrect value \""+obj.toString()+"\"");
+                return false;
+            }
+            else
+                return true;
+        });
+        //ServerConfig.GENERATIONMODES =  server_builder.defineList("GenerationModes", ServerConfig.Default.GENERATIONMODES,(obj)->{return obj instanceof String;});
         server_builder.comment(
                 "# Weighted Algorithm",
                 "- Decides the method used to weight the points",
                 "- Available when the Generation Mode is weighted (EDGE_WEIGHTED\\MID_WEIGHTED\\RANDOM when selected WEIGHTED) "
         );
-        server_builder.defineEnum("WeightedMode", RingGeneration.WeightedMode.MUL2, RingGeneration.WeightedMode.values());
+        ServerConfig.WEIGHTEDMODE = server_builder.defineEnum("WeightedMode",ServerConfig.Default.WEIGHTEDMODE, RingGeneration.WeightedMode.values());
+
         server_builder.pop();
+        server_builder.push("ITEMS");
+        server_builder.comment(
+                "UseDuration: Define ticks cost when using an item." ,
+                "MaxStackSize: The stack size of a slot of this item");
+        server_builder.push("MEDS");
+        server_builder.comment(
+                "HealAmount: Define Health gained after finishing using it.");
+        server_builder.push("SYRINGE");
+        ServerConfig.ITEM_SYRINGE_USEDURATION = server_builder.defineInRange("UseDuration",ServerConfig.Default.ITEM_SYRINGE_USEDURATION,1,6000);
+        ServerConfig.ITEM_SYRINGE_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize",ServerConfig.Default.ITEM_SYRINGE_MAXSTACKSIZE,1,6000);
+        ServerConfig.ITEM_SYRINGE_HEALAMOUNT = server_builder.defineInRange("HealAmount",ServerConfig.Default.ITEM_SYRINGE_HEALAMOUNT,0.0f,10000.0f);
+        server_builder.pop();
+        server_builder.push("MEDKIT");
+        ServerConfig.ITEM_MEDKIT_USEDURATION = server_builder.defineInRange("UseDuration",ServerConfig.Default.ITEM_MEDKIT_USEDURATION,1,6000);
+        ServerConfig.ITEM_MEDKIT_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize",ServerConfig.Default.ITEM_MEDKIT_MAXSTACKSIZE,1,6000);
+        ServerConfig.ITEM_MEDKIT_HEALAMOUNT = server_builder.defineInRange("HealAmount",ServerConfig.Default.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
+        server_builder.pop();
+        server_builder.pop().push("ARMOR");
+        server_builder.comment("");
 
+        CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);
 
+        server_builder.pop();
         server_builder.pop();
         SERVER_CONFIG = server_builder.build();
     }

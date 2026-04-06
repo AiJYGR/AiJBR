@@ -8,6 +8,9 @@ import com.aijygr.Item.Medkit;
 import com.aijygr.Item.Syringe;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -23,6 +26,7 @@ public class Reg
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Main.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Main.MODID);
+    //public static final DeferredRegister<DamageType> DAMAGE_TYPE = DeferredRegister.create(Registries.DAMAGE_TYPE,  Main.MODID);
 
     public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe",()-> new Syringe(new Item.Properties()));
     public static final RegistryObject<Item> MEDKIT = ITEMS.register("medkit", () -> new Medkit(new Item.Properties()));
@@ -33,4 +37,7 @@ public class Reg
 
     public static final RegistryObject<BlockEntityType<LootContainer>> LOOTCONTAINER_REG = BLOCK_ENTITIES.register("loot_container", () -> BlockEntityType.Builder.of(LootContainer::new, MYBLOCK.get()).build(null));
     public static final RegistryObject<Item> MYBLOCKITEM = ITEMS.register("loot_container", () -> new BlockItem(Reg.MYBLOCK.get(),new Item.Properties()));
+
+    //public static final RegistryObject<DamageType> AIJBR_RING_DAMAGE = DAMAGE_TYPE.register("ring_damage",()->new DamageType("ring_damage",0.0f));
+    public static final ResourceKey<DamageType> AIJBR_RING_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath(Main.MODID, "ring_damage"));
 }

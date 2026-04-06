@@ -8,7 +8,7 @@
 
     "block.aijbr.loot_container": "战利品箱",
 
-    "aijbr.command.err.game_started":"游戏已经开始!",
-    "aijbr.command.err.game_ended":"游戏未开始!",
-    "aijbr.command.executed":"已成功执行指令"
+    "aijbr.command.err.game_started":"[AiJBR]游戏已经开始!",
+    "aijbr.command.err.game_ended":"[AiJBR]游戏未开始!",
+    "aijbr.command.executed":"[AiJBR]已成功执行指令"
 }

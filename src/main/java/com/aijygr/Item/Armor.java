@@ -3,7 +3,6 @@ package com.aijygr.Item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -38,7 +37,7 @@ public class Armor extends ArmorItem
 //        }
 //    }
     @Override
-    public ItemStack getDefaultInstance()
+    public @NotNull ItemStack getDefaultInstance()
     {
         ItemStack stack = super.getDefaultInstance();
         CompoundTag enchantmentTag = new CompoundTag();

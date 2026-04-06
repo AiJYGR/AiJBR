@@ -30,7 +30,7 @@ public class Scr extends Screen {
         
         button = new Builder(Component.translatable("CLICK"), (btn) -> {
             this.minecraft.player.sendSystemMessage(title);
-            var list = Config.SERVERCFG_BACKPACK_SLOTS.get();
+            var list = Config.ServerConfig.BACKPACK_SLOTS.get();
             System.out.println("Slots Defined:"+list.size());
             for(var it = list.iterator(); it.hasNext();)
             {

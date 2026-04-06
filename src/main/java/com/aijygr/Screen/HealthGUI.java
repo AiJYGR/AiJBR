@@ -6,12 +6,15 @@ import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+
 @Mod.EventBusSubscriber(modid = "aijbr", value = Dist.CLIENT)
 public class HealthGUI {
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.options.hideGui)
+            return;
+        if(minecraft.player.isCreative()||minecraft.player.isSpectator())
             return;
 
         float health = minecraft.player.getHealth();

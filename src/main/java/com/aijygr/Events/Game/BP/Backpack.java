@@ -1,6 +1,7 @@
 package com.aijygr.Events.Game.BP;
 
 import com.aijygr.Events.Game.Game;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
@@ -14,14 +15,44 @@ import net.minecraft.world.entity.player.Player;
 @Mod.EventBusSubscriber() //####################################
 public class Backpack extends Event
 {
+    public enum SlotTag{
+        MAINWPN,
+        SUBWPN,
+        MELEE,
+        NADES,
+        SUPPLIES,
+        BACKPACK,
+        ARMOR,
+        DEFAULT
+    }
+
     public static class BackpackSlotAttribute{
-        String tag;
+        SlotTag tag;
         short permissionLevel;
         short slot;
-        public BackpackSlotAttribute(short slot, short permissionLevel, String tag) {
+        public BackpackSlotAttribute(short slot, short permissionLevel, SlotTag tag) {
             this.tag = tag;
             this.permissionLevel = permissionLevel;
             this.slot = slot;
+        }
+        public BackpackSlotAttribute(short slot, short permissionLevel, String tag) {
+            this.tag = SlotTag.valueOf(tag);
+            this.permissionLevel = permissionLevel;
+            this.slot = slot;
+        }
+        public BackpackSlotAttribute(short slot, String tag) {
+            this.tag = SlotTag.valueOf(tag);
+            this.slot = slot;
+            this.permissionLevel = Short.MAX_VALUE;
+        }
+        public BackpackSlotAttribute(short slot) {
+            this.tag = SlotTag.DEFAULT;
+            this.slot = slot;
+            this.permissionLevel = Short.MAX_VALUE;
+        }
+
+        public String getTagName() {
+            return tag.name();
         }
     }
 
@@ -35,6 +66,9 @@ public class Backpack extends Event
         Player player = event.player;
         if(player != null && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
         {
+            if (Minecraft.getInstance().player == null || !player.getUUID().equals(Minecraft.getInstance().player.getUUID()))
+                return;
+
             String inv = player.getInventory().getSelected().getDisplayName().getString();
             //Main.LOGGER.info("s:"+s);
             if(!s.equals(inv))

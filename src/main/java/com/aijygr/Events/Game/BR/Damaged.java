@@ -17,7 +17,7 @@ public class Damaged {
             if(player.level().isClientSide){ return ;}
             DamageSource damagesource = event.getSource();
             if(damagesource.is(Reg.AIJBR_RING_DAMAGE)){
-                player.sendSystemMessage(Component.literal(player.getName().getString()+":"+event.getAmount()));
+                player.sendSystemMessage(Component.literal(String.format("%s:%4.3f",player.getName().getString(), event.getAmount())));
             }
         }
     }

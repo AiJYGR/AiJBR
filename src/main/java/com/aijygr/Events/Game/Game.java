@@ -2,12 +2,18 @@ package com.aijygr.Events.Game;
 
 import com.aijygr.Events.Game.BP.Backpack;
 import com.aijygr.Events.Game.Ring.RingGeneration;
+import com.aijygr.Main;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentContents;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Mod.EventBusSubscriber()
@@ -42,6 +48,32 @@ public class Game {
     public static boolean isRingClosing = false;
     public static int sv_roundticktotal = 0;
     public static List<Backpack.BackpackSlotAttribute> bp_slotsAttributes = new ArrayList<>();
+
+    public static void tryPlayerMessage(Player player, String message) {
+        if(player!=null)
+            player.sendSystemMessage(Component.translatable(message));
+            //player.sendSystemMessage(Component.translatable("msg.aijbr").append(Component.translatable(message)));
+        Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", message);
+    }
+
+//    public static void tryPlayerMessage(Player player, String message, String message2) {
+//        if(player!=null)
+//            player.sendSystemMessage(Component.translatable(message).append(Component.translatable(message2)));
+//        Main.LOGGER.info("[AiJBR]tryPlayerMessage:{} {}", message, message2);
+//    }
+    public static void tryPlayerMessage(Player player, String... messages) {
+        messages = Arrays.copyOf(messages, messages.length);
+        MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
+        StringBuilder str = new StringBuilder();
+        for (String message : messages) {
+            component.append(Component.translatable(message));
+            str.append(message+" ");
+        }
+        if(player!=null)
+            player.sendSystemMessage(component);
+        Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", str);
+
+    }
 
     public static class VecIntXZ {
         public int x;

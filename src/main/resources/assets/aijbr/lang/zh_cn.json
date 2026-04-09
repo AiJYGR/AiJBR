@@ -8,7 +8,17 @@
 
     "block.aijbr.loot_container": "战利品箱",
 
-    "aijbr.command.err.game_started":"[AiJBR]游戏已经开始!",
-    "aijbr.command.err.game_ended":"[AiJBR]游戏未开始!",
-    "aijbr.command.executed":"[AiJBR]已成功执行指令"
+    "msg.aijbr": "[AiJBR]",
+    "msg.aijbr.red": "§c[AiJBR]§r",
+    "msg.aijbr.yellow": "§e[AiJBR]§r",
+    "msg.aijbr.green": "§a[AiJBR]§r",
+    "msg.aijbr.bold": "§d§l[AiJBR]§r",
+
+    "msg.aijbr.info.command_executed":"已成功执行指令",
+    "msg.aijbr.info.command_game_started": "已成功开始游戏",
+
+    "msg.aijbr.err.command_game_started":"游戏已经开始!",
+    "msg.aijbr.err.command_game_ended":"游戏未开始!",
+    "msg.aijbr.err.command_executed_failed":"执行指令失败",
+    "msg.aijbr.err.command_game_not_initialized":"游戏尚未初始化"
 }

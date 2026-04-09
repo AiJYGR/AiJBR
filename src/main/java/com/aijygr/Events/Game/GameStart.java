@@ -13,7 +13,7 @@ public class GameStart {
     @SubscribeEvent
     public static void onGameStart(GameStartEvent event) {
         if(!Game.isInitialized){
-            event.getPlayer().sendSystemMessage(Component.translatable("[AiJBR][WARN] Game not initialized!"));
+            Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
             return;
         }
         Game.isGameStart  = true;
@@ -25,6 +25,8 @@ public class GameStart {
         //Game.sv_next_z = vec2.z;
         Game.isRingClosing = false;
         RingMove.PhaseChange();
-        event.getPlayer().sendSystemMessage(Component.translatable("aijbr.gamestart"));
+
+        Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_game_started");
+        Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_executed");
     }
 }

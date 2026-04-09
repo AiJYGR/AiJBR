@@ -1,11 +1,7 @@
 package com.aijygr.Events.Game.Ring;
 
 import com.aijygr.Events.Game.Game;
-import com.aijygr.Reg;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 
@@ -13,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.aijygr.RingDamage.getRingDamageSource;
+import static com.aijygr.DamageSource.getRingDamageSource;
 
 
 @Mod.EventBusSubscriber()

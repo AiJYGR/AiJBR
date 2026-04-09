@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.aijygr.Events.Game.BP.Backpack;
 import com.aijygr.Events.Game.Ring.RingGeneration;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -43,15 +44,15 @@ public abstract class ModConfig {
                 public static final String BACKPACK_SLOT_DEFAULT = "DEFAULT";
                 public static final String ENABLE_AIJBR = "INGAME";
                 public static final List<String> BACKPACK_SLOTS = new ArrayList<>(List.of(
-                        "0,0,+mainwpn",
-                        "1,0,+mainwpn",
-                        "2,0,+subwpn",
-                        "3,0,+melee",
-                        "4,0,+nades",
-                        "5,0,+supplies",
-                        "6,0,+supplies",
-                        "7,1,+supplies",
-                        "8,1,+supplies"
+                        "0,0,mainwpn",
+                        "1,0,mainwpn",
+                        "2,0,subwpn",
+                        "3,0,melee",
+                        "4,0,nades",
+                        "5,0,supplies",
+                        "6,0,supplies",
+                        "7,1,supplies",
+                        "8,1,supplies"
                 ));
             }
             public static class RING{
@@ -89,16 +90,34 @@ public abstract class ModConfig {
     static {
         //ForgeConfigSpec.Builder common_builder = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();//栈结构 builder
-        server_builder.comment("AiJBR Server Settings").push("AiJBR_SV");
+        StringBuilder strbuilder = new StringBuilder();
 
-        server_builder.push("Backpack");
+        server_builder.comment("AiJBR Server Settings").push("AiJBR_SV");//File Start
+
+        server_builder.push("Backpack");    //Backpack
+        strbuilder.delete(0, strbuilder.length());
+        for (Backpack.SlotTag it : Backpack.SlotTag.values()) {
+            strbuilder.append(it.name());
+            strbuilder.append(" ");
+        }
         server_builder.comment(
                 "# BackPack Slots Attributes",
                 "- For Each String, the format is: \"Slot,PermissionLevel,Type\"",
-                "- Example:  \"0,0,+mainwpn\"",
-                "- It represents that Slot 0 has PermissionLevel of 0, its type is \"+mainwpn\"."
+                "- Example:  \"0,0,mainwpn\"",
+                "- It represents that Slot 0 has PermissionLevel of 0, its type is \"mainwpn\".",
+                "Allowed Values: "+strbuilder.toString()
         );
-        Server.Config.BACKPACK.BACKPACK_SLOTS = server_builder.defineList("BackPackSlotsAttributes", Server.Default.BACKPACK.BACKPACK_SLOTS, (obj)->{return obj instanceof String;});
+        Server.Config.BACKPACK.BACKPACK_SLOTS = server_builder.defineList("BackPackSlotsAttributes", Server.Default.BACKPACK.BACKPACK_SLOTS, (obj)->{
+            if (!(obj instanceof String)) {
+                System.out.println("[AiJBR] BackpackSlotAttributes Config ERR: "+obj.toString()+" is not a String");
+                return false;
+            }
+            for(Backpack.SlotTag it : Backpack.SlotTag.values())
+                if (obj.equals(it.name()))
+                    return true;
+            System.out.println("[AiJBR] BackpackSlotAttributes Config ERR: Incorrect value \""+obj+"\"");
+            return false;
+        });
         server_builder.comment("#Default Attributes",
                 "- Define the Default Attributes of undefined slots above.");
         Server.Config.BACKPACK.BACKPACK_SLOT_DEFAULT = server_builder.define("Default", Server.Default.BACKPACK.BACKPACK_SLOT_DEFAULT,(obj)->{return obj instanceof String;});
@@ -107,7 +126,7 @@ public abstract class ModConfig {
         Server.Config.BACKPACK.ENABLEAIJBR = server_builder.define("EnableAiJBP", Server.Default.BACKPACK.ENABLE_AIJBR,(obj)->{return obj instanceof String;});
         server_builder.pop();
 
-        server_builder.push("Ring");
+        server_builder.push("Ring");    //Ring
         server_builder.comment(
                 "# Ring Initial Setting",
                 "- Format: InitialRingSize, WaitingTick",
@@ -124,59 +143,53 @@ public abstract class ModConfig {
                 "- BasicDamage: The basic damage player would take for being outside the ring.",
                 "- DamagePerBlock: Penalties for being very far from the ring.",
                 "- ClosingTick: Ticks for ring to close of this round.",
-                "***The Total Rounds is defined here, by the number of inputs.***"
+                "# The Total Rounds is defined here, by the number of inputs."
         );
         Server.Config.RING.RING_ATTRIBUTES =  server_builder.defineList("RingAttributes", Server.Default.RING.RING_ATTRIBUTES,(obj)->{return obj instanceof String;});
 
         server_builder.comment(
                 "# Ring Damage Ticking Time",
-                "- Interval ticks between between 2 ring damages."
+                "- Interval ticks between 2 ring damages."
         );
         Server.Config.RING.DAMAGE_TICKING_TIME = server_builder.defineInRange("DamageTickingTime", Server.Default.RING.DAMAGE_TICKING_TIME,1,Short.MAX_VALUE);
+
         server_builder.comment(
                 "# Ring Generation Mode",
-                "- For each String, it decides the method used in generation of the next ring.",
+                "- For each String, it decides the algorithm used in generation of the next ring.",
                 "- UNIFORM: Possibilities of every points in the map are equal",
                 "- EDGE_WEIGHTED: The next ring has more possibility to be at the edge" ,
                 "- MID_WEIGHTED: The next ring has more possibility to be at the middle" ,
                 "- TANGENT: The next ring must touch the edge. Possibilities of every points on the edge are equal" ,
                 "- RANDOM: Randomly choose one of above methods to generate");
-        StringBuilder strmodes = new StringBuilder();
-        RingGeneration.GenerationMode[] modes = RingGeneration.GenerationMode.values();
-        for (RingGeneration.GenerationMode it : modes) {
-            strmodes.append(it.name());
-            strmodes.append(" ");
+        strbuilder.delete(0, strbuilder.length());
+        RingGeneration.GenerationMode[] generationModes = RingGeneration.GenerationMode.values();
+        for (RingGeneration.GenerationMode it : generationModes) {
+            strbuilder.append(it.name());
+            strbuilder.append(" ");
         }
-        server_builder.comment(("Allowed Values: "+strmodes));
+        server_builder.comment(("Allowed Values: "+strbuilder));
         Server.Config.RING.GENERATIONMODES =  server_builder.defineList("GenerationModes", Server.Default.RING.GENERATIONMODES,(obj)->{
-            boolean f = false;
             if (!(obj instanceof String)) {
-                System.out.println("[AiJBR][WARN]Generation Mode Config ERR: "+obj.toString()+" is not a String");
+                System.out.println("[AiJBR] GenerationModes Config ERR: "+obj.toString()+" is not a String");
                 return false;
             }
-            for (RingGeneration.GenerationMode mode : modes) {
-                if (obj.equals(mode.name())) {
-                    f = true;
-                    break;
-                }
-            }
-            if(!f){
-                System.out.println("[AiJBR][WARN]Generation Mode Config ERR: Incorrect value \""+obj+"\"");
-                return false;
-            }
-            else
-                return true;
+            for (RingGeneration.GenerationMode it: generationModes)
+                if (obj.equals(it.name()))
+                    return true;
+            System.out.println("[AiJBR] GenerationModes Config ERR: Incorrect value \""+obj+"\"");
+            return false;
         });
         //ServerConfig.GENERATIONMODES =  server_builder.defineList("GenerationModes", ServerConfig.Default.GENERATIONMODES,(obj)->{return obj instanceof String;});
+
         server_builder.comment(
                 "# Weighted Algorithm",
                 "- Decides the method used to weight the points",
                 "- Available when the Generation Mode is weighted (EDGE_WEIGHTED\\MID_WEIGHTED\\RANDOM when selected WEIGHTED) "
         );
         Server.Config.RING.WEIGHTEDMODE = server_builder.defineEnum("WeightedMode", Server.Default.RING.WEIGHTEDMODE, RingGeneration.WeightedMode.values());
-
         server_builder.pop();
-        server_builder.push("ITEMS");
+
+        server_builder.push("ITEMS");   //ITEMS
         server_builder.comment(
                 "UseDuration: Define ticks cost when using an item." ,
                 "MaxStackSize: The stack size of a slot of this item");
@@ -193,6 +206,7 @@ public abstract class ModConfig {
         Server.Config.ITEM.MEDKIT_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.RING.ITEM_MEDKIT_MAXSTACKSIZE,1,6000);
         Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.RING.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
         server_builder.pop();
+
         server_builder.pop().push("ARMOR");
         server_builder.comment("");
 

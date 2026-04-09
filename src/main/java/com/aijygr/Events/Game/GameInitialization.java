@@ -4,8 +4,6 @@ import com.aijygr.Events.Game.BP.Backpack;
 import com.aijygr.ModConfig;
 import com.aijygr.Events.Game.Ring.GameInitEvent;
 import com.aijygr.Events.Game.Ring.RingGeneration;
-import com.aijygr.Main;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,9 +15,7 @@ import static com.aijygr.Events.Game.Ring.RingGeneration.Generate;
 
 @Mod.EventBusSubscriber()
 public class GameInitialization {
-
-
-    private static ServerPlayer player;
+    //private static ServerPlayer player;
 
     private static void readRingAttributesConfig(List<? extends String> ringattributes) throws Exception {
         Game.totalrounds = 0;
@@ -40,31 +36,22 @@ public class GameInitialization {
                 }
             } else throw new Exception("At Round:"+ (Game.totalrounds+1) +"  Inputs must be 7.");
         }
-        Main.LOGGER.info("Successfully read ring attributes.");
-    }
-
-
-
-    public static void tryPlayerMessage(ServerPlayer player, String message) {
-        if(player!=null){
-            player.sendSystemMessage(Component.translatable(message));
-            Main.LOGGER.info("[AiJBR]PlayerMessage:{}", message);
-        }
-        else {
-            Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", message);
+        if(Game.totalrounds == 0 ){
+            throw new Exception(" Input is empty.");
         }
     }
-    //initialization
+
+    //Init
     @SubscribeEvent
     public static void onGameInit(GameInitEvent event) {
-        if(event.getLevel().isClientSide()) return;
+        if(event.getLevel().isClientSide())
+            return;
         Game.r_ring_size.clear();
         Game.r_waiting_tick.clear();
         Game.r_basic_damage.clear();
         Game.r_damage_per_block.clear();
         Game.r_moving_tick.clear();
         Game.r_generation_modes.clear();
-
         Game.isInitialized = false;
         ServerPlayer player = event.getPlayer();
         WorldBorder worldBorder =event.getLevel().getWorldBorder();
@@ -73,77 +60,85 @@ public class GameInitialization {
         Game.sv_next_z = 0;
         Game.sv_curr_x = 0;
         Game.sv_curr_z = 0;
-
         Game.sv_r_x = Game.sv_curr_x;
         Game.sv_r_z = Game.sv_curr_z;
         Game.damage_tickingtime = ModConfig.Server.Config.RING.DAMAGE_TICKING_TIME.get();
+        Game.tryPlayerMessage(player, "msg.aijbr.bold","Starting INIT.");
 
+        //Read RingAttributes CFG
+        var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();
+        Game.r_initial_ringsize = ring_initial.get(0); //InitialRingSize, WaitingTick
+        Game.sv_curr_size = Game.r_initial_ringsize;
+        Game.r_initial_waitingtick = ring_initial.get(1);
+        //System.out.println(Game.r_initial_waitingtick+" "+Game.r_initial_ringsize);
+        worldBorder.setSize(Game.sv_curr_size);
+        worldBorder.setCenter(Game.sv_curr_x,Game.sv_curr_z);
+        var ring_initial_attributes = ModConfig.Server.Config.RING.RING_ATTRIBUTES.get();
+        try {
+            readRingAttributesConfig(ring_initial_attributes);
+            Game.tryPlayerMessage(player, "msg.aijbr.green","Successfully loaded RingAttributes, "+(Game.totalrounds)+" rounds read.");
+        }catch(Exception e){
+            String str = ("RingAttributesInitialization failed. "+e.getMessage()+" *Please check the TOML file.");
+            Game.tryPlayerMessage(player,"msg.aijbr.red", str);
+            boolean usingDefaultsWhenFailed = false;//Don't use default config.
+            if(usingDefaultsWhenFailed){
+                String str2 = "Trying to use Default RingAttributesConfig.";
+                Game.tryPlayerMessage(player,"msg.aijbr.yellow", str2);
+                var default_ring_initial_attributes = ModConfig.Server.Default.RING.RING_ATTRIBUTES;
+                try{
+                    readRingAttributesConfig(default_ring_initial_attributes);
+                    String str3 = "Default RingAttributesConfig Loaded. "+Game.totalrounds+" rounds read.";
+                    Game.tryPlayerMessage(player, "msg.aijbr.yellow",str3);
+                }
+                catch (Exception e1){
+                    String str4 = ("Hey AiJYGR, what are you doing? "+e1.getMessage());
+                    String str5 = "Initialization failed";
+                    Game.tryPlayerMessage(player, "msg.aijbr.red",str4);
+                    Game.tryPlayerMessage(player,"msg.aijbr.red",str5);
+                    return ;
+                }
+            }
+            else
+                return;
+        }
+
+        //Set Initial Attributes
+        Game.sv_next_size = Game.r_initial_ringsize;
+        Game.sv_damage_per_block = Game.r_damage_per_block.get(0);
+        Game.sv_basicdamage = Game.r_basic_damage.get(0);
+
+        //Read Generation Mode CFG
         //List<GenerationMode>   <---   List<String>
         var list_str = ModConfig.Server.Config.RING.GENERATIONMODES.get();
         var LIST_ENUM = RingGeneration.GenerationMode.values();
         Game.r_generation_modes.clear();
         for(int i = 0; i < list_str.size(); i++) {
-            System.out.println(i);
             for(int j = 0 ; j < LIST_ENUM.length; j++ ) {
-                if(LIST_ENUM[j].name().equalsIgnoreCase(list_str.get(i))) {
+                if(LIST_ENUM[j].name().equalsIgnoreCase(list_str.get(i).trim())) {
                     Game.r_generation_modes.add(LIST_ENUM[j]);
                 }
             }
         }
-
-
-        var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();
-        Game.r_initial_ringsize = ring_initial.get(0); //InitialRingSize, WaitingTick
-        Game.sv_curr_size = Game.r_initial_ringsize;
-        Game.r_initial_waitingtick = ring_initial.get(1);
-        System.out.println(Game.r_initial_waitingtick+" "+Game.r_initial_ringsize);
-        worldBorder.setSize(Game.sv_curr_size);
-        worldBorder.setCenter(Game.sv_curr_x,Game.sv_curr_z);
-
-        var ring_initial_attributes = ModConfig.Server.Config.RING.RING_ATTRIBUTES.get();
-
-        //Read RingAttributes
-        try {
-            readRingAttributesConfig(ring_initial_attributes);
-        }catch(Exception e){
-            String str = ("§4[AiJBR]§r RingAttributesInitialization failed. "+e.getMessage()+" *Please check the TOML file.");
-            tryPlayerMessage(player, str);
-            String str2 = "§4[AiJBR]§r Trying to use Default RingAttributesConfig.";
-            tryPlayerMessage(player, str2);
-            var default_ring_initial_attributes = ModConfig.Server.Default.RING.RING_ATTRIBUTES;
-            try{
-                readRingAttributesConfig(default_ring_initial_attributes);
-                String str3 = "§4[AiJBR]§r Default RingAttributesConfig Loaded.";
-                tryPlayerMessage(player, str3);
+        if(Game.totalrounds != Game.r_generation_modes.size()) {
+            StringBuilder str = new StringBuilder();
+            for(var it = Game.r_generation_modes.stream().iterator();it.hasNext();)
+            {
+                str.append(it.next()).append(",");
             }
-            catch (Exception e1){
-                String str4 = ("§4[AiJBR]§r§c Hey AiJYGR, what are you doing? "+e1.getMessage());
-                String str5 = "§4[AiJBR]§r Initialization failed";
-                tryPlayerMessage(player, str4);
-                tryPlayerMessage(player, str5);
-                return ;
-            }
+            Game.tryPlayerMessage(player, "msg.aijbr.red","Failed to load GenerationModes.\nGet: "+str.toString()+" only "+Game.r_generation_modes.size()+" values read.");
+            return ;
         }
-        //tryPlayerMessage(player,(Game.totalrounds)+"rounds read.");
+        else
+            Game.tryPlayerMessage(player,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
 
-        //RingGeneration.Generate(256,256,256,64, Game.generation_modes.get(0));
-        Game.sv_next_size = Game.r_initial_ringsize;
-        Game.sv_damage_per_block = Game.r_damage_per_block.get(0);
-        Game.sv_basicdamage = Game.r_basic_damage.get(0);
 
-        for(var it = Game.r_generation_modes.stream().iterator();it.hasNext();)
-        {
-            System.out.println(it.next().name());
-        }
-
-        //AiJBP
+        //Read AiJBP CFG
         var backpack_slots = ModConfig.Server.Config.BACKPACK.BACKPACK_SLOTS.get();
         short i = 0;
         for(var it = backpack_slots.iterator();it.hasNext();i++)
         {
             String str_slot = it.next();
             var s = str_slot.split(",");
-            System.out.println("bpinit"+i);
             if(s.length == 3)
             {
                 short slot = Short.parseShort(s[0].trim());
@@ -152,12 +147,15 @@ public class GameInitialization {
                 Game.bp_slotsAttributes.add(new Backpack.BackpackSlotAttribute(slot, plvl, tag));
             }
             else{
+                Game.tryPlayerMessage(player,"msg.aijbr.red","Failed to load BackpackSlotAttributes, at "+(i)+":\""+str_slot+"\"");
                 return;
             }
         }
+        Game.tryPlayerMessage(player,"msg.aijbr.green","Successfully loaded BackpackSlotAttributes, "+(i)+" values read.");
 
 
-        tryPlayerMessage(player,"aijbr.command.executed");
         Game.isInitialized = true;
+        Game.tryPlayerMessage(player,"");
+        Game.tryPlayerMessage(player,"msg.aijbr.bold","msg.aijbr.info.command_executed");
     }
 }

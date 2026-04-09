@@ -1,6 +1,7 @@
 package com.aijygr.Events.Game;
 
-import com.aijygr.Config;
+import com.aijygr.Events.Game.BP.Backpack;
+import com.aijygr.ModConfig;
 import com.aijygr.Events.Game.Ring.GameInitEvent;
 import com.aijygr.Events.Game.Ring.RingGeneration;
 import com.aijygr.Main;
@@ -10,7 +11,6 @@ import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.aijygr.Events.Game.Ring.RingGeneration.Generate;
@@ -45,7 +45,7 @@ public class GameInitialization {
 
 
 
-    private static void tryPlayerMessage(ServerPlayer player, String message) {
+    public static void tryPlayerMessage(ServerPlayer player, String message) {
         if(player!=null){
             player.sendSystemMessage(Component.translatable(message));
             Main.LOGGER.info("[AiJBR]PlayerMessage:{}", message);
@@ -76,10 +76,10 @@ public class GameInitialization {
 
         Game.sv_r_x = Game.sv_curr_x;
         Game.sv_r_z = Game.sv_curr_z;
-        Game.damage_tickingtime = Config.ServerConfig.DAMAGE_TICKING_TIME.get();
+        Game.damage_tickingtime = ModConfig.Server.Config.RING.DAMAGE_TICKING_TIME.get();
 
         //List<GenerationMode>   <---   List<String>
-        var list_str = Config.ServerConfig.GENERATIONMODES.get();
+        var list_str = ModConfig.Server.Config.RING.GENERATIONMODES.get();
         var LIST_ENUM = RingGeneration.GenerationMode.values();
         Game.r_generation_modes.clear();
         for(int i = 0; i < list_str.size(); i++) {
@@ -92,7 +92,7 @@ public class GameInitialization {
         }
 
 
-        var ring_initial = Config.ServerConfig.RING_INITIAL_ATTRUBUTES.get();
+        var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();
         Game.r_initial_ringsize = ring_initial.get(0); //InitialRingSize, WaitingTick
         Game.sv_curr_size = Game.r_initial_ringsize;
         Game.r_initial_waitingtick = ring_initial.get(1);
@@ -100,7 +100,7 @@ public class GameInitialization {
         worldBorder.setSize(Game.sv_curr_size);
         worldBorder.setCenter(Game.sv_curr_x,Game.sv_curr_z);
 
-        var ring_initial_attributes = Config.ServerConfig.RING_ATTRIBUTES.get();
+        var ring_initial_attributes = ModConfig.Server.Config.RING.RING_ATTRIBUTES.get();
 
         //Read RingAttributes
         try {
@@ -110,14 +110,14 @@ public class GameInitialization {
             tryPlayerMessage(player, str);
             String str2 = "§4[AiJBR]§r Trying to use Default RingAttributesConfig.";
             tryPlayerMessage(player, str2);
-            var default_ring_initial_attributes = Config.ServerConfig.Default.RING_ATTRIBUTES;
+            var default_ring_initial_attributes = ModConfig.Server.Default.RING.RING_ATTRIBUTES;
             try{
                 readRingAttributesConfig(default_ring_initial_attributes);
                 String str3 = "§4[AiJBR]§r Default RingAttributesConfig Loaded.";
                 tryPlayerMessage(player, str3);
             }
             catch (Exception e1){
-                String str4 = ("§4[AiJBR]§r §cHey AiJYGR, what are you doing? "+e1.getMessage());
+                String str4 = ("§4[AiJBR]§r§c Hey AiJYGR, what are you doing? "+e1.getMessage());
                 String str5 = "§4[AiJBR]§r Initialization failed";
                 tryPlayerMessage(player, str4);
                 tryPlayerMessage(player, str5);
@@ -135,6 +135,27 @@ public class GameInitialization {
         {
             System.out.println(it.next().name());
         }
+
+        //AiJBP
+        var backpack_slots = ModConfig.Server.Config.BACKPACK.BACKPACK_SLOTS.get();
+        short i = 0;
+        for(var it = backpack_slots.iterator();it.hasNext();i++)
+        {
+            String str_slot = it.next();
+            var s = str_slot.split(",");
+            System.out.println("bpinit"+i);
+            if(s.length == 3)
+            {
+                short slot = Short.parseShort(s[0].trim());
+                short plvl = Short.parseShort(s[1].trim());
+                String tag = s[2].toUpperCase().trim();
+                Game.bp_slotsAttributes.add(new Backpack.BackpackSlotAttribute(slot, plvl, tag));
+            }
+            else{
+                return;
+            }
+        }
+
 
         tryPlayerMessage(player,"aijbr.command.executed");
         Game.isInitialized = true;

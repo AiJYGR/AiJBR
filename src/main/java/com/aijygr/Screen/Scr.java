@@ -1,6 +1,6 @@
 package com.aijygr.Screen;
 
-import com.aijygr.Config;
+import com.aijygr.ModConfig;
 import com.aijygr.Main;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -30,7 +30,7 @@ public class Scr extends Screen {
         
         button = new Builder(Component.translatable("CLICK"), (btn) -> {
             this.minecraft.player.sendSystemMessage(title);
-            var list = Config.ServerConfig.BACKPACK_SLOTS.get();
+            var list = ModConfig.Server.Config.BACKPACK.BACKPACK_SLOTS.get();
             System.out.println("Slots Defined:"+list.size());
             for(var it = list.iterator(); it.hasNext();)
             {
@@ -53,7 +53,7 @@ public class Scr extends Screen {
 
         super.render(graphics, mouseX, mouseY, partialTick);  
 
-        String str = Config.CFGDOUBLE.get().toString();
+        String str = ModConfig.CFGDOUBLE.get().toString();
         
 
         graphics.drawString(this.font, str, this.width / 2 , this.height / 2 - 20, 0xf0f0f0, true);       //   文字

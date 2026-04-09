@@ -1,6 +1,6 @@
 package com.aijygr.Item;
 
-import com.aijygr.Config;
+import com.aijygr.ModConfig;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,11 +20,11 @@ public class Syringe extends Item {
 
     @Override
     public int getUseDuration(ItemStack itemStack) {
-        return Config.ServerConfig.ITEM_MEDKIT_USEDURATION.get();
+        return ModConfig.Server.Config.ITEM.MEDKIT_USEDURATION.get();
     }
     @Override
     public int getMaxStackSize(ItemStack stack) {
-        return Config.ServerConfig.ITEM_MEDKIT_MAXSTACKSIZE.get();
+        return ModConfig.Server.Config.ITEM.MEDKIT_MAXSTACKSIZE.get();
     }
     @Override @NotNull
     public  InteractionResultHolder<ItemStack> use(Level level, @NotNull Player player, @NotNull InteractionHand interactionHand) // 使用东西的那一瞬间（按下右键的一瞬间）的代码
@@ -40,7 +40,7 @@ public class Syringe extends Item {
     {
         if (!level.isClientSide()) {
             if (livingEntity instanceof Player player) {
-                float h = Config.ServerConfig.ITEM_SYRINGE_HEALAMOUNT.get().floatValue();
+                float h = ModConfig.Server.Config.ITEM.SYRINGE_HEALAMOUNT.get().floatValue();
                 player.heal(h);
             }
         }

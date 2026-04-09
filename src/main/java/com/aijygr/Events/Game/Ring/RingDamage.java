@@ -1,6 +1,7 @@
 package com.aijygr.Events.Game.Ring;
 
 import com.aijygr.Events.Game.Game;
+import com.aijygr.Reg;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -38,7 +39,8 @@ public class RingDamage {
                         float damage = (float)((-distance)*Game.sv_damage_per_block +Game.sv_basicdamage);
                         //player.sendSystemMessage(Component.translatable(player.getName().getString()+String.format(" %3.2f",damage)));
                         if(damage - player.getHealth() > 0) {
-                            player.hurt(player.damageSources().outOfBorder(),damage);//kill the player
+                            //player.hurt(player.damageSources().outOfBorder(),damage);//kill the player
+                            player.hurt(getRingDamageSource(player.level()),damage);
                         }
                         else {
 
@@ -47,11 +49,11 @@ public class RingDamage {
                             player.invulnerableTime = 0;
                             player.hurtTime = 0;
                             //if(player instanceof ServerPlayer)
-                            {
-                                //player.playSound(SoundEvents.PLAYER_HURT_DROWN, 0.8F, 0.8F);
-                                //player.playNotifySound(SoundEvents.PLAYER_HURT_DROWN, SoundSource.PLAYERS,0.8F, 0.8F);
-                                //System.out.println("hurt");
-                            }
+                            //{
+                            //    player.playSound(SoundEvents.PLAYER_HURT_DROWN, 0.8F, 0.8F);
+                            //    player.playNotifySound(SoundEvents.PLAYER_HURT_DROWN, SoundSource.PLAYERS,0.8F, 0.8F);
+                            //    System.out.println("hurt");
+                            //}
                         }
 
                         data.putLong((DATA_LastHurtTick), Game.gametime);

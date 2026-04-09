@@ -1,5 +1,6 @@
 package com.aijygr.Events.Game;
 
+import com.aijygr.Events.Game.BP.Backpack;
 import com.aijygr.Events.Game.Ring.RingGeneration;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
@@ -40,6 +41,7 @@ public class Game {
     public static boolean isGameStart = false;
     public static boolean isRingClosing = false;
     public static int sv_roundticktotal = 0;
+    public static List<Backpack.BackpackSlotAttribute> bp_slotsAttributes = new ArrayList<>();
 
     public static class VecIntXZ {
         public int x;

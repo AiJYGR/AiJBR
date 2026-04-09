@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WorldBorder.class)
 public class WorldBorderMixin {
-
     @Inject(method = "isWithinBounds(Lnet/minecraft/world/phys/AABB;)Z", at = @At("HEAD"), cancellable = true)
     private void onIsWithinBoundsAABB(AABB pBox, CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue(false);
@@ -36,6 +35,4 @@ public class WorldBorderMixin {
     private void onIsWithinBoundsBlockPos(BlockPos p, CallbackInfoReturnable<Boolean> cir){
         cir.setReturnValue(true);
     }
-
-
 }

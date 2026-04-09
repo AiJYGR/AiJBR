@@ -1,5 +1,5 @@
 package com.aijygr.Item;
-import com.aijygr.Config;
+import com.aijygr.ModConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -17,11 +17,11 @@ public class Medkit extends Item
     }
     @Override
     public int getUseDuration(ItemStack itemStack) {
-        return Config.ServerConfig.ITEM_MEDKIT_USEDURATION.get();
+        return ModConfig.Server.Config.ITEM.MEDKIT_USEDURATION.get();
     }
     @Override
     public int getMaxStackSize(ItemStack stack) {
-        return Config.ServerConfig.ITEM_MEDKIT_MAXSTACKSIZE.get();
+        return ModConfig.Server.Config.ITEM.MEDKIT_MAXSTACKSIZE.get();
     }
     public ItemStack finishUsingItem(@NotNull ItemStack itemStack, Level level, @NotNull LivingEntity livingEntity)
     {
@@ -29,7 +29,7 @@ public class Medkit extends Item
         {
             if(livingEntity instanceof Player player)
             {
-                player.heal(Config.ServerConfig.ITEM_MEDKIT_HEALAMOUNT.get().floatValue());
+                player.heal(ModConfig.Server.Config.ITEM.MEDKIT_HEALAMOUNT.get().floatValue());
             }
         }
         return super.finishUsingItem(itemStack, level, livingEntity);

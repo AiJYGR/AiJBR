@@ -44,11 +44,11 @@ public class Armor extends ArmorItem
         ListTag enchantmentsList = new ListTag();
         CompoundTag enchantment = new CompoundTag();
         enchantment.putString("id", Enchantments.ALL_DAMAGE_PROTECTION.toString());
-        enchantment.putInt("lvl", 8);
+        enchantment.putShort("lvl", (short)8);
         enchantmentsList.add(enchantment);
         enchantmentTag.put("Enchantments", enchantmentsList);
         stack.setTag(enchantmentTag);
-        System.out.println(Enchantments.ALL_DAMAGE_PROTECTION.toString());
+        //System.out.println(Enchantments.ALL_DAMAGE_PROTECTION.toString());
         return stack;
     }
 }

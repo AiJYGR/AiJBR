@@ -2,10 +2,7 @@ package com.aijygr;
 
 import com.aijygr.Block.ContainerBlock;
 import com.aijygr.Entity.BlockEntity.LootContainer;
-import com.aijygr.Item.Armor;
-import com.aijygr.Item.ArmorMaterials_override;
-import com.aijygr.Item.Medkit;
-import com.aijygr.Item.Syringe;
+import com.aijygr.Item.*;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -32,11 +29,12 @@ public class Reg
     public static final RegistryObject<Item> MEDKIT = ITEMS.register("medkit", () -> new Medkit(new Item.Properties()));
     public static final RegistryObject<Item> IRON_ARMOR = ITEMS.register("iron_armor", () -> new Armor(ArmorMaterials_override.IRON,new ArmorItem.Properties()));
     public static final RegistryObject<Item> DIAMOND_ARMOR = ITEMS.register("diamond_armor", () -> new Armor(ArmorMaterials_override.DIAMOND,new ArmorItem.Properties()));
-    public static final RegistryObject<Block> MYBLOCK = BLOCKS.register("loot_container",() -> new ContainerBlock(BlockBehaviour.Properties.copy(Blocks.CHEST)));
+    public static final RegistryObject<Item> AiJBP_LVL10 = ITEMS.register("aijbackpack_lvl10",()->new Backpack(new Item.Properties().fireResistant(),(short)10));
+    public static final RegistryObject<Item> AiJBP_LVL20 = ITEMS.register("aijbackpack_lvl20",()->new Backpack(new Item.Properties().fireResistant(),(short)20));
 
-
-    public static final RegistryObject<BlockEntityType<LootContainer>> LOOTCONTAINER_REG = BLOCK_ENTITIES.register("loot_container", () -> BlockEntityType.Builder.of(LootContainer::new, MYBLOCK.get()).build(null));
-    public static final RegistryObject<Item> MYBLOCKITEM = ITEMS.register("loot_container", () -> new BlockItem(Reg.MYBLOCK.get(),new Item.Properties()));
+    public static final RegistryObject<Item> LOOTCONTAINER_ITEM = ITEMS.register("loot_container", () -> new BlockItem(Reg.LOOTCONTAINER_BLOCK.get(),new Item.Properties()));
+    public static final RegistryObject<Block> LOOTCONTAINER_BLOCK = BLOCKS.register("loot_container",() -> new ContainerBlock(BlockBehaviour.Properties.copy(Blocks.BARREL)));
+    public static final RegistryObject<BlockEntityType<LootContainer>> LOOTCONTAINER_BLOCCKENTITY = BLOCK_ENTITIES.register("loot_container", () -> BlockEntityType.Builder.of(LootContainer::new, LOOTCONTAINER_BLOCK.get()).build(null));
 
     //public static final RegistryObject<DamageType> AIJBR_RING_DAMAGE = DAMAGE_TYPE.register("ring_damage",()->new DamageType("ring_damage",0.0f));
     public static final ResourceKey<DamageType> AIJBR_RING_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath(Main.MODID, "ring_damage"));

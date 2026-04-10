@@ -30,6 +30,7 @@ public abstract class ModConfig {
             }
 
             public static class ITEM{
+                public static ForgeConfigSpec.IntValue BACKPACK_LVL1_PERMISSIONLEVEL;
                 public static ForgeConfigSpec.ConfigValue<Integer> SYRINGE_USEDURATION;
                 public static ForgeConfigSpec.ConfigValue<Integer> SYRINGE_MAXSTACKSIZE;
                 public static ForgeConfigSpec.DoubleValue SYRINGE_HEALAMOUNT;
@@ -75,12 +76,15 @@ public abstract class ModConfig {
                         RingGeneration.GenerationMode.UNIFORM.name()
                 ));
                 public static final RingGeneration.WeightedMode WEIGHTEDMODE = RingGeneration.WeightedMode.MUL2;
+            }
+            public static class ITEM{
                 public static final int ITEM_SYRINGE_USEDURATION = 50;
                 public static final int ITEM_SYRINGE_MAXSTACKSIZE = 5;
                 public static final double ITEM_SYRINGE_HEALAMOUNT = 5.0f;
                 public static final int ITEM_MEDKIT_USEDURATION = 120;
                 public static final int ITEM_MEDKIT_MAXSTACKSIZE = 2;
                 public static final double ITEM_MEDKIT_HEALAMOUNT = 10.0f;
+                public static final short BACKPACK_LVL1_PERMISSIONLEVEL = 10;
             }
 
         }
@@ -190,24 +194,28 @@ public abstract class ModConfig {
         server_builder.pop();
 
         server_builder.push("ITEMS");   //ITEMS
+        server_builder.push("MEDS");
+
         server_builder.comment(
                 "UseDuration: Define ticks cost when using an item." ,
-                "MaxStackSize: The stack size of a slot of this item");
-        server_builder.push("MEDS");
-        server_builder.comment(
+                "MaxStackSize: The stack size of a slot of this item",
                 "HealAmount: Define Health gained after finishing using it.");
         server_builder.push("SYRINGE");
-        Server.Config.ITEM.SYRINGE_USEDURATION = server_builder.defineInRange("UseDuration", Server.Default.RING.ITEM_SYRINGE_USEDURATION,1,6000);
-        Server.Config.ITEM.SYRINGE_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.RING.ITEM_SYRINGE_MAXSTACKSIZE,1,6000);
-        Server.Config.ITEM.SYRINGE_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.RING.ITEM_SYRINGE_HEALAMOUNT, 0.0f, 10000.0f);
+        Server.Config.ITEM.SYRINGE_USEDURATION = server_builder.defineInRange("UseDuration", Server.Default.ITEM.ITEM_SYRINGE_USEDURATION,1,6000);
+        Server.Config.ITEM.SYRINGE_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_SYRINGE_MAXSTACKSIZE,1,6000);
+        Server.Config.ITEM.SYRINGE_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.ITEM.ITEM_SYRINGE_HEALAMOUNT, 0.0f, 10000.0f);
         server_builder.pop();
         server_builder.push("MEDKIT");
-        Server.Config.ITEM.MEDKIT_USEDURATION = server_builder.defineInRange("UseDuration", Server.Default.RING.ITEM_MEDKIT_USEDURATION,1,6000);
-        Server.Config.ITEM.MEDKIT_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.RING.ITEM_MEDKIT_MAXSTACKSIZE,1,6000);
-        Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.RING.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
+        Server.Config.ITEM.MEDKIT_USEDURATION = server_builder.defineInRange("UseDuration", Server.Default.ITEM.ITEM_MEDKIT_USEDURATION,1,6000);
+        Server.Config.ITEM.MEDKIT_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_MEDKIT_MAXSTACKSIZE,1,6000);
+        Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.ITEM.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
         server_builder.pop();
-
-        server_builder.pop().push("ARMOR");
+        server_builder.push("BACKPACK");
+        server_builder.comment(
+                "PermissionLevel: Used with BackpackSlotAttributes together.");
+        Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL = server_builder.defineInRange("LVL1Permission",Server.Default.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+        server_builder.pop();
+        server_builder.push("ARMOR");
         server_builder.comment("");
 
         CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);

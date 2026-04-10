@@ -78,7 +78,7 @@ public class LootContainer extends RandomizableContainerBlockEntity{
     };
 
     public LootContainer(BlockPos p_155630_, BlockState p_155631_) {
-        super(Reg.LOOTCONTAINER_REG.get(), p_155630_, p_155631_);
+        super(Reg.LOOTCONTAINER_BLOCCKENTITY.get(), p_155630_, p_155631_);
     }
 
     @Override

@@ -96,8 +96,6 @@ public class Backpack extends Event
                     inventory.getItem(i);
                 }
             }
-
-
         }
     }
 }

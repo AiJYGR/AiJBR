@@ -1,5 +1,6 @@
 package com.aijygr;
 
+import com.aijygr.AiJTAG.Tagger;
 import com.aijygr.Events.Game.Ring.GameInitEvent;
 import com.aijygr.Events.Game.Ring.GameStartEvent;
 
@@ -17,6 +18,8 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.ConfigCommand;
+
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Commands
@@ -39,8 +42,12 @@ public class Commands
 
     private static class ReloadCommand {
         private void Reload(CommandSourceStack source) {
-            source.getServer().sendSystemMessage(Component.literal("TMM"));
-            source.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("msg.aijbr.command.reload"),false);
+            try{Tagger.reload(source.getServer());}catch(Exception e){
+                Main.LOGGER.error("[AiJBR]Reload ERR:", e);
+                source.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("msg.aijbr.err.command_executed_failed"),false);
+                return;
+            }
+            source.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("msg.aijbr.info.command_executed"),false);
         }
         public ReloadCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(net.minecraft.commands.Commands.literal("reload").requires((source) -> {
@@ -49,7 +56,6 @@ public class Commands
                 this.Reload(command.getSource());
                 return 0;
             })));
-
             dispatcher.register(net.minecraft.commands.Commands.literal("AiJBR")
                     .then(net.minecraft.commands.Commands.literal("reload").requires(s -> s.hasPermission(3))
                             .executes((command) -> {
@@ -64,17 +70,15 @@ public class Commands
             dispatcher.register(net.minecraft.commands.Commands.literal("AiJBR").requires((source) -> {
                 return source.hasPermission(3);//权限等级
             }).then(net.minecraft.commands.Commands.literal("start").executes((command) -> {
-                //指令实现代码
                 ServerPlayer player = command.getSource().getPlayer();
                 MinecraftServer server = command.getSource().getServer();
                 MinecraftForge.EVENT_BUS.post(new GameStartEvent(server.overworld(),player));//向EVENT_BUS传递一个事件
                 return 0;
             })));
-
             dispatcher.register(
                     net.minecraft.commands.Commands.literal("AiJBR").requires((r)->{return true;})
-                            .executes((cmd)->{
-                                cmd.getSource().getPlayer().sendSystemMessage(Component.literal(
+                            .executes((commmand)->{
+                                Objects.requireNonNull(commmand.getSource().getPlayer()).sendSystemMessage(Component.literal(
                                         "[AiJBR]\n"+ "Auth: AiJYGR"));
                                 return 1;
                             })

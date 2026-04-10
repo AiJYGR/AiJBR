@@ -21,6 +21,8 @@ public class   Main
         Reg.CREATIVE_MODE_TABS.register(bus);
         Reg.BLOCK_ENTITIES.register(bus);
 
+        ModMessages.register();//reg net
+
         //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
         modloadingcontext.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_CONFIG);
     }

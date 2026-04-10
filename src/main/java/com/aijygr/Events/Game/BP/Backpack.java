@@ -82,19 +82,19 @@ public class Backpack extends Event
             {
                 System.out.println(Game.gametime);
                 int i = 0;
-                for(var it = inventory.items.iterator(); it.hasNext(); )
-                {
-                    ItemStack itemstack = it.next();
-                    //System.out.println(itemstack.serializeNBT().getAsString());
-                    System.out.println(i+":"+inventory.getItem(i).serializeNBT().getAsString());
-                    i++;
-                }
-                i=0;
-                for(var it = inventory.armor.iterator();it.hasNext(); )
-                {
-                    ItemStack itemstack = it.next();
-                    inventory.getItem(i);
-                }
+//                for(var it = inventory.items.iterator(); it.hasNext(); )
+//                {
+//                    ItemStack itemstack = it.next();
+//                    //System.out.println(itemstack.serializeNBT().getAsString());
+//                    System.out.println(i+":"+inventory.getItem(i).serializeNBT().getAsString());
+//                    i++;
+//                }
+//                i=0;
+//                for(var it = inventory.armor.iterator();it.hasNext(); )
+//                {
+//                    ItemStack itemstack = it.next();
+//                    inventory.getItem(i);
+//                }
             }
         }
     }

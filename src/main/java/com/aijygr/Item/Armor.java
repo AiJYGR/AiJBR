@@ -40,15 +40,15 @@ public class Armor extends ArmorItem
     public @NotNull ItemStack getDefaultInstance()
     {
         ItemStack stack = super.getDefaultInstance();
-        CompoundTag enchantmentTag = new CompoundTag();
+        CompoundTag tag = new CompoundTag();
         ListTag enchantmentsList = new ListTag();
         CompoundTag enchantment = new CompoundTag();
         enchantment.putString("id", Enchantments.ALL_DAMAGE_PROTECTION.toString());
         enchantment.putShort("lvl", (short)8);
         enchantmentsList.add(enchantment);
-        enchantmentTag.put("Enchantments", enchantmentsList);
-        stack.setTag(enchantmentTag);
-        //System.out.println(Enchantments.ALL_DAMAGE_PROTECTION.toString());
+        tag.put("Enchantments", enchantmentsList);
+        stack.setTag(tag);
+        System.out.println("\n\n\n"+Enchantments.ALL_DAMAGE_PROTECTION.toString());
         return stack;
     }
 }

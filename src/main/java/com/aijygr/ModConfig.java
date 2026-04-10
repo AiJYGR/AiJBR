@@ -67,10 +67,10 @@ public abstract class ModConfig {
                 ));
                 public static final int DAMAGE_TICKING_TIME = 10;
                 public static final List<String> GENERATIONMODES = new ArrayList<>(List.of(
-                        RingGeneration.GenerationMode.TANGENT.name(),
                         RingGeneration.GenerationMode.EDGE_WEIGHTED.name(),
                         RingGeneration.GenerationMode.UNIFORM.name(),
-                        RingGeneration.GenerationMode.MID_WEIGHTED.name(),
+                        RingGeneration.GenerationMode.TANGENT.name(),
+                        RingGeneration.GenerationMode.RANDOM.name(),
                         RingGeneration.GenerationMode.RANDOM.name(),
                         RingGeneration.GenerationMode.UNIFORM.name()
                 ));
@@ -149,7 +149,7 @@ public abstract class ModConfig {
 
         server_builder.comment(
                 "# Ring Damage Ticking Time",
-                "- Interval ticks between 2 ring damages."
+                "- Interval ticks between two ring damages."
         );
         Server.Config.RING.DAMAGE_TICKING_TIME = server_builder.defineInRange("DamageTickingTime", Server.Default.RING.DAMAGE_TICKING_TIME,1,Short.MAX_VALUE);
 
@@ -184,7 +184,7 @@ public abstract class ModConfig {
         server_builder.comment(
                 "# Weighted Algorithm",
                 "- Decides the method used to weight the points",
-                "- Available when the Generation Mode is weighted (EDGE_WEIGHTED\\MID_WEIGHTED\\RANDOM when selected WEIGHTED) "
+                "- Available when the Generation Mode is weighted (EDGE_WEIGHTED\\MID_WEIGHTED\\) "
         );
         Server.Config.RING.WEIGHTEDMODE = server_builder.defineEnum("WeightedMode", Server.Default.RING.WEIGHTEDMODE, RingGeneration.WeightedMode.values());
         server_builder.pop();

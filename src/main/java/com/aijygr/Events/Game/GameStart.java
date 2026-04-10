@@ -26,7 +26,7 @@ public class GameStart {
         Game.isRingClosing = false;
         RingMove.PhaseChange();
 
-        Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_game_started");
+        Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.yellow","msg.aijbr.info.command_game_started");
         Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_executed");
     }
 }

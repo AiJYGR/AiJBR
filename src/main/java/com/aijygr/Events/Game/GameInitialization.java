@@ -63,7 +63,7 @@ public class GameInitialization {
         Game.sv_r_x = Game.sv_curr_x;
         Game.sv_r_z = Game.sv_curr_z;
         Game.damage_tickingtime = ModConfig.Server.Config.RING.DAMAGE_TICKING_TIME.get();
-        Game.tryPlayerMessage(player, "msg.aijbr.bold","Starting INIT.");
+        Game.tryPlayerMessage(player, "msg.aijbr.yellow","Starting INIT.");
 
         //Read RingAttributes CFG
         var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();

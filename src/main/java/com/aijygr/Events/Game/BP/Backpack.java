@@ -3,6 +3,7 @@ package com.aijygr.Events.Game.BP;
 import com.aijygr.Events.Game.Game;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -56,7 +57,6 @@ public class Backpack extends Event
         }
     }
 
-
     public static String s = "";
     public static Inventory inventory;
 
@@ -69,20 +69,32 @@ public class Backpack extends Event
             if (Minecraft.getInstance().player == null || !player.getUUID().equals(Minecraft.getInstance().player.getUUID()))
                 return;
 
-            String inv = player.getInventory().getSelected().getDisplayName().getString();
-            //Main.LOGGER.info("s:"+s);
-            if(!s.equals(inv))
+//            String inv = player.getInventory().getSelected().getDisplayName().getString();
+//            //Main.LOGGER.info("s:"+s);
+//            if(!s.equals(inv))
+//            {
+//                System.out.println("inv:"+inv+player.level().getGameTime());
+//                s = inv;
+//            }
+            Inventory inventory = player.getInventory();
+
+            if(Game.gametime%100 == 0)
             {
-                System.out.println("inv:"+inv+player.level().getGameTime());
-                s = inv;
-            }
-            boolean c = player.getInventory().equals(inventory);
-            if(!c)
-                System.out.println(Game.gametime+" isChanged:"+c);
-            inventory = player.getInventory();
-            if(Game.gametime%20 == 0)
-            {
-                //SlotTests.IsValidSlot(player,player.getInventory().getSelected(),new BackpackSlotAttribute((short)0,(short)0,""));
+                System.out.println(Game.gametime);
+                int i = 0;
+                for(var it = inventory.items.iterator(); it.hasNext(); )
+                {
+                    ItemStack itemstack = it.next();
+                    //System.out.println(itemstack.serializeNBT().getAsString());
+                    System.out.println(i+":"+inventory.getItem(i).serializeNBT().getAsString());
+                    i++;
+                }
+                i=0;
+                for(var it = inventory.armor.iterator();it.hasNext(); )
+                {
+                    ItemStack itemstack = it.next();
+                    inventory.getItem(i);
+                }
             }
 
 

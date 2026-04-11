@@ -11,26 +11,26 @@ public class MSGClientTagHash {
     private final String str;
     public MSGClientTagHash(String str) { this.str = str; }
     public MSGClientTagHash(FriendlyByteBuf buf) {
-        this.str = buf.readUtf(Tagger.PMAXLENGTH);
+        this.str = buf.readUtf(AiJTAGSync.PMAXLENGTH);
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(this.str, Tagger.PMAXLENGTH);
+        buf.writeUtf(this.str, AiJTAGSync.PMAXLENGTH);
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if(Tagger.clienthash.isEmpty()){
-                Tagger.loadLocalCache();
+            if(AiJTAGSync.clienthash.isEmpty()){
+                AiJTAGSync.loadLocalCache();
             }
-            Main.LOGGER.info("[AiJTAG]: Server tag hash received = "+ str);
-            Main.LOGGER.info("[AiJTAG]: Client Hash: "+ Tagger.clienthash);
-            if(Tagger.clienthash.equals(this.str)){
-                Main.LOGGER.info("[AiJTAG]: EQUAL.");
+            Main.LOGGER.info("[AiJTAG][Client]: Server tag hash received = "+ str);
+            Main.LOGGER.info("[AiJTAG][Client]: Client Hash = "+ AiJTAGSync.clienthash);
+            if(AiJTAGSync.clienthash.equals(this.str)){
+                Main.LOGGER.info("[AiJTAG][Client]: EQUAL.");
                 ModMessages.PlayerSendToServer(new MSGServerRequestSyncTagJSON("="));
             }
             else{
-                Main.LOGGER.info("[AiJTAG]: DIFFERENT.");
+                Main.LOGGER.info("[AiJTAG][Client]: DIFFERENT.");
                 ModMessages.PlayerSendToServer(new MSGServerRequestSyncTagJSON("!"));
             }
         });

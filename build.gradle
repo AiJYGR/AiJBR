@@ -178,11 +178,10 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 
-    //runtimeOnly "curse.maven:configured-457570:5096828"
-    //runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
-    runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
-    //runtimeOnly fg.deobf("curse.maven:timeless-and-classics-zero-1028108:7745481")
-
+    runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
+    //runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
+    runtimeOnly fg.deobf("curse.maven:timeless-and-classics-zero-1028108:7745481")
+    //runtimeOnly fg.deobf("curse.maven:inventory-free-406383:4658538")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

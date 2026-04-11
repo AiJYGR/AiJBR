@@ -1,4 +1,4 @@
-package com.aijygr.Events.Game.Ring;
+package com.aijygr.AiJGame.Ring;
 
 
 import net.minecraftforge.eventbus.api.Event;

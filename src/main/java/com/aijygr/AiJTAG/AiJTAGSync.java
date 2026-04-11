@@ -6,7 +6,6 @@ import com.google.common.base.CharMatcher;
 import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -19,19 +18,22 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class Tagger {
+public class AiJTAGSync {
     public static final String DEFAULTFILE = """
-{
-  "tacz:modern_kinetic_gun": {
-    "tags": {
-      "GunId": {
-        "tacz:ak47": ["MAINWPN"],
-        "tacz:p320": ["MAINWPN","SUBWPN"]
-      }
-    }
-  },
-  "aijbr:medkit":"SUPPLIES"
-}
+            {
+               "tacz:modern_kinetic_gun": {
+                 "GunId": {
+                   "tacz:ak47": ["MAINWPN"],
+                   "tacz:scar_l": ["MAINWPN"],
+                   "tacz:ai_awp": ["MAINWPN"],
+                   "tacz:p320": ["MAINWPN","SUBWPN"]
+                 }
+               },
+               "tacz:attachment":["SUPPLIES"],
+               "tacz:ammo":["SUPPLIES"],
+               "aijbr:medkit":["SUPPLIES"],
+               "aijbr:syringe":["SUPPLIES"]
+             }
         """;
     public static final int PMAXLENGTH = 262144; //!!!!!文件最大长度 256KB
     public static JsonObject json = new JsonObject();
@@ -70,7 +72,7 @@ public class Tagger {
     public static void saveLocalCache(String rawJson, String hash) {
         try {
             json = JsonParser.parseString(rawJson).getAsJsonObject();
-            Tagger.clienthash = hash;
+            AiJTAGSync.clienthash = hash;
             Files.writeString(getCachePath(), rawJson, StandardCharsets.UTF_8);
             Main.LOGGER.info("[AiJTAG][Client] Cache saved.");
         } catch (Exception e) {
@@ -94,8 +96,7 @@ public class Tagger {
 
         } catch (Exception e) {
             Main.LOGGER.error("[AiJTAG][Server]: {}", e.getMessage());
-            throw new Exception("Failed:"+e.getMessage());
+            throw new Exception("Failed: "+e.getMessage());
         }
-
     }
 }

@@ -1,9 +1,10 @@
-package com.aijygr.Events.Game.BP;
+package com.aijygr.AiJBP;
 
-import com.aijygr.Events.Game.Game;
+import com.aijygr.AiJTAG.TAGGER;
+import com.aijygr.AiJGame.Game;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -13,7 +14,10 @@ import net.minecraftforge.fml.common.Mod;
 
 import net.minecraft.world.entity.player.Player;
 
-@Mod.EventBusSubscriber() //####################################
+import java.awt.*;
+import java.util.List;
+
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)//####################################
 public class Backpack extends Event
 {
     public enum SlotTag{
@@ -68,7 +72,6 @@ public class Backpack extends Event
         {
             if (Minecraft.getInstance().player == null || !player.getUUID().equals(Minecraft.getInstance().player.getUUID()))
                 return;
-
 //            String inv = player.getInventory().getSelected().getDisplayName().getString();
 //            //Main.LOGGER.info("s:"+s);
 //            if(!s.equals(inv))
@@ -80,22 +83,21 @@ public class Backpack extends Event
 
             if(Game.gametime%100 == 0)
             {
-                System.out.println(Game.gametime);
+
+                System.out.println("\n"+Game.gametime);
                 int i = 0;
-//                for(var it = inventory.items.iterator(); it.hasNext(); )
-//                {
-//                    ItemStack itemstack = it.next();
-//                    //System.out.println(itemstack.serializeNBT().getAsString());
-//                    System.out.println(i+":"+inventory.getItem(i).serializeNBT().getAsString());
-//                    i++;
-//                }
-//                i=0;
-//                for(var it = inventory.armor.iterator();it.hasNext(); )
-//                {
-//                    ItemStack itemstack = it.next();
-//                    inventory.getItem(i);
-//                }
+                List<String> tags = TAGGER.GetItemTag(inventory.getItem(0));
+                if(tags != null)
+                {
+                    StringBuilder s = new StringBuilder();
+                    for(String tag : tags)
+                        s.append(tag+" ");
+                    System.out.println("TAG:"+s.toString());
+                }
             }
         }
     }
+
+
+
 }

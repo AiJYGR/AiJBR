@@ -2,6 +2,6 @@
   "parent": "minecraft:item/generated",
 
   "textures": {
-    "layer0": "minecraft:item/iron_chestplate"
+    "layer0": "aijbr:item/aijbackpack_lvl3"
   }
 }

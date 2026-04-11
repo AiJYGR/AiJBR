@@ -1,9 +1,7 @@
-package com.aijygr.Events.Game;
+package com.aijygr.AiJGame;
 
-import com.aijygr.Events.Game.Ring.GameStartEvent;
-import com.aijygr.Events.Game.Ring.RingGeneration;
-import com.aijygr.Events.Game.Ring.RingMove;
-import net.minecraft.network.chat.Component;
+import com.aijygr.AiJGame.Ring.GameStartEvent;
+import com.aijygr.AiJGame.Ring.RingMove;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

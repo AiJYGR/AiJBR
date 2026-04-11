@@ -1,8 +1,8 @@
 package com.aijygr;
 
-import com.aijygr.AiJTAG.Tagger;
-import com.aijygr.Events.Game.Ring.GameInitEvent;
-import com.aijygr.Events.Game.Ring.GameStartEvent;
+import com.aijygr.AiJTAG.AiJTAGSync;
+import com.aijygr.AiJGame.Ring.GameInitEvent;
+import com.aijygr.AiJGame.Ring.GameStartEvent;
 
 import com.aijygr.Screen.Scr;
 import com.mojang.brigadier.CommandDispatcher;
@@ -42,12 +42,13 @@ public class Commands
 
     private static class ReloadCommand {
         private void Reload(CommandSourceStack source) {
-            try{Tagger.reload(source.getServer());}catch(Exception e){
-                Main.LOGGER.error("[AiJBR]Reload ERR:", e);
-                source.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("msg.aijbr.err.command_executed_failed"),false);
+            try{
+                AiJTAGSync.reload(source.getServer());}catch(Exception e){
+                source.getPlayer().sendSystemMessage(Component.translatable("msg.aijtag").append(Component.literal(":"+e.getMessage()+"\nPlease check AiJTAG.json file.")));
+                source.getPlayer().sendSystemMessage(Component.translatable("msg.aijtag").append(Component.translatable("msg.aijbr.err.command_executed_failed")));
                 return;
             }
-            source.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("msg.aijbr.info.command_executed"),false);
+            source.getPlayer().sendSystemMessage(Component.translatable("msg.aijtag").append(Component.translatable("msg.aijbr.info.command_executed")));
         }
         public ReloadCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(net.minecraft.commands.Commands.literal("reload").requires((source) -> {

@@ -1,6 +1,6 @@
-package com.aijygr.Events.Game.Ring;
+package com.aijygr.AiJGame.Ring;
 
-import com.aijygr.Events.Game.Game;
+import com.aijygr.AiJGame.Game;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.event.TickEvent;

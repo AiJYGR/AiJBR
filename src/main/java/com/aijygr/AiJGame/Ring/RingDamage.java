@@ -1,6 +1,6 @@
-package com.aijygr.Events.Game.Ring;
+package com.aijygr.AiJGame.Ring;
 
-import com.aijygr.Events.Game.Game;
+import com.aijygr.AiJGame.Game;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;

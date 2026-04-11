@@ -1,9 +1,9 @@
-package com.aijygr.Events.Game;
+package com.aijygr.AiJGame;
 
-import com.aijygr.Events.Game.BP.Backpack;
+import com.aijygr.AiJBP.Backpack;
 import com.aijygr.ModConfig;
-import com.aijygr.Events.Game.Ring.GameInitEvent;
-import com.aijygr.Events.Game.Ring.RingGeneration;
+import com.aijygr.AiJGame.Ring.GameInitEvent;
+import com.aijygr.AiJGame.Ring.RingGeneration;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-import static com.aijygr.Events.Game.Ring.RingGeneration.Generate;
+import static com.aijygr.AiJGame.Ring.RingGeneration.Generate;
 
 @Mod.EventBusSubscriber()
 public class GameInitialization {

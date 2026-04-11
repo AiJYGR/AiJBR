@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import com.aijygr.Events.Game.BP.Backpack;
-import com.aijygr.Events.Game.Ring.RingGeneration;
+import com.aijygr.AiJBP.Backpack;
+import com.aijygr.AiJGame.Ring.RingGeneration;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 
@@ -194,8 +194,6 @@ public abstract class ModConfig {
         server_builder.pop();
 
         server_builder.push("ITEMS");   //ITEMS
-        server_builder.push("MEDS");
-
         server_builder.comment(
                 "UseDuration: Define ticks cost when using an item." ,
                 "MaxStackSize: The stack size of a slot of this item",
@@ -220,7 +218,6 @@ public abstract class ModConfig {
 
         CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);
 
-        server_builder.pop();
         server_builder.pop();
         SERVER_CONFIG = server_builder.build();
     }

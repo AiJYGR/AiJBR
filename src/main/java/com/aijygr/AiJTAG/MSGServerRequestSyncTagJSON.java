@@ -13,19 +13,23 @@ public class MSGServerRequestSyncTagJSON {
     public MSGServerRequestSyncTagJSON(String str) { this.str = str; }
     public MSGServerRequestSyncTagJSON(FriendlyByteBuf buf) {
         // 给 256KB 的宽限，防止大型配置包溢出 GEMINI
-        this.str = buf.readUtf(Tagger.PMAXLENGTH);
+        this.str = buf.readUtf(AiJTAGSync.PMAXLENGTH);
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(this.str, Tagger.PMAXLENGTH);
+        buf.writeUtf(this.str, AiJTAGSync.PMAXLENGTH);
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             if(str.equals("!")){
                 ServerPlayer player = ctx.get().getSender();
-                ModMessages.ServerSendToPlayer(new MSGClientTagJSON(Tagger.rawjson), player);
-                Main.LOGGER.info("[AiJTAG]: Server: send json.");
+                ModMessages.ServerSendToPlayer(new MSGClientTagJSON(AiJTAGSync.rawjson), player);
+                Main.LOGGER.info("[AiJTAG][Server] Sync request received, send json file.");
+            }
+            else if (str.equals("=")||str.equals("+")){
+                ServerPlayer player = ctx.get().getSender();
+                Main.LOGGER.info("[AiJTAG][Server]"+str+player.getName().getString()+" has synced json file.");
             }
         });
         ctx.get().setPacketHandled(true);

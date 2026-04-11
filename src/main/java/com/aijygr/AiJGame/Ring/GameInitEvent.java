@@ -1,9 +1,8 @@
-package com.aijygr.Events.Game.Ring;
+package com.aijygr.AiJGame.Ring;
 
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
 
 public class GameInitEvent extends Event

@@ -1,4 +1,4 @@
-package com.aijygr.Events.Game.BR;
+package com.aijygr.AiJGame.BR;
 
 import com.aijygr.Reg;
 import net.minecraft.network.chat.Component;

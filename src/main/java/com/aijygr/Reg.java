@@ -29,8 +29,10 @@ public class Reg
     public static final RegistryObject<Item> MEDKIT = ITEMS.register("medkit", () -> new Medkit(new Item.Properties()));
     public static final RegistryObject<Item> IRON_ARMOR = ITEMS.register("iron_armor", () -> new Armor(ArmorMaterials_override.IRON,new ArmorItem.Properties()));
     public static final RegistryObject<Item> DIAMOND_ARMOR = ITEMS.register("diamond_armor", () -> new Armor(ArmorMaterials_override.DIAMOND,new ArmorItem.Properties()));
-    public static final RegistryObject<Item> AiJBP_LVL10 = ITEMS.register("aijbackpack_lvl10",()->new Backpack(new Item.Properties().fireResistant(),(short)10));
-    public static final RegistryObject<Item> AiJBP_LVL20 = ITEMS.register("aijbackpack_lvl20",()->new Backpack(new Item.Properties().fireResistant(),(short)20));
+    public static final RegistryObject<Item> AiJBP_LVL1 = ITEMS.register("aijbackpack_lvl1",()->new Backpack(new Item.Properties().fireResistant(),(short)100));
+    public static final RegistryObject<Item> AiJBP_LVL2 = ITEMS.register("aijbackpack_lvl2",()->new Backpack(new Item.Properties().fireResistant(),(short)200));
+    public static final RegistryObject<Item> AiJBP_LVL3 = ITEMS.register("aijbackpack_lvl3",()->new Backpack(new Item.Properties().fireResistant(),(short)300));
+    public static final RegistryObject<Item> LOCK = ITEMS.register("lock",()->new Lock(new Item.Properties()));
 
     public static final RegistryObject<Item> LOOTCONTAINER_ITEM = ITEMS.register("loot_container", () -> new BlockItem(Reg.LOOTCONTAINER_BLOCK.get(),new Item.Properties()));
     public static final RegistryObject<Block> LOOTCONTAINER_BLOCK = BLOCKS.register("loot_container",() -> new ContainerBlock(BlockBehaviour.Properties.copy(Blocks.BARREL)));

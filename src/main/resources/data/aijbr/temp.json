@@ -1,0 +1,12 @@
+{
+  "tacz:modern_kinetic_gun": {
+    "tags": {
+      "GunId": {
+        "tacz:ak47": ["MAINWPN"],
+        "tacz:p320": ["MAINWPN","SUBWPN"]
+      }
+    }
+  },
+  "minecraft:apple": ["SUPPLIES"],
+  "aijbr:backpack_lvl1": ["SUPPLIES","BACKPACK"]
+}

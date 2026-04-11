@@ -8,6 +8,8 @@
 
     "block.aijbr.loot_container": "战利品箱",
 
+    "msg.aijtag": "[AiJTAG]",
+
     "msg.aijbr": "[AiJBR]",
     "msg.aijbr.red": "§c[AiJBR]§r",
     "msg.aijbr.yellow": "§e[AiJBR]§r",

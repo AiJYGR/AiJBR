@@ -1,7 +1,7 @@
-package com.aijygr.Events.Game;
+package com.aijygr.AiJGame;
 
-import com.aijygr.Events.Game.BP.Backpack;
-import com.aijygr.Events.Game.Ring.RingGeneration;
+import com.aijygr.AiJBP.Backpack;
+import com.aijygr.AiJGame.Ring.RingGeneration;
 import com.aijygr.Main;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;

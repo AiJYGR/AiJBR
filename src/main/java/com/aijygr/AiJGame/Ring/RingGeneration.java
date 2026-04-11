@@ -1,7 +1,7 @@
-package com.aijygr.Events.Game.Ring;
+package com.aijygr.AiJGame.Ring;
 
 
-import com.aijygr.Events.Game.Game;
+import com.aijygr.AiJGame.Game;
 
 
 public class RingGeneration {

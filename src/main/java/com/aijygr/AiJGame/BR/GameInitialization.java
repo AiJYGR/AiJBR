@@ -11,8 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-import static com.aijygr.AiJGame.Ring.RingGeneration.Generate;
-
 @Mod.EventBusSubscriber()
 public class GameInitialization {
     //private static ServerPlayer player;
@@ -134,7 +132,7 @@ public class GameInitialization {
             {
                 str.append(it.next()).append(",");
             }
-            Game.tryPlayerMessage(player, "msg.aijbr.red","Failed to load GenerationModes.\nGet: "+str.toString()+" only "+Game.r_generation_modes.size()+" values read.");
+            Game.tryPlayerMessage(player, "msg.aijbr.red","Failed to load GenerationModes.\nGet: "+str+" only "+Game.r_generation_modes.size()+" values read.");
             return ;
         }
         else

@@ -1,13 +1,10 @@
 package com.aijygr;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-import com.aijygr.AiJBP.Backpack;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import java.util.ArrayList;
+import java.util.List;
 public abstract class ModConfig {
     //public static ForgeConfigSpec COMMON_CONFIG;
     public static ForgeConfigSpec SERVER_CONFIG;
@@ -15,8 +12,8 @@ public abstract class ModConfig {
     public static class Server {
         public static class Config {
             public static class BACKPACK {
-                public static ForgeConfigSpec.ConfigValue<String> BACKPACK_SLOT_DEFAULT;
-                public static ForgeConfigSpec.ConfigValue<String> ENABLEAIJBR;
+                //public static ForgeConfigSpec.ConfigValue<String> BACKPACK_SLOT_DEFAULT;
+                //public static ForgeConfigSpec.ConfigValue<String> ENABLEAIJBR;
                 public static ForgeConfigSpec.ConfigValue<List<? extends String>> BACKPACK_SLOTS;
             }
 

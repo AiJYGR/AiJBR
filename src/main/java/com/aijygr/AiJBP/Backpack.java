@@ -81,8 +81,8 @@ public class Backpack extends Event
                 {
                     StringBuilder s = new StringBuilder();
                     for(String tag : tags)
-                        s.append(tag+" ");
-                    System.out.println("TAG:"+s.toString());
+                        s.append(tag).append(" ");
+                    System.out.println("TAG:"+s);
                 }
                 InventoryLock.lock(12);
             }

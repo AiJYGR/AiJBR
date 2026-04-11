@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 public class Tagger {
-    private static JsonObject json = new JsonObject();
     private static List<String> tags = new ArrayList<>();
     private static boolean isPermativeString(JsonElement element){
         if (element.isJsonPrimitive()) {
@@ -72,11 +71,11 @@ public class Tagger {
 
 
     public static List<String> GetItemTag(ItemStack itemStack){
-        json = SyncTag.json;
+        JsonObject json = SyncTag.json;
         tags.clear();
         if(itemStack == null || itemStack.isEmpty())
             return null;
-        if(json==null)
+        if(json ==null)
         {
             Main.LOGGER.info("json is null!");
             return null;

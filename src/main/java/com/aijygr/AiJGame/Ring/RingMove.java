@@ -48,7 +48,6 @@ public class RingMove {
                 Game.sv_roundtick = Game.sv_roundticktotal;
                 Game.sv_damage_per_block=Game.r_damage_per_block.get(0);
                 Game.sv_basicdamage=Game.r_basic_damage.get(0);
-                return;
             }
             else{
                 int i = Game.sv_round - 1 ;

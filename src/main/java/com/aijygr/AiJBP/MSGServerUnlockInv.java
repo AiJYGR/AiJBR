@@ -1,6 +1,5 @@
 package com.aijygr.AiJBP;
 
-import com.aijygr.Main;
 import com.aijygr.Reg;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,7 +10,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class MSGServerUnlockInv {
-    private Short value = -1;
+    private Short value;
     public MSGServerUnlockInv(Short value) { this.value = value; }
     public MSGServerUnlockInv(FriendlyByteBuf buf) {
         this.value = buf.readShort();
@@ -23,7 +22,7 @@ public class MSGServerUnlockInv {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
-            Inventory inventory = null;
+            Inventory inventory;
             if (player != null) {
                 inventory = player.getInventory();
                 ItemStack stack = inventory.getItem(value);

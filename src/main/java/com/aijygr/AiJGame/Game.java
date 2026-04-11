@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -70,7 +69,7 @@ public class Game {
         StringBuilder str = new StringBuilder();
         for (String message : messages) {
             component.append(Component.translatable(message));
-            str.append(message+" ");
+            str.append(message).append(" ");
         }
         if(player!=null)
             player.sendSystemMessage(component);
@@ -106,12 +105,5 @@ public class Game {
         Game.isReloaded = false;
         Game.isInitialized = false;
         Game.isGameStart = false;
-    }
-
-    public static long getGametime(){
-        return gametime;
-    }
-    public static int getDamage_tickingtime() {
-        return damage_tickingtime;
     }
 }

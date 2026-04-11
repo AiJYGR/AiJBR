@@ -1,6 +1,8 @@
 package com.aijygr.AiJGame.Ring;
 
 import com.aijygr.AiJGame.Game;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.event.TickEvent;
@@ -9,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber()
 public class RingMove {
-    public static void PhaseChange(){
+    private static void PhaseChange(){
         System.out.println("PHASE CHANGE");
         if(Game.isRingClosing){//进入下一阶段 刷圈&等待缩圈
             Game.isRingClosing = false;
@@ -57,7 +59,10 @@ public class RingMove {
             }
         }
     }
-
+    public static void PhaseChange(MinecraftServer server,String message){
+        server.getPlayerList().broadcastSystemMessage(Component.translatable(message),false);
+        PhaseChange();
+    }
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
         if ((event.phase == TickEvent.Phase.START) && (event.level.dimension().equals(Level.OVERWORLD))
@@ -66,7 +71,7 @@ public class RingMove {
             if(Game.isGameStart && Game.isInitialized){
                 Game.sv_roundtick--;
                 if(Game.sv_roundtick<=-1){
-                    PhaseChange();
+                    PhaseChange(event.level.getServer(),"msg.aijbr.yellow");
                 }
                 if(Game.isRingClosing&&Game.sv_round!=0){
                     if(Game.sv_roundtick==0){

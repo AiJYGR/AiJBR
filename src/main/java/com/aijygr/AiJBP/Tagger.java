@@ -1,5 +1,6 @@
-package com.aijygr.AiJTAG;
+package com.aijygr.AiJBP;
 
+import com.aijygr.AiJBP.SYNC.SyncTag;
 import com.aijygr.Main;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class TAGGER {
+public class Tagger {
     private static JsonObject json = new JsonObject();
     private static List<String> tags = new ArrayList<>();
     private static boolean isPermativeString(JsonElement element){
@@ -71,7 +72,7 @@ public class TAGGER {
 
 
     public static List<String> GetItemTag(ItemStack itemStack){
-        json = AiJTAGSync.json;
+        json = SyncTag.json;
         tags.clear();
         if(itemStack == null || itemStack.isEmpty())
             return null;

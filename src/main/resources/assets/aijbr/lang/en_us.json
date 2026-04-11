@@ -1,2 +1,32 @@
-{  "msg.aijbr.command.reload": "\" \""
+{
+  "item.aijbr.syringe": "注射器",
+  "item.aijbr.badage": "绷带",
+  "item.aijbr.medkit": "医疗包",
+  "item.aijbr.iron_armor": "一级护甲",
+  "item.aijbr.diamond_armor": "二级护甲",
+  "item.aijbr.loot_container": "战利品箱",
+
+  "block.aijbr.loot_container": "战利品箱",
+
+  "msg.aijtag": "[AiJTAG]",
+
+  "msg.aijbr": "[AiJBR]",
+  "msg.aijbr.red": "§c[AiJBR]§r",
+  "msg.aijbr.yellow": "§e[AiJBR]§r",
+  "msg.aijbr.green": "§a[AiJBR]§r",
+  "msg.aijbr.bold": "§d§l[AiJBR]§r",
+
+
+  "msg.aijbr.info.command_executed":"已成功执行指令",
+  "msg.aijbr.info.command_game_started": "已成功开始游戏",
+
+  "msg.aijbr.err.command_game_started":"游戏已经开始!",
+  "msg.aijbr.err.command_game_ended":"游戏未开始!",
+  "msg.aijbr.err.command_executed_failed":"执行指令失败",
+  "msg.aijbr.err.command_game_not_initialized":"尚未初始化游戏 执行/AiJBR init",
+  "msg.aijbr.err.command_game_not_reloaded": "尚未重载游戏配置文件 执行/AiJBR reload",
+
+
+
+  "death.attack.aijbr.ring.message": "%1$s感觉到浑身酥酥麻麻的"
 }

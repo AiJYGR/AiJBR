@@ -1,8 +1,10 @@
 package com.aijygr;
 
-import com.aijygr.AiJTAG.AiJTAGSync;
-import com.aijygr.AiJGame.Ring.GameInitEvent;
-import com.aijygr.AiJGame.Ring.GameStartEvent;
+import com.aijygr.AiJBP.SYNC.SyncBP;
+import com.aijygr.AiJBP.SYNC.SyncTag;
+import com.aijygr.AiJGame.Game;
+import com.aijygr.AiJGame.GameInitEvent;
+import com.aijygr.AiJGame.GameStartEvent;
 
 import com.aijygr.Screen.Scr;
 import com.mojang.brigadier.CommandDispatcher;
@@ -43,12 +45,15 @@ public class Commands
     private static class ReloadCommand {
         private void Reload(CommandSourceStack source) {
             try{
-                AiJTAGSync.reload(source.getServer());}catch(Exception e){
-                source.getPlayer().sendSystemMessage(Component.translatable("msg.aijtag").append(Component.literal(":"+e.getMessage()+"\nPlease check AiJTAG.json file.")));
-                source.getPlayer().sendSystemMessage(Component.translatable("msg.aijtag").append(Component.translatable("msg.aijbr.err.command_executed_failed")));
+                SyncTag.reload(source.getServer());
+                SyncBP.reload(source.getServer());
+                Game.isReloaded = true;
+            }catch(Exception e){
+                source.getPlayer().sendSystemMessage(Component.literal("\n").append(Component.translatable("msg.aijbr").append(Component.literal(":"+e.getMessage()+"\nPlease check AiJTAG.json file."))));
+                source.getPlayer().sendSystemMessage(Component.translatable("msg.aijbr").append(Component.translatable("msg.aijbr.err.command_executed_failed")));
                 return;
             }
-            source.getPlayer().sendSystemMessage(Component.translatable("msg.aijtag").append(Component.translatable("msg.aijbr.info.command_executed")));
+            source.getPlayer().sendSystemMessage(Component.literal("\n").append(Component.translatable("msg.aijbr.bold").append(Component.translatable("msg.aijbr.info.command_executed"))));
         }
         public ReloadCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(net.minecraft.commands.Commands.literal("reload").requires((source) -> {

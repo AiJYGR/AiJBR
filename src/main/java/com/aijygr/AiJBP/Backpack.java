@@ -1,6 +1,5 @@
 package com.aijygr.AiJBP;
 
-import com.aijygr.AiJTAG.TAGGER;
 import com.aijygr.AiJGame.Game;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import net.minecraft.world.entity.player.Player;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)//####################################
@@ -55,16 +54,15 @@ public class Backpack extends Event
             this.slot = slot;
             this.permissionLevel = Short.MAX_VALUE;
         }
-
         public String getTagName() {
             return tag.name();
         }
     }
-
+    public static List<BackpackSlotAttribute> Backpack = new ArrayList<>();
     public static String s = "";
     public static Inventory inventory;
 
-    @SubscribeEvent     //##############################
+    @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent event)
     {
         Player player = event.player;
@@ -72,21 +70,13 @@ public class Backpack extends Event
         {
             if (Minecraft.getInstance().player == null || !player.getUUID().equals(Minecraft.getInstance().player.getUUID()))
                 return;
-//            String inv = player.getInventory().getSelected().getDisplayName().getString();
-//            //Main.LOGGER.info("s:"+s);
-//            if(!s.equals(inv))
-//            {
-//                System.out.println("inv:"+inv+player.level().getGameTime());
-//                s = inv;
-//            }
             Inventory inventory = player.getInventory();
 
-            if(Game.gametime%100 == 0)
+            if(Game.gametime%200 == 0)
             {
-
                 System.out.println("\n"+Game.gametime);
                 int i = 0;
-                List<String> tags = TAGGER.GetItemTag(inventory.getItem(0));
+                List<String> tags = Tagger.GetItemTag(inventory.getItem(0));
                 if(tags != null)
                 {
                     StringBuilder s = new StringBuilder();
@@ -94,6 +84,11 @@ public class Backpack extends Event
                         s.append(tag+" ");
                     System.out.println("TAG:"+s.toString());
                 }
+                InventoryLock.lock(12);
+            }
+            if(Game.gametime%200 == 100)
+            {
+                InventoryLock.unlock(12);
             }
         }
     }

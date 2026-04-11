@@ -9,6 +9,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -34,6 +36,7 @@ public class Game {
     public static int r_initial_waitingtick = 0;
     public static double r_initial_ringsize = 0;
     public static boolean isInitialized = false;
+    public static boolean isReloaded = false;
     public static List<Integer> r_waiting_tick =new ArrayList<>();
     public static List<Integer> r_moving_tick = new ArrayList<>();
     public static List<Double> r_basic_damage= new ArrayList<>();
@@ -96,6 +99,13 @@ public class Game {
         {
             gametime = event.level.getGameTime();
         }
+    }
+
+    @SubscribeEvent
+    public static void onServerStarted(ServerStartedEvent event) {
+        Game.isReloaded = false;
+        Game.isInitialized = false;
+        Game.isGameStart = false;
     }
 
     public static long getGametime(){

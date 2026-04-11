@@ -1,6 +1,7 @@
-package com.aijygr.AiJGame;
+package com.aijygr.AiJGame.BR;
 
-import com.aijygr.AiJGame.Ring.GameStartEvent;
+import com.aijygr.AiJGame.Game;
+import com.aijygr.AiJGame.GameStartEvent;
 import com.aijygr.AiJGame.Ring.RingMove;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +15,10 @@ public class GameStart {
             Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
             return;
         }
+        if(!Game.isReloaded){
+            Game.tryPlayerMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err.command_game_not_reloaded");
+            return;
+        }
         Game.isGameStart  = true;
         Game.sv_round = 0;
         Game.sv_roundticktotal = Game.r_initial_waitingtick+1;
@@ -22,7 +27,7 @@ public class GameStart {
         //Game.sv_next_x = vec2.x;
         //Game.sv_next_z = vec2.z;
         Game.isRingClosing = false;
-        RingMove.PhaseChange();
+        RingMove.PhaseChange(event.getLevel().getServer(),"msg.aijbr.yellow");
 
         Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.yellow","msg.aijbr.info.command_game_started");
         Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_executed");

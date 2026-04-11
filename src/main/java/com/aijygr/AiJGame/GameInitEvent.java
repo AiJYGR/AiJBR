@@ -1,4 +1,4 @@
-package com.aijygr.AiJGame.Ring;
+package com.aijygr.AiJGame;
 
 
 import net.minecraft.server.level.ServerLevel;

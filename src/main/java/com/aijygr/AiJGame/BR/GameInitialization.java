@@ -1,8 +1,8 @@
-package com.aijygr.AiJGame;
+package com.aijygr.AiJGame.BR;
 
-import com.aijygr.AiJBP.Backpack;
+import com.aijygr.AiJGame.Game;
+import com.aijygr.AiJGame.GameInitEvent;
 import com.aijygr.ModConfig;
-import com.aijygr.AiJGame.Ring.GameInitEvent;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.border.WorldBorder;
@@ -46,6 +46,15 @@ public class GameInitialization {
     public static void onGameInit(GameInitEvent event) {
         if(event.getLevel().isClientSide())
             return;
+        ServerPlayer player = event.getPlayer();
+        Game.tryPlayerMessage(player,"\n");
+        if(!Game.isReloaded)
+        {
+            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_reloaded");
+            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
+            return;
+        }
+        Game.tryPlayerMessage(player, "msg.aijbr.yellow","Starting INIT.");
         Game.r_ring_size.clear();
         Game.r_waiting_tick.clear();
         Game.r_basic_damage.clear();
@@ -53,7 +62,7 @@ public class GameInitialization {
         Game.r_moving_tick.clear();
         Game.r_generation_modes.clear();
         Game.isInitialized = false;
-        ServerPlayer player = event.getPlayer();
+
         WorldBorder worldBorder =event.getLevel().getWorldBorder();
         Game.isGameStart = false;
         Game.sv_next_x = 0;
@@ -63,7 +72,7 @@ public class GameInitialization {
         Game.sv_r_x = Game.sv_curr_x;
         Game.sv_r_z = Game.sv_curr_z;
         Game.damage_tickingtime = ModConfig.Server.Config.RING.DAMAGE_TICKING_TIME.get();
-        Game.tryPlayerMessage(player, "msg.aijbr.yellow","Starting INIT.");
+
 
         //Read RingAttributes CFG
         var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();
@@ -133,25 +142,25 @@ public class GameInitialization {
 
 
         //Read AiJBP CFG
-        var backpack_slots = ModConfig.Server.Config.BACKPACK.BACKPACK_SLOTS.get();
-        short i = 0;
-        for(var it = backpack_slots.iterator();it.hasNext();i++)
-        {
-            String str_slot = it.next();
-            var s = str_slot.split(",");
-            if(s.length == 3)
-            {
-                short slot = Short.parseShort(s[0].trim());
-                short plvl = Short.parseShort(s[1].trim());
-                String tag = s[2].toUpperCase().trim();
-                Game.bp_slotsAttributes.add(new Backpack.BackpackSlotAttribute(slot, plvl, tag));
-            }
-            else{
-                Game.tryPlayerMessage(player,"msg.aijbr.red","Failed to load BackpackSlotAttributes, at "+(i)+":\""+str_slot+"\"");
-                return;
-            }
-        }
-        Game.tryPlayerMessage(player,"msg.aijbr.green","Successfully loaded BackpackSlotAttributes, "+(i)+" values read.");
+//        var backpack_slots = ModConfig.Server.Config.BACKPACK.BACKPACK_SLOTS.get();
+//        short i = 0;
+//        for(var it = backpack_slots.iterator();it.hasNext();i++)
+//        {
+//            String str_slot = it.next();
+//            var s = str_slot.split(",");
+//            if(s.length == 3)
+//            {
+//                short slot = Short.parseShort(s[0].trim());
+//                short plvl = Short.parseShort(s[1].trim());
+//                String tag = s[2].toUpperCase().trim();
+//                Game.bp_slotsAttributes.add(new Backpack.BackpackSlotAttribute(slot, plvl, tag));
+//            }
+//            else{
+//                Game.tryPlayerMessage(player,"msg.aijbr.red","Failed to load BackpackSlotAttributes, at "+(i)+":\""+str_slot+"\"");
+//                return;
+//            }
+//        }
+//        Game.tryPlayerMessage(player,"msg.aijbr.green","Successfully loaded BackpackSlotAttributes, "+(i)+" values read.");
 
 
         Game.isInitialized = true;

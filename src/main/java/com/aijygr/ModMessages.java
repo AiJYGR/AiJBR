@@ -1,8 +1,13 @@
 package com.aijygr;
 
-import com.aijygr.AiJTAG.MSGClientTagJSON;
-import com.aijygr.AiJTAG.MSGClientTagHash;
-import com.aijygr.AiJTAG.MSGServerRequestSyncTagJSON;
+import com.aijygr.AiJBP.SYNC.MSGClientBPHash;
+import com.aijygr.AiJBP.SYNC.MSGClientBPJSON;
+import com.aijygr.AiJBP.SYNC.MSGServerRequestSyncBPJSON;
+import com.aijygr.AiJBP.SYNC.MSGClientTagJSON;
+import com.aijygr.AiJBP.SYNC.MSGClientTagHash;
+import com.aijygr.AiJBP.SYNC.MSGServerRequestSyncTagJSON;
+import com.aijygr.AiJBP.MSGServerLockInv;
+import com.aijygr.AiJBP.MSGServerUnlockInv;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -25,7 +30,7 @@ public class ModMessages {//呜呜好难 GEMINI救救我QwQ
 
         INSTANCE = net;
 
-        // 注册 SyncTag 包
+        // 注册 SyncBP 包
         net.messageBuilder(MSGClientTagJSON.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(MSGClientTagJSON::new)
                 .encoder(MSGClientTagJSON::encode)
@@ -41,6 +46,32 @@ public class ModMessages {//呜呜好难 GEMINI救救我QwQ
                 .encoder(MSGServerRequestSyncTagJSON::encode)
                 .consumerMainThread(MSGServerRequestSyncTagJSON::handle)
                 .add();
+        net.messageBuilder(MSGClientBPJSON.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientBPJSON::new)
+                .encoder(MSGClientBPJSON::encode)
+                .consumerMainThread(MSGClientBPJSON::handle)
+                .add();
+        net.messageBuilder(MSGClientBPHash.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientBPHash::new)
+                .encoder(MSGClientBPHash::encode)
+                .consumerMainThread(MSGClientBPHash::handle)
+                .add();
+        net.messageBuilder(MSGServerRequestSyncBPJSON.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MSGServerRequestSyncBPJSON::new)
+                .encoder(MSGServerRequestSyncBPJSON::encode)
+                .consumerMainThread(MSGServerRequestSyncBPJSON::handle)
+                .add();
+        net.messageBuilder(MSGServerLockInv.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MSGServerLockInv::new)
+                .encoder(MSGServerLockInv::encode)
+                .consumerMainThread(MSGServerLockInv::handle)
+                .add();
+        net.messageBuilder(MSGServerUnlockInv.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MSGServerUnlockInv::new)
+                .encoder(MSGServerUnlockInv::encode)
+                .consumerMainThread(MSGServerUnlockInv::handle)
+                .add();
+
     }
     public static <MSG> void ServerSendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);

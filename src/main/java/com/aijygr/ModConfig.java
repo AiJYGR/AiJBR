@@ -8,7 +8,6 @@ import com.aijygr.AiJBP.Backpack;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-
 public abstract class ModConfig {
     //public static ForgeConfigSpec COMMON_CONFIG;
     public static ForgeConfigSpec SERVER_CONFIG;
@@ -41,6 +40,7 @@ public abstract class ModConfig {
         }
 
         public static final class Default {
+            /*
             public static class BACKPACK{
                 public static final String BACKPACK_SLOT_DEFAULT = "DEFAULT";
                 public static final String ENABLE_AIJBR = "INGAME";
@@ -55,7 +55,7 @@ public abstract class ModConfig {
                         "7,1,supplies",
                         "8,1,supplies"
                 ));
-            }
+            }*/
             public static class RING{
                 public static final List<Integer> RING_INITIAL_ATTRUBUTES =  new ArrayList<>(List.of(512,300));
                 public static final List<String> RING_ATTRIBUTES = new ArrayList<>(List.of(
@@ -97,7 +97,7 @@ public abstract class ModConfig {
         StringBuilder strbuilder = new StringBuilder();
 
         server_builder.comment("AiJBR Server Settings").push("AiJBR_SV");//File Start
-
+        /*
         server_builder.push("Backpack");    //Backpack
         strbuilder.delete(0, strbuilder.length());
         for (Backpack.SlotTag it : Backpack.SlotTag.values()) {
@@ -129,7 +129,7 @@ public abstract class ModConfig {
                 "When to enable AiJYGR's Backpack");
         Server.Config.BACKPACK.ENABLEAIJBR = server_builder.define("EnableAiJBP", Server.Default.BACKPACK.ENABLE_AIJBR,(obj)->{return obj instanceof String;});
         server_builder.pop();
-
+        */
         server_builder.push("Ring");    //Ring
         server_builder.comment(
                 "# Ring Initial Setting",
@@ -159,7 +159,7 @@ public abstract class ModConfig {
 
         server_builder.comment(
                 "# Ring Generation Mode",
-                "- For each String, it decides the algorithm used in generation of the next ring.",
+                "- For each String, it decides the algorithm used in generation of the ring of this round.",
                 "- UNIFORM: Possibilities of every points in the map are equal",
                 "- EDGE_WEIGHTED: The next ring has more possibility to be at the edge" ,
                 "- MID_WEIGHTED: The next ring has more possibility to be at the middle" ,
@@ -188,16 +188,17 @@ public abstract class ModConfig {
         server_builder.comment(
                 "# Weighted Algorithm",
                 "- Decides the method used to weight the points",
-                "- Available when the Generation Mode is weighted (EDGE_WEIGHTED\\MID_WEIGHTED\\) "
+                "- Available when the Generation Mode is weighted (EDGE_WEIGHTED/MID_WEIGHTED) "
         );
         Server.Config.RING.WEIGHTEDMODE = server_builder.defineEnum("WeightedMode", Server.Default.RING.WEIGHTEDMODE, RingGeneration.WeightedMode.values());
         server_builder.pop();
 
-        server_builder.push("ITEMS");   //ITEMS
+        server_builder.push("Items");   //ITEMS
         server_builder.comment(
                 "UseDuration: Define ticks cost when using an item." ,
                 "MaxStackSize: The stack size of a slot of this item",
                 "HealAmount: Define Health gained after finishing using it.");
+        server_builder.push("MEDS");
         server_builder.push("SYRINGE");
         Server.Config.ITEM.SYRINGE_USEDURATION = server_builder.defineInRange("UseDuration", Server.Default.ITEM.ITEM_SYRINGE_USEDURATION,1,6000);
         Server.Config.ITEM.SYRINGE_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_SYRINGE_MAXSTACKSIZE,1,6000);
@@ -208,9 +209,11 @@ public abstract class ModConfig {
         Server.Config.ITEM.MEDKIT_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_MEDKIT_MAXSTACKSIZE,1,6000);
         Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.ITEM.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
         server_builder.pop();
-        server_builder.push("BACKPACK");
+        server_builder.pop();
+
         server_builder.comment(
                 "PermissionLevel: Used with BackpackSlotAttributes together.");
+        server_builder.push("BACKPACK");
         Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL = server_builder.defineInRange("LVL1Permission",Server.Default.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         server_builder.pop();
         server_builder.push("ARMOR");

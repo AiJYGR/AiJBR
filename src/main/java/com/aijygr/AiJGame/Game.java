@@ -49,7 +49,7 @@ public class Game {
     public static boolean isGameStart = false;
     public static boolean isRingClosing = false;
     public static int sv_roundticktotal = 0;
-    public static List<Backpack.BackpackSlotAttribute> bp_slotsAttributes = new ArrayList<>();
+
 
     public static void tryPlayerMessage(Player player, String message) {
         if(player!=null)
@@ -57,12 +57,6 @@ public class Game {
             //player.sendSystemMessage(Component.translatable("msg.aijbr").append(Component.translatable(message)));
         Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", message);
     }
-
-//    public static void tryPlayerMessage(Player player, String message, String message2) {
-//        if(player!=null)
-//            player.sendSystemMessage(Component.translatable(message).append(Component.translatable(message2)));
-//        Main.LOGGER.info("[AiJBR]tryPlayerMessage:{} {}", message, message2);
-//    }
     public static void tryPlayerMessage(Player player, String... messages) {
         messages = Arrays.copyOf(messages, messages.length);
         MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
@@ -74,7 +68,18 @@ public class Game {
         if(player!=null)
             player.sendSystemMessage(component);
         Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", str);
-
+    }
+    public static void tryBroadcastMessage(Player player, String... messages) {
+        messages = Arrays.copyOf(messages, messages.length);
+        MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
+        StringBuilder str = new StringBuilder();
+        for (String message : messages) {
+            component.append(Component.translatable(message));
+            str.append(message).append(" ");
+        }
+        if(player!=null)
+            player.getServer().getPlayerList().broadcastSystemMessage(component,false);
+        Main.LOGGER.info("[AiJBR]tryBroadcastMessage:{}", str);
     }
 
     public static class VecIntXZ {

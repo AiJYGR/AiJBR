@@ -1,4 +1,4 @@
-package com.aijygr.AiJBP.SYNC;
+package com.aijygr.AiJBP.SYNC.Tag;
 
 import com.aijygr.Main;
 import com.aijygr.ModMessages;
@@ -8,28 +8,28 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MSGServerRequestSyncBPJSON {
+public class MSGServerRequestSyncTagJSON {
     private final String str;
-    public MSGServerRequestSyncBPJSON(String str) { this.str = str; }
-    public MSGServerRequestSyncBPJSON(FriendlyByteBuf buf) {
+    public MSGServerRequestSyncTagJSON(String str) { this.str = str; }
+    public MSGServerRequestSyncTagJSON(FriendlyByteBuf buf) {
         // 给 256KB 的宽限，防止大型配置包溢出 GEMINI
-        this.str = buf.readUtf(SyncBP.PMAXLENGTH);
+        this.str = buf.readUtf(SyncTag.PMAXLENGTH);
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(this.str, SyncBP.PMAXLENGTH);
+        buf.writeUtf(this.str, SyncTag.PMAXLENGTH);
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             if(str.equals("!")){
                 ServerPlayer player = ctx.get().getSender();
-                ModMessages.ServerSendToPlayer(new MSGClientBPJSON(SyncBP.rawjson), player);
-                Main.LOGGER.info("[AiJBR][MSGServerRequestSyncBPJSON] SyncBP request received, send json file.");
+                ModMessages.ServerSendToPlayer(new MSGClientTagJSON(SyncTag.rawjson), player);
+                Main.LOGGER.info("[AiJBR][MSGServerRequestSyncTagJSON] SyncBP request received, send json file.");
             }
             else if (str.equals("=")||str.equals("+")){
                 ServerPlayer player = ctx.get().getSender();
-                Main.LOGGER.info("[AiJBR][MSGServerRequestSyncBPJSON]"+str+player.getName().getString()+" has synced json file.");
+                Main.LOGGER.info("[AiJBR][MSGServerRequestSyncTagJSON]"+str+player.getName().getString()+" has synced json file.");
             }
         });
         ctx.get().setPacketHandled(true);

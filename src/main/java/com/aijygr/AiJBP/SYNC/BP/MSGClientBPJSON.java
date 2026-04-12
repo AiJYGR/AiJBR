@@ -1,4 +1,4 @@
-package com.aijygr.AiJBP.SYNC;
+package com.aijygr.AiJBP.SYNC.BP;
 
 import com.aijygr.Main;
 import com.google.gson.JsonParser;
@@ -7,7 +7,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-import static com.aijygr.AiJBP.SYNC.SyncTag.HASH;
+import static com.aijygr.AiJBP.SYNC.Tag.SyncTag.HASH;
 
 public class MSGClientBPJSON {
     private final String str;
@@ -21,9 +21,10 @@ public class MSGClientBPJSON {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            SyncBP.json = JsonParser.parseString(str).getAsJsonObject();
+            SyncBP.json = JsonParser.parseString(str).getAsJsonArray();
             String hash = HASH(str);
             SyncBP.saveLocalCache(str,hash);
+            Reload.ReloadBP();
             Main.LOGGER.info("[AiJBR][MSGClientBPJSON] Successfully synced json and saved local cache.");
         });
         ctx.get().setPacketHandled(true);

@@ -30,13 +30,6 @@ public class Scr extends Screen {
         
         button = new Builder(Component.translatable("CLICK"), (btn) -> {
             this.minecraft.player.sendSystemMessage(title);
-            var list = ModConfig.Server.Config.BACKPACK.BACKPACK_SLOTS.get();
-            System.out.println("Slots Defined:"+list.size());
-            for(var it = list.iterator(); it.hasNext();)
-            {
-                String str_slot = it.next();
-                System.out.println(str_slot);
-            }
             
         }).pos(this.width / 2 - 50, this.height / 2 + 40).size(100, 20).build();
         this.addRenderableWidget(button);

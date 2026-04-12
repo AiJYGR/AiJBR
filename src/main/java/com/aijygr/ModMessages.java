@@ -1,11 +1,11 @@
 package com.aijygr;
 
-import com.aijygr.AiJBP.SYNC.MSGClientBPHash;
-import com.aijygr.AiJBP.SYNC.MSGClientBPJSON;
-import com.aijygr.AiJBP.SYNC.MSGServerRequestSyncBPJSON;
-import com.aijygr.AiJBP.SYNC.MSGClientTagJSON;
-import com.aijygr.AiJBP.SYNC.MSGClientTagHash;
-import com.aijygr.AiJBP.SYNC.MSGServerRequestSyncTagJSON;
+import com.aijygr.AiJBP.SYNC.BP.MSGClientBPHash;
+import com.aijygr.AiJBP.SYNC.BP.MSGClientBPJSON;
+import com.aijygr.AiJBP.SYNC.BP.MSGServerRequestSyncBPJSON;
+import com.aijygr.AiJBP.SYNC.Tag.MSGClientTagJSON;
+import com.aijygr.AiJBP.SYNC.Tag.MSGClientTagHash;
+import com.aijygr.AiJBP.SYNC.Tag.MSGServerRequestSyncTagJSON;
 import com.aijygr.AiJBP.MSGServerLockInv;
 import com.aijygr.AiJBP.MSGServerUnlockInv;
 import net.minecraft.resources.ResourceLocation;

@@ -21,6 +21,7 @@ public class HealthGUI {
         float maxHealth = minecraft.player.getMaxHealth();
 
         String healthText = String.format("%.2f / %.0f", health, maxHealth);
+        String percentage = String.format("%.2f%%", (health/maxHealth)*100);
 
         int width = event.getWindow().getGuiScaledWidth();
         int height = event.getWindow().getGuiScaledHeight();
@@ -28,8 +29,10 @@ public class HealthGUI {
         var font = minecraft.font;
 
         int x = width / 2 + 40;
-        int y = height - 50;
+        int y = height - 51;
 
+        guiGraphics.drawString(font, percentage, x+10, y-10, 0xFF5555, false);
         guiGraphics.drawString(font, healthText, x, y, 0xFF5555, false);
+
     }
 }

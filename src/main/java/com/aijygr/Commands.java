@@ -1,7 +1,7 @@
 package com.aijygr;
 
-import com.aijygr.AiJBP.SYNC.SyncBP;
-import com.aijygr.AiJBP.SYNC.SyncTag;
+import com.aijygr.AiJBP.SYNC.BP.SyncBP;
+import com.aijygr.AiJBP.SYNC.Tag.SyncTag;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.GameInitEvent;
 import com.aijygr.AiJGame.GameStartEvent;
@@ -44,16 +44,19 @@ public class Commands
 
     private static class ReloadCommand {
         private void Reload(CommandSourceStack source) {
+            ServerPlayer player = source.getPlayer();
+            Game.tryBroadcastMessage(player,"\n","msg.aijbr.green","msg.server"," Starting Reload...");
             try{
                 SyncTag.reload(source.getServer());
                 SyncBP.reload(source.getServer());
                 Game.isReloaded = true;
             }catch(Exception e){
-                source.getPlayer().sendSystemMessage(Component.literal("\n").append(Component.translatable("msg.aijbr").append(Component.literal(":"+e.getMessage()+"\nPlease check AiJTAG.json file."))));
-                source.getPlayer().sendSystemMessage(Component.translatable("msg.aijbr").append(Component.translatable("msg.aijbr.err.command_executed_failed")));
+                Game.tryBroadcastMessage(player,"\n","msg.aijbr.red","msg.server","Reload failed:");
+                Game.tryBroadcastMessage(player,e.getMessage(),"\nPlease check AiJTAG.json file.");
+                Game.tryBroadcastMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
                 return;
             }
-            source.getPlayer().sendSystemMessage(Component.literal("\n").append(Component.translatable("msg.aijbr.bold").append(Component.translatable("msg.aijbr.info.command_executed"))));
+            Game.tryBroadcastMessage(player,"msg.aijbr.bold","msg.aijbr.info.command_executed");
         }
         public ReloadCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(net.minecraft.commands.Commands.literal("reload").requires((source) -> {

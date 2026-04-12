@@ -29,7 +29,6 @@ public class Backpack extends Event
         ARMOR,
         DEFAULT
     }
-
     public static class BackpackSlotAttribute{
         SlotTag tag;
         short permissionLevel;
@@ -54,11 +53,16 @@ public class Backpack extends Event
             this.slot = slot;
             this.permissionLevel = Short.MAX_VALUE;
         }
+        public BackpackSlotAttribute() {
+            this.tag = SlotTag.DEFAULT;
+            this.slot = 0;
+            this.permissionLevel = Short.MAX_VALUE;
+        }
         public String getTagName() {
             return tag.name();
         }
     }
-    public static List<BackpackSlotAttribute> Backpack = new ArrayList<>();
+    public static List<BackpackSlotAttribute> backpack = new ArrayList<>();
     public static String s = "";
     public static Inventory inventory;
 
@@ -89,6 +93,11 @@ public class Backpack extends Event
             if(Game.gametime%200 == 100)
             {
                 InventoryLock.unlock(12);
+                if(Game.isReloaded){
+                    for(BackpackSlotAttribute backpackSlotAttribute : backpack){
+                        System.out.println(backpackSlotAttribute.tag.name());
+                    }
+                }
             }
         }
     }

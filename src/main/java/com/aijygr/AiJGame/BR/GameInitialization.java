@@ -45,14 +45,14 @@ public class GameInitialization {
         if(event.getLevel().isClientSide())
             return;
         ServerPlayer player = event.getPlayer();
-        Game.tryPlayerMessage(player,"\n");
-        if(!Game.isReloaded)
+        Game.tryBroadcastMessage(player," ");
+        /*if(!Game.isReloaded)
         {
-            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_reloaded");
-            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
+            Game.tryBroadcastMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_reloaded");
+            Game.tryBroadcastMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
             return;
-        }
-        Game.tryPlayerMessage(player, "msg.aijbr.yellow","Starting INIT.");
+        }*/
+        Game.tryBroadcastMessage(player, "msg.aijbr.yellow","Starting INIT.");
         Game.r_ring_size.clear();
         Game.r_waiting_tick.clear();
         Game.r_basic_damage.clear();
@@ -83,25 +83,25 @@ public class GameInitialization {
         var ring_initial_attributes = ModConfig.Server.Config.RING.RING_ATTRIBUTES.get();
         try {
             readRingAttributesConfig(ring_initial_attributes);
-            Game.tryPlayerMessage(player, "msg.aijbr.green","Successfully loaded RingAttributes, "+(Game.totalrounds)+" rounds read.");
+            Game.tryBroadcastMessage(player, "msg.aijbr.green","Successfully loaded RingAttributes, "+(Game.totalrounds)+" rounds read.");
         }catch(Exception e){
             String str = ("RingAttributesInitialization failed. "+e.getMessage()+" *Please check the TOML file.");
-            Game.tryPlayerMessage(player,"msg.aijbr.red", str);
+            Game.tryBroadcastMessage(player,"msg.aijbr.red", str);
             boolean usingDefaultsWhenFailed = false;//Don't use default config.
             if(usingDefaultsWhenFailed){
                 String str2 = "Trying to use Default RingAttributesConfig.";
-                Game.tryPlayerMessage(player,"msg.aijbr.yellow", str2);
+                Game.tryBroadcastMessage(player,"msg.aijbr.yellow", str2);
                 var default_ring_initial_attributes = ModConfig.Server.Default.RING.RING_ATTRIBUTES;
                 try{
                     readRingAttributesConfig(default_ring_initial_attributes);
                     String str3 = "Default RingAttributesConfig Loaded. "+Game.totalrounds+" rounds read.";
-                    Game.tryPlayerMessage(player, "msg.aijbr.yellow",str3);
+                    Game.tryBroadcastMessage(player, "msg.aijbr.yellow",str3);
                 }
                 catch (Exception e1){
                     String str4 = ("Hey AiJYGR, what are you doing? "+e1.getMessage());
                     String str5 = "Initialization failed";
-                    Game.tryPlayerMessage(player, "msg.aijbr.red",str4);
-                    Game.tryPlayerMessage(player,"msg.aijbr.red",str5);
+                    Game.tryBroadcastMessage(player, "msg.aijbr.red",str4);
+                    Game.tryBroadcastMessage(player,"msg.aijbr.red",str5);
                     return ;
                 }
             }
@@ -132,37 +132,13 @@ public class GameInitialization {
             {
                 str.append(it.next()).append(",");
             }
-            Game.tryPlayerMessage(player, "msg.aijbr.red","Failed to load GenerationModes.\nGet: "+str+" only "+Game.r_generation_modes.size()+" values read.");
+            Game.tryBroadcastMessage(player, "msg.aijbr.red","Failed to load GenerationModes.\nGet: "+str+" only "+Game.r_generation_modes.size()+" values read.");
             return ;
         }
         else
-            Game.tryPlayerMessage(player,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
-
-
-        //Read AiJBP CFG
-//        var backpack_slots = ModConfig.Server.Config.BACKPACK.BACKPACK_SLOTS.get();
-//        short i = 0;
-//        for(var it = backpack_slots.iterator();it.hasNext();i++)
-//        {
-//            String str_slot = it.next();
-//            var s = str_slot.split(",");
-//            if(s.length == 3)
-//            {
-//                short slot = Short.parseShort(s[0].trim());
-//                short plvl = Short.parseShort(s[1].trim());
-//                String tag = s[2].toUpperCase().trim();
-//                Game.bp_slotsAttributes.add(new Backpack.BackpackSlotAttribute(slot, plvl, tag));
-//            }
-//            else{
-//                Game.tryPlayerMessage(player,"msg.aijbr.red","Failed to load BackpackSlotAttributes, at "+(i)+":\""+str_slot+"\"");
-//                return;
-//            }
-//        }
-//        Game.tryPlayerMessage(player,"msg.aijbr.green","Successfully loaded BackpackSlotAttributes, "+(i)+" values read.");
-
+            Game.tryBroadcastMessage(player,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
 
         Game.isInitialized = true;
-        Game.tryPlayerMessage(player,"");
-        Game.tryPlayerMessage(player,"msg.aijbr.bold","msg.aijbr.info.command_executed");
+        Game.tryBroadcastMessage(player,"msg.aijbr.bold","msg.aijbr.info.command_executed");
     }
 }

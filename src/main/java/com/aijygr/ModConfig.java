@@ -12,9 +12,10 @@ public abstract class ModConfig {
     public static class Server {
         public static class Config {
             public static class BACKPACK {
-                //public static ForgeConfigSpec.ConfigValue<String> BACKPACK_SLOT_DEFAULT;
-                //public static ForgeConfigSpec.ConfigValue<String> ENABLEAIJBR;
-                public static ForgeConfigSpec.ConfigValue<List<? extends String>> BACKPACK_SLOTS;
+                /*public static ForgeConfigSpec.ConfigValue<String> BACKPACK_SLOT_DEFAULT;
+                public static ForgeConfigSpec.ConfigValue<String> ENABLEAIJBR;
+                public static ForgeConfigSpec.ConfigValue<List<? extends String>> BACKPACK_SLOTS;*/
+                public static ForgeConfigSpec.IntValue DEFAULT_PERMISSIONLEVEL;
             }
 
             public static class RING{
@@ -37,8 +38,9 @@ public abstract class ModConfig {
         }
 
         public static final class Default {
-            /*
+
             public static class BACKPACK{
+                /*
                 public static final String BACKPACK_SLOT_DEFAULT = "DEFAULT";
                 public static final String ENABLE_AIJBR = "INGAME";
                 public static final List<String> BACKPACK_SLOTS = new ArrayList<>(List.of(
@@ -51,8 +53,9 @@ public abstract class ModConfig {
                         "6,0,supplies",
                         "7,1,supplies",
                         "8,1,supplies"
-                ));
-            }*/
+                ));*/
+                public static final int DEFAULT_PERMISSIONLEVEL = 0;
+            }
             public static class RING{
                 public static final List<Integer> RING_INITIAL_ATTRUBUTES =  new ArrayList<>(List.of(512,300));
                 public static final List<String> RING_ATTRIBUTES = new ArrayList<>(List.of(
@@ -94,9 +97,9 @@ public abstract class ModConfig {
         StringBuilder strbuilder = new StringBuilder();
 
         server_builder.comment("AiJBR Server Settings").push("AiJBR_SV");//File Start
-        /*
+
         server_builder.push("Backpack");    //Backpack
-        strbuilder.delete(0, strbuilder.length());
+        /*strbuilder.delete(0, strbuilder.length());
         for (Backpack.SlotTag it : Backpack.SlotTag.values()) {
             strbuilder.append(it.name());
             strbuilder.append(" ");
@@ -124,12 +127,16 @@ public abstract class ModConfig {
         Server.Config.BACKPACK.BACKPACK_SLOT_DEFAULT = server_builder.define("Default", Server.Default.BACKPACK.BACKPACK_SLOT_DEFAULT,(obj)->{return obj instanceof String;});
         server_builder.comment("#Enable AiJBP",
                 "When to enable AiJYGR's Backpack");
-        Server.Config.BACKPACK.ENABLEAIJBR = server_builder.define("EnableAiJBP", Server.Default.BACKPACK.ENABLE_AIJBR,(obj)->{return obj instanceof String;});
+        Server.Config.BACKPACK.ENABLEAIJBR = server_builder.define("EnableAiJBP", Server.Default.BACKPACK.ENABLE_AIJBR,(obj)->{return obj instanceof String;});*/
+        server_builder.comment(
+                "# Default Permission Level",
+                "- Define the permission level that the player has without a backpack.");
+        Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",0,Short.MIN_VALUE,Short.MAX_VALUE);
         server_builder.pop();
-        */
+
         server_builder.push("Ring");    //Ring
         server_builder.comment(
-                "# Ring Initial Setting",
+                "# Ring Initial Attributes",
                 "- Format: InitialRingSize, WaitingTick",
                 "- Default: 512, 300   Must be Integer."
         );

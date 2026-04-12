@@ -1,4 +1,4 @@
-package com.aijygr.AiJBP.SYNC;
+package com.aijygr.AiJBP.SYNC.Tag;
 
 import com.aijygr.Main;
 import com.google.gson.JsonParser;
@@ -7,7 +7,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-import static com.aijygr.AiJBP.SYNC.SyncTag.HASH;
+import static com.aijygr.AiJBP.SYNC.Tag.SyncTag.HASH;
 
 public class MSGClientTagJSON {
     private final String str;

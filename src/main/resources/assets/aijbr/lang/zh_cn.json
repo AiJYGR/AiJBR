@@ -5,6 +5,7 @@
     "item.aijbr.iron_armor": "一级护甲",
     "item.aijbr.diamond_armor": "二级护甲",
     "item.aijbr.loot_container": "战利品箱",
+    "item.aijbr.lock": "",
 
     "block.aijbr.loot_container": "战利品箱",
 
@@ -15,7 +16,8 @@
     "msg.aijbr.yellow": "§e[AiJBR]§r",
     "msg.aijbr.green": "§a[AiJBR]§r",
     "msg.aijbr.bold": "§d§l[AiJBR]§r",
-
+    "msg.server":"[SV]",
+    "msg.client": "[CL]",
 
     "msg.aijbr.info.command_executed":"已成功执行指令",
     "msg.aijbr.info.command_game_started": "已成功开始游戏",
@@ -23,8 +25,8 @@
     "msg.aijbr.err.command_game_started":"游戏已经开始!",
     "msg.aijbr.err.command_game_ended":"游戏未开始!",
     "msg.aijbr.err.command_executed_failed":"执行指令失败",
-    "msg.aijbr.err.command_game_not_initialized":"尚未初始化游戏 \n请执行 /AiJBR init",
-    "msg.aijbr.err.command_game_not_reloaded": "尚未重载游戏配置文件 \n请执行 /AiJBR reload",
+    "msg.aijbr.err.command_game_not_initialized":"尚未初始化游戏  请执行 /AiJBR init",
+    "msg.aijbr.err.command_game_not_reloaded": "尚未重载游戏配置文件  请执行 /AiJBR reload",
 
 
 

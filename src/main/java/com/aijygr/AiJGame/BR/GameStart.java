@@ -11,12 +11,14 @@ public class GameStart {
 
     @SubscribeEvent
     public static void onGameStart(GameStartEvent event) {
-        if(!Game.isInitialized){
-            Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
-            return;
-        }
-        if(!Game.isReloaded){
-            Game.tryPlayerMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err.command_game_not_reloaded");
+
+        if(!(Game.isInitialized&&Game.isReloaded)){
+            if(!Game.isInitialized){
+                Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
+            }
+            if(!Game.isReloaded){
+                Game.tryPlayerMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err.command_game_not_reloaded");
+            }
             return;
         }
         Game.isGameStart  = true;
@@ -29,7 +31,7 @@ public class GameStart {
         Game.isRingClosing = false;
         RingMove.PhaseChange(event.getLevel().getServer(),"msg.aijbr.yellow");
 
-        Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.yellow","msg.aijbr.info.command_game_started");
-        Game.tryPlayerMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_executed");
+        Game.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.yellow","msg.aijbr.info.command_game_started");
+        Game.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_executed");
     }
 }

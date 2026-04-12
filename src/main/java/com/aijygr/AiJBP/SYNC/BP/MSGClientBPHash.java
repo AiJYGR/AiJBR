@@ -1,4 +1,4 @@
-package com.aijygr.AiJBP.SYNC;
+package com.aijygr.AiJBP.SYNC.BP;
 
 import com.aijygr.Main;
 import com.aijygr.ModMessages;
@@ -28,6 +28,7 @@ public class MSGClientBPHash {
             if(SyncBP.clienthash.equals(this.str)){
                 Main.LOGGER.info("[AiJBR][MSGClientBPHash]: EQUAL.");
                 ModMessages.PlayerSendToServer(new MSGServerRequestSyncBPJSON("="));
+                Reload.ReloadBP();
             }
             else{
                 Main.LOGGER.info("[AiJBR][MSGClientBPHash]: DIFFERENT.");

@@ -20,11 +20,11 @@ public class Syringe extends Item {
 
     @Override
     public int getUseDuration(ItemStack itemStack) {
-        return ModConfig.Server.Config.ITEM.MEDKIT_USEDURATION.get();
+        return ModConfig.Server.Config.ITEM.SYRINGE_USEDURATION.get();
     }
     @Override
     public int getMaxStackSize(ItemStack stack) {
-        return ModConfig.Server.Config.ITEM.MEDKIT_MAXSTACKSIZE.get();
+        return ModConfig.Server.Config.ITEM.SYRINGE_MAXSTACKSIZE.get();
     }
     @Override @NotNull
     public  InteractionResultHolder<ItemStack> use(Level level, @NotNull Player player, @NotNull InteractionHand interactionHand) // 使用东西的那一瞬间（按下右键的一瞬间）的代码

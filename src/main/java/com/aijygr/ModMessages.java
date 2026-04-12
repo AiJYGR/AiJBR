@@ -1,5 +1,7 @@
 package com.aijygr;
 
+import com.aijygr.AiJBP.MSGClientFinished;
+import com.aijygr.AiJBP.MSGServerSwapItem;
 import com.aijygr.AiJBP.SYNC.BP.MSGClientBPHash;
 import com.aijygr.AiJBP.SYNC.BP.MSGClientBPJSON;
 import com.aijygr.AiJBP.SYNC.BP.MSGServerRequestSyncBPJSON;
@@ -70,6 +72,16 @@ public class ModMessages {//呜呜好难 GEMINI救救我QwQ
                 .decoder(MSGServerUnlockInv::new)
                 .encoder(MSGServerUnlockInv::encode)
                 .consumerMainThread(MSGServerUnlockInv::handle)
+                .add();
+        net.messageBuilder(MSGServerSwapItem.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MSGServerSwapItem::new)
+                .encoder(MSGServerSwapItem::encode)
+                .consumerMainThread(MSGServerSwapItem::handle)
+                .add();
+        net.messageBuilder(MSGClientFinished.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientFinished::new)
+                .encoder(MSGClientFinished::encode)
+                .consumerMainThread(MSGClientFinished::handle)
                 .add();
 
     }

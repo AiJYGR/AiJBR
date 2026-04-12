@@ -34,13 +34,16 @@ public class SyncTag {
       "tacz:ak47": ["MAINWPN"],
       "tacz:scar_l": ["MAINWPN"],
       "tacz:ai_awp": ["MAINWPN"],
-      "tacz:p320": ["MAINWPN","SUBWPN"]
+      "tacz:p320": ["SUBWPN","MAINWPN"]
     }
   },
   "tacz:attachment":["SUPPLIES"],
   "tacz:ammo":["SUPPLIES"],
   "aijbr:medkit":["SUPPLIES"],
-  "aijbr:syringe":["SUPPLIES"]
+  "aijbr:syringe":["SUPPLIES"],
+  "aijbr:backpack_lvl1":["BACKPACK"],
+  "aijbr:backpack_lvl2":["BACKPACK"],
+  "aijbr:backpack_lvl3":["BACKPACK"]
 }
         """;
     public static final int PMAXLENGTH = 262144; //!!!!!文件最大长度 256KB

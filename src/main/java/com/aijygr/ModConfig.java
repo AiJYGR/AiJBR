@@ -104,9 +104,9 @@ public abstract class ModConfig {
 
         server_builder.comment("AiJBR Server Settings").push("AiJBR_SV");//File Start
 
-        server_builder.push("Backpack");    //Backpack
+        server_builder.push("AiJBackpack");    //AiJBackpack
         /*strbuilder.delete(0, strbuilder.length());
-        for (Backpack.SlotTag it : Backpack.SlotTag.values()) {
+        for (AiJBackpack.SlotTag it : AiJBackpack.SlotTag.values()) {
             strbuilder.append(it.name());
             strbuilder.append(" ");
         }
@@ -122,7 +122,7 @@ public abstract class ModConfig {
                 System.out.println("[AiJBR] BackpackSlotAttributes Config ERR: "+obj.toString()+" is not a String");
                 return false;
             }
-            for(Backpack.SlotTag it : Backpack.SlotTag.values())
+            for(AiJBackpack.SlotTag it : AiJBackpack.SlotTag.values())
                 if (obj.equals(it.name()))
                     return true;
             System.out.println("[AiJBR] BackpackSlotAttributes Config ERR: Incorrect value \""+obj+"\"");
@@ -132,7 +132,7 @@ public abstract class ModConfig {
                 "- Define the Default Attributes of undefined slots above.");
         Server.Config.BACKPACK.BACKPACK_SLOT_DEFAULT = server_builder.define("Default", Server.Default.BACKPACK.BACKPACK_SLOT_DEFAULT,(obj)->{return obj instanceof String;});
         server_builder.comment("#Enable AiJBP",
-                "When to enable AiJYGR's Backpack");
+                "When to enable AiJYGR's AiJBackpack");
         Server.Config.BACKPACK.ENABLEAIJBR = server_builder.define("EnableAiJBP", Server.Default.BACKPACK.ENABLE_AIJBR,(obj)->{return obj instanceof String;});*/
         server_builder.comment(
                 "# Default Permission Level",

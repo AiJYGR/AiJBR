@@ -1,6 +1,6 @@
 package com.aijygr.AiJBP.SYNC.BP;
 
-import com.aijygr.AiJBP.Backpack;
+import com.aijygr.AiJBP.AiJBackpack;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.Main;
 import com.google.gson.JsonElement;
@@ -15,8 +15,7 @@ public class Reload {
         JsonObject json = SyncBP.json;
         Player player = Minecraft.getInstance().player;
         int i = 0;
-        Backpack.backpack.clear();
-        Backpack.armor.clear();
+        AiJBackpack.slots.clear();
         try {
             for (JsonElement element : json.getAsJsonArray("Inventory")) {
                 int j = 0;
@@ -36,8 +35,8 @@ public class Reload {
                     }
                     j++;
                 }
-                Backpack.backpack.computeIfAbsent(Backpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new Backpack.SlotPermissionLevel(slot,plvl));
-                //Backpack.backpack.add(new Backpack.SlotAttribute(slot, plvl, tag));
+                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl, AiJBackpack.SlotType.BACKPACK));
+                //AiJBackpack.backpack.add(new AiJBackpack.SlotAttribute(slot, plvl, tag));
                 i++;
             }
             for (JsonElement element : json.getAsJsonArray("Armor")) {
@@ -58,7 +57,7 @@ public class Reload {
                     }
                     j++;
                 }
-                Backpack.armor.computeIfAbsent(Backpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new Backpack.SlotPermissionLevel(slot,plvl));
+                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl, AiJBackpack.SlotType.ARMOR));
                 i++;
             }
             {
@@ -79,7 +78,7 @@ public class Reload {
                     }
                     j++;
                 }
-                Backpack.offhand = new Backpack.SlotAttribute(slot, plvl, tag);
+                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl, AiJBackpack.SlotType.OFFHAND));
                 i++;
 
             }
@@ -88,7 +87,7 @@ public class Reload {
         } catch (Exception e) {
             Game.tryPlayerMessage(player, "msg.aijbr.red", "msg.client", " Read " + i + " values");
             Game.tryPlayerMessage(player,"msg.aijbr.red","msg.client"," ERR:",e.getMessage());
-            Main.LOGGER.warn("[AiJBR] Backpack JSON ERR:{}", e.getMessage());
+            Main.LOGGER.warn("[AiJBR] AiJBackpack JSON ERR:{}", e.getMessage());
         }
     }
 

@@ -5,6 +5,7 @@ import com.aijygr.ModMessages;
 import com.google.common.base.CharMatcher;
 import com.google.common.hash.Hashing;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
@@ -28,20 +29,38 @@ import java.nio.file.Path;
 * */
 public class SyncBP {
     public static final String DEFAULTFILE = """
-[
-  [0,0,"MAINWPN"],
-  [1,0,"MAINWPN"],
-  [2,0,"SUBWPN"],
-  [3,0,"MELEE"],
-  [4,0,"SUPPLIES"],
-  [5,0,"SUPPLIES"],
-  [6,0,"SUPPLIES"],
-  [7,1,"SUPPLIES"],
-  [8,1,"SUPPLIES"]
-]
+{
+  "Inventory":[
+    [0,0,"MAINWPN"],
+    [1,0,"MAINWPN"],
+    [2,0,"SUBWPN"],
+    [3,0,"MELEE"],
+    [4,0,"SUPPLIES"],
+    [5,0,"SUPPLIES"],
+    [6,0,"SUPPLIES"],
+    [7,1,"SUPPLIES"],
+    [8,1,"SUPPLIES"],
+    [9,0,"BACKPACK"],
+    [10,0,"BACKPACK"],
+    [11,1,"SUPPLIES"],
+    [12,1,"SUPPLIES"],
+    [13,1,"SUPPLIES"],
+    [14,1,"SUPPLIES"],
+    [15,1,"SUPPLIES"],
+    [16,1,"SUPPLIES"],
+    [17,1,"SUPPLIES"]
+  ],
+  "Armor":[
+    [0,0,"DISABLE"],
+    [1,0,"ARMOR"],
+    [2,0,"DISABLE"],
+    [3,0,"DISABLE"]
+  ],
+  "Offhand":[0,0,"DISABLE"]
+}
         """;
     public static final int PMAXLENGTH = 262144; //!!!!!文件最大长度 256KB
-    public static JsonArray json = new JsonArray();
+    public static JsonObject json = new JsonObject();
     public static String rawjson = "";
     public static String clienthash = "";
     private static void generateDefault(File file) {
@@ -64,7 +83,7 @@ public class SyncBP {
         if (Files.exists(path)) {
             try {
                 String strfilecontent = Files.readString(path, StandardCharsets.UTF_8);
-                json = JsonParser.parseString(strfilecontent).getAsJsonArray();
+                json = JsonParser.parseString(strfilecontent).getAsJsonObject();
                 clienthash = HASH(strfilecontent);
                 Main.LOGGER.info("[AiJBR][SyncBP] Successfully read Hash: {}", clienthash);
             } catch (Exception e) {
@@ -76,7 +95,7 @@ public class SyncBP {
     }
     public static void saveLocalCache(String rawJson, String hash) {
         try {
-            json = JsonParser.parseString(rawJson).getAsJsonArray();
+            json = JsonParser.parseString(rawJson).getAsJsonObject();
             SyncBP.clienthash = hash;
             Files.writeString(getCachePath(), rawJson, StandardCharsets.UTF_8);
             Main.LOGGER.info("[AiJBR][SyncBP] Cache saved.");
@@ -94,7 +113,7 @@ public class SyncBP {
         }
         try (FileReader reader = new FileReader(file)) {
             rawjson = Files.readString(jsonfilepath, StandardCharsets.UTF_8);
-            json = JsonParser.parseString(rawjson).getAsJsonArray();
+            json = JsonParser.parseString(rawjson).getAsJsonObject();
             String hash = HASH(rawjson);
             ModMessages.ServerSendToAll(new MSGClientBPHash(hash));//////SYNC HASH!!!!!!!!
             Main.LOGGER.info("[AiJBR][SyncBP] Serverside hash = {}", hash);

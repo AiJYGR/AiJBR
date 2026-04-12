@@ -29,9 +29,10 @@ public class Reg
     public static final RegistryObject<Item> MEDKIT = ITEMS.register("medkit", () -> new Medkit(new Item.Properties()));
     public static final RegistryObject<Item> IRON_ARMOR = ITEMS.register("iron_armor", () -> new Armor(ArmorMaterials_override.IRON,new ArmorItem.Properties()));
     public static final RegistryObject<Item> DIAMOND_ARMOR = ITEMS.register("diamond_armor", () -> new Armor(ArmorMaterials_override.DIAMOND,new ArmorItem.Properties()));
-    public static final RegistryObject<Item> AiJBP_LVL1 = ITEMS.register("aijbackpack_lvl1",()->new Backpack(new Item.Properties().fireResistant(),(short)100));
-    public static final RegistryObject<Item> AiJBP_LVL2 = ITEMS.register("aijbackpack_lvl2",()->new Backpack(new Item.Properties().fireResistant(),(short)200));
-    public static final RegistryObject<Item> AiJBP_LVL3 = ITEMS.register("aijbackpack_lvl3",()->new Backpack(new Item.Properties().fireResistant(),(short)300));
+    public static final RegistryObject<Item> AiJBP_LVL1 = ITEMS.register("backpack_lvl1",()->new Backpack(new Item.Properties().fireResistant(),() -> ModConfig.Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL.get().shortValue()));
+    public static final RegistryObject<Item> AiJBP_LVL2 = ITEMS.register("backpack_lvl2",()->new Backpack(new Item.Properties().fireResistant(),() -> ModConfig.Server.Config.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL.get().shortValue()));
+    public static final RegistryObject<Item> AiJBP_LVL3 = ITEMS.register("backpack_lvl3",()->new Backpack(new Item.Properties().fireResistant(),() -> ModConfig.Server.Config.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL.get().shortValue()));
+    public static final RegistryObject<Item> AiJBP_LVL4 = ITEMS.register("backpack_lvl4",()->new Backpack(new Item.Properties().fireResistant(),() -> ModConfig.Server.Config.ITEM.BACKPACK_LVL4_PERMISSIONLEVEL.get().shortValue()));
     public static final RegistryObject<Item> LOCK = ITEMS.register("lock",()->new Lock(new Item.Properties()));
 
     public static final RegistryObject<Item> LOOTCONTAINER_ITEM = ITEMS.register("loot_container", () -> new BlockItem(Reg.LOOTCONTAINER_BLOCK.get(),new Item.Properties()));

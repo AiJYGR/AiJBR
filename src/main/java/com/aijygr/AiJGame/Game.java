@@ -67,7 +67,8 @@ public class Game {
         }
         if(player!=null)
             player.sendSystemMessage(component);
-        Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", str);
+        else
+            Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", str);
     }
     public static void tryBroadcastMessage(Player player, String... messages) {
         messages = Arrays.copyOf(messages, messages.length);
@@ -79,7 +80,8 @@ public class Game {
         }
         if(player!=null)
             player.getServer().getPlayerList().broadcastSystemMessage(component,false);
-        Main.LOGGER.info("[AiJBR]tryBroadcastMessage:{}", str);
+        else
+            Main.LOGGER.info("[AiJBR]tryBroadcastMessage:{}", str);
     }
 
     public static class VecIntXZ {

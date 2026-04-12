@@ -28,6 +28,9 @@ public abstract class ModConfig {
 
             public static class ITEM{
                 public static ForgeConfigSpec.IntValue BACKPACK_LVL1_PERMISSIONLEVEL;
+                public static ForgeConfigSpec.IntValue BACKPACK_LVL2_PERMISSIONLEVEL;
+                public static ForgeConfigSpec.IntValue BACKPACK_LVL3_PERMISSIONLEVEL;
+                public static ForgeConfigSpec.IntValue BACKPACK_LVL4_PERMISSIONLEVEL;
                 public static ForgeConfigSpec.ConfigValue<Integer> SYRINGE_USEDURATION;
                 public static ForgeConfigSpec.ConfigValue<Integer> SYRINGE_MAXSTACKSIZE;
                 public static ForgeConfigSpec.DoubleValue SYRINGE_HEALAMOUNT;
@@ -84,7 +87,10 @@ public abstract class ModConfig {
                 public static final int ITEM_MEDKIT_USEDURATION = 120;
                 public static final int ITEM_MEDKIT_MAXSTACKSIZE = 2;
                 public static final double ITEM_MEDKIT_HEALAMOUNT = 10.0f;
-                public static final short BACKPACK_LVL1_PERMISSIONLEVEL = 10;
+                public static final short BACKPACK_LVL1_PERMISSIONLEVEL = 6;
+                public static final short BACKPACK_LVL2_PERMISSIONLEVEL = 12;
+                public static final short BACKPACK_LVL3_PERMISSIONLEVEL = 18;
+                public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 35;
             }
 
         }
@@ -219,6 +225,10 @@ public abstract class ModConfig {
                 "PermissionLevel: Used with BackpackSlotAttributes together.");
         server_builder.push("BACKPACK");
         Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL = server_builder.defineInRange("LVL1Permission",Server.Default.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+        Server.Config.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL = server_builder.defineInRange("LVL2Permission",Server.Default.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+        Server.Config.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL = server_builder.defineInRange("LVL3Permission",Server.Default.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+        Server.Config.ITEM.BACKPACK_LVL4_PERMISSIONLEVEL = server_builder.defineInRange("LVL4Permission",Server.Default.ITEM.BACKPACK_LVL4_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+
         server_builder.pop();
         server_builder.push("ARMOR");
         server_builder.comment("");

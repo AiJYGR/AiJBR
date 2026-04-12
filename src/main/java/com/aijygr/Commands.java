@@ -52,7 +52,7 @@ public class Commands
                 Game.isReloaded = true;
             }catch(Exception e){
                 Game.tryBroadcastMessage(player,"\n","msg.aijbr.red","msg.server","Reload failed:");
-                Game.tryBroadcastMessage(player,e.getMessage(),"\nPlease check AiJTAG.json file.");
+                Game.tryBroadcastMessage(player,e.getMessage(),"\nPlease check the JSON file.");
                 Game.tryBroadcastMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
                 return;
             }

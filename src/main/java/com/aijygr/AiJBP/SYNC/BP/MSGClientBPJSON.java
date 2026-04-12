@@ -21,7 +21,7 @@ public class MSGClientBPJSON {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            SyncBP.json = JsonParser.parseString(str).getAsJsonArray();
+            SyncBP.json = JsonParser.parseString(str).getAsJsonObject();
             String hash = HASH(str);
             SyncBP.saveLocalCache(str,hash);
             Reload.ReloadBP();

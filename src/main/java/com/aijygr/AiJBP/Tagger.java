@@ -70,7 +70,7 @@ public class Tagger {
     }
 
 
-    public static List<String> GetItemTag(ItemStack itemStack){
+    public static List<String> GetItemTags(ItemStack itemStack){
         JsonObject json = SyncTag.json;
         tags.clear();
         if(itemStack == null || itemStack.isEmpty())

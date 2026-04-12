@@ -43,7 +43,8 @@ public class SyncTag {
   "aijbr:syringe":["SUPPLIES"],
   "aijbr:backpack_lvl1":["BACKPACK"],
   "aijbr:backpack_lvl2":["BACKPACK"],
-  "aijbr:backpack_lvl3":["BACKPACK"]
+  "aijbr:backpack_lvl3":["BACKPACK"],
+  "minecraft:diamond_sword":["MAINWPN","BACKPACK"]
 }
         """;
     public static final int PMAXLENGTH = 262144; //!!!!!文件最大长度 256KB

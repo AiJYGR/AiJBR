@@ -1,15 +1,12 @@
 package com.aijygr;
 
-import com.aijygr.AiJBP.MSGClientFinished;
-import com.aijygr.AiJBP.MSGServerSwapItem;
+import com.aijygr.AiJBP.*;
 import com.aijygr.AiJBP.SYNC.BP.MSGClientBPHash;
 import com.aijygr.AiJBP.SYNC.BP.MSGClientBPJSON;
 import com.aijygr.AiJBP.SYNC.BP.MSGServerRequestSyncBPJSON;
 import com.aijygr.AiJBP.SYNC.Tag.MSGClientTagJSON;
 import com.aijygr.AiJBP.SYNC.Tag.MSGClientTagHash;
 import com.aijygr.AiJBP.SYNC.Tag.MSGServerRequestSyncTagJSON;
-import com.aijygr.AiJBP.MSGServerLockInv;
-import com.aijygr.AiJBP.MSGServerUnlockInv;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -17,7 +14,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-public class ModMessages {//呜呜好难 GEMINI救救我QwQ
+public class ModMessages {//GEMINI简直是我亲爹
     private static SimpleChannel INSTANCE;
     private static int packetId = 0;
     private static int id() { return packetId++; }
@@ -29,10 +26,8 @@ public class ModMessages {//呜呜好难 GEMINI救救我QwQ
                 .clientAcceptedVersions(s -> true)
                 .serverAcceptedVersions(s -> true)
                 .simpleChannel();
-
         INSTANCE = net;
-
-        // 注册 SyncBP 包
+        // 注册包
         net.messageBuilder(MSGClientTagJSON.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(MSGClientTagJSON::new)
                 .encoder(MSGClientTagJSON::encode)
@@ -83,16 +78,18 @@ public class ModMessages {//呜呜好难 GEMINI救救我QwQ
                 .encoder(MSGClientFinished::encode)
                 .consumerMainThread(MSGClientFinished::handle)
                 .add();
-
+        net.messageBuilder(MSGServerRemoveItem.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MSGServerRemoveItem::new)
+                .encoder(MSGServerRemoveItem::encode)
+                .consumerMainThread(MSGServerRemoveItem::handle)
+                .add();
     }
     public static <MSG> void ServerSendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
-
     public static <MSG> void ServerSendToAll(MSG message) {
         INSTANCE.send(PacketDistributor.ALL.noArg(), message);
     }
-
     public static <MSG> void PlayerSendToServer(MSG message) {
         INSTANCE.sendToServer(message);
     }

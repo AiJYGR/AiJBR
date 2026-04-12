@@ -3,6 +3,7 @@ package com.aijygr.AiJBP;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.ModConfig;
 import com.aijygr.ModMessages;
+import com.mojang.authlib.minecraft.TelemetrySession;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -42,7 +43,7 @@ public class AiJBackpack extends Event
     public static class SlotPermissionLevel{
         short index = 0;
         short permissionlevel = 0;
-        SlotType type = SlotType.BACKPACK;
+        SlotType type;
         public SlotPermissionLevel(){
             index = 0;
             permissionlevel = Short.MAX_VALUE;
@@ -55,20 +56,30 @@ public class AiJBackpack extends Event
         }
     }
 
-    //public static List<SlotAttribute> backpack = new ArrayList<>();
-    //public static Map<SlotTag,List<SlotPermissionLevel>> backpack = new HashMap<>();
-    //public static List<SlotAttribute> armor = new ArrayList<>();
-    //public static Map<SlotTag,List<SlotPermissionLevel>> armor = new HashMap<>();
     public static Map<SlotTag,List<SlotPermissionLevel>> slots = new HashMap<>();
-    public static String s = "";
-    public static Inventory inventory;
     public static short playerPermission = 0;
-
-
 
     private static boolean isAvaliable = true;
     public static void setAvaliable(){
         isAvaliable = true;
+    }
+    public static void serverSwap(Inventory inventory,SlotType t1, short s1, SlotType t2, short s2){
+        ModMessages.PlayerSendToServer(new MSGServerSwapItem(t1,s1,t2,s2));
+        isAvaliable = false;
+//        switch (t1) {
+//            case BACKPACK -> inventory.items.set(s1,ItemStack.EMPTY);
+//            case ARMOR -> inventory.armor.set(s1,ItemStack.EMPTY);
+//            case OFFHAND -> inventory.offhand.set(0,ItemStack.EMPTY);
+//        };
+    }
+    public static void serverRemove(Inventory inventory,SlotType type, short index,boolean remove){
+        ModMessages.PlayerSendToServer(new MSGServerRemoveItem(type,index,remove));
+        isAvaliable = false;
+        switch (type) {
+            case BACKPACK -> inventory.items.set(index,ItemStack.EMPTY);
+            case ARMOR -> inventory.armor.set(index,ItemStack.EMPTY);
+            case OFFHAND -> inventory.offhand.set(0,ItemStack.EMPTY);
+        };
     }
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent event)
@@ -79,16 +90,19 @@ public class AiJBackpack extends Event
             if (Minecraft.getInstance().player == null || !player.getUUID().equals(Minecraft.getInstance().player.getUUID()))
                 return;
             Inventory inventory = player.getInventory();
-            if(Game.gametime%50==0)// 防止如果不小心/clear @s
-            {
-                InventoryLock.unlockAll();
-                setAvaliable();
-            }
+//            if(Game.gametime%50==0)// 防止如果不小心/clear @s
+//            {
+//                InventoryLock.unlockAll();
+//                setAvaliable();
+//            }
             if(Game.isReloaded && isAvaliable){
-                //1.检查背包格位 计算permissionlevel
+                //1.检查背包格位 计算PermissionLevel
                 //2.锁格子
                 //3.扫描所有未上锁格子 检查非法位置
-                //4.寻找合法的位置 并且移动 如果没有，丢弃物品（40tick延迟）
+                //4.寻找合法的位置 并且移动
+                //5.如果没有就丢弃物品（40tick延迟）
+
+                //Step1
                 List<SlotPermissionLevel> bp = slots.get(SlotTag.BACKPACK);
                 if(bp != null){
                     short i = ModConfig.Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL.get().shortValue();
@@ -114,53 +128,49 @@ public class AiJBackpack extends Event
                     }
                 });
                 //Step3
-                // Step3: 扫描所有未上锁格子 检查非法位置
                 for (Map.Entry<SlotTag, List<SlotPermissionLevel>> entry : slots.entrySet()) {
                     SlotTag slottag = entry.getKey();
                     List<SlotPermissionLevel> slotPermissionLevels = entry.getValue();
-
                     for (SlotPermissionLevel slot : slotPermissionLevels) {
                         ItemStack itemstack = switch (slot.type) {
                             case BACKPACK -> inventory.items.get(slot.index);
                             case ARMOR -> inventory.armor.get(slot.index);
                             case OFFHAND -> inventory.offhand.get(0);
                         };
-
-                        // 检测非法物品
                         if (!itemstack.isEmpty()
                                 && !InventoryLock.isLocked(slot.index)
                                 && !Tagger.GetItemTags(itemstack).isEmpty()
                                 && !Tagger.GetItemTags(itemstack).contains(slottag.name())) {
-
-                            System.out.println(slot.index + " illegal");
+                            //Step4
                             for (String itemtag : Tagger.GetItemTags(itemstack)) {
                                 SlotTag targetTagType= SlotTag.valueOf(itemtag);
                                 List<SlotPermissionLevel> slots2 = slots.get(targetTagType);
                                 if (slots2 == null) continue;
 
                                 for (SlotPermissionLevel s : slots2) {
+                                    if(s.equals(slot))
+                                        continue;
+
                                     ItemStack i = switch (s.type) {
                                         case BACKPACK -> inventory.items.get(s.index);
                                         case ARMOR -> inventory.armor.get(s.index);
                                         case OFFHAND -> inventory.offhand.get(0);
                                     };
-
                                     if (i.isEmpty()) {
                                         System.out.println(String.format("%dMSG:(%s,%d,%s,%d)", Game.gametime, s.type.name(), s.index, slot.type.name(), slot.index));
-                                        ModMessages.PlayerSendToServer(new MSGServerSwapItem(s.type, s.index, slot.type, slot.index));
-                                        isAvaliable = false;
-                                        inventory.setItem(slot.index, ItemStack.EMPTY);///???
+                                        serverSwap(inventory,s.type, s.index, slot.type, slot.index);
                                         return;
                                     }
                                 }
                             }
+                            //Step5
+                            System.out.println(String.format("%dMSG:(%s,%d)", Game.gametime, slot.type.name(),slot.index));
+                            serverRemove(inventory,slot.type,slot.index,false);
+                            return;
                         }
                     }
                 }
             }
         }
     }
-
-
-
 }

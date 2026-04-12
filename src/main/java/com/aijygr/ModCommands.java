@@ -46,8 +46,8 @@ public class ModCommands
 
     private static class SyncBPCommand{
         private void SYNC(){
-            InventoryLock.unlockAll();
             AiJBackpack.setAvaliable();
+            InventoryLock.unlockAll();
         }
         public SyncBPCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
@@ -139,6 +139,7 @@ public class ModCommands
     @SubscribeEvent
     public static void onClientCommandsRegister(RegisterClientCommandsEvent event){
         new ScrCommand(event.getDispatcher());
+        new SyncBPCommand(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }
 }

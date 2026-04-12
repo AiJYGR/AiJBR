@@ -93,12 +93,10 @@ public class InventoryLock {
             }
         }
     }
-
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack itemstack = event.getItemStack();
         if (!itemstack.isEmpty() && itemstack.getItem() instanceof Lock) {
-            System.out.println("clear");
             event.getToolTip().clear();
         }
     }

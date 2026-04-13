@@ -15,8 +15,7 @@ public class MSGClientFinished {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            AiJBackpack.setAvaliable();
-            System.out.println("AVALIABLE!");
+            AiJBackpack.setAvailable();
         });
         ctx.get().setPacketHandled(true);
     }

@@ -30,6 +30,7 @@ import java.nio.file.Path;
 public class SyncBP {
     public static final String DEFAULTFILE = """
 {
+  "Comment":"0~8快捷栏  9~35 背包  36鞋子 37护腿 38护甲 39头盔 40副手",
   "Inventory":[
     [0,0,"MAINWPN"],
     [1,0,"MAINWPN"],
@@ -66,15 +67,14 @@ public class SyncBP {
     [32,21,"SUPPLIES"],
     [33,22,"SUPPLIES"],
     [34,23,"SUPPLIES"],
-    [35,24,"SUPPLIES"]
+    [35,24,"SUPPLIES"],
+    [36,0,"DISABLE"],
+    [37,0,"DISABLE"],
+    [38,0,"ARMOR"],
+    [39,0,"DISABLE"],
+    [40,0,"DISABLE"]
   ],
-  "Armor":[
-    [0,0,"DISABLE"],
-    [1,0,"ARMOR"],
-    [2,0,"DISABLE"],
-    [3,0,"DISABLE"]
-  ],
-  "Offhand":[0,0,"DISABLE"]
+  "Default":[32767,"DISABLE"]
 }
         """;
     public static final int PMAXLENGTH = 262144; //!!!!!文件最大长度 256KB

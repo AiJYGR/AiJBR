@@ -14,29 +14,35 @@ import java.util.List;
 import java.util.Set;
 
 public class Tagger {
-    private static List<String> tags = new ArrayList<>();
-    private static boolean isPermativeString(JsonElement element){
+    private static List<AiJBackpack.SlotTag> tags = new ArrayList<>();
+    private static AiJBackpack.SlotTag getPermativeEnumString(JsonElement element){
         if (element.isJsonPrimitive()) {
-            return element.getAsJsonPrimitive().isString();
+            if(element.getAsJsonPrimitive().isString()){
+                String str = element.getAsJsonPrimitive().getAsString();
+                return AiJBackpack.SlotTag.getEnum(str);
+            }
         }
-        return false;
+        return null;
     }
-    private static List<String> getArrayString(JsonElement element){ //StringArray or String
-        ArrayList<String> a = new ArrayList<>();
+    private static List<AiJBackpack.SlotTag> getArrayEnumString(JsonElement element){
+        List<AiJBackpack.SlotTag> a = new ArrayList<>();
+        AiJBackpack.SlotTag t;
         if(element.isJsonArray()){
             for(JsonElement e : element.getAsJsonArray()){
-                if(isPermativeString(e))
-                    a.add(e.getAsString());
+                t = getPermativeEnumString(e);
+                if(t!=null)
+                    a.add(t);
                 else return null;
             }
             return a;
-        }else if(isPermativeString(element)){
-            a.add(element.getAsString());
+        }
+        t = getPermativeEnumString(element);
+        if (t!=null){
+            a.add(t);
             return a;
         }
         else return null;
     }
-
     private static void handleObject(JsonObject object, CompoundTag tag,int d)
     {
         //终止条件：getArrayString 或层数>10
@@ -47,7 +53,7 @@ public class Tagger {
             if(object.has(key)){
                 JsonElement e = object.get(key);
                 if (e.isJsonPrimitive() || e.isJsonArray()) {
-                    tags = getArrayString(e);
+                    tags = getArrayEnumString(e);
                     if(tags != null)
                         return;
                 }
@@ -56,7 +62,7 @@ public class Tagger {
                         String subId = tag.getString(key);
                         JsonObject subObj = e.getAsJsonObject();
                         if (subObj.has(subId)) {
-                            tags = getArrayString(subObj.get(subId));
+                            tags = getArrayEnumString(subObj.get(subId));
                             if(tags != null)
                                 return;
                         }
@@ -70,7 +76,7 @@ public class Tagger {
     }
 
 
-    public static List<String> GetItemTags(ItemStack itemStack){
+    public static List<AiJBackpack.SlotTag> GetItemTags(ItemStack itemStack){
         JsonObject json = SyncTag.json;
         tags.clear();
         if(itemStack == null || itemStack.isEmpty())
@@ -87,7 +93,7 @@ public class Tagger {
             if(mainObj.has(itemid)){
                 JsonElement element = mainObj.get(itemid);
                 if(element.isJsonPrimitive()||element.isJsonArray()){
-                    tags = getArrayString(element);
+                    tags = getArrayEnumString(element);
                     return tags;
                 }else if(element.isJsonObject()){
                     handleObject(element.getAsJsonObject(),itemStack.getTag(), 0);

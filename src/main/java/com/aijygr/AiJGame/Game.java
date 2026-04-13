@@ -48,6 +48,7 @@ public class Game {
     public static boolean isGameStart = false;
     public static boolean isRingClosing = false;
     public static int sv_roundticktotal = 0;
+    public static boolean enableAiJBP;
 
 
     public static void tryPlayerMessage(Player player, String message) {

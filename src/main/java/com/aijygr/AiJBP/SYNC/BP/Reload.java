@@ -35,53 +35,53 @@ public class Reload {
                     }
                     j++;
                 }
-                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl, AiJBackpack.SlotType.BACKPACK));
+                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl));
                 //AiJBackpack.backpack.add(new AiJBackpack.SlotAttribute(slot, plvl, tag));
                 i++;
             }
-            for (JsonElement element : json.getAsJsonArray("Armor")) {
-                int j = 0;
-                String tag = "";
-                short slot = -1;
-                short plvl = -1;
-                for (JsonElement e : element.getAsJsonArray()) {
-                    switch (j) {
-                        case 0:
-                            slot = e.getAsShort();
-                            break;
-                        case 1:
-                            plvl = e.getAsShort();
-                            break;
-                        case 2:
-                            tag = e.getAsString();
-                    }
-                    j++;
-                }
-                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl, AiJBackpack.SlotType.ARMOR));
-                i++;
-            }
-            {
-                int j = 0;
-                String tag = "";
-                short slot = -1;
-                short plvl = -1;
-                for (JsonElement e : json.getAsJsonArray("Offhand")) {
-                    switch (j) {
-                        case 0:
-                            slot = e.getAsShort();
-                            break;
-                        case 1:
-                            plvl = e.getAsShort();
-                            break;
-                        case 2:
-                            tag = e.getAsString();
-                    }
-                    j++;
-                }
-                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl, AiJBackpack.SlotType.OFFHAND));
-                i++;
-
-            }
+//            for (JsonElement element : json.getAsJsonArray("Armor")) {
+//                int j = 0;
+//                String tag = "";
+//                short slot = -1;
+//                short plvl = -1;
+//                for (JsonElement e : element.getAsJsonArray()) {
+//                    switch (j) {
+//                        case 0:
+//                            slot = e.getAsShort();
+//                            break;
+//                        case 1:
+//                            plvl = e.getAsShort();
+//                            break;
+//                        case 2:
+//                            tag = e.getAsString();
+//                    }
+//                    j++;
+//                }
+//                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl, AiJBackpack.SlotType.ARMOR));
+//                i++;
+//            }
+//            {
+//                int j = 0;
+//                String tag = "";
+//                short slot = -1;
+//                short plvl = -1;
+//                for (JsonElement e : json.getAsJsonArray("Offhand")) {
+//                    switch (j) {
+//                        case 0:
+//                            slot = e.getAsShort();
+//                            break;
+//                        case 1:
+//                            plvl = e.getAsShort();
+//                            break;
+//                        case 2:
+//                            tag = e.getAsString();
+//                    }
+//                    j++;
+//                }
+//                AiJBackpack.slots.computeIfAbsent(AiJBackpack.SlotTag.valueOf(tag), k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl, AiJBackpack.SlotType.OFFHAND));
+//                i++;
+//
+//            }
 
             Game.tryPlayerMessage(player, "msg.aijbr.green", "msg.client", " Read " + i + " values");
         } catch (Exception e) {

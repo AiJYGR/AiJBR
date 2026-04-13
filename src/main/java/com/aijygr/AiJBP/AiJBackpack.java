@@ -3,7 +3,6 @@ package com.aijygr.AiJBP;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.ModConfig;
 import com.aijygr.ModMessages;
-import com.mojang.authlib.minecraft.TelemetrySession;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -33,74 +32,75 @@ public class AiJBackpack extends Event
         BACKPACK,
         ARMOR,
         DISABLE,
-        //DEFAULT
+        DEFAULT;
+
+        public static SlotTag getEnum(String tag){
+            for(SlotTag s:SlotTag.values()){
+                if(s.name().equalsIgnoreCase(tag)){
+                    return s;
+                }
+            }
+            return null;
+        }
     }
-    public enum SlotType{
-        BACKPACK,
-        ARMOR,
-        OFFHAND
-    }
+
     public static class SlotPermissionLevel{
-        short index = 0;
-        short permissionlevel = 0;
-        SlotType type;
+        short index;
+        short permissionlevel;
+
         public SlotPermissionLevel(){
             index = 0;
             permissionlevel = Short.MAX_VALUE;
-            type = SlotType.BACKPACK;
         }
-        public SlotPermissionLevel(short index,short permissionlevel,SlotType type){
+        public SlotPermissionLevel(short index,short permissionlevel){
             this.index = index;
             this.permissionlevel = permissionlevel;
-            this.type = type;
         }
     }
 
     public static Map<SlotTag,List<SlotPermissionLevel>> slots = new HashMap<>();
     public static short playerPermission = 0;
 
-    private static boolean isAvaliable = true;
-    public static void setAvaliable(){
-        isAvaliable = true;
+    private static boolean isAvailable = true;
+    public static void setAvailable(){
+        isAvailable = true;
     }
-    public static void serverSwap(Inventory inventory,SlotType t1, short s1, SlotType t2, short s2){
-        ModMessages.PlayerSendToServer(new MSGServerSwapItem(t1,s1,t2,s2));
-        isAvaliable = false;
-//        switch (t1) {
-//            case BACKPACK -> inventory.items.set(s1,ItemStack.EMPTY);
-//            case ARMOR -> inventory.armor.set(s1,ItemStack.EMPTY);
-//            case OFFHAND -> inventory.offhand.set(0,ItemStack.EMPTY);
-//        };
+    public static void clientsync(){
+        setAvailable();
+        InventoryLock.unlockAll();
     }
-    public static void serverRemove(Inventory inventory,SlotType type, short index,boolean remove){
-        ModMessages.PlayerSendToServer(new MSGServerRemoveItem(type,index,remove));
-        isAvaliable = false;
-        switch (type) {
-            case BACKPACK -> inventory.items.set(index,ItemStack.EMPTY);
-            case ARMOR -> inventory.armor.set(index,ItemStack.EMPTY);
-            case OFFHAND -> inventory.offhand.set(0,ItemStack.EMPTY);
-        };
+    public static void serverSwap(Inventory inventory,short s1, short s2){
+        ModMessages.PlayerSendToServer(new MSGServerSwapItem(s1,s2));
+        ItemStack temp = inventory.getItem(s1).copy();
+        inventory.setItem(s1,inventory.getItem(s2));
+        inventory.setItem(s2,temp);
+        isAvailable = false;
+
+    }
+    public static void serverRemove(Inventory inventory, short index,boolean remove){
+        ModMessages.PlayerSendToServer(new MSGServerRemoveItem(index,remove));
+        inventory.setItem(index,ItemStack.EMPTY);
+        isAvailable = false;
     }
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent event)
     {
         Player player = event.player;
-        if(player != null && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
+        if(player != null && event.side == LogicalSide.CLIENT && event.phase == Phase.END)
         {
             if (Minecraft.getInstance().player == null || !player.getUUID().equals(Minecraft.getInstance().player.getUUID()))
                 return;
             Inventory inventory = player.getInventory();
-//            if(Game.gametime%50==0)// 防止如果不小心/clear @s
+//            if(Game.gametime%50==0)//
 //            {
-//                InventoryLock.unlockAll();
-//                setAvaliable();
+//                clientsync();
 //            }
-            if(Game.isReloaded && isAvaliable){
+            if(Game.isReloaded && isAvailable){
                 //1.检查背包格位 计算PermissionLevel
                 //2.锁格子
                 //3.扫描所有未上锁格子 检查非法位置
                 //4.寻找合法的位置 并且移动
-                //5.如果没有就丢弃物品（40tick延迟）
+                //5.如果没有就丢弃物品（延迟）
 
                 //Step1
                 List<SlotPermissionLevel> bp = slots.get(SlotTag.BACKPACK);
@@ -119,53 +119,44 @@ public class AiJBackpack extends Event
                     playerPermission = i;
                 }
                 //Step2
-                slots.forEach((tag,slotPermissionLevel)->{
-                    for(SlotPermissionLevel slot:  slotPermissionLevel){
+                for(Map.Entry<SlotTag,List<SlotPermissionLevel>> entry: slots.entrySet()){
+                    for(SlotPermissionLevel slot:entry.getValue()){
                         if(slot.permissionlevel>playerPermission)
                             InventoryLock.lock(slot.index);
                         else
                             InventoryLock.unlock(slot.index);
                     }
-                });
+                }
+
                 //Step3
                 for (Map.Entry<SlotTag, List<SlotPermissionLevel>> entry : slots.entrySet()) {
                     SlotTag slottag = entry.getKey();
-                    List<SlotPermissionLevel> slotPermissionLevels = entry.getValue();
-                    for (SlotPermissionLevel slot : slotPermissionLevels) {
-                        ItemStack itemstack = switch (slot.type) {
-                            case BACKPACK -> inventory.items.get(slot.index);
-                            case ARMOR -> inventory.armor.get(slot.index);
-                            case OFFHAND -> inventory.offhand.get(0);
-                        };
+                    List<SlotPermissionLevel> slots1 = entry.getValue();
+                    for (SlotPermissionLevel slot1 : slots1) {
+                        ItemStack itemstack = inventory.getItem(slot1.index);
                         if (!itemstack.isEmpty()
-                                && !InventoryLock.isLocked(slot.index)
+                                && !InventoryLock.isLocked(slot1.index)
                                 && !Tagger.GetItemTags(itemstack).isEmpty()
-                                && !Tagger.GetItemTags(itemstack).contains(slottag.name())) {
+                                && !Tagger.GetItemTags(itemstack).contains(slottag)) {
                             //Step4
-                            for (String itemtag : Tagger.GetItemTags(itemstack)) {
-                                SlotTag targetTagType= SlotTag.valueOf(itemtag);
-                                List<SlotPermissionLevel> slots2 = slots.get(targetTagType);
-                                if (slots2 == null) continue;
-
-                                for (SlotPermissionLevel s : slots2) {
-                                    if(s.equals(slot))
+                            for (SlotTag itemtag : Tagger.GetItemTags(itemstack)) {
+                                List<SlotPermissionLevel> slots2 = slots.get(itemtag);
+                                if (slots2 == null)
+                                    continue;
+                                for (SlotPermissionLevel slot2 : slots2) {
+                                    if(slot2.equals(slot1))
                                         continue;
-
-                                    ItemStack i = switch (s.type) {
-                                        case BACKPACK -> inventory.items.get(s.index);
-                                        case ARMOR -> inventory.armor.get(s.index);
-                                        case OFFHAND -> inventory.offhand.get(0);
-                                    };
+                                    ItemStack i = inventory.getItem(slot2.index);
                                     if (i.isEmpty()) {
-                                        System.out.println(String.format("%dMSG:(%s,%d,%s,%d)", Game.gametime, s.type.name(), s.index, slot.type.name(), slot.index));
-                                        serverSwap(inventory,s.type, s.index, slot.type, slot.index);
+                                        System.out.printf("%d MSGSVSWAP:(%d,%d)\n", Game.gametime,  slot1.index,  slot2.index);
+                                        serverSwap(inventory,slot1.index,slot2.index);
                                         return;
                                     }
                                 }
                             }
                             //Step5
-                            System.out.println(String.format("%dMSG:(%s,%d)", Game.gametime, slot.type.name(),slot.index));
-                            serverRemove(inventory,slot.type,slot.index,false);
+                            System.out.println(String.format("%d MSGSVRemove:(%d)\n", Game.gametime,slot1.index));
+                            serverRemove(inventory,slot1.index,false);
                             return;
                         }
                     }

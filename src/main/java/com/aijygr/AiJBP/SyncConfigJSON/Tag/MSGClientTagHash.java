@@ -1,4 +1,4 @@
-package com.aijygr.AiJBP.SYNC.Tag;
+package com.aijygr.AiJBP.SyncConfigJSON.Tag;
 
 import com.aijygr.Main;
 import com.aijygr.ModMessages;

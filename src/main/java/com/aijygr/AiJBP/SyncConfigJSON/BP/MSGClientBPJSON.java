@@ -1,4 +1,4 @@
-package com.aijygr.AiJBP.SYNC.BP;
+package com.aijygr.AiJBP.SyncConfigJSON.BP;
 
 import com.aijygr.Main;
 import com.google.gson.JsonParser;
@@ -7,7 +7,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-import static com.aijygr.AiJBP.SYNC.Tag.SyncTag.HASH;
+import static com.aijygr.AiJBP.SyncConfigJSON.Tag.SyncTag.HASH;
 
 public class MSGClientBPJSON {
     private final String str;

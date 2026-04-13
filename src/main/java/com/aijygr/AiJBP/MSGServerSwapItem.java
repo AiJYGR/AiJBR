@@ -31,9 +31,11 @@ public class MSGServerSwapItem {
             ServerPlayer player = ctx.get().getSender();
             Inventory inventory = player.getInventory();
             try{
-                ItemStack temp = inventory.getItem(value1).copy();
-                inventory.setItem(value1,inventory.getItem(value2));
-                inventory.setItem(value2,temp);
+                ItemStack item1 = inventory.getItem(value1).copy();
+                ItemStack item2 = inventory.getItem(value2).copy();
+                inventory.setItem(value1,item2.copy());
+                inventory.setItem(value2,item1.copy());
+                //player.containerMenu.sendAllDataToRemote();
                 player.containerMenu.broadcastChanges();
                 ModMessages.ServerSendToPlayer(new MSGClientFinished(),ctx.get().getSender());
             }catch(Exception e){

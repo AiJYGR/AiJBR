@@ -1,6 +1,6 @@
 package com.aijygr.AiJBP;
 
-import com.aijygr.AiJBP.SYNC.Tag.SyncTag;
+import com.aijygr.AiJBP.SyncConfigJSON.Tag.SyncTag;
 import com.aijygr.Main;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

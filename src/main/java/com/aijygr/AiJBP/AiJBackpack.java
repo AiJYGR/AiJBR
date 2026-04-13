@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -50,18 +51,19 @@ public class AiJBackpack extends Event
         InventoryLock.unlockAll();
     }
     public static void serverSwap(Inventory inventory,short s1, short s2){
-        ModMessages.PlayerSendToServer(new MSGServerSwapItem(s1,s2));
-        ItemStack temp = inventory.getItem(s1).copy();
-        inventory.setItem(s1,inventory.getItem(s2));
-        inventory.setItem(s2,temp);
         isAvailable = false;
-
+        ModMessages.PlayerSendToServer(new MSGServerSwapItem(s1,s2));
+        ItemStack item1 = inventory.getItem(s1).copy();
+        ItemStack item2 = inventory.getItem(s2).copy();
+        inventory.setItem(s1,item2.copy());
+        inventory.setItem(s2,item1.copy());
     }
     public static void serverRemove(Inventory inventory, short index,boolean remove){
+        isAvailable = false;
         ModMessages.PlayerSendToServer(new MSGServerRemoveItem(index,remove));
         inventory.setItem(index,ItemStack.EMPTY);
-        isAvailable = false;
     }
+
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent event)
     {
@@ -70,7 +72,7 @@ public class AiJBackpack extends Event
         {
             if (Minecraft.getInstance().player == null || !player.getUUID().equals(Minecraft.getInstance().player.getUUID()))
                 return;
-            Inventory inventory = player.getInventory();
+
 //            if(Game.gametime%50==0)//
 //            {
 //                clientsync();
@@ -84,6 +86,7 @@ public class AiJBackpack extends Event
 
                 //Step1
                 List<SlotPermissionLevel> bp = slots.get("BACKPACK");
+                Inventory inventory = player.getInventory();
                 if(bp != null){
                     short i = ModConfig.Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL.get().shortValue();
                     for(SlotPermissionLevel it : bp){
@@ -144,4 +147,16 @@ public class AiJBackpack extends Event
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onPlayerPickup(PlayerEvent.ItemPickupEvent event){
+        if(event.getEntity().level().isClientSide()&&event.getEntity().isLocalPlayer()){
+            System.out.println("Player picked up");
+            if(!isAvailable){
+                System.out.println("not available");
+                event.setCanceled(true);
+            }
+        }
+    }
+
 }

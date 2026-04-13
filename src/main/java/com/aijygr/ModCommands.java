@@ -1,9 +1,8 @@
 package com.aijygr;
 
 import com.aijygr.AiJBP.AiJBackpack;
-import com.aijygr.AiJBP.InventoryLock;
-import com.aijygr.AiJBP.SYNC.BP.SyncBP;
-import com.aijygr.AiJBP.SYNC.Tag.SyncTag;
+import com.aijygr.AiJBP.SyncConfigJSON.BP.SyncBP;
+import com.aijygr.AiJBP.SyncConfigJSON.Tag.SyncTag;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.GameInitEvent;
 import com.aijygr.AiJGame.GameStartEvent;

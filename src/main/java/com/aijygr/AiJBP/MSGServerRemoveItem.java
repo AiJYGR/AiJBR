@@ -30,10 +30,11 @@ public class MSGServerRemoveItem {
             ServerPlayer player = ctx.get().getSender();
             Inventory inventory = player.getInventory();
             if(!remove){
-                player.drop(inventory.getItem(index),false);
+                player.drop(inventory.getItem(index).copy(),false);
             }
-            inventory.setItem(index,ItemStack.EMPTY);
+            inventory.setItem(index,ItemStack.EMPTY.copy());
             player.containerMenu.broadcastChanges();
+            //player.containerMenu.sendAllDataToRemote();
             ModMessages.ServerSendToPlayer(new MSGClientFinished(),ctx.get().getSender());
         });
         ctx.get().setPacketHandled(true);

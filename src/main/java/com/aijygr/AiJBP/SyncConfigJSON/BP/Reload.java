@@ -1,4 +1,4 @@
-package com.aijygr.AiJBP.SYNC.BP;
+package com.aijygr.AiJBP.SyncConfigJSON.BP;
 
 import com.aijygr.AiJBP.AiJBackpack;
 import com.aijygr.AiJGame.Game;

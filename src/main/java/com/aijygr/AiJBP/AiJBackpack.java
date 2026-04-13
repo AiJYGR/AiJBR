@@ -23,27 +23,6 @@ import java.util.Map;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)//####################################
 public class AiJBackpack extends Event
 {
-    public enum SlotTag{
-        MAINWPN,
-        SUBWPN,
-        MELEE,
-        //NADES,
-        SUPPLIES,
-        BACKPACK,
-        ARMOR,
-        DISABLE,
-        DEFAULT;
-
-        public static SlotTag getEnum(String tag){
-            for(SlotTag s:SlotTag.values()){
-                if(s.name().equalsIgnoreCase(tag)){
-                    return s;
-                }
-            }
-            return null;
-        }
-    }
-
     public static class SlotPermissionLevel{
         short index;
         short permissionlevel;
@@ -58,7 +37,8 @@ public class AiJBackpack extends Event
         }
     }
 
-    public static Map<SlotTag,List<SlotPermissionLevel>> slots = new HashMap<>();
+    //public static Map<SlotTag,List<SlotPermissionLevel>> slots = new HashMap<>();
+    public static Map<String, List<SlotPermissionLevel>> slots = new HashMap<>();
     public static short playerPermission = 0;
 
     private static boolean isAvailable = true;
@@ -103,7 +83,7 @@ public class AiJBackpack extends Event
                 //5.如果没有就丢弃物品（延迟）
 
                 //Step1
-                List<SlotPermissionLevel> bp = slots.get(SlotTag.BACKPACK);
+                List<SlotPermissionLevel> bp = slots.get("BACKPACK");
                 if(bp != null){
                     short i = ModConfig.Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL.get().shortValue();
                     for(SlotPermissionLevel it : bp){
@@ -119,7 +99,7 @@ public class AiJBackpack extends Event
                     playerPermission = i;
                 }
                 //Step2
-                for(Map.Entry<SlotTag,List<SlotPermissionLevel>> entry: slots.entrySet()){
+                for(Map.Entry<String, List<SlotPermissionLevel>> entry: slots.entrySet()){
                     for(SlotPermissionLevel slot:entry.getValue()){
                         if(slot.permissionlevel>playerPermission)
                             InventoryLock.lock(slot.index);
@@ -129,8 +109,8 @@ public class AiJBackpack extends Event
                 }
 
                 //Step3
-                for (Map.Entry<SlotTag, List<SlotPermissionLevel>> entry : slots.entrySet()) {
-                    SlotTag slottag = entry.getKey();
+                for (Map.Entry<String, List<SlotPermissionLevel>> entry : slots.entrySet()) {
+                    String slottag = entry.getKey();
                     List<SlotPermissionLevel> slots1 = entry.getValue();
                     for (SlotPermissionLevel slot1 : slots1) {
                         ItemStack itemstack = inventory.getItem(slot1.index);
@@ -139,7 +119,7 @@ public class AiJBackpack extends Event
                                 && !Tagger.GetItemTags(itemstack).isEmpty()
                                 && !Tagger.GetItemTags(itemstack).contains(slottag)) {
                             //Step4
-                            for (SlotTag itemtag : Tagger.GetItemTags(itemstack)) {
+                            for (String itemtag : Tagger.GetItemTags(itemstack)) {
                                 List<SlotPermissionLevel> slots2 = slots.get(itemtag);
                                 if (slots2 == null)
                                     continue;
@@ -155,7 +135,7 @@ public class AiJBackpack extends Event
                                 }
                             }
                             //Step5
-                            System.out.println(String.format("%d MSGSVRemove:(%d)\n", Game.gametime,slot1.index));
+                            System.out.printf("%d MSGSVRemove:(%d)\n", Game.gametime,slot1.index);
                             serverRemove(inventory,slot1.index,false);
                             return;
                         }

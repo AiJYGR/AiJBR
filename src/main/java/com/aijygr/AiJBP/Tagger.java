@@ -14,19 +14,19 @@ import java.util.List;
 import java.util.Set;
 
 public class Tagger {
-    private static List<AiJBackpack.SlotTag> tags = new ArrayList<>();
-    private static AiJBackpack.SlotTag getPermativeEnumString(JsonElement element){
+    private static List<String> tags = new ArrayList<>();
+    private static String getPermativeEnumString(JsonElement element){
         if (element.isJsonPrimitive()) {
             if(element.getAsJsonPrimitive().isString()){
                 String str = element.getAsJsonPrimitive().getAsString();
-                return AiJBackpack.SlotTag.getEnum(str);
+                return str;
             }
         }
         return null;
     }
-    private static List<AiJBackpack.SlotTag> getArrayEnumString(JsonElement element){
-        List<AiJBackpack.SlotTag> a = new ArrayList<>();
-        AiJBackpack.SlotTag t;
+    private static List<String> getArrayEnumString(JsonElement element){
+        List<String> a = new ArrayList<>();
+        String t;
         if(element.isJsonArray()){
             for(JsonElement e : element.getAsJsonArray()){
                 t = getPermativeEnumString(e);
@@ -76,7 +76,7 @@ public class Tagger {
     }
 
 
-    public static List<AiJBackpack.SlotTag> GetItemTags(ItemStack itemStack){
+    public static List<String> GetItemTags(ItemStack itemStack){
         JsonObject json = SyncTag.json;
         tags.clear();
         if(itemStack == null || itemStack.isEmpty())

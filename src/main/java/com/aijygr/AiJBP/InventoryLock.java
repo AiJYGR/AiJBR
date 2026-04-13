@@ -12,22 +12,20 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.BitSet;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class InventoryLock {
-    private static List<Short> locks = new ArrayList<>();
+    private static BitSet locks = new BitSet(64);
     public static boolean isLocked(short i){
-        return locks.contains(i);
+        return locks.get(i);
     }
     public static void lock(short i){
         if(isLocked(i)){
             return;
         }
-        locks.add(i);
+        locks.set(i, true);
         ModMessages.PlayerSendToServer(new MSGServerLockInv(i));
     }
     public static void lock(int i){
@@ -35,7 +33,7 @@ public class InventoryLock {
     }
     public static void unlock(short i){
         if(isLocked(i)){
-            locks.remove(Short.valueOf(i));
+            locks.set(i, false);
             ModMessages.PlayerSendToServer(new MSGServerUnlockInv(i));
         }
     }
@@ -43,8 +41,8 @@ public class InventoryLock {
         unlock((short)i);
     }
     public static void unlockAll(){
-        for(short i : locks){
-            ModMessages.PlayerSendToServer(new MSGServerUnlockInv(i));
+        for(short i = 0; i < locks.length(); i++){
+            unlock(i);
         }
         locks.clear();
     }

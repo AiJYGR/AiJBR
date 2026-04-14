@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)//####################################
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class AiJBackpack extends Event
 {
     public static class SlotPermissionLevel{
@@ -50,6 +50,7 @@ public class AiJBackpack extends Event
         setAvailable();
         InventoryLock.unlockAll();
     }
+    /*@Deprecated
     public static void serverSwap(Inventory inventory,short s1, short s2){
         isAvailable = false;
         ModMessages.PlayerSendToServer(new MSGServerSwapItem(s1,s2));
@@ -57,8 +58,14 @@ public class AiJBackpack extends Event
         ItemStack item2 = inventory.getItem(s2).copy();
         inventory.setItem(s1,item2.copy());
         inventory.setItem(s2,item1.copy());
+    }*/
+    public static void serverMoveEmpty(Inventory inventory,short index, short target) {
+        System.out.printf("[%d]MSGSVMoveEmpty:(%d,%d)\n", Game.gametime, index, target);
+        isAvailable = false;
+        ModMessages.PlayerSendToServer(new MSGServerMoveEmpty(index,target));
     }
     public static void serverRemove(Inventory inventory, short index,boolean remove){
+        System.out.printf("[%d]MSGSVMoveEmpty:(%d,%s)\n", Game.gametime, index, remove);
         isAvailable = false;
         ModMessages.PlayerSendToServer(new MSGServerRemoveItem(index,remove));
         inventory.setItem(index,ItemStack.EMPTY);
@@ -131,14 +138,12 @@ public class AiJBackpack extends Event
                                         continue;
                                     ItemStack i = inventory.getItem(slot2.index);
                                     if (i.isEmpty()) {
-                                        System.out.printf("%d MSGSVSWAP:(%d,%d)\n", Game.gametime,  slot1.index,  slot2.index);
-                                        serverSwap(inventory,slot1.index,slot2.index);
+                                        serverMoveEmpty(inventory,slot1.index,slot2.index);
                                         return;
                                     }
                                 }
                             }
                             //Step5
-                            System.out.printf("%d MSGSVRemove:(%d)\n", Game.gametime,slot1.index);
                             serverRemove(inventory,slot1.index,false);
                             return;
                         }

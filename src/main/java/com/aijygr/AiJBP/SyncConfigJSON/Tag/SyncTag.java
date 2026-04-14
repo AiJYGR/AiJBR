@@ -107,8 +107,7 @@ public class SyncTag {
             Main.LOGGER.info("[AiJBR][SyncTag] Serverside hash = {}", hash);
 
         } catch (Exception e) {
-            Main.LOGGER.error("[AiJBR][SyncTag]: {}", e.getMessage());
-            throw new Exception("Failed: "+e.getMessage());
+            throw new Exception("AiJTAG.reload: "+e.getMessage());
         }
     }
 }

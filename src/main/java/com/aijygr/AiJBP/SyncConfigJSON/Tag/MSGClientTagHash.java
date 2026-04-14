@@ -1,7 +1,9 @@
 package com.aijygr.AiJBP.SyncConfigJSON.Tag;
 
+import com.aijygr.AiJGame.Game;
 import com.aijygr.Main;
 import com.aijygr.ModMessages;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -13,25 +15,24 @@ public class MSGClientTagHash {
     public MSGClientTagHash(FriendlyByteBuf buf) {
         this.str = buf.readUtf(SyncTag.PMAXLENGTH);
     }
-
     public void encode(FriendlyByteBuf buf) {
         buf.writeUtf(this.str, SyncTag.PMAXLENGTH);
     }
-
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if(SyncTag.clienthash.isEmpty()){
-                SyncTag.loadLocalCache();
-            }
-            Main.LOGGER.info("[AiJBR][MSGClientTagHash]: Server tag hash received = "+ str);
-            Main.LOGGER.info("[AiJBR][MSGClientTagHash]: Client Hash = "+ SyncTag.clienthash);
-            if(SyncTag.clienthash.equals(this.str)){
-                Main.LOGGER.info("[AiJBR][MSGClientTagHash]: EQUAL.");
-                ModMessages.PlayerSendToServer(new MSGServerRequestSyncTagJSON("="));
-            }
-            else{
-                Main.LOGGER.info("[AiJBR][MSGClientTagHash]: DIFFERENT.");
-                ModMessages.PlayerSendToServer(new MSGServerRequestSyncTagJSON("!"));
+            try{
+                if(SyncTag.clienthash.isEmpty()){
+                    SyncTag.loadLocalCache();
+                }
+                if(SyncTag.clienthash.equals(this.str)){
+                    ModMessages.PlayerSendToServer(new MSGServerRequestSyncTagJSON("="));
+                    Game.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient TagHASH] Success.");
+                }
+                else{
+                    ModMessages.PlayerSendToServer(new MSGServerRequestSyncTagJSON("!"));
+                }
+            } catch (Exception e){
+                Main.LOGGER.error("[MSGClientTagHASH]:{}", e.getMessage());
             }
         });
         ctx.get().setPacketHandled(true);

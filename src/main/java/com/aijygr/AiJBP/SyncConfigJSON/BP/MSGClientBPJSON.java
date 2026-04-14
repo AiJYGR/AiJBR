@@ -1,7 +1,9 @@
 package com.aijygr.AiJBP.SyncConfigJSON.BP;
 
+import com.aijygr.AiJGame.Game;
 import com.aijygr.Main;
 import com.google.gson.JsonParser;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -18,14 +20,17 @@ public class MSGClientBPJSON {
     public void encode(FriendlyByteBuf buf) {
         buf.writeUtf(this.str, SyncBP.PMAXLENGTH);
     }
-
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            SyncBP.json = JsonParser.parseString(str).getAsJsonObject();
-            String hash = HASH(str);
-            SyncBP.saveLocalCache(str,hash);
-            Reload.ReloadBP();
-            Main.LOGGER.info("[AiJBR][MSGClientBPJSON] Successfully synced json and saved local cache.");
+            try{
+                SyncBP.json = JsonParser.parseString(str).getAsJsonObject();
+                String hash = HASH(str);
+                SyncBP.saveLocalCache(str,hash);
+                Reload.ReloadBP();
+            }catch(Exception e){
+                Main.LOGGER.error("[MSGClientBPJSON]:{}", e.getMessage());
+            }
+            Game.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPJSON] Success.");
         });
         ctx.get().setPacketHandled(true);
     }

@@ -9,21 +9,23 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class Tagger {
-    private static List<String> tags = new ArrayList<>();
+    private static List<String> tags;
+    @Nullable
     private static String getPermativeEnumString(JsonElement element){
         if (element.isJsonPrimitive()) {
             if(element.getAsJsonPrimitive().isString()){
-                String str = element.getAsJsonPrimitive().getAsString();
-                return str;
+                return element.getAsJsonPrimitive().getAsString();
             }
         }
         return null;
     }
+    @Nullable
     private static List<String> getArrayEnumString(JsonElement element){
         List<String> a = new ArrayList<>();
         String t;
@@ -75,10 +77,10 @@ public class Tagger {
         }
     }
 
-
+    @Nullable
     public static List<String> GetItemTags(ItemStack itemStack){
         JsonObject json = SyncTag.json;
-        tags.clear();
+        tags = new ArrayList<>();
         if(itemStack == null || itemStack.isEmpty())
             return null;
         if(json ==null)

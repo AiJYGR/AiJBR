@@ -37,7 +37,7 @@ public class ModCommands
 //                    Minecraft.getInstance().setScreen(new Scr(Component.translatable("title.singleplayer")));
 //                });
                 Minecraft.getInstance().setScreen(new Scr(Component.translatable("title.singleplayer")));
-                Player player = command.getSource().getPlayer();
+                //Player player = command.getSource().getPlayer();
                 return 0;
             })));
         }
@@ -62,18 +62,18 @@ public class ModCommands
     private static class ReloadCommand {
         private void Reload(CommandSourceStack source) {
             ServerPlayer player = source.getPlayer();
-            Game.tryBroadcastMessage(player,"\n","msg.aijbr.green","msg.server"," Starting Reload...");
+            Game.tryBroadcastMessage(player,"\n","msg.aijbr.yellow","msg.server","Start to SYNC JSON...");
+            Game.isReloaded = false;
             try{
                 SyncTag.reload(source.getServer());
                 SyncBP.reload(source.getServer());
                 Game.isReloaded = true;
             }catch(Exception e){
-                Game.tryBroadcastMessage(player,"\n","msg.aijbr.red","msg.server","Reload failed:");
+                Game.tryBroadcastMessage(player,"msg.aijbr.red","msg.server","Reload failed:");
                 Game.tryBroadcastMessage(player,e.getMessage(),"\nPlease check the JSON file.");
                 Game.tryBroadcastMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
-                return;
             }
-            Game.tryBroadcastMessage(player,"msg.aijbr.bold","msg.aijbr.info.command_executed");
+            //Game.tryBroadcastMessage(player,"msg.aijbr.bold"," SYNC SUCCESSFULLY.");
         }
         public ReloadCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("reload").requires((source) -> {

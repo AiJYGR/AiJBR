@@ -15,11 +15,9 @@ public class MSGServerRequestSyncTagJSON {
         // 给 256KB 的宽限，防止大型配置包溢出 GEMINI
         this.str = buf.readUtf(SyncTag.PMAXLENGTH);
     }
-
     public void encode(FriendlyByteBuf buf) {
         buf.writeUtf(this.str, SyncTag.PMAXLENGTH);
     }
-
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             if(str.equals("!")){
@@ -27,7 +25,7 @@ public class MSGServerRequestSyncTagJSON {
                 ModMessages.ServerSendToPlayer(new MSGClientTagJSON(SyncTag.rawjson), player);
                 Main.LOGGER.info("[AiJBR][MSGServerRequestSyncTagJSON] SyncBP request received, send json file.");
             }
-            else if (str.equals("=")||str.equals("+")){
+            else if (str.equals("=")||str.equals("+") ){
                 ServerPlayer player = ctx.get().getSender();
                 Main.LOGGER.info("[AiJBR][MSGServerRequestSyncTagJSON]"+str+player.getName().getString()+" has synced json file.");
             }

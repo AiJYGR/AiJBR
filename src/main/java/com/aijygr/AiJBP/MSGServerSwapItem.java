@@ -1,7 +1,5 @@
 package com.aijygr.AiJBP;
 
-import com.aijygr.AiJGame.Game;
-import com.aijygr.Main;
 import com.aijygr.ModMessages;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

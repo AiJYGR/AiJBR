@@ -1,7 +1,8 @@
 package com.aijygr.AiJBP.SyncConfigJSON.Tag;
 
-import com.aijygr.Main;
+import com.aijygr.AiJGame.Game;
 import com.google.gson.JsonParser;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -24,7 +25,7 @@ public class MSGClientTagJSON {
             SyncTag.json = JsonParser.parseString(str).getAsJsonObject();
             String hash = HASH(str);
             SyncTag.saveLocalCache(str,hash);
-            Main.LOGGER.info("[AiJBR][MSGClientTagJSON] Successfully synced json and saved local cache.");
+            Game.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient TagJSON] Success.");
         });
         ctx.get().setPacketHandled(true);
     }

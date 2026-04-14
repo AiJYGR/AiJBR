@@ -44,7 +44,6 @@ public class InventoryLock {
         for(short i = 0; i < locks.length(); i++){
             unlock(i);
         }
-        locks.clear();
     }
 
     /*  Disable the interacts   */

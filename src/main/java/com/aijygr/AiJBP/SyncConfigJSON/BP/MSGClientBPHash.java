@@ -1,7 +1,9 @@
 package com.aijygr.AiJBP.SyncConfigJSON.BP;
 
+import com.aijygr.AiJGame.Game;
 import com.aijygr.Main;
 import com.aijygr.ModMessages;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -13,26 +15,25 @@ public class MSGClientBPHash {
     public MSGClientBPHash(FriendlyByteBuf buf) {
         this.str = buf.readUtf(SyncBP.PMAXLENGTH);
     }
-
     public void encode(FriendlyByteBuf buf) {
         buf.writeUtf(this.str, SyncBP.PMAXLENGTH);
     }
-
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if(SyncBP.clienthash.isEmpty()){
-                SyncBP.loadLocalCache();
-            }
-            Main.LOGGER.info("[AiJBR][MSGClientBPHash]: Server tag hash received = "+ str);
-            Main.LOGGER.info("[AiJBR][MSGClientBPHash]: Client Hash = "+ SyncBP.clienthash);
-            if(SyncBP.clienthash.equals(this.str)){
-                Main.LOGGER.info("[AiJBR][MSGClientBPHash]: EQUAL.");
-                ModMessages.PlayerSendToServer(new MSGServerRequestSyncBPJSON("="));
-                Reload.ReloadBP();
-            }
-            else{
-                Main.LOGGER.info("[AiJBR][MSGClientBPHash]: DIFFERENT.");
-                ModMessages.PlayerSendToServer(new MSGServerRequestSyncBPJSON("!"));
+            try{
+                if(SyncBP.clienthash.isEmpty()){
+                    SyncBP.loadLocalCache();
+                }
+                if(SyncBP.clienthash.equals(this.str)){
+                    ModMessages.PlayerSendToServer(new MSGServerRequestSyncBPJSON("="));
+                    Reload.ReloadBP();
+                    Game.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPHASH] Success.");
+                }
+                else{
+                    ModMessages.PlayerSendToServer(new MSGServerRequestSyncBPJSON("!"));
+                }
+            }catch(Exception e){
+                Main.LOGGER.error("[MSGClientBPHASH]:{}", e.getMessage());
             }
         });
         ctx.get().setPacketHandled(true);

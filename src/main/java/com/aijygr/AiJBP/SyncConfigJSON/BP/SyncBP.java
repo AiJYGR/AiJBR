@@ -18,14 +18,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-
-/*
-* SyncBP the Json data
-* From Server to Client Side
-* Firstly Server sends HASH
-* Client checks if local cache is differ from it, and sends sync request
-* Server receives request, and send full file.
-* */
 public class SyncBP {
     public static final String DEFAULTFILE = """
 {
@@ -131,13 +123,13 @@ public class SyncBP {
         try (FileReader reader = new FileReader(file)) {
             rawjson = Files.readString(jsonfilepath, StandardCharsets.UTF_8);
             json = JsonParser.parseString(rawjson).getAsJsonObject();
+            int i = Reload.ReloadBP();//服务器预检查
             String hash = HASH(rawjson);
             ModMessages.ServerSendToAll(new MSGClientBPHash(hash));//////SYNC HASH!!!!!!!!
-            Main.LOGGER.info("[AiJBR][SyncBP] Serverside hash = {}", hash);
+            Main.LOGGER.info("[AiJBR][SyncBP]Read {} values. Serverside hash = {}",i , hash);
 
         } catch (Exception e) {
-            Main.LOGGER.error("[AiJBR][SyncBP]: {}", e.getMessage());
-            throw new Exception("Failed: "+e.getMessage());
+            throw new Exception("AiJBP.reload: "+e.getMessage());
         }
     }
 }

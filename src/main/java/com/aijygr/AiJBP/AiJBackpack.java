@@ -68,7 +68,7 @@ public class AiJBackpack extends Event
         System.out.printf("[%d]MSGSVMoveEmpty:(%d,%s)\n", Game.gametime, index, remove);
         isAvailable = false;
         ModMessages.PlayerSendToServer(new MSGServerRemoveItem(index,remove));
-        inventory.setItem(index,ItemStack.EMPTY);
+        //inventory.setItem(index,ItemStack.EMPTY);
     }
 
     @SubscribeEvent
@@ -84,7 +84,7 @@ public class AiJBackpack extends Event
 //            {
 //                clientsync();
 //            }
-            if(Game.isReloaded && isAvailable){
+            if(Game.isReloaded && isAvailable && Game.gametime%2==0){
                 //1.检查背包格位 计算PermissionLevel
                 //2.锁格子
                 //3.扫描所有未上锁格子 检查非法位置

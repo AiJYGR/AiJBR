@@ -31,14 +31,16 @@ public class MSGServerMoveEmpty {
             Inventory inventory = player.getInventory();
             if(inventory.getItem(target).isEmpty())
             {
-                inventory.setItem(target,inventory.getItem(index));
+                inventory.setItem(target,inventory.getItem(index).copy());
                 inventory.setItem(index,ItemStack.EMPTY.copy());
+                player.containerMenu.broadcastChanges();
             }
             else{
                 System.out.println("REJECTED");
+                //player.containerMenu.sendAllDataToRemote();
             }
             //player.containerMenu.sendAllDataToRemote();
-            player.containerMenu.broadcastChanges();
+
             ModMessages.ServerSendToPlayer(new MSGClientFinished(),ctx.get().getSender());
         });
         ctx.get().setPacketHandled(true);

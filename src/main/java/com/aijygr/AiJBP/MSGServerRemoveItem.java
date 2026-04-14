@@ -9,6 +9,8 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
+import static com.aijygr.AiJBP.AiJBackpack.inventoryToSlotId;
+
 public class MSGServerRemoveItem {
     private short index;
     private boolean remove;
@@ -29,12 +31,12 @@ public class MSGServerRemoveItem {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
             Inventory inventory = player.getInventory();
+            player.containerMenu.incrementStateId();
             if(!remove){
                 player.drop(inventory.getItem(index).copy(),false);
             }
             inventory.setItem(index,ItemStack.EMPTY.copy());
             player.containerMenu.broadcastChanges();
-            //player.containerMenu.sendAllDataToRemote();
             ModMessages.ServerSendToPlayer(new MSGClientFinished(),ctx.get().getSender());
         });
         ctx.get().setPacketHandled(true);

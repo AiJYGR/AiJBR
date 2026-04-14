@@ -35,8 +35,6 @@ public class MSGServerSwapItem {
             ItemStack item2 = inventory.getItem(value2).copy();
             inventory.setItem(value1,item2.copy());
             inventory.setItem(value2,item1.copy());
-            //player.containerMenu.sendAllDataToRemote();
-            player.containerMenu.broadcastChanges();
             ModMessages.ServerSendToPlayer(new MSGClientFinished(),ctx.get().getSender());
         });
         ctx.get().setPacketHandled(true);

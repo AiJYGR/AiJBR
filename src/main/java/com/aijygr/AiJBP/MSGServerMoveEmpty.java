@@ -10,6 +10,8 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
+import static com.aijygr.AiJBP.AiJBackpack.inventoryToSlotId;
+
 public class MSGServerMoveEmpty {
     private short index, target;
 
@@ -29,18 +31,23 @@ public class MSGServerMoveEmpty {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
             Inventory inventory = player.getInventory();
+            player.containerMenu.incrementStateId();
+            System.out.printf("Server:{%s,%s}->",inventory.getItem(index).getDisplayName().getString(),inventory.getItem(target).getDisplayName().getString());
             if(inventory.getItem(target).isEmpty())
             {
-                inventory.setItem(target,inventory.getItem(index).copy());
-                inventory.setItem(index,ItemStack.EMPTY.copy());
+                ItemStack item1 = player.getInventory().getItem(index).copy();
+                ItemStack item2 = player.getInventory().getItem(target).copy();
+                inventory.setItem(index,item2.copy());
+                inventory.setItem(target,item1.copy());
                 player.containerMenu.broadcastChanges();
             }
             else{
-                System.out.println("REJECTED");
-                //player.containerMenu.sendAllDataToRemote();
+                System.out.print("REJECTED");
+                //player.drop(inventory.getItem(index).copy(),false);
+                //inventory.setItem(index,ItemStack.EMPTY.copy());
+                player.containerMenu.sendAllDataToRemote();
             }
-            //player.containerMenu.sendAllDataToRemote();
-
+            System.out.printf("{%s,%s}\n",inventory.getItem(index).getDisplayName().getString(),inventory.getItem(target).getDisplayName().getString());
             ModMessages.ServerSendToPlayer(new MSGClientFinished(),ctx.get().getSender());
         });
         ctx.get().setPacketHandled(true);

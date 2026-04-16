@@ -152,6 +152,15 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'GeckoLib'
+                url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            }
+        }
+        filter { includeGroupAndSubgroups('com.geckolib') }
+    }
 }
 
 dependencies {
@@ -177,6 +186,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    implementation fg.deobf("curse.maven:geckolib-388172:7553267")
+    //implementation minecraft.dependency("com.geckolib:geckolib-forge-${minecraft_version}:${geckolibVersion}")
 
     runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
     //runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")

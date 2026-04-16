@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 public class Tagger {
-    private static List<String> tags;
     @Nullable
     private static String getPermativeEnumString(JsonElement element){
         if (element.isJsonPrimitive()) {
@@ -34,7 +33,7 @@ public class Tagger {
                 t = getPermativeEnumString(e);
                 if(t!=null)
                     a.add(t);
-                else return null;
+                else return new ArrayList<>();
             }
             return a;
         }
@@ -45,42 +44,39 @@ public class Tagger {
         }
         else return null;
     }
-    private static void handleObject(JsonObject object, CompoundTag tag,int d)
+    @Nullable
+    private static List<String> handleObject(JsonObject object, CompoundTag tag,int d)
     {
         //终止条件：getArrayString 或层数>10
         if (d > 10 || object == null || tag == null)
-            return;
+            return null;
         Set<String> keys = tag.getAllKeys();
         for(String key : keys){
             if(object.has(key)){
                 JsonElement e = object.get(key);
                 if (e.isJsonPrimitive() || e.isJsonArray()) {
-                    tags = getArrayEnumString(e);
-                    if(tags != null)
-                        return;
+                        return getArrayEnumString(e);
                 }
                 else if (e.isJsonObject()) {
                     if (tag.getTagType(key) == Tag.TAG_STRING) {
                         String subId = tag.getString(key);
                         JsonObject subObj = e.getAsJsonObject();
                         if (subObj.has(subId)) {
-                            tags = getArrayEnumString(subObj.get(subId));
-                            if(tags != null)
-                                return;
+                            return getArrayEnumString(subObj.get(subId));
                         }
                     }
                     else if (tag.getTagType(key) == Tag.TAG_COMPOUND) {
-                        handleObject(e.getAsJsonObject(), tag.getCompound(key), d+1);
+                        return handleObject(e.getAsJsonObject(), tag.getCompound(key), d+1);
                     }
                 }
             }
-        }
+        return null;
     }
 
     @Nullable
     public static List<String> GetItemTags(ItemStack itemStack){
         JsonObject json = SyncTag.json;
-        tags = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
         if(itemStack == null || itemStack.isEmpty())
             return null;
         if(json ==null)

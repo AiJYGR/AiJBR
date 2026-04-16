@@ -218,7 +218,6 @@ public abstract class ModConfig {
         server_builder.pop();
         server_builder.push("ARMOR");
         //server_builder.comment("");
-        server_builder.translation("");
         //CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);
         server_builder.pop();
 

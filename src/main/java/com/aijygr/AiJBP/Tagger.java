@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class Tagger {
         }
         return null;
     }
-    @Nullable
+    @NotNull
     private static List<String> getArrayEnumString(JsonElement element){
         List<String> a = new ArrayList<>();
         String t;
@@ -42,42 +43,43 @@ public class Tagger {
             a.add(t);
             return a;
         }
-        else return null;
+        else return new ArrayList<>();
     }
     @Nullable
-    private static List<String> handleObject(JsonObject object, CompoundTag tag,int d)
-    {
+    private static List<String> handleObject(JsonObject object, CompoundTag tag,int d) {
         //终止条件：getArrayString 或层数>10
         if (d > 10 || object == null || tag == null)
             return null;
         Set<String> keys = tag.getAllKeys();
-        for(String key : keys){
-            if(object.has(key)){
+        for (String key : keys) {
+            if (object.has(key)) {
                 JsonElement e = object.get(key);
                 if (e.isJsonPrimitive() || e.isJsonArray()) {
-                        return getArrayEnumString(e);
+                    return getArrayEnumString(e);
                 }
-                else if (e.isJsonObject()) {
-                    if (tag.getTagType(key) == Tag.TAG_STRING) {
+                else if (e.isJsonObject())
+                {
+                    if (tag.getTagType(key) == Tag.TAG_STRING)
+                    {
                         String subId = tag.getString(key);
                         JsonObject subObj = e.getAsJsonObject();
                         if (subObj.has(subId)) {
                             return getArrayEnumString(subObj.get(subId));
                         }
-                    }
-                    else if (tag.getTagType(key) == Tag.TAG_COMPOUND) {
-                        return handleObject(e.getAsJsonObject(), tag.getCompound(key), d+1);
+                    } else if (tag.getTagType(key) == Tag.TAG_COMPOUND) {
+                        return handleObject(e.getAsJsonObject(), tag.getCompound(key), d + 1);
                     }
                 }
             }
+
+        }
         return null;
     }
-
     @Nullable
-    public static List<String> GetItemTags(ItemStack itemStack){
+    public static List<String> GetItemTags(ItemStack itemstack)
+    {
         JsonObject json = SyncTag.json;
-        List<String> tags = new ArrayList<>();
-        if(itemStack == null || itemStack.isEmpty())
+        if(itemstack == null || itemstack.isEmpty())
             return null;
         if(json ==null)
         {
@@ -86,19 +88,26 @@ public class Tagger {
         }
         if(json.isJsonObject()){
             JsonObject mainObj = json.getAsJsonObject();
-            String itemid;
-            itemid = ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString();
+            String itemid = ForgeRegistries.ITEMS.getKey(itemstack.getItem()).toString();
+            List<String> tags = null;
             if(mainObj.has(itemid)){
                 JsonElement element = mainObj.get(itemid);
                 if(element.isJsonPrimitive()||element.isJsonArray()){
                     tags = getArrayEnumString(element);
-                    return tags;
                 }else if(element.isJsonObject()){
-                    handleObject(element.getAsJsonObject(),itemStack.getTag(), 0);
+                    tags = handleObject(element.getAsJsonObject(),itemstack.getTag(), 0);
                 }
             }
-            return tags;
+            if(tags!=null)//找到了定义
+                return tags;
+            else if(mainObj.has("DEFAULT")){
+                JsonElement element = mainObj.get("DEFAULT");
+                if(element.isJsonPrimitive()||element.isJsonArray()){
+                    return getArrayEnumString(element);
+                }
+            }
+            return null;
         }
-        else return null;
+        return null;
     }
 }

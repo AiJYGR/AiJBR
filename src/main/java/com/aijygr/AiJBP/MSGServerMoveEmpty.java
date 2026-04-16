@@ -28,19 +28,16 @@ public class MSGServerMoveEmpty {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
             Inventory inventory = player.getInventory();
-            //System.out.printf("Server:{%s,%s}->",inventory.getItem(index).getDisplayName().getString(),inventory.getItem(target).getDisplayName().getString());
             if(inventory.getItem(target).isEmpty())
             {
                 ItemStack item1 = player.getInventory().getItem(index).copy();
                 ItemStack item2 = player.getInventory().getItem(target).copy();
                 inventory.setItem(index,item2.copy());
                 inventory.setItem(target,item1.copy());
-                player.containerMenu.broadcastChanges();
             }
             else{
                 System.out.print("REJECTED");
             }
-            //System.out.printf("{%s,%s}\n",inventory.getItem(index).getDisplayName().getString(),inventory.getItem(target).getDisplayName().getString());
             ModMessages.ServerSendToPlayer(new MSGClientFinished(),ctx.get().getSender());
         });
         ctx.get().setPacketHandled(true);

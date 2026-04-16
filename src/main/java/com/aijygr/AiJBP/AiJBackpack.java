@@ -6,6 +6,7 @@ import com.aijygr.ModMessages;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,23 +50,42 @@ public class AiJBackpack extends Event
         setAvailable();
         InventoryLock.unlockAll();
     }
-    /*@Deprecated
-    public static void serverSwap(Inventory inventory,short s1, short s2){
-        isAvailable = false;
-        ModMessages.PlayerSendToServer(new MSGServerSwapItem(s1,s2));
-    }*/
-    public static void serverMoveEmpty(short index, short target) {
-        //System.out.printf("[%d]MSGSVMoveEmpty:(%d,%d) ", Game.gametime, index, target);
-        //System.out.printf("Client:{%s,%s}\n",player.getInventory().getItem(index).getDisplayName().getString(),player.getInventory().getItem(target).getDisplayName().getString());
-        isAvailable = false;
-        ModMessages.PlayerSendToServer(new MSGServerMoveEmpty(index,target));
-    }
     public static void serverRemove(short index, boolean remove){
-        //System.out.printf("[%d]MSGSVMoveEmpty:(%d,%s)", Game.gametime, index, remove);
-        //System.out.printf("Client:{%s}\n",player.getInventory().getItem(index).getDisplayName().getString());
         isAvailable = false;
         ModMessages.PlayerSendToServer(new MSGServerRemoveItem(index,remove));
     }
+    public static void serverMoveEmpty(LocalPlayer player,short index, short target) {
+        isAvailable = false;
+        Inventory inventory = player.getInventory();
+        switch (target) {
+            case 36:
+                if(!inventory.getItem(index).getItem().canEquip(inventory.getItem(index), EquipmentSlot.FEET, player)){
+                    serverRemove(index,false);
+                    return;
+                }
+                break;
+            case 37:
+                if(!inventory.getItem(index).getItem().canEquip(inventory.getItem(index), EquipmentSlot.LEGS, player)){
+                    serverRemove(index,false);
+                    return;
+                }
+                break;
+            case 38:
+                if(!inventory.getItem(index).getItem().canEquip(inventory.getItem(index), EquipmentSlot.CHEST, player)){
+                    serverRemove(index,false);
+                    return;
+                }
+                break;
+            case 39:
+                if(!inventory.getItem(index).getItem().canEquip(inventory.getItem(index), EquipmentSlot.HEAD, player)){
+                    serverRemove(index,false);
+                    return;
+                }
+                break;
+        }
+        ModMessages.PlayerSendToServer(new MSGServerMoveEmpty(index,target));
+    }
+
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event){
@@ -83,8 +103,6 @@ public class AiJBackpack extends Event
                 //3.扫描所有未上锁格子 检查非法位置
                 //4.寻找合法的位置 并且移动
                 //5.如果没有就丢弃物品（延迟）
-                player.containerMenu.incrementStateId();
-                player.containerMenu.broadcastChanges();
                 //Step1
                 List<SlotPermissionLevel> bp = slots.get("BACKPACK");
                 Inventory inventory = player.getInventory();
@@ -117,32 +135,38 @@ public class AiJBackpack extends Event
                     List<SlotPermissionLevel> slots1 = entry.getValue();
                     for (SlotPermissionLevel slot1 : slots1) {
                         ItemStack itemstack = inventory.getItem(slot1.index);
-                        if ((!itemstack.isEmpty())
-                                && (!InventoryLock.isLocked(slot1.index))
-                                && (Tagger.GetItemTags(itemstack) != null)
-                                && (!Tagger.GetItemTags(itemstack).contains(slottag)))
+                        if ((!itemstack.isEmpty())&& (!InventoryLock.isLocked(slot1.index)))
                         {
-                            //Step4
-                            boolean f = false;
-                            for (String itemtag : Tagger.GetItemTags(itemstack)) {
-                                if(f) break;
-                                List<SlotPermissionLevel> slots2 = slots.get(itemtag);
-                                if (slots2 == null)
-                                    continue;
-                                for (SlotPermissionLevel slot2 : slots2) {
-                                    if(slot2.equals(slot1))
+                            List<String> tags = Tagger.GetItemTags(itemstack);
+                            if(tags == null)
+                            {
+                                serverRemove(slot1.index,false);
+                                return;
+                            }
+                            if(tags.isEmpty()){
+                                break;
+                            }
+                            if (!tags.contains(slottag))
+                            {
+                                //Step4
+                                for (String itemtag : Tagger.GetItemTags(itemstack)) {
+                                    List<SlotPermissionLevel> slots2 = slots.get(itemtag);
+                                    if (slots2 == null)
                                         continue;
-                                    ItemStack i = inventory.getItem(slot2.index);
-                                    if (i.isEmpty()) {
-                                        serverMoveEmpty(slot1.index,slot2.index);
-                                        f = true;
-                                        break;
+                                    for (SlotPermissionLevel slot2 : slots2) {
+                                        if(slot2.equals(slot1))
+                                            continue;
+                                        ItemStack i = inventory.getItem(slot2.index);
+                                        if (i.isEmpty()) {
+                                            serverMoveEmpty(player,slot1.index,slot2.index);
+                                            return;
+                                        }
                                     }
                                 }
+                                //Step5
+                                serverRemove(slot1.index,false);
+                                return;
                             }
-                            //Step5
-                            serverRemove(slot1.index,false);
-                            return;//在高速更改物品栏时，有极小概率在背包内仍有空格的时候扔出物品 所以return
                         }
                     }
                 }

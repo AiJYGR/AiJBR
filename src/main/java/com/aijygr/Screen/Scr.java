@@ -46,7 +46,7 @@ public class Scr extends Screen {
 
         super.render(graphics, mouseX, mouseY, partialTick);  
 
-        String str = ModConfig.CFGDOUBLE.get().toString();
+        String str = "6";
         
 
         graphics.drawString(this.font, str, this.width / 2 , this.height / 2 - 20, 0xf0f0f0, true);       //   文字

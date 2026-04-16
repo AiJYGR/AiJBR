@@ -38,6 +38,10 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.ConfigValue<Integer> MEDKIT_MAXSTACKSIZE;
                 public static ForgeConfigSpec.DoubleValue MEDKIT_HEALAMOUNT;
             }
+            public static class DROPSHIP{
+                public static ForgeConfigSpec.DoubleValue SPEED;
+                public static ForgeConfigSpec.IntValue HEIGHT;
+            }
         }
 
         public static final class Default {
@@ -69,8 +73,7 @@ public abstract class ModConfig {
                         "16 ,100,2  ,0.05 ,100,2.5  ,0.05",
                         "0.1,100,3  ,0.1  ,500,3    ,0.1"
                 ));
-                public static final int DAMAGE_TICKING_TIME = 10;
-                public static final List<String> GENERATIONMODES = new ArrayList<>(List.of(
+                public static final int DAMAGE_TICKING_TIME = 30;                public static final List<String> GENERATIONMODES = new ArrayList<>(List.of(
                         RingGeneration.GenerationMode.EDGE_WEIGHTED.name(),
                         RingGeneration.GenerationMode.UNIFORM.name(),
                         RingGeneration.GenerationMode.TANGENT.name(),
@@ -92,7 +95,10 @@ public abstract class ModConfig {
                 public static final short BACKPACK_LVL3_PERMISSIONLEVEL = 18;
                 public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 35;
             }
-
+            public static final class DROPSHIP{
+                public static final double SPEED = 0.1d;
+                public static final short HEIGHT = 200;
+            }
         }
     }
     public static ForgeConfigSpec.DoubleValue CFGDOUBLE;    //获取值
@@ -102,42 +108,13 @@ public abstract class ModConfig {
         ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();//栈结构 builder
         StringBuilder strbuilder = new StringBuilder();
 
-        server_builder.comment("AiJBR Server Settings").push("AiJBR_SV");//File Start
+        server_builder.comment("AiJBR Server Settings").push("AiJBR SV");//File Start
 
         server_builder.push("AiJBackpack");    //AiJBackpack
-        /*strbuilder.delete(0, strbuilder.length());
-        for (AiJBackpack.SlotTag it : AiJBackpack.SlotTag.values()) {
-            strbuilder.append(it.name());
-            strbuilder.append(" ");
-        }
-        server_builder.comment(
-                "# BackPack Slots Attributes",
-                "- For Each String, the format is: \"Slot,PermissionLevel,Type\"",
-                "- Example:  \"0,0,mainwpn\"",
-                "- It represents that Slot 0 has PermissionLevel of 0, its type is \"mainwpn\".",
-                "Allowed Values: "+strbuilder.toString()
-        );
-        Server.Config.BACKPACK.BACKPACK_SLOTS = server_builder.defineList("BackPackSlotsAttributes", Server.Default.BACKPACK.BACKPACK_SLOTS, (obj)->{
-            if (!(obj instanceof String)) {
-                System.out.println("[AiJBR] BackpackSlotAttributes Config ERR: "+obj.toString()+" is not a String");
-                return false;
-            }
-            for(AiJBackpack.SlotTag it : AiJBackpack.SlotTag.values())
-                if (obj.equals(it.name()))
-                    return true;
-            System.out.println("[AiJBR] BackpackSlotAttributes Config ERR: Incorrect value \""+obj+"\"");
-            return false;
-        });
-        server_builder.comment("#Default Attributes",
-                "- Define the Default Attributes of undefined slots above.");
-        Server.Config.BACKPACK.BACKPACK_SLOT_DEFAULT = server_builder.define("Default", Server.Default.BACKPACK.BACKPACK_SLOT_DEFAULT,(obj)->{return obj instanceof String;});
-        server_builder.comment("#Enable AiJBP",
-                "When to enable AiJYGR's AiJBackpack");
-        Server.Config.BACKPACK.ENABLEAIJBR = server_builder.define("EnableAiJBP", Server.Default.BACKPACK.ENABLE_AIJBR,(obj)->{return obj instanceof String;});*/
         server_builder.comment(
                 "# Default Permission Level",
                 "- Define the permission level that the player has without a backpack.");
-        Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",0,Short.MIN_VALUE,Short.MAX_VALUE);
+        Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",Server.Default.BACKPACK.DEFAULT_PERMISSIONLEVEL,Short.MIN_VALUE,Short.MAX_VALUE);
         server_builder.pop();
 
         server_builder.push("Ring");    //Ring
@@ -203,6 +180,15 @@ public abstract class ModConfig {
         Server.Config.RING.WEIGHTEDMODE = server_builder.defineEnum("WeightedMode", Server.Default.RING.WEIGHTEDMODE, RingGeneration.WeightedMode.values());
         server_builder.pop();
 
+        server_builder.push("Dropship");
+        server_builder.comment("#SPEED",
+                "- Unit: Blocks per tick (Meters per tick)");
+        Server.Config.DROPSHIP.SPEED = server_builder.defineInRange("Speed", Server.Default.DROPSHIP.SPEED,0.01,10.0);
+        server_builder.comment("# Height",
+                "Altitude that the Dropship travels on.");
+        Server.Config.DROPSHIP.HEIGHT = server_builder.defineInRange("Height", Server.Default.DROPSHIP.HEIGHT,-60,500);
+        server_builder.pop();
+
         server_builder.push("Items");   //ITEMS
         server_builder.comment(
                 "UseDuration: Define ticks cost when using an item." ,
@@ -231,9 +217,10 @@ public abstract class ModConfig {
 
         server_builder.pop();
         server_builder.push("ARMOR");
-        server_builder.comment("");
-
-        CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);
+        //server_builder.comment("");
+        server_builder.translation("");
+        //CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);
+        server_builder.pop();
 
         server_builder.pop();
         SERVER_CONFIG = server_builder.build();

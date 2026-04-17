@@ -62,15 +62,52 @@ public class RingMove {
         server.getPlayerList().broadcastSystemMessage(Component.translatable(message),false);
         PhaseChange();
     }
+
+    public static void LogRingStatus(){
+        String str =  String.format("\n%d: Round %d %d  closing:%b\n" +
+                        "cur(%3d,%3d):%3.2f  next(%3d,%3d):%3.2f\n" +
+                        "SV(%3.2f,%3.2f):%3.2f\n"+
+                        "dpb:%3.2f  dmg:%3.2f\n",
+                Game.gametime,Game.sv_round,Game.sv_roundtick,Game.isRingClosing,
+                Game.sv_curr_x,Game.sv_curr_z,Game.sv_curr_size,
+                Game.sv_next_x,Game.sv_next_z,Game.sv_next_size,
+                Game.sv_r_x, Game.sv_r_z,Game.sv_r_size,
+                Game.sv_damage_per_block, Game.sv_basicdamage
+        );
+        System.out.println(str);
+    }
+
+    public static void setWorldBorder(WorldBorder worldborder){
+        setWorldBorder(worldborder,Game.sv_r_x,Game.sv_r_z,Game.sv_r_size);
+    }
+    public static void setWorldBorder(WorldBorder worldborder,double x, double z, double size){
+        if(size<0.02)
+            size = 0.02;
+        worldborder.setSize(size);
+        worldborder.setCenter(x, z);
+    }
+
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
         if ((event.phase == TickEvent.Phase.START) && (event.level.dimension().equals(Level.OVERWORLD))
                 && (!event.level.isClientSide())){
-            double i = 0.0d;
+
+            double i;
+            WorldBorder worldborder = event.level.getWorldBorder();
+
             if(Game.isGameStart && Game.isInitialized){
+                //LOG
+                if(Game.gametime%20==0)
+                    LogRingStatus();
                 Game.sv_roundtick--;
-                if(Game.sv_roundtick<=-1){
+                if(Game.sv_roundtick<=0){
                     PhaseChange(event.level.getServer(),"msg.aijbr.yellow");
+                    setWorldBorder(worldborder);
+                }
+                if(Game.isRingClosing&&Game.sv_round==0){
+                    Game.sv_r_size = Game.R;
+                    worldborder.setSize(Game.sv_r_size);
+                    return;
                 }
                 if(Game.isRingClosing&&Game.sv_round!=0){
                     if(Game.sv_roundtick==0){
@@ -85,30 +122,9 @@ public class RingMove {
                         Game.sv_r_x = (Game.sv_next_x-Game.sv_curr_x)*i+Game.sv_curr_x;
                         Game.sv_r_z = (Game.sv_next_z-Game.sv_curr_z)*i+Game.sv_curr_z;
                     }
-                    //System.out.println("closing");
-                    WorldBorder worldborder = event.level.getWorldBorder();
-                    if(Game.sv_r_size < 0.01)
-                        Game.sv_r_size = 0.01;
-                    worldborder.setSize(Game.sv_r_size);
-                    worldborder.setCenter(Game.sv_r_x, Game.sv_r_z);
+                    setWorldBorder(worldborder);
                 }
             }
-            //LOG
-//            if(Game.gametime%10==1&&Game.isInitialized)
-//            {
-//                String str =  String.format("\ni=%3.2f\n%d: Round %d %d  %b closing:%b\n" +
-//                                "cur(%3d,%3d):%3.2f  next(%3d,%3d):%3.2f\n" +
-//                                "SV(%3.2f,%3.2f):%3.2f\n"+
-//                                "dpb:%3.2f  dmg:%3.2f\n",
-//                        i,
-//                        Game.gametime,Game.sv_round,Game.sv_roundtick,Game.isGameStart,Game.isRingClosing,
-//                        Game.sv_curr_x,Game.sv_curr_z,Game.sv_curr_size,
-//                        Game.sv_next_x,Game.sv_next_z,Game.sv_next_size,
-//                        Game.sv_r_x, Game.sv_r_z,Game.sv_r_size,
-//                        Game.sv_damage_per_block, Game.sv_basicdamage
-//                );
-//                System.out.println(str);
-//            }
         }
     }
 }

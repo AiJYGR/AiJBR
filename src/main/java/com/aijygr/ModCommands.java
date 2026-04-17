@@ -3,19 +3,20 @@ package com.aijygr;
 import com.aijygr.AiJBP.AiJBackpack;
 import com.aijygr.AiJBP.SyncConfigJSON.BP.SyncBP;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.SyncTag;
+import com.aijygr.AiJGame.AiJBRPlayer;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.GameInitEvent;
 import com.aijygr.AiJGame.GameStartEvent;
 
 import com.aijygr.Screen.Scr;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -31,7 +32,7 @@ public class ModCommands
     private static class ScrCommand {
         public ScrCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
-                return source.hasPermission(1);
+                return source.hasPermission(0);
             }).then(Commands.literal("scr").executes((command) -> {
 //                Minecraft.getInstance().tell(() -> {
 //                    Minecraft.getInstance().setScreen(new Scr(Component.translatable("title.singleplayer")));
@@ -49,7 +50,7 @@ public class ModCommands
         }
         public SyncBPCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
-                return source.hasPermission(1);
+                return source.hasPermission(0);
             }).then(Commands.literal("sync").executes((command) -> {
                 SYNC();
                 Game.tryPlayerMessage(command.getSource().getPlayer(),"msg.aijbr.yellow","Refreshed your backpack.");
@@ -125,12 +126,59 @@ public class ModCommands
         }
     }
 
+
+
+    private static class PlayerJoinCommand {
+        private int PlayerJoin(ServerPlayer player) {
+            if(!Game.isInitialized){
+                Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
+                return 1;
+            }
+            if(player!=null){
+                for(int i = 1; i <= ModConfig.Server.Config.TEAM.TEAMNUM.get();i++)
+                {
+                    if(AiJBRPlayer.joinTeam(player,i))
+                    {
+                        Game.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command.player_join_team_p1",AiJBRPlayer.getTeamName(i),"msg.aijbr.info.command.player_join_team_p2");
+                        return 0;
+                    }
+                }
+            }
+            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.command.err.player_join_team_failed");
+            return 1;
+        }
+        private int PlayerJoin(ServerPlayer player, int team) {
+            if(!Game.isInitialized){
+                Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
+                return 1;
+            }
+            if(player!=null){
+                if(AiJBRPlayer.joinTeam(player,team)){
+                    Game.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command.player_join_team_p1",AiJBRPlayer.getTeamName(team),"msg.aijbr.info.command.player_join_team_p2");
+                    return 0;
+                }
+            }
+            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command.player_join_team_failed_p1",AiJBRPlayer.getTeamName(team),"msg.aijbr.err.command.player_join_team_failed_p2");
+            return 1;
+        }
+        public PlayerJoinCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+            dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
+                return source.hasPermission(0);
+            }).then(Commands.literal("ready").executes((command)->{
+                return PlayerJoin(command.getSource().getPlayer());
+            }).then(Commands.argument("team_num", IntegerArgumentType.integer()).executes((command) -> {
+                return PlayerJoin(command.getSource().getPlayer(),IntegerArgumentType.getInteger(command,"team_num"));
+            }))));
+        }
+    }
+
     @SubscribeEvent
-    public static void onCommandsRegister(RegisterCommandsEvent event)
+    public static void onServerCommandsRegister(RegisterCommandsEvent event)
     {
         new StartCommand(event.getDispatcher());
         new InitCommand(event.getDispatcher());
         new ReloadCommand(event.getDispatcher());
+        new PlayerJoinCommand(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }
 

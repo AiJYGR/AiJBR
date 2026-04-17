@@ -21,6 +21,8 @@
 
     "msg.aijbr.info.command_executed":"已成功执行指令",
     "msg.aijbr.info.command_game_started": "已成功开始游戏",
+    "msg.aijbr.info.player_get_ready": "已准备",
+    "msg.aijbr.info.player_cancel_ready": "已取消准备",
 
     "msg.aijbr.err.command_game_started":"游戏已经开始!",
     "msg.aijbr.err.command_game_ended":"游戏未开始!",

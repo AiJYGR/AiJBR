@@ -1,20 +1,21 @@
 package com.aijygr.AiJGame;
 
+import com.aijygr.AiJGame.BR.GameInitialization;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import com.aijygr.Main;
+import com.aijygr.ModConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.scores.Team;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Mod.EventBusSubscriber()
 public class Game {
@@ -49,6 +50,10 @@ public class Game {
     public static boolean isRingClosing = false;
     public static int sv_roundticktotal = 0;
     public static boolean enableAiJBP;
+    public static final double R = 6000000.0d;
+    public static int players = 0;
+    public static List<UUID> playerlist = new ArrayList<>();
+    public static final Set<Team> teams = new HashSet<>();
 
 
     public static void tryPlayerMessage(Player player, String message) {
@@ -97,7 +102,6 @@ public class Game {
         }
     }
 
-
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
         if((event.phase == TickEvent.Phase.START) && (event.level.dimension().equals(Level.OVERWORLD))
@@ -112,5 +116,12 @@ public class Game {
         Game.isReloaded = false;
         Game.isInitialized = false;
         Game.isGameStart = false;
+        Game.playerlist = new ArrayList<>();
+    }
+
+    @SubscribeEvent
+    public static void onGameInit(GameInitEvent event) {
+        GameInitialization.GameInit(event);
+        AiJBRPlayer.initTeams(ModConfig.Server.Config.TEAM.TEAMNUM.get(), ModConfig.Server.Config.TEAM.TEAMSIZE.get(),event.getLevel().getScoreboard());
     }
 }

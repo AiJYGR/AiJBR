@@ -6,7 +6,6 @@ import com.aijygr.ModConfig;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.border.WorldBorder;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
@@ -40,8 +39,8 @@ public class GameInitialization {
     }
 
     //Init
-    @SubscribeEvent
-    public static void onGameInit(GameInitEvent event) {
+    //@SubscribeEvent//已经改为在Game类统一监听
+    public static void GameInit(GameInitEvent event) {
         if(event.getLevel().isClientSide())
             return;
         ServerPlayer player = event.getPlayer();

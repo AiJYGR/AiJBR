@@ -1,6 +1,7 @@
 package com.aijygr.AiJBP;
 
 import com.aijygr.AiJGame.Game;
+import com.aijygr.Item.Lock;
 import com.aijygr.ModConfig;
 import com.aijygr.ModMessages;
 
@@ -137,6 +138,9 @@ public class AiJBackpack extends Event
                         ItemStack itemstack = inventory.getItem(slot1.index);
                         if ((!itemstack.isEmpty())&& (!InventoryLock.isLocked(slot1.index)))
                         {
+                            if(itemstack.getItem() instanceof Lock){
+                                serverRemove(slot1.index,true);
+                            }
                             List<String> tags = Tagger.GetItemTags(itemstack);
                             if(tags == null)
                             {

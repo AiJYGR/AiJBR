@@ -1,6 +1,7 @@
 package com.aijygr;
 
 import com.aijygr.AiJGame.Ring.RingGeneration;
+import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.ArrayList;
@@ -9,15 +10,20 @@ public abstract class ModConfig {
     //public static ForgeConfigSpec COMMON_CONFIG;
     public static ForgeConfigSpec SERVER_CONFIG;
 
+    public enum BOOL {
+        TRUE(true),
+        FALSE(false);
+
+        private final boolean value;
+        BOOL(boolean value) { this.value = value; }
+        public boolean get() { return value; }
+    }
+
     public static class Server {
         public static class Config {
             public static class BACKPACK {
-                /*public static ForgeConfigSpec.ConfigValue<String> BACKPACK_SLOT_DEFAULT;
-                public static ForgeConfigSpec.ConfigValue<String> ENABLEAIJBR;
-                public static ForgeConfigSpec.ConfigValue<List<? extends String>> BACKPACK_SLOTS;*/
                 public static ForgeConfigSpec.IntValue DEFAULT_PERMISSIONLEVEL;
             }
-
             public static class RING{
                 public static ForgeConfigSpec.EnumValue<RingGeneration.WeightedMode> WEIGHTEDMODE;
                 public static ForgeConfigSpec.ConfigValue<List<? extends Integer>> RING_INITIAL_ATTRUBUTES;
@@ -25,7 +31,6 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.ConfigValue<List<? extends String>> RING_ATTRIBUTES;
                 public static ForgeConfigSpec.ConfigValue<List<? extends String>> GENERATIONMODES;
             }
-
             public static class ITEM{
                 public static ForgeConfigSpec.IntValue BACKPACK_LVL1_PERMISSIONLEVEL;
                 public static ForgeConfigSpec.IntValue BACKPACK_LVL2_PERMISSIONLEVEL;
@@ -42,25 +47,19 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.DoubleValue SPEED;
                 public static ForgeConfigSpec.IntValue HEIGHT;
             }
+            public static class TEAM {
+                public static ForgeConfigSpec.IntValue TEAMNUM;
+                public static ForgeConfigSpec.IntValue TEAMSIZE;
+                public static ForgeConfigSpec.EnumValue<Team.CollisionRule> COLLISION_RULE;
+                public static ForgeConfigSpec.EnumValue<Team.Visibility> DEATHMSG_VISIBILITY;
+                public static ForgeConfigSpec.EnumValue<Team.Visibility> NAMETAG_VISIBILITY;
+                public static ForgeConfigSpec.EnumValue<BOOL> ALLOWFRIENDLYFIRE;
+                public static ForgeConfigSpec.EnumValue<BOOL> SEEFRIENTLYINVISIBLES;
+            }
         }
 
         public static final class Default {
-
             public static class BACKPACK{
-                /*
-                public static final String BACKPACK_SLOT_DEFAULT = "DEFAULT";
-                public static final String ENABLE_AIJBR = "INGAME";
-                public static final List<String> BACKPACK_SLOTS = new ArrayList<>(List.of(
-                        "0,0,mainwpn",
-                        "1,0,mainwpn",
-                        "2,0,subwpn",
-                        "3,0,melee",
-                        "4,0,nades",
-                        "5,0,supplies",
-                        "6,0,supplies",
-                        "7,1,supplies",
-                        "8,1,supplies"
-                ));*/
                 public static final int DEFAULT_PERMISSIONLEVEL = 0;
             }
             public static class RING{
@@ -73,7 +72,8 @@ public abstract class ModConfig {
                         "16 ,100,2  ,0.05 ,100,2.5  ,0.05",
                         "0.1,100,3  ,0.1  ,500,3    ,0.1"
                 ));
-                public static final int DAMAGE_TICKING_TIME = 30;                public static final List<String> GENERATIONMODES = new ArrayList<>(List.of(
+                public static final int DAMAGE_TICKING_TIME = 30;
+                public static final List<String> GENERATIONMODES = new ArrayList<>(List.of(
                         RingGeneration.GenerationMode.EDGE_WEIGHTED.name(),
                         RingGeneration.GenerationMode.UNIFORM.name(),
                         RingGeneration.GenerationMode.TANGENT.name(),
@@ -99,17 +99,25 @@ public abstract class ModConfig {
                 public static final double SPEED = 0.1d;
                 public static final short HEIGHT = 200;
             }
+            public static class TEAM {
+                public static int TEAMNUM = 20;
+                public static int TEAMSIZE = 1;
+                public static Team.CollisionRule COLLISION_RULE = Team.CollisionRule.ALWAYS;
+                public static Team.Visibility DEATHMSG_VISIBILITY = Team.Visibility.ALWAYS;
+                public static Team.Visibility NAMETAG_VISIBILITY = Team.Visibility.HIDE_FOR_OTHER_TEAMS;
+                public static BOOL ALLOWFRIENDLYFIRE =  BOOL.TRUE;
+                public static BOOL SEEFRIENTLYINVISIBLES = BOOL.TRUE;
+            }
         }
     }
-    public static ForgeConfigSpec.DoubleValue CFGDOUBLE;    //获取值
 
     static {
         //ForgeConfigSpec.Builder common_builder = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();//栈结构 builder
         StringBuilder strbuilder = new StringBuilder();
 
-        server_builder.comment("AiJBR Server Settings").push("AiJBR SV");//File Start
 
+        server_builder.comment("AiJYGR Backpack Management System");
         server_builder.push("AiJBackpack");    //AiJBackpack
         server_builder.comment(
                 "# Default Permission Level",
@@ -117,6 +125,7 @@ public abstract class ModConfig {
         Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",Server.Default.BACKPACK.DEFAULT_PERMISSIONLEVEL,Short.MIN_VALUE,Short.MAX_VALUE);
         server_builder.pop();
 
+        server_builder.comment("Ring Settings used in the game");
         server_builder.push("Ring");    //Ring
         server_builder.comment(
                 "# Ring Initial Attributes",
@@ -170,8 +179,6 @@ public abstract class ModConfig {
             System.out.println("[AiJBR] GenerationModes Config ERR: Incorrect value \""+obj+"\"");
             return false;
         });
-        //ServerConfig.GENERATIONMODES =  server_builder.defineList("GenerationModes", ServerConfig.Default.GENERATIONMODES,(obj)->{return obj instanceof String;});
-
         server_builder.comment(
                 "# Weighted Algorithm",
                 "- Decides the method used to weight the points",
@@ -180,8 +187,9 @@ public abstract class ModConfig {
         Server.Config.RING.WEIGHTEDMODE = server_builder.defineEnum("WeightedMode", Server.Default.RING.WEIGHTEDMODE, RingGeneration.WeightedMode.values());
         server_builder.pop();
 
+        server_builder.comment("Dropship Settings used in the game");
         server_builder.push("Dropship");
-        server_builder.comment("#SPEED",
+        server_builder.comment("# SPEED",
                 "- Unit: Blocks per tick (Meters per tick)");
         Server.Config.DROPSHIP.SPEED = server_builder.defineInRange("Speed", Server.Default.DROPSHIP.SPEED,0.01,10.0);
         server_builder.comment("# Height",
@@ -189,6 +197,7 @@ public abstract class ModConfig {
         Server.Config.DROPSHIP.HEIGHT = server_builder.defineInRange("Height", Server.Default.DROPSHIP.HEIGHT,-60,500);
         server_builder.pop();
 
+        server_builder.comment("AiJBR Mod Items Config");
         server_builder.push("Items");   //ITEMS
         server_builder.comment(
                 "UseDuration: Define ticks cost when using an item." ,
@@ -206,9 +215,7 @@ public abstract class ModConfig {
         Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.ITEM.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
         server_builder.pop();
         server_builder.pop();
-
-        server_builder.comment(
-                "PermissionLevel: Used with BackpackSlotAttributes together.");
+        server_builder.comment("PermissionLevel: Used with BackpackSlotAttributes together.");
         server_builder.push("BACKPACK");
         Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL = server_builder.defineInRange("LVL1Permission",Server.Default.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL = server_builder.defineInRange("LVL2Permission",Server.Default.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL,0,Short.MAX_VALUE);
@@ -221,7 +228,20 @@ public abstract class ModConfig {
         //CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);
         server_builder.pop();
 
+
         server_builder.pop();
+
+        server_builder.comment("Teams & Players Attributes");
+        server_builder.push("Team");
+        Server.Config.TEAM.TEAMNUM = server_builder.defineInRange("TeamNumber", Server.Default.TEAM.TEAMNUM,2,30);
+        Server.Config.TEAM.TEAMSIZE = server_builder.defineInRange( "TeamSize", Server.Default.TEAM.TEAMSIZE,1,30);
+        Server.Config.TEAM.DEATHMSG_VISIBILITY = server_builder.defineEnum("DeathMessageVisibility",Server.Default.TEAM.DEATHMSG_VISIBILITY);
+        Server.Config.TEAM.NAMETAG_VISIBILITY = server_builder.defineEnum("NameTagVisibility",Server.Default.TEAM.NAMETAG_VISIBILITY);
+        Server.Config.TEAM.COLLISION_RULE = server_builder.defineEnum("Collision_Rule",Server.Default.TEAM.COLLISION_RULE);
+        Server.Config.TEAM.ALLOWFRIENDLYFIRE = server_builder.defineEnum("FriendlyFire",Server.Default.TEAM.ALLOWFRIENDLYFIRE);
+        Server.Config.TEAM.SEEFRIENTLYINVISIBLES = server_builder.defineEnum("SeeFriendlyInvisibles",Server.Default.TEAM.SEEFRIENTLYINVISIBLES);
+        server_builder.pop();
+
         SERVER_CONFIG = server_builder.build();
     }
 }

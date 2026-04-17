@@ -20,7 +20,7 @@ public class RingDamage {
         if (event.phase == TickEvent.Phase.START && event.side == LogicalSide.SERVER) {
             Player player = event.player;
             if(player!=null) {
-                double distance =  player.level().getWorldBorder().getDistanceToBorder(player);
+                double distance =  player.level().getWorldBorder().getDistanceToBorder(player) - 0.3;//玩家碰撞箱宽度为0.3
                 CompoundTag data = player.getPersistentData();
                 long lasthurttick = data.getLong(DATA_LastHurtTick);
                 if(distance < 0)

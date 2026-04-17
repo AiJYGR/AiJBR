@@ -243,5 +243,5 @@ public abstract class ModConfig {
         server_builder.pop();
 
         SERVER_CONFIG = server_builder.build();
-    }
+    } 
 }

@@ -20,12 +20,12 @@ import java.nio.file.Path;
 
 
 /*
-* SyncBP the Json data
-* From Server to Client Side
-* Firstly Server sends HASH
-* Client checks if local cache is differ from it, and sends sync request
-* Server receives request, and send full file.
-* */
+ * SyncBP the Json data
+ * From Server to Client Side
+ * Firstly Server sends HASH
+ * Client checks if local cache is differ from it, and sends sync request
+ * Server receives request, and send full file.
+ * */
 public class SyncTag {
     public static final String DEFAULTFILE = """
 {

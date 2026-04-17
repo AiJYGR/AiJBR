@@ -32,7 +32,7 @@
   "msg.aijbr.err.command_executed_failed":"执行指令失败",
   "msg.aijbr.err.command.player_join_team_failed": "加入队伍失败",
   "msg.aijbr.err.command.player_join_team_failed_p1": "加入队伍",
-  "msg.aijbr.err.command.player_join_team_failed_p2": "失败\n队伍已满或者你已在此队伍",
+  "msg.aijbr.err.command.player_join_team_failed_p2": "失败\n队伍不存在，队伍已满或者你已在此队伍",
   "msg.aijbr.err.command_game_not_initialized": "尚未初始化游戏  请执行 /AiJBR init",
   "msg.aijbr.err.command_game_not_reloaded": "尚未重载游戏配置文件  请执行 /AiJBR reload",
 

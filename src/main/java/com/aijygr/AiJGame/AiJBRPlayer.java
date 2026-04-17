@@ -12,46 +12,46 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class AiJBRPlayer {
     public static int getTeamColor(int i){
-    return switch (i){
-        case 1 -> 0xff0000;
-        case 2 -> 0x0000ff;
-        case 3 -> 0xffff00;
-        case 4 -> 0x00ff00;
-        case 5 -> 0xff7f00;
-        case 6 -> 0x7f00ff;
-        case 7 -> 0x00ffff;
-        case 8 -> 0x007fff;
-        case 9 -> 0xff00ff;
+        return switch (i){
+            case 1 -> 0xff0000;
+            case 2 -> 0x0000ff;
+            case 3 -> 0xffff00;
+            case 4 -> 0x00ff00;
+            case 5 -> 0xff7f00;
+            case 6 -> 0x7f00ff;
+            case 7 -> 0x00ffff;
+            case 8 -> 0x007fff;
+            case 9 -> 0xff00ff;
 
-        case 10 -> 0xffffff;
-        case 11 -> 0x000000;
-        case 12 -> 0x7f7f7f;
+            case 10 -> 0xffffff;
+            case 11 -> 0x000000;
+            case 12 -> 0x7f7f7f;
 
-        case 13 -> 0xff7f7f;
-        case 14 -> 0x7f7fff;
-        case 15 -> 0xffff7f;
-        case 16 -> 0x7fff7f;
-        case 17 -> 0xffc07f;
-        case 18 -> 0xc07fff;
-        case 19 -> 0x7fffff;
-        case 20 -> 0x7fc0ff;
-        case 21 -> 0xff7fff;
+            case 13 -> 0xff7f7f;
+            case 14 -> 0x7f7fff;
+            case 15 -> 0xffff7f;
+            case 16 -> 0x7fff7f;
+            case 17 -> 0xffc07f;
+            case 18 -> 0xc07fff;
+            case 19 -> 0x7fffff;
+            case 20 -> 0x7fc0ff;
+            case 21 -> 0xff7fff;
 
-        case 22 -> 0x7f0000;
-        case 23 -> 0x00007f;
-        case 24 -> 0x7f7f00;
-        case 25 -> 0x007f00;
-        case 26 -> 0x7f3f00;
-        case 27 -> 0x3f007f;
-        case 28 -> 0x007f7f;
-        case 29 -> 0x003f7f;
-        case 30 -> 0x7f007f;
+            case 22 -> 0x7f0000;
+            case 23 -> 0x00007f;
+            case 24 -> 0x7f7f00;
+            case 25 -> 0x007f00;
+            case 26 -> 0x7f3f00;
+            case 27 -> 0x3f007f;
+            case 28 -> 0x007f7f;
+            case 29 -> 0x003f7f;
+            case 30 -> 0x7f007f;
 
-        case 31 -> 0xc0c0c0;
-        case 32 -> 0x3f3f3f;
-        default -> 0x114514;
-    };
-}
+            case 31 -> 0xc0c0c0;
+            case 32 -> 0x3f3f3f;
+            default -> 0x114514;
+        };
+    }
     public static String getTeamName(int i){
         return String.format("%02d",i);
     }

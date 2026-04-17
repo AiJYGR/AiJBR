@@ -7,6 +7,8 @@ import net.minecraft.world.level.Level;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class DropShip extends Entity implements GeoEntity{
@@ -17,24 +19,24 @@ public class DropShip extends Entity implements GeoEntity{
     }
 
     @Override
-    protected void defineSynchedData() {}
+    protected void defineSynchedData() {
 
+    }
     // See the Data and Networking article for information about these methods.
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
 
     }
-
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
 
     }
-
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "wdnmd", 5, a -> {
+            return a.setAndContinue(RawAnimation.begin().thenLoop("spin"));
+        }));
     }
-
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.geoCache;

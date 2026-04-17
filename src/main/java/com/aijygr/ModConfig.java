@@ -56,6 +56,11 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.EnumValue<BOOL> ALLOWFRIENDLYFIRE;
                 public static ForgeConfigSpec.EnumValue<BOOL> SEEFRIENTLYINVISIBLES;
             }
+            public static class PLAYER{
+                public static ForgeConfigSpec.IntValue MAXHEALTH;
+                public static ForgeConfigSpec.DoubleValue MOVEMENTSPEED;
+                public static ForgeConfigSpec.DoubleValue FALLDAMAGEMUTIPIER;
+            }
         }
 
         public static final class Default {
@@ -100,13 +105,18 @@ public abstract class ModConfig {
                 public static final short HEIGHT = 200;
             }
             public static class TEAM {
-                public static int TEAMNUM = 20;
-                public static int TEAMSIZE = 1;
-                public static Team.CollisionRule COLLISION_RULE = Team.CollisionRule.ALWAYS;
-                public static Team.Visibility DEATHMSG_VISIBILITY = Team.Visibility.ALWAYS;
-                public static Team.Visibility NAMETAG_VISIBILITY = Team.Visibility.HIDE_FOR_OTHER_TEAMS;
-                public static BOOL ALLOWFRIENDLYFIRE =  BOOL.TRUE;
-                public static BOOL SEEFRIENTLYINVISIBLES = BOOL.TRUE;
+                public static final int TEAMNUM = 20;
+                public static final int TEAMSIZE = 1;
+                public static final Team.CollisionRule COLLISION_RULE = Team.CollisionRule.ALWAYS;
+                public static final Team.Visibility DEATHMSG_VISIBILITY = Team.Visibility.ALWAYS;
+                public static final Team.Visibility NAMETAG_VISIBILITY = Team.Visibility.HIDE_FOR_OTHER_TEAMS;
+                public static final BOOL ALLOWFRIENDLYFIRE =  BOOL.TRUE;
+                public static final BOOL SEEFRIENTLYINVISIBLES = BOOL.TRUE;
+            }
+            public static class PLAYER{
+                public static final int MAXHEALTH = 20;
+                public static final double MOVEMENTSPEED = 0.1000000014911612;
+                public static final double FALLDAMAGEMUTIPIER = 1.0;
             }
         }
     }
@@ -231,7 +241,7 @@ public abstract class ModConfig {
 
         server_builder.pop();
 
-        server_builder.comment("Teams & Players Attributes");
+        server_builder.comment("Team-UP Attributes");
         server_builder.push("Team");
         Server.Config.TEAM.TEAMNUM = server_builder.defineInRange("TeamNumber", Server.Default.TEAM.TEAMNUM,2,30);
         Server.Config.TEAM.TEAMSIZE = server_builder.defineInRange( "TeamSize", Server.Default.TEAM.TEAMSIZE,1,30);
@@ -242,6 +252,11 @@ public abstract class ModConfig {
         Server.Config.TEAM.SEEFRIENTLYINVISIBLES = server_builder.defineEnum("SeeFriendlyInvisibles",Server.Default.TEAM.SEEFRIENTLYINVISIBLES);
         server_builder.pop();
 
+        server_builder.comment("Default Player Attributes");
+        server_builder.push("Player");
+        Server.Config.PLAYER.MAXHEALTH = server_builder.defineInRange("MaxHealth",Server.Default.PLAYER.MAXHEALTH,1,1000);
+        Server.Config.PLAYER.MOVEMENTSPEED = server_builder.defineInRange("MaxMovementSpeed",Server.Default.PLAYER.MOVEMENTSPEED,0.001,0.5);
+        Server.Config.PLAYER.FALLDAMAGEMUTIPIER = server_builder.defineInRange("FallDamageMutipier",Server.Default.PLAYER.FALLDAMAGEMUTIPIER,0.0,10);
         SERVER_CONFIG = server_builder.build();
-    } 
+    }
 }

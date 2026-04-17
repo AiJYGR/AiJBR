@@ -5,8 +5,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
@@ -105,6 +110,23 @@ public class AiJBRPlayer {
             team.setPlayerPrefix(Component.empty());
             team.setPlayerSuffix(Component.empty());
             team.setSeeFriendlyInvisibles(ModConfig.Server.Config.TEAM.SEEFRIENTLYINVISIBLES.get().get());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerFall(LivingFallEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            event.setDamageMultiplier(ModConfig.Server.Config.PLAYER.FALLDAMAGEMUTIPIER.get().floatValue());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onGameInit(GameInitEvent event) {
+        for(var it = event.getLevel().getServer().getPlayerList().getPlayers().iterator(); it.hasNext(); ) {
+            var player = it.next();
+            player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModConfig.Server.Config.PLAYER.MOVEMENTSPEED.get());
+            player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
+            player.setHealth(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
         }
     }
 }

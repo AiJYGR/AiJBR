@@ -4,6 +4,7 @@ import com.aijygr.ModConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +16,9 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class AiJBRPlayer {
@@ -83,6 +87,24 @@ public class AiJBRPlayer {
             return scoreboard.removePlayerFromTeam(player.getName().getString());
         }
         return false;
+    }
+    public static List<String> getTeams(MinecraftServer server){
+        List<String> teamlist = new ArrayList<>();
+        for(PlayerTeam team : server.getScoreboard().getPlayerTeams())
+        {
+            if(!team.getPlayers().isEmpty())
+            {
+                teamlist.add(team.getName());
+            }
+        }
+        return teamlist;
+    }
+    public static int getPlayers(MinecraftServer server){
+        int i = 0;
+        for(String team : getTeams(server)){
+            i+=server.getScoreboard().getPlayerTeam(team).getPlayers().size();
+        }
+        return i;
     }
 
     public static void initTeams(int team_num, int team_size, Scoreboard scoreboard) {

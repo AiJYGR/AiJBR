@@ -43,7 +43,6 @@ public class ModCommands
             })));
         }
     }
-
     private static class SyncBPCommand{
         private void SYNC(){
             AiJBackpack.clientsync();
@@ -58,7 +57,6 @@ public class ModCommands
             })));
         }
     }
-
 
     private static class ReloadCommand {
         private void Reload(CommandSourceStack source) {
@@ -126,8 +124,6 @@ public class ModCommands
         }
     }
 
-
-
     private static class PlayerJoinCommand {
         private int PlayerJoin(ServerPlayer player) {
             if(!Game.isInitialized){
@@ -139,12 +135,12 @@ public class ModCommands
                 {
                     if(AiJBRPlayer.joinTeam(player,i))
                     {
-                        Game.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command.player_join_team_p1",AiJBRPlayer.getTeamName(i),"msg.aijbr.info.command.player_join_team_p2");
+                        Game.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_join_team_p1",AiJBRPlayer.getTeamName(i),"msg.aijbr.info.command_player_join_team_p2");
                         return 0;
                     }
                 }
             }
-            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.command.err.player_join_team_failed");
+            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_join_team_failed");
             return 1;
         }
         private int PlayerJoin(ServerPlayer player, int team) {
@@ -154,21 +150,75 @@ public class ModCommands
             }
             if(player!=null){
                 if(AiJBRPlayer.joinTeam(player,team)){
-                    Game.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command.player_join_team_p1",AiJBRPlayer.getTeamName(team),"msg.aijbr.info.command.player_join_team_p2");
+                    Game.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_join_team_p1",AiJBRPlayer.getTeamName(team),"msg.aijbr.info.command_player_join_team_p2");
                     return 0;
                 }
             }
-            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command.player_join_team_failed_p1",AiJBRPlayer.getTeamName(team),"msg.aijbr.err.command.player_join_team_failed_p2");
+            Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_join_team_failed_p1",AiJBRPlayer.getTeamName(team),"msg.aijbr.err.command_player_join_team_failed_p2");
             return 1;
         }
         public PlayerJoinCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
                 return source.hasPermission(0);
-            }).then(Commands.literal("ready").executes((command)->{
+            }).then(Commands.literal("join").executes((command)->{
                 return PlayerJoin(command.getSource().getPlayer());
             }).then(Commands.argument("team_num", IntegerArgumentType.integer()).executes((command) -> {
                 return PlayerJoin(command.getSource().getPlayer(),IntegerArgumentType.getInteger(command,"team_num"));
             }))));
+        }
+    }
+
+    public static class PlayerLeaveCommand {
+        private int PlayerLeave(ServerPlayer player) {
+            if(!Game.isInitialized){
+                Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
+                return 1;
+            }
+            if(AiJBRPlayer.leaveTeam(player))
+            {
+                Game.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_leave_team");
+                return 0;
+            }
+            else{
+                Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_leave_team_failed");
+                return 1;
+            }
+        }
+        public PlayerLeaveCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+            dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
+                return source.hasPermission(0);
+            }).then(Commands.literal("leave").executes((command)->{
+                return PlayerLeave(command.getSource().getPlayer());
+            })));
+        }
+    }
+
+    public static class SVCommand {
+        private int PlayerLeave(ServerPlayer player) {
+            if(!Game.isInitialized){
+                Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
+                return 1;
+            }
+            if(AiJBRPlayer.leaveTeam(player))
+            {
+                Game.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_leave_team");
+                return 0;
+            }
+            else{
+                Game.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_leave_team_failed");
+                return 1;
+            }
+        }
+        public SVCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+            dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
+                return source.hasPermission(3);
+            }).then(Commands.literal("SV").executes((command)->{
+                StringBuilder str = new StringBuilder();
+                str.append(AiJBRPlayer.getPlayers(command.getSource().getServer())).append("\n");
+                str.append(AiJBRPlayer.getTeams(command.getSource().getServer()));
+                Game.tryPlayerMessage(command.getSource().getPlayer(),str.toString());
+                return 0;
+            })));
         }
     }
 
@@ -179,6 +229,8 @@ public class ModCommands
         new InitCommand(event.getDispatcher());
         new ReloadCommand(event.getDispatcher());
         new PlayerJoinCommand(event.getDispatcher());
+        new PlayerLeaveCommand(event.getDispatcher());
+        new SVCommand(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }
 

@@ -23,18 +23,21 @@
   "msg.aijbr.info.command_game_started": "已成功开始游戏",
   "msg.aijbr.info.player_get_ready": "已准备",
   "msg.aijbr.info.player_cancel_ready": "已取消准备",
-  "msg.aijbr.info.command.player_join_team": "成功加入队伍",
-  "msg.aijbr.info.command.player_join_team_p1": "成功加入队伍",
-  "msg.aijbr.info.command.player_join_team_p2": "",
+  "msg.aijbr.info.command_player_join_team": "成功加入队伍",
+  "msg.aijbr.info.command_player_join_team_p1": "成功加入队伍",
+  "msg.aijbr.info.command_player_join_team_p2": "",
+  "msg.aijbr.info.command_player_leave_team": "成功离开队伍",
 
   "msg.aijbr.err.command_game_started":"游戏已经开始!",
   "msg.aijbr.err.command_game_ended":"游戏未开始!",
   "msg.aijbr.err.command_executed_failed":"执行指令失败",
-  "msg.aijbr.err.command.player_join_team_failed": "加入队伍失败",
-  "msg.aijbr.err.command.player_join_team_failed_p1": "加入队伍",
-  "msg.aijbr.err.command.player_join_team_failed_p2": "失败\n队伍不存在，队伍已满或者你已在此队伍",
+  "msg.aijbr.err.command_player_join_team_failed": "加入队伍失败",
+  "msg.aijbr.err.command_player_join_team_failed_p1": "加入队伍",
+  "msg.aijbr.err.command_player_join_team_failed_p2": "失败\n队伍不存在，队伍已满或者你已在此队伍",
+  "msg.aijbr.err.command_player_leave_team_failed": "离开队伍失败，你不在任何队伍中",
   "msg.aijbr.err.command_game_not_initialized": "尚未初始化游戏  请执行 /AiJBR init",
   "msg.aijbr.err.command_game_not_reloaded": "尚未重载游戏配置文件  请执行 /AiJBR reload",
+  "msg.aijbr.err.command_no_enough_teams": "小队数量小于2 无法开始游戏",
 
 
 

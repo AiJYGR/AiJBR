@@ -44,7 +44,10 @@ public class Reg
     public static final RegistryObject<EntityType<DropShip>> DROPSHIP = ENTITY_TYPES.register("dropship", () ->
             EntityType.Builder.of(DropShip::new, MobCategory.MISC)
                     .sized(2.0f,2.0f)
-                    .noSave()
+                    .clientTrackingRange(256)
+                    .updateInterval(20)
+                    .setShouldReceiveVelocityUpdates(true)
+                    //.noSave()
                     .fireImmune()
                     .updateInterval(10)
                     .build("dropship"));

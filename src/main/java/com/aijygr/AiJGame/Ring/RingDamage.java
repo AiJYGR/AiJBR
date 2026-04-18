@@ -35,12 +35,9 @@ public class RingDamage {
                         float damage = (float)((-distance)*Game.sv_damage_per_block +Game.sv_basicdamage);
                         //player.sendSystemMessage(Component.translatable(player.getName().getString()+String.format(" %3.2f",damage)));
                         if(damage - player.getHealth() > 0) {
-                            //player.hurt(player.damageSources().outOfBorder(),damage);//kill the player
                             player.hurt(getRingDamageSource(player.level()),damage);
                         }
                         else {
-
-                            //player.setHealth(player.getHealth()-damage);
                             player.hurt(getRingDamageSource(player.level()),damage);
                             player.invulnerableTime = 0;
                             player.hurtTime = 0;

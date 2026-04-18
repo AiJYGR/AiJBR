@@ -4,11 +4,17 @@ import com.aijygr.AiJGame.BR.GameInitialization;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import com.aijygr.Main;
 import com.aijygr.ModConfig;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -87,6 +93,14 @@ public class Game {
             player.getServer().getPlayerList().broadcastSystemMessage(component,false);
         else
             Main.LOGGER.info("[AiJBR]tryBroadcastMessage:{}", str);
+    }
+    public static void TPwithForceLoad(Entity entity, Vec3 vec3) {
+        entity.getServer().getLevel(Level.OVERWORLD).setChunkForced((int)Math.ceil(vec3.x/16),(int)Math.ceil(vec3.z/16),true);
+        entity.setPos(vec3.x, vec3.y, vec3.z);
+    }
+    public static void SMwithForceLoad(MinecraftServer server, EntityType entitytype, Vec3 vec3) {
+        BlockPos pos = new BlockPos((int)Math.ceil(vec3.x/16),(int)Math.ceil(vec3.y/16),(int)Math.ceil(vec3.z));
+        entitytype.spawn(server.getLevel(Level.OVERWORLD),pos, MobSpawnType.COMMAND);
     }
 
     public static class VecIntXZ {

@@ -1,6 +1,7 @@
 package com.aijygr.AiJGame.Ring;
 
 import com.aijygr.AiJGame.Game;
+import com.aijygr.LIB;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
@@ -89,9 +90,8 @@ public class RingMove {
 
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
-        if ((event.phase == TickEvent.Phase.START) && (event.level.dimension().equals(Level.OVERWORLD))
-                && (!event.level.isClientSide())){
-
+        if (LIB.SVLV1TK(event))
+        {
             double i;
             WorldBorder worldborder = event.level.getWorldBorder();
 

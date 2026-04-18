@@ -2,6 +2,7 @@ package com.aijygr.AiJGame.Ring;
 
 
 import com.aijygr.AiJGame.Game;
+import com.aijygr.LIB;
 
 
 public class RingGeneration {
@@ -17,11 +18,11 @@ public class RingGeneration {
         MUL2
     }
 
-    public static Game.VecIntXZ Generate(int curr_x, int curr_z, double curr_size, double next_size)
+    public static LIB.VecIntXZ Generate(int curr_x, int curr_z, double curr_size, double next_size)
     {
         return Generate(curr_x,curr_z,curr_size,next_size,GenerationMode.RANDOM);
     }
-    public static Game.VecIntXZ Generate(int curr_x, int curr_z, double curr_size, double next_size, GenerationMode MODE)
+    public static LIB.VecIntXZ Generate(int curr_x, int curr_z, double curr_size, double next_size, GenerationMode MODE)
     {
         int next_x = curr_x, next_z = curr_z;
         float range_xz = (int)((curr_size - next_size)/2);
@@ -90,6 +91,6 @@ public class RingGeneration {
                 break;
         }
         System.out.println(MODE.name()+":("+curr_size+","+next_size+")");
-        return new Game.VecIntXZ(next_x,next_z).sout();
+        return new LIB.VecIntXZ(next_x,next_z).sout();
     }
 }

@@ -1,6 +1,6 @@
 package com.aijygr.AiJBP.SyncConfigJSON.BP;
 
-import com.aijygr.AiJGame.Game;
+import com.aijygr.LIB;
 import com.aijygr.Main;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
@@ -30,7 +30,7 @@ public class MSGClientBPJSON {
             }catch(Exception e){
                 Main.LOGGER.error("[MSGClientBPJSON]:{}", e.getMessage());
             }
-            Game.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPJSON] Success.");
+            LIB.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPJSON] Success.");
         });
         ctx.get().setPacketHandled(true);
     }

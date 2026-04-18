@@ -1,6 +1,6 @@
 package com.aijygr.AiJBP.SyncConfigJSON.BP;
 
-import com.aijygr.AiJGame.Game;
+import com.aijygr.LIB;
 import com.aijygr.Main;
 import com.aijygr.ModMessages;
 import net.minecraft.client.Minecraft;
@@ -27,7 +27,7 @@ public class MSGClientBPHash {
                 if(SyncBP.clienthash.equals(this.str)){
                     ModMessages.PlayerSendToServer(new MSGServerRequestSyncBPJSON("="));
                     Reload.ReloadBP();
-                    Game.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPHASH] Success.");
+                    LIB.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPHASH] Success.");
                 }
                 else{
                     ModMessages.PlayerSendToServer(new MSGServerRequestSyncBPJSON("!"));

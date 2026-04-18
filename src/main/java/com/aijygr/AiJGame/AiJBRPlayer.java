@@ -1,6 +1,7 @@
 package com.aijygr.AiJGame;
 
 import com.aijygr.ModConfig;
+import com.aijygr.ModEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -17,12 +18,14 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import javax.management.DescriptorKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber
 public class AiJBRPlayer {
-    public static int getTeamColor(int i){
+    private static int toTeamColor(int i){
         return switch (i){
             case 1 -> 0xff0000;
             case 2 -> 0x0000ff;
@@ -63,16 +66,17 @@ public class AiJBRPlayer {
             default -> 0x114514;
         };
     }
-    public static String getTeamName(int i){
+    public static String toTeamName(int i){
         return String.format("%02d",i);
     }
-    public static String getTeamID(int i){
-        return "AiJBR"+getTeamName(i);
+    public static String toTeamID(int i){
+        return "AiJBR"+ toTeamName(i);
     }
+
     public static boolean joinTeam(ServerPlayer player, int index) {
         Scoreboard scoreboard = player.getServer().getScoreboard();
         if (scoreboard != null) {
-            PlayerTeam team = scoreboard.getPlayerTeam(getTeamID(index));
+            PlayerTeam team = scoreboard.getPlayerTeam(toTeamID(index));
             if (team != null && team.getPlayers().size() < ModConfig.Server.Config.TEAM.TEAMSIZE.get()) {
                 scoreboard.removePlayerFromTeam(player.getName().getString());
                 scoreboard.addPlayerToTeam(player.getName().getString(), team);
@@ -88,23 +92,33 @@ public class AiJBRPlayer {
         }
         return false;
     }
-    public static List<String> getTeams(MinecraftServer server){
-        List<String> teamlist = new ArrayList<>();
+
+    public static List<String> getTeamsNames(MinecraftServer server){
+        List<String> list = new ArrayList<>();
         for(PlayerTeam team : server.getScoreboard().getPlayerTeams())
         {
-            if(!team.getPlayers().isEmpty())
+            if(!team.getPlayers().isEmpty() && team.getName().contains("AiJBR"))
             {
-                teamlist.add(team.getName());
+                list.add(team.getName());
             }
         }
-        return teamlist;
+        return list;
     }
-    public static int getPlayers(MinecraftServer server){
-        int i = 0;
-        for(String team : getTeams(server)){
-            i+=server.getScoreboard().getPlayerTeam(team).getPlayers().size();
+    @DescriptorKey("DEP")
+    public static List<UUID> getPlayers(MinecraftServer server){
+        List<UUID> list = new ArrayList<>();
+        for(String teamname : getTeamsNames(server)){
+            PlayerTeam team = server.getScoreboard().getPlayerTeam(teamname);
+            if(team != null)
+                for(String playername : team.getPlayers())
+                    for (ServerPlayer player : server.getPlayerList().getPlayers())
+                        if(player.getName().getString().equals(playername))
+                        {
+                            list.add(player.getUUID());
+                            break;
+                        }
         }
-        return i;
+        return list;
     }
 
     public static void initTeams(int team_num, int team_size, Scoreboard scoreboard) {
@@ -114,9 +128,9 @@ public class AiJBRPlayer {
             if(team_size == 1)
                 color = 0xf0f0f0;
             else
-                color = getTeamColor(i);
-            String teamname = getTeamName(i);
-            String teamid = getTeamID(i);
+                color = toTeamColor(i);
+            String teamname = toTeamName(i);
+            String teamid = toTeamID(i);
             if(scoreboard.getPlayerTeam(teamid)!=null) {
                 scoreboard.removePlayerTeam(scoreboard.getPlayerTeam(teamid));
             }
@@ -161,7 +175,7 @@ public class AiJBRPlayer {
     }
 
     @SubscribeEvent
-    public static void onGameInit(GameInitEvent event) {
+    public static void onGameInit(ModEvents.GameInitEvent event) {
         for(var it = event.getLevel().getServer().getPlayerList().getPlayers().iterator(); it.hasNext(); ) {
             var player = it.next();
             player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModConfig.Server.Config.PLAYER.MOVEMENTSPEED.get());

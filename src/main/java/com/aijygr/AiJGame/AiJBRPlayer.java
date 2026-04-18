@@ -5,12 +5,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -118,6 +120,22 @@ public class AiJBRPlayer {
         if (event.getEntity() instanceof Player player) {
             event.setDamageMultiplier(ModConfig.Server.Config.PLAYER.FALLDAMAGEMUTIPIER.get().floatValue());
         }
+    }
+
+    @SubscribeEvent
+    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+        BlockState blockstate = event.getState();
+        Player player = event.getEntity();
+        if(!ModConfig.Server.Config.PLAYER.SURVIVALBREAK.get().get()){
+            if(ModConfig.Server.Config.PLAYER.SURVIVALBREAKGLASS.get().get()){
+                if(blockstate.is(Tags.Blocks.GLASS)||blockstate.is(Tags.Blocks.GLASS_PANES)){
+                    event.setNewSpeed(event.getOriginalSpeed());
+                    return;
+                }
+            }
+            event.setNewSpeed(-1);
+        }
+        return;
     }
 
     @SubscribeEvent

@@ -60,6 +60,8 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.IntValue MAXHEALTH;
                 public static ForgeConfigSpec.DoubleValue MOVEMENTSPEED;
                 public static ForgeConfigSpec.DoubleValue FALLDAMAGEMUTIPIER;
+                public static ForgeConfigSpec.EnumValue<BOOL> SURVIVALBREAK;
+                public static ForgeConfigSpec.EnumValue<BOOL> SURVIVALBREAKGLASS;
             }
         }
 
@@ -117,6 +119,8 @@ public abstract class ModConfig {
                 public static final int MAXHEALTH = 20;
                 public static final double MOVEMENTSPEED = 0.1000000014911612;
                 public static final double FALLDAMAGEMUTIPIER = 1.0;
+                public static final BOOL SURVIVALBREAK = BOOL.FALSE;
+                public static final BOOL SURVIVALBREAKGLASS = BOOL.TRUE;
             }
         }
     }
@@ -257,6 +261,8 @@ public abstract class ModConfig {
         Server.Config.PLAYER.MAXHEALTH = server_builder.defineInRange("MaxHealth",Server.Default.PLAYER.MAXHEALTH,1,1000);
         Server.Config.PLAYER.MOVEMENTSPEED = server_builder.defineInRange("MaxMovementSpeed",Server.Default.PLAYER.MOVEMENTSPEED,0.001,0.5);
         Server.Config.PLAYER.FALLDAMAGEMUTIPIER = server_builder.defineInRange("FallDamageMutipier",Server.Default.PLAYER.FALLDAMAGEMUTIPIER,0.0,10);
+        Server.Config.PLAYER.SURVIVALBREAK = server_builder.defineEnum("CanSurvivalPlayerBreakBlocks",Server.Default.PLAYER.SURVIVALBREAK);
+        Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.defineEnum("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
         SERVER_CONFIG = server_builder.build();
     }
 }

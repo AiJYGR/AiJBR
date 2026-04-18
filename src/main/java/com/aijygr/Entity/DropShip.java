@@ -1,15 +1,13 @@
 package com.aijygr.Entity;
 
 import com.aijygr.AiJGame.Game;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -17,17 +15,23 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
 public class DropShip extends Entity implements GeoEntity{
 
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-    public DropShip(EntityType<?> pEntityType, Level pLevel) {
+    public DropShip(EntityType<? extends Entity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
+
     @Override
     public void tick() {
-        Vec3 motion1 = this.getDeltaMovement();
+        super.tick();
 
+        Vec3 motion1 = this.getDeltaMovement();
         StringBuilder str = new StringBuilder();
         str.append(Game.gametime).append(":");
         str.append("(").append(motion1.x).append(",").append(motion1.y).append(",").append(motion1.z).append(")  ");
@@ -49,27 +53,29 @@ public class DropShip extends Entity implements GeoEntity{
             this.setDeltaMovement(Vec3.ZERO);
         }
 
-        this.xo = this.getX();
-        this.yo = this.getY();
-        this.zo = this.getZ();
-        this.xRotO = this.getXRot();
-        this.yRotO = this.getYRot();
-
-
-        super.tick();
     }
-
     @Override
     protected void defineSynchedData() {
 
     }
-    // See the Data and Networking article for information about these methods.
+
     @Override
-    protected void readAdditionalSaveData(CompoundTag compoundTag) {
+    public void setItemSlot(EquipmentSlot pSlot, ItemStack pStack) {
 
     }
     @Override
-    protected void addAdditionalSaveData(CompoundTag compoundTag) {
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+
+    }
+
+
+    @Override
+    public boolean isNoGravity() {
+        return true;
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundTag pCompound) {
 
     }
 

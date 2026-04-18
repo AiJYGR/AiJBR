@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -42,7 +43,7 @@ public class Reg
     public static final RegistryObject<Block> LOOTCONTAINER_BLOCK = BLOCKS.register("loot_container",() -> new ContainerBlock(BlockBehaviour.Properties.copy(Blocks.BARREL)));
     public static final RegistryObject<BlockEntityType<LootContainer>> LOOTCONTAINER_BLOCCKENTITY = BLOCK_ENTITIES.register("loot_container", () -> BlockEntityType.Builder.of(LootContainer::new, LOOTCONTAINER_BLOCK.get()).build(null));
     public static final RegistryObject<EntityType<DropShip>> DROPSHIP = ENTITY_TYPES.register("dropship", () ->
-            EntityType.Builder.of(DropShip::new, MobCategory.MISC)
+            EntityType.Builder.<DropShip>of(DropShip::new, MobCategory.MISC)
                     .sized(2.0f,2.0f)
                     .clientTrackingRange(256)
                     .updateInterval(20)

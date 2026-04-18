@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.aijygr.DamageSource.getRingDamageSource;
+import static com.aijygr.ModDamageSource.getRingDamageSource;
 
 
 @Mod.EventBusSubscriber()

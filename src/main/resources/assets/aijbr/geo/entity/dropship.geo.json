@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "bb_main",
+					"name": "MAIN",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{
@@ -33,6 +33,7 @@
 				},
 				{
 					"name": "fan",
+					"parent": "MAIN",
 					"pivot": [0, 16, 0],
 					"cubes": [
 						{

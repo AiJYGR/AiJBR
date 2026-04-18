@@ -14,13 +14,13 @@ public class DropShipEntityRenderer extends GeoEntityRenderer<DropShip> {
     }
 
     @Override
-    protected void applyRotations(DropShip animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
-        super.applyRotations(animatable, poseStack, ageInTicks, rotationYaw, partialTick);
-
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - rotationYaw));
-
-        float lerpPitch = Mth.lerp(partialTick, animatable.xRotO, animatable.getXRot());
-
-        poseStack.mulPose(Axis.XP.rotationDegrees(lerpPitch));
+    public void render(DropShip animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        //神奇的GeckoLib 解决模型不匹配朝向
+        poseStack.pushPose();
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - entityYaw));
+        float pitch = Mth.lerp(partialTick, animatable.xRotO, animatable.getXRot());
+        poseStack.mulPose(Axis.XP.rotationDegrees((float) - pitch));
+        super.render(animatable, 0, partialTick, poseStack, bufferSource, packedLight);
+        poseStack.popPose();
     }
 }

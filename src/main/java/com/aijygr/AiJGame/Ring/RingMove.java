@@ -4,7 +4,6 @@ import com.aijygr.AiJGame.Game;
 import com.aijygr.LIB;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -97,8 +96,8 @@ public class RingMove {
 
             if(Game.isGameStart && Game.isInitialized){
                 //LOG
-                if(Game.gametime%20==0)
-                    LogRingStatus();
+//                if(Game.gametime%50==0)
+//                    LogRingStatus();
                 Game.sv_roundtick--;
                 if(Game.sv_roundtick<=0){
                     PhaseChange(event.level.getServer(),"msg.aijbr.yellow");

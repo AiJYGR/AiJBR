@@ -1,5 +1,6 @@
 package com.aijygr.AiJGame.BR;
 
+import com.aijygr.AiJGame.AiJDropShip;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.LIB;
 import com.aijygr.ModConfig;
@@ -43,6 +44,12 @@ public class GameInitialization {
         if(event.getLevel().isClientSide())
             return;
         ServerPlayer player = event.getPlayer();
+        for(ServerPlayer svplayer : event.getLevel().getServer().getPlayerList().getPlayers())
+        {
+            svplayer.setNoGravity(false);
+            svplayer.removeAllEffects();
+        }
+
         LIB.tryBroadcastMessage(player," ");
         LIB.tryBroadcastMessage(player, "msg.aijbr.yellow","Starting INIT.");
         Game.r_ring_size.clear();
@@ -63,6 +70,8 @@ public class GameInitialization {
         Game.sv_r_z = Game.sv_curr_z;
         Game.damage_tickingtime = ModConfig.Server.Config.RING.DAMAGE_TICKING_TIME.get();
 
+        AiJDropShip.playerlist.clear();
+        AiJDropShip.isTick = false;
 
         //Read RingAttributes CFG
         var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();

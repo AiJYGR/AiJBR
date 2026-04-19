@@ -7,11 +7,15 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import org.slf4j.Logger;
 
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MODID)
 public class Main
 {
     public static final String MODID = "aijbr";
+    public static final int MODUUIDP1 = 0x0041694A;
+    public static final int MODUUIDP2 = 0x00004252;
+
     public static final Logger LOGGER = LogUtils.getLogger();
     public Main(FMLJavaModLoadingContext modloadingcontext)
     {

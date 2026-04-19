@@ -122,7 +122,6 @@ public class AiJBRPlayer {
     }
 
     public static void initTeams(int team_num, int team_size, Scoreboard scoreboard) {
-
         for(int i=1;i<=team_num;i++){
             int color;
             if(team_size == 1)

@@ -1,8 +1,10 @@
 package com.aijygr.Entity;
 
+import com.aijygr.AiJGame.AiJDropShip;
 import com.aijygr.LIB;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -13,16 +15,27 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
 import java.util.UUID;
 
 
 public class DropShip extends Entity implements GeoEntity{
 
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-    public static final UUID DROPSHIPUUID = LIB.UUID(0,0,1,0);
 
     public DropShip(EntityType<? extends Entity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+    public void setMotion(double x, double y, double z){
+        this.setDeltaMovement(x,y,z);
+    }
+    public void setMotion(Vec3 v){
+        this.setDeltaMovement(v);
+    }
+
+    public Vec3 getMotion(){
+        return this.getDeltaMovement();
     }
 
     @Override
@@ -38,45 +51,70 @@ public class DropShip extends Entity implements GeoEntity{
             this.setXRot(pitch);
         }
         this.move(MoverType.SELF, motion1);
-        Vec3 motion2 = this.getDeltaMovement();
-        if (!motion1.equals(motion2)) {
-            this.setDeltaMovement(Vec3.ZERO);
+//        Vec3 motion2 = this.getDeltaMovement();
+//        if (!motion1.equals(motion2)) {
+//            this.setDeltaMovement(Vec3.ZERO);
+//        }
+
+        if (this.uuid.equals(AiJDropShip.DROPSHIPUUID) && !this.level().isClientSide)
+        {
+            Vec3 pos = this.position();
+            MinecraftServer sv = this.level().getServer();
+            AiJDropShip.tick(sv,this);
         }
-
-        Vec3 pos = this.position();
-
-        if (this.uuid.equals(DROPSHIPUUID) && !this.level().isClientSide)
-            com.aijygr.AiJGame.DropShip.tick(pos);
-
-    }
-
-    @Override
-    protected void defineSynchedData() {
-
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-
     }
 
     @Override
     public boolean isNoGravity() {
         return true;
     }
+    @Override
+    protected boolean canRide(Entity pVehicle){
+        return true;
+    }
+    @Override
+    protected boolean canAddPassenger(Entity passenger) {
+        return this.getPassengers().size() <= 100;
+    }
 
+    @Override
+    protected void removePassenger(Entity passenger) {
+        super.removePassenger(passenger);
+        if (AiJDropShip.canleave) {
+            if(passenger instanceof ServerPlayer player) {
+                AiJDropShip.playerLeave(player);
+            }
+        }
+        else{
+            passenger.startRiding(this,true);
+        }
+    }
+
+    public void ejectAllPassengers(MinecraftServer server, List<UUID> passengers) {
+        LIB.PLAYERS(server,passengers,player -> {
+            removePassenger(player);
+        });
+        super.ejectPassengers();
+    }
+
+    @Override
+    protected void defineSynchedData() {
+
+    }
+    @Override
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+
+    }
     @Override
     protected void readAdditionalSaveData(CompoundTag pCompound) {
 
     }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "wdnmd", 5, a -> {
             return a.setAndContinue(RawAnimation.begin().thenLoop("spin"));
         }));
     }
-
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.geoCache;

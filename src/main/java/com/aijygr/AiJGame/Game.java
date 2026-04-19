@@ -5,8 +5,6 @@ import com.aijygr.AiJGame.Ring.RingGeneration;
 import com.aijygr.LIB;
 import com.aijygr.ModConfig;
 import com.aijygr.ModEvents;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,16 +15,19 @@ import java.util.*;
 @Mod.EventBusSubscriber()
 public class Game {
     public static long gametime;
+    public static long BRGameTime = 0;
     public static int damage_tickingtime = 30;
-    public static int sv_next_x = 0;
-    public static int sv_next_z = 0;
-    public static double sv_next_size = 0;
     public static int sv_curr_x = 0;
     public static int sv_curr_z = 0;
     public static double sv_curr_size = 0;
+    public static int sv_next_x = 0;
+    public static int sv_next_z = 0;
+    public static double sv_next_size = 0;
+    //curr next:只在回合更新的时候刷新
     public static double sv_r_x = 0;
     public static double sv_r_z = 0;
     public static double sv_r_size = 0;
+    //实时刷新
     public static double sv_damage_per_block = 0.00001;
     public static double sv_basicdamage = 0;
     public static int r_initial_waitingtick = 0;
@@ -46,10 +47,12 @@ public class Game {
     public static boolean isGameStart = false;
     public static boolean isRingClosing = false;
     public static int sv_roundticktotal = 0;
-    public static boolean enableAiJBP;
+    //public static boolean enableAiJBP;
     public static final double R = 6000000.0d;
+    public static final int TRAVELTICKS = 100;
     public static List<UUID> playerlist = new ArrayList<>();
     public static List<String> teams = new ArrayList<>();
+
 
 
 
@@ -58,6 +61,8 @@ public class Game {
         if(LIB.SVLV1TK(event))
         {
             gametime = event.level.getGameTime();
+            if(Game.isGameStart)
+                BRGameTime++;
         }
     }
 

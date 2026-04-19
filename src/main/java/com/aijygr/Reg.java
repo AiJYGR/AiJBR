@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -45,12 +44,11 @@ public class Reg
     public static final RegistryObject<EntityType<DropShip>> DROPSHIP = ENTITY_TYPES.register("dropship", () ->
             EntityType.Builder.<DropShip>of(DropShip::new, MobCategory.MISC)
                     .sized(2.0f,2.0f)
-                    .clientTrackingRange(256)
-                    .updateInterval(20)
+                    .clientTrackingRange(128)
+                    .updateInterval(40)
                     .setShouldReceiveVelocityUpdates(true)
-                    //.noSave()
+                    .noSave()
                     .fireImmune()
-                    .updateInterval(10)
                     .build("dropship"));
 
     public static final ResourceKey<DamageType> AIJBR_RING_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath(Main.MODID, "ring_damage"));

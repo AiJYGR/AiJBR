@@ -64,7 +64,6 @@ public class LIB {
     }
 
     public static Entity SMwithForceLoad(MinecraftServer server, EntityType entitytype, Vec3 vec3) {
-
         BlockPos pos = new BlockPos((int)Math.ceil(vec3.x),(int)Math.ceil(vec3.y),(int)Math.ceil(vec3.z));
         ServerLevel level = server.getLevel(Level.OVERWORLD);
         level.setChunkForced((int)Math.ceil(vec3.x/16),(int)Math.ceil(vec3.z/16),true);
@@ -82,6 +81,15 @@ public class LIB {
         }
         return i;
     }
+    public static int PLAYERS(List<ServerPlayer> players, Consumer<ServerPlayer> action){
+        int i = 0;
+        for(ServerPlayer player : players){
+            if(player != null){
+                action.accept(player);
+            }
+        }
+        return i;
+    }
     public static List<String> UUIDtoNames(MinecraftServer server, List<UUID> uuids) {
         List<String> list = new ArrayList<>();
         for (UUID uuid : uuids) {
@@ -95,6 +103,10 @@ public class LIB {
                 && event.phase == TickEvent.Phase.END
                 && !event.side.isClient()
                 && !event.level.isClientSide;
+    }
+    public static boolean SVLV1TK(TickEvent.PlayerTickEvent event){
+        return event.phase == TickEvent.Phase.END
+                && !event.side.isClient();
     }
 
     public static UUID UUID(int part1, int part2, int part3, int part4) {

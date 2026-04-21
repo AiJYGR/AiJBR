@@ -92,9 +92,8 @@ public class DropShip extends Entity implements GeoEntity{
 
     public void ejectAllPassengers(MinecraftServer server, List<UUID> passengers) {
         LIB.PLAYERS(server,passengers,player -> {
-            removePassenger(player);
+            player.stopRiding();
         });
-        super.ejectPassengers();
     }
 
     @Override

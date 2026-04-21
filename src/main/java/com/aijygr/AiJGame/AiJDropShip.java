@@ -72,8 +72,12 @@ public class AiJDropShip {
             System.out.println("Canleave "+canleave);
         }
         if(Game.BRGameTime == dropship_forceejecttick && !playerlist.isEmpty()){
-            dropship.ejectAllPassengers(server,playerlist);
             System.out.println("ForceEject");
+            LIB.PLAYERS(server,playerlist,player -> {
+                System.out.println(player.getName().getString());
+            });
+            List<UUID> templist = new ArrayList<>(playerlist);
+            dropship.ejectAllPassengers(server,templist);
         }
     }
     public static void playerGetOn(MinecraftServer server, UUID uuid, DropShip dropship){

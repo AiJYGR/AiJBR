@@ -1,5 +1,7 @@
 package com.aijygr;
 
+import com.aijygr.AiJGame.Game;
+import com.sun.jna.platform.win32.WinDef;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
@@ -71,8 +73,9 @@ public class LIB {
     }
 
     public static int PLAYERS(MinecraftServer server, List<UUID> uuids, Consumer<ServerPlayer> action) {
+        List<UUID> templist = new ArrayList<>(uuids);
         int i = 0;
-        for (UUID uuid : uuids) {
+        for (UUID uuid : templist) {
             ServerPlayer player = server.getPlayerList().getPlayer(uuid);
             if (player != null) {
                 action.accept(player);
@@ -89,6 +92,25 @@ public class LIB {
             }
         }
         return i;
+    }
+
+    private static boolean allowBRLOG(){
+        return ModConfig.Server.Config.ALLOW_BRLOG.get().get();
+    };
+    private static long memTime = Long.MIN_VALUE;
+    public static void BRLOG(String string){
+        if(allowBRLOG()){
+            if(memTime != Game.BRGameTime)
+            {
+                memTime = Game.BRGameTime;
+                System.out.println("\n#AiJBR "+Game.BRGameTime+": ");
+            }
+//            ArrayList<String> strings = new ArrayList<>(List.of(string.split("\n")));
+//            for(String str : strings){
+//                System.out.println(str);
+//            }
+            System.out.println(string);
+        }
     }
     public static List<String> UUIDtoNames(MinecraftServer server, List<UUID> uuids) {
         List<String> list = new ArrayList<>();
@@ -121,8 +143,8 @@ public class LIB {
             this.x = x;
             this.z = z;
         }
-        public VecIntXZ sout(){
-            System.out.println("("+this.x+","+this.z+")");
+        public VecIntXZ brlog(){
+            LIB.BRLOG("("+this.x+","+this.z+")");
             return this;
         }
     }

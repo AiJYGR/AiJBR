@@ -21,6 +21,7 @@ public abstract class ModConfig {
 
     public static class Server {
         public static class Config {
+            public static ForgeConfigSpec.EnumValue<BOOL> ALLOW_BRLOG;
             public static class BACKPACK {
                 public static ForgeConfigSpec.IntValue DEFAULT_PERMISSIONLEVEL;
             }
@@ -66,6 +67,7 @@ public abstract class ModConfig {
         }
 
         public static final class Default {
+            public static BOOL ALLOW_BRLOG = BOOL.TRUE;
             public static class BACKPACK{
                 public static final int DEFAULT_PERMISSIONLEVEL = 0;
             }
@@ -130,6 +132,8 @@ public abstract class ModConfig {
         ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();//栈结构 builder
         StringBuilder strbuilder = new StringBuilder();
 
+        server_builder.comment("Whether to log BR GAME Status like RingSize,Damage,AirRoute etc");
+        Server.Config.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG",Server.Default.ALLOW_BRLOG);
 
         server_builder.comment("AiJYGR Backpack Management System");
         server_builder.push("AiJBackpack");    //AiJBackpack

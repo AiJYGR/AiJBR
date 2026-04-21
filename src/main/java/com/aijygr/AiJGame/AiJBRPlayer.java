@@ -104,7 +104,6 @@ public class AiJBRPlayer {
         }
         return list;
     }
-    @DescriptorKey("DEP")
     public static List<UUID> getPlayers(MinecraftServer server){
         List<UUID> list = new ArrayList<>();
         for(String teamname : getTeamsNames(server)){

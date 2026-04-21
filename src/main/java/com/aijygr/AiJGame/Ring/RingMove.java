@@ -8,11 +8,14 @@ import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.TestOnly;
+
+import javax.management.DescriptorKey;
 
 @Mod.EventBusSubscriber()
 public class RingMove {
     private static void PhaseChange(){
-        System.out.println("PHASE CHANGE");
+        LIB.BRLOG("PHASE CHANGE");
         if(Game.isRingClosing){//进入下一阶段 刷圈&等待缩圈
             Game.isRingClosing = false;
             Game.sv_round++;
@@ -64,17 +67,18 @@ public class RingMove {
     }
 
     public static void LogRingStatus(){
-        String str =  String.format("\n%d: Round %d %d  closing:%b\n" +
-                        "cur(%3d,%3d):%3.2f  next(%3d,%3d):%3.2f\n" +
-                        "SV(%3.2f,%3.2f):%3.2f\n"+
-                        "dpb:%3.2f  dmg:%3.2f\n",
-                Game.gametime,Game.sv_round,Game.sv_roundtick,Game.isRingClosing,
+        String str =  String.format("""
+                        Rnd:%d RndTick:%d  isClosing:%b
+                        cur(%3d,%3d,%3.2f)  next(%3d,%3d,%3.2f)
+                        sv(%3.2f,%3.2f,%3.2f)
+                        DPB:%3.2f  DMG:%3.2f""",
+                Game.sv_round,Game.sv_roundtick,Game.isRingClosing,
                 Game.sv_curr_x,Game.sv_curr_z,Game.sv_curr_size,
                 Game.sv_next_x,Game.sv_next_z,Game.sv_next_size,
                 Game.sv_r_x, Game.sv_r_z,Game.sv_r_size,
                 Game.sv_damage_per_block, Game.sv_basicdamage
         );
-        System.out.println(str);
+        LIB.BRLOG(str);
     }
 
     public static void setWorldBorder(WorldBorder worldborder){
@@ -96,8 +100,8 @@ public class RingMove {
 
             if(Game.isGameStart && Game.isInitialized){
                 //LOG
-//                if(Game.gametime%50==0)
-//                    LogRingStatus();
+                //if(Game.gametime%100==0)
+                //    LogRingStatus();
                 Game.sv_roundtick--;
                 if(Game.sv_roundtick<=0){
                     PhaseChange(event.level.getServer(),"msg.aijbr.yellow");

@@ -70,7 +70,7 @@ public class GameInitialization {
         Game.sv_r_z = Game.sv_curr_z;
         Game.damage_tickingtime = ModConfig.Server.Config.RING.DAMAGE_TICKING_TIME.get();
 
-        AiJDropShip.playerlist.clear();
+        AiJDropShip.dropshipPlayerlist.clear();
         AiJDropShip.isTick = false;
 
         //Read RingAttributes CFG
@@ -78,7 +78,6 @@ public class GameInitialization {
         Game.r_initial_ringsize = ring_initial.get(0); //InitialRingSize, WaitingTick
         Game.sv_curr_size = Game.r_initial_ringsize;
         Game.r_initial_waitingtick = ring_initial.get(1);
-        //System.out.println(Game.r_initial_waitingtick+" "+Game.r_initial_ringsize);
         worldBorder.setSize(Game.sv_curr_size);
         worldBorder.setCenter(Game.sv_curr_x,Game.sv_curr_z);
         var ring_initial_attributes = ModConfig.Server.Config.RING.RING_ATTRIBUTES.get();

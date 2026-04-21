@@ -90,7 +90,7 @@ public class RingGeneration {
                 next_z = (int)Math.round((iz*range_xz)+curr_z);
                 break;
         }
-        System.out.println(MODE.name()+":("+curr_size+","+next_size+")");
-        return new LIB.VecIntXZ(next_x,next_z).sout();
+        LIB.BRLOG(MODE.name()+":["+curr_size+"->"+next_size+"]");
+        return new LIB.VecIntXZ(next_x,next_z).brlog();
     }
 }

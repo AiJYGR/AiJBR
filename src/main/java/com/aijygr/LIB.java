@@ -1,7 +1,7 @@
 package com.aijygr;
 
 import com.aijygr.AiJGame.Game;
-import com.sun.jna.platform.win32.WinDef;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
@@ -120,20 +120,36 @@ public class LIB {
         return list;
     }
 
-    public static boolean SVLV1TK(TickEvent.LevelTickEvent event){
+    public static boolean SV1TK(TickEvent.LevelTickEvent event){
         return event.level.dimension().equals(Level.OVERWORLD)
                 && event.phase == TickEvent.Phase.END
                 && !event.side.isClient()
                 && !event.level.isClientSide;
     }
-    public static boolean SVLV1TK(TickEvent.PlayerTickEvent event){
+    public static boolean SV1TK(TickEvent.PlayerTickEvent event){
         return event.phase == TickEvent.Phase.END
                 && !event.side.isClient();
     }
+    public static boolean CL1TK(TickEvent.PlayerTickEvent event){
+        if (Minecraft.getInstance().player != null) {
+            return event.phase == TickEvent.Phase.END
+                    && event.side.isClient();
+        }
+        return false;
+    }
 
-    public static UUID UUID(int part1, int part2, int part3, int part4) {
+    public static UUID makeUUID(int part1, int part2, int part3, int part4) {
         int[] a = {part1,part2,part3,part4};
         return UUIDUtil.uuidFromIntArray(a);
+    }
+
+    public enum BOOL {
+        TRUE(true),
+        FALSE(false);
+
+        private final boolean value;
+        BOOL(boolean value) { this.value = value; }
+        public boolean get() { return value; }
     }
 
     public static class VecIntXZ {

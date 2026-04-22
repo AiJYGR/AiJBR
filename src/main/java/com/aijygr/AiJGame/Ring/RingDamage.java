@@ -1,6 +1,7 @@
 package com.aijygr.AiJGame.Ring;
 
 import com.aijygr.AiJGame.Game;
+import com.aijygr.LIB;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
@@ -15,12 +16,15 @@ import static com.aijygr.ModDamageSource.getRingDamageSource;
 @Mod.EventBusSubscriber()
 public class RingDamage {
     private static final String DATA_LastHurtTick = "AiJBR_LastRingHurtTick";
+    public static final double PLAYER_HITBOXFIX = 0.3d;
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.START && event.side == LogicalSide.SERVER) {
+        if (LIB.SV1TK(event))
+        {
             Player player = event.player;
-            if(player!=null) {
-                double distance =  player.level().getWorldBorder().getDistanceToBorder(player) - 0.3;//玩家碰撞箱宽度为0.3
+            if(player!=null)
+            {
+                double distance =  player.level().getWorldBorder().getDistanceToBorder(player) - PLAYER_HITBOXFIX;//玩家碰撞箱宽度为0.3
                 CompoundTag data = player.getPersistentData();
                 long lasthurttick = data.getLong(DATA_LastHurtTick);
                 if(distance < 0)

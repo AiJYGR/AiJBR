@@ -10,18 +10,9 @@ public abstract class ModConfig {
     //public static ForgeConfigSpec COMMON_CONFIG;
     public static ForgeConfigSpec SERVER_CONFIG;
 
-    public enum BOOL {
-        TRUE(true),
-        FALSE(false);
-
-        private final boolean value;
-        BOOL(boolean value) { this.value = value; }
-        public boolean get() { return value; }
-    }
-
     public static class Server {
         public static class Config {
-            public static ForgeConfigSpec.EnumValue<BOOL> ALLOW_BRLOG;
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOW_BRLOG;
             public static class BACKPACK {
                 public static ForgeConfigSpec.IntValue DEFAULT_PERMISSIONLEVEL;
             }
@@ -54,20 +45,20 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.EnumValue<Team.CollisionRule> COLLISION_RULE;
                 public static ForgeConfigSpec.EnumValue<Team.Visibility> DEATHMSG_VISIBILITY;
                 public static ForgeConfigSpec.EnumValue<Team.Visibility> NAMETAG_VISIBILITY;
-                public static ForgeConfigSpec.EnumValue<BOOL> ALLOWFRIENDLYFIRE;
-                public static ForgeConfigSpec.EnumValue<BOOL> SEEFRIENTLYINVISIBLES;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOWFRIENDLYFIRE;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SEEFRIENTLYINVISIBLES;
             }
             public static class PLAYER{
                 public static ForgeConfigSpec.IntValue MAXHEALTH;
                 public static ForgeConfigSpec.DoubleValue MOVEMENTSPEED;
                 public static ForgeConfigSpec.DoubleValue FALLDAMAGEMUTIPIER;
-                public static ForgeConfigSpec.EnumValue<BOOL> SURVIVALBREAK;
-                public static ForgeConfigSpec.EnumValue<BOOL> SURVIVALBREAKGLASS;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAK;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAKGLASS;
             }
         }
 
         public static final class Default {
-            public static BOOL ALLOW_BRLOG = BOOL.TRUE;
+            public static LIB.BOOL ALLOW_BRLOG = LIB.BOOL.TRUE;
             public static class BACKPACK{
                 public static final int DEFAULT_PERMISSIONLEVEL = 0;
             }
@@ -114,15 +105,15 @@ public abstract class ModConfig {
                 public static final Team.CollisionRule COLLISION_RULE = Team.CollisionRule.ALWAYS;
                 public static final Team.Visibility DEATHMSG_VISIBILITY = Team.Visibility.ALWAYS;
                 public static final Team.Visibility NAMETAG_VISIBILITY = Team.Visibility.HIDE_FOR_OTHER_TEAMS;
-                public static final BOOL ALLOWFRIENDLYFIRE =  BOOL.TRUE;
-                public static final BOOL SEEFRIENTLYINVISIBLES = BOOL.TRUE;
+                public static final LIB.BOOL ALLOWFRIENDLYFIRE =  LIB.BOOL.TRUE;
+                public static final LIB.BOOL SEEFRIENTLYINVISIBLES = LIB.BOOL.TRUE;
             }
             public static class PLAYER{
                 public static final int MAXHEALTH = 20;
                 public static final double MOVEMENTSPEED = 0.1000000014911612;
                 public static final double FALLDAMAGEMUTIPIER = 1.0;
-                public static final BOOL SURVIVALBREAK = BOOL.FALSE;
-                public static final BOOL SURVIVALBREAKGLASS = BOOL.TRUE;
+                public static final LIB.BOOL SURVIVALBREAK = LIB.BOOL.FALSE;
+                public static final LIB.BOOL SURVIVALBREAKGLASS = LIB.BOOL.TRUE;
             }
         }
     }

@@ -8,9 +8,6 @@ import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.jetbrains.annotations.TestOnly;
-
-import javax.management.DescriptorKey;
 
 @Mod.EventBusSubscriber()
 public class RingMove {
@@ -93,7 +90,7 @@ public class RingMove {
 
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
-        if (LIB.SVLV1TK(event))
+        if (LIB.SV1TK(event))
         {
             double i;
             WorldBorder worldborder = event.level.getWorldBorder();

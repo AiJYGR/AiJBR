@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class AiJDropShip {
-    public static final UUID DROPSHIPUUID = LIB.UUID(Main.MODUUIDP1,Main.MODUUIDP2,1,0);
+    public static final UUID DROPSHIPUUID = LIB.makeUUID(Main.MODUUIDP1,Main.MODUUIDP2,1,0);
     public static List<UUID> dropshipPlayerlist = new ArrayList<>();
     public static long dropship_forceejecttick = 2000;
     public static long dropship_allowejecttick = 100;
@@ -110,7 +110,7 @@ public class AiJDropShip {
 
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
-        if(LIB.SVLV1TK(event)){
+        if(LIB.SV1TK(event)){
             LIB.PLAYERS(event.level.getServer(), dropshipPlayerlist,(player)->{
                 //player.teleportTo();
             });

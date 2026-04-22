@@ -53,12 +53,9 @@ public class Game {
     public static List<UUID> playerlist = new ArrayList<>();
     public static List<String> teams = new ArrayList<>();
 
-
-
-
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
-        if(LIB.SVLV1TK(event))
+        if(LIB.SV1TK(event))
         {
             gametime = event.level.getGameTime();
             if(Game.isGameStart)

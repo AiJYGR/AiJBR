@@ -7,6 +7,7 @@ import com.aijygr.AiJBP.SyncConfigJSON.BP.MSGServerRequestSyncBPJSON;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGClientTagJSON;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGClientTagHash;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGServerRequestSyncTagJSON;
+import com.aijygr.AiJGame.Map.MSGClientNextRing;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -88,6 +89,11 @@ public class ModMessages {//GEMINI简直是我亲爹
                 .decoder(MSGServerMoveEmpty::new)
                 .encoder(MSGServerMoveEmpty::encode)
                 .consumerMainThread(MSGServerMoveEmpty::handle)
+                .add();
+        net.messageBuilder(MSGClientNextRing.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientNextRing::new)
+                .encoder(MSGClientNextRing::encode)
+                .consumerMainThread(MSGClientNextRing::handle)
                 .add();
     }
     public static <MSG> void ServerSendToPlayer(MSG message, ServerPlayer player) {

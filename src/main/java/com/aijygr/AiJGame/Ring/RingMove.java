@@ -1,7 +1,9 @@
 package com.aijygr.AiJGame.Ring;
 
 import com.aijygr.AiJGame.Game;
+import com.aijygr.AiJGame.Map.MSGClientNextRing;
 import com.aijygr.LIB;
+import com.aijygr.ModMessages;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.border.WorldBorder;
@@ -39,6 +41,7 @@ public class RingMove {
             Game.sv_roundtick = Game.sv_roundticktotal;
             Game.sv_damage_per_block=Game.r_damage_per_block.get(i*2);
             Game.sv_basicdamage=Game.r_basic_damage.get(i*2);
+            ModMessages.ServerSendToAll(new MSGClientNextRing(Game.sv_next_x,Game.sv_next_z,Game.sv_next_size));
         }
         else{//开始缩圈
             Game.isRingClosing = true;
@@ -100,7 +103,7 @@ public class RingMove {
                 //if(Game.gametime%100==0)
                 //    LogRingStatus();
                 Game.sv_roundtick--;
-                if(Game.sv_roundtick<=0){
+                if(Game.sv_roundtick<0){
                     PhaseChange(event.level.getServer(),"msg.aijbr.yellow");
                     setWorldBorder(worldborder);
                 }

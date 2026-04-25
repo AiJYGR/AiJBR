@@ -21,7 +21,7 @@ import java.nio.file.Path;
 public class SyncBP {
     public static final String DEFAULTFILE = """
 {
-  "Comment":"0~8快捷栏  9~35 背包  36鞋子 37护腿 38护甲 39头盔 40副手",
+  "Comment":"0~8Hotbars  9~35Inventory  36Feet -> 39Helmet 40 Offhand",
   "Inventory":[
     [0,0,"MAINWPN"],
     [1,0,"MAINWPN"],

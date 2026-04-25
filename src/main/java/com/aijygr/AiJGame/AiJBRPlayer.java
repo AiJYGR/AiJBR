@@ -196,6 +196,11 @@ public class AiJBRPlayer {
     }
 
     @SubscribeEvent
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event){
+        Game.isReloaded = false;
+    }
+
+    @SubscribeEvent
     public static void onPlayerDeath(LivingDeathEvent event) {
         if(event.getEntity() instanceof ServerPlayer player)
         {

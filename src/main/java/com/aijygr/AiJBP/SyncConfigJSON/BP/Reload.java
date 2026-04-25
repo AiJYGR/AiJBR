@@ -36,7 +36,7 @@ public class Reload {
                     }
                     j++;
                 }
-                AiJBackpack.slots.computeIfAbsent(tag, k -> new ArrayList<>()).add(new AiJBackpack.SlotPermissionLevel(slot,plvl));
+                AiJBackpack.slots.computeIfAbsent(tag, k -> new ArrayList<>()).add(new AiJBackpack.SlotwithPermissionLevel(slot,plvl));
                 i++;
             }
             return i;

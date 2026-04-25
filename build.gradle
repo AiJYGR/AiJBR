@@ -154,6 +154,10 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        name = "JourneyMap (Public)"
+        url = "https://jm.gserv.me/repository/maven-public/"
+    }
     exclusiveContent {
         forRepository {
             maven {
@@ -163,6 +167,11 @@ repositories {
         }
         filter { includeGroupAndSubgroups('com.geckolib') }
     }
+}
+
+configurations.all {
+    // Check for snapshots more frequently than Gradle's default of 1 day. 0 = every build.
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 dependencies {
@@ -191,11 +200,15 @@ dependencies {
     implementation fg.deobf("curse.maven:geckolib-388172:7553267")
     //implementation minecraft.dependency("com.geckolib:geckolib-forge-${minecraft_version}:${geckolibVersion}")
 
+    compileOnly fg.deobf(group: 'info.journeymap', name: 'journeymap-api', version: project.journeymap_api_version, changing: true)
+    runtimeOnly fg.deobf("curse.maven:journeymap-32274:5789363")
+
     runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
     //runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
     runtimeOnly fg.deobf("curse.maven:timeless-and-classics-zero-1028108:7745481")
     runtimeOnly fg.deobf("curse.maven:spark-361579:4738952")
     runtimeOnly fg.deobf("curse.maven:cloth-config-348521:5729105")
+
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

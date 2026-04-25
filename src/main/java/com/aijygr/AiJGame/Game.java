@@ -69,6 +69,8 @@ public class Game {
         Game.isInitialized = false;
         Game.isGameStart = false;
         Game.playerlist = new ArrayList<>();
+        Game.sv_damage_per_block = 0.00001;
+        Game.sv_basicdamage = 0;
     }
 
     @SubscribeEvent

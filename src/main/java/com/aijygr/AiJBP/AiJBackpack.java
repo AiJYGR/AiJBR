@@ -24,22 +24,21 @@ import java.util.Map;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class AiJBackpack
 {
-    public static class SlotPermissionLevel{
+    public static class SlotwithPermissionLevel {
         short index;
         short permissionlevel;
 
-        public SlotPermissionLevel(){
+        public SlotwithPermissionLevel(){
             index = 0;
             permissionlevel = Short.MAX_VALUE;
         }
-        public SlotPermissionLevel(short index,short permissionlevel){
+        public SlotwithPermissionLevel(short index, short permissionlevel){
             this.index = index;
             this.permissionlevel = permissionlevel;
         }
     }
 
-    //public static Map<SlotTag,List<SlotPermissionLevel>> slots = new HashMap<>();
-    public static Map<String, List<SlotPermissionLevel>> slots = new HashMap<>();
+    public static Map<String, List<SlotwithPermissionLevel>> slots = new HashMap<>();
     public static short playerPermission = 0;
 
     private static boolean isAvailable = true;
@@ -104,11 +103,11 @@ public class AiJBackpack
                 //4.寻找合法的位置 并且移动
                 //5.如果没有就丢弃物品（延迟）
                 //Step1
-                List<SlotPermissionLevel> bp = slots.get("BACKPACK");
+                List<SlotwithPermissionLevel> bp = slots.get("BACKPACK");
                 Inventory inventory = player.getInventory();
                 if(bp != null){
                     short i = ModConfig.Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL.get().shortValue();
-                    for(SlotPermissionLevel it : bp){
+                    for(SlotwithPermissionLevel it : bp){
                         ItemStack itemstack = inventory.getItem(it.index);
                         if(!itemstack.isEmpty() && itemstack.getItem() instanceof com.aijygr.Item.Backpack backpack){
                             if(i+backpack.getPermissionLevel()>=Short.MAX_VALUE)
@@ -121,8 +120,8 @@ public class AiJBackpack
                     playerPermission = i;
                 }
                 //Step2
-                for(Map.Entry<String, List<SlotPermissionLevel>> entry: slots.entrySet()){
-                    for(SlotPermissionLevel slot:entry.getValue()){
+                for(Map.Entry<String, List<SlotwithPermissionLevel>> entry: slots.entrySet()){
+                    for(SlotwithPermissionLevel slot:entry.getValue()){
                         if(slot.permissionlevel>playerPermission)
                             InventoryLock.lock(slot.index);
                         else
@@ -130,10 +129,10 @@ public class AiJBackpack
                     }
                 }
                 //Step3
-                for (Map.Entry<String, List<SlotPermissionLevel>> entry : slots.entrySet()) {
+                for (Map.Entry<String, List<SlotwithPermissionLevel>> entry : slots.entrySet()) {
                     String slottag = entry.getKey();
-                    List<SlotPermissionLevel> slots1 = entry.getValue();
-                    for (SlotPermissionLevel slot1 : slots1) {
+                    List<SlotwithPermissionLevel> slots1 = entry.getValue();
+                    for (SlotwithPermissionLevel slot1 : slots1) {
                         ItemStack itemstack = inventory.getItem(slot1.index);
                         if ((!itemstack.isEmpty())&& (!InventoryLock.isLocked(slot1.index)))
                         {
@@ -153,10 +152,10 @@ public class AiJBackpack
                             {
                                 //Step4
                                 for (String itemtag : Tagger.GetItemTags(itemstack)) {
-                                    List<SlotPermissionLevel> slots2 = slots.get(itemtag);
+                                    List<SlotwithPermissionLevel> slots2 = slots.get(itemtag);
                                     if (slots2 == null)
                                         continue;
-                                    for (SlotPermissionLevel slot2 : slots2) {
+                                    for (SlotwithPermissionLevel slot2 : slots2) {
                                         if(slot2.equals(slot1))
                                             continue;
                                         ItemStack i = inventory.getItem(slot2.index);

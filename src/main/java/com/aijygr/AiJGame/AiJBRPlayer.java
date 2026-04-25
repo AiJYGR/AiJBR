@@ -1,5 +1,6 @@
 package com.aijygr.AiJGame;
 
+import com.aijygr.Item.Lock;
 import com.aijygr.ModConfig;
 import com.aijygr.ModEvents;
 import net.minecraft.network.chat.Component;
@@ -8,17 +9,19 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import javax.management.DescriptorKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -169,16 +172,39 @@ public class AiJBRPlayer {
             }
             event.setNewSpeed(-1);
         }
-        return;
+    }
+
+
+
+    private static void resetPlayerAttributes(List<ServerPlayer> players){
+        for (ServerPlayer player : players) {
+            player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModConfig.Server.Config.PLAYER.MOVEMENTSPEED.get());
+            player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
+            player.setHealth(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
+        if(event.getEntity() instanceof ServerPlayer player)
+            resetPlayerAttributes(List.of(player));
     }
 
     @SubscribeEvent
     public static void onGameInit(ModEvents.GameInitEvent event) {
-        for(var it = event.getLevel().getServer().getPlayerList().getPlayers().iterator(); it.hasNext(); ) {
-            var player = it.next();
-            player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModConfig.Server.Config.PLAYER.MOVEMENTSPEED.get());
-            player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
-            player.setHealth(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
+        resetPlayerAttributes(event.getLevel().getServer().getPlayerList().getPlayers());
+    }
+
+    @SubscribeEvent
+    public static void onPlayerDeath(LivingDeathEvent event) {
+        if(event.getEntity() instanceof ServerPlayer player)
+        {
+            Inventory inventory = player.getInventory();
+            for (int i = 0; i < inventory.getContainerSize(); i++) {
+                ItemStack stack = inventory.getItem(i);
+                if (!stack.isEmpty() && stack.getItem() instanceof Lock)
+                    inventory.setItem(i, ItemStack.EMPTY);
+                }
         }
     }
 }

@@ -15,6 +15,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 
@@ -96,7 +97,7 @@ public class LIB {
 
     private static boolean allowBRLOG(){
         return ModConfig.Server.Config.ALLOW_BRLOG.get().get();
-    };
+    }
     private static long memTime = Long.MIN_VALUE;
     public static void BRLOG(String string){
         if(allowBRLOG()){
@@ -138,6 +139,13 @@ public class LIB {
         return false;
     }
 
+    public static void TPTop(Entity entity, int x, int z) {
+        if (entity == null || entity.level().isClientSide)
+            return;
+        Level level = entity.level();
+        BlockPos topPos = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, new BlockPos(x, 0, z));
+        entity.teleportTo(x + 0.5, topPos.getY(), z + 0.5);
+    }
     public static UUID makeUUID(int part1, int part2, int part3, int part4) {
         int[] a = {part1,part2,part3,part4};
         return UUIDUtil.uuidFromIntArray(a);

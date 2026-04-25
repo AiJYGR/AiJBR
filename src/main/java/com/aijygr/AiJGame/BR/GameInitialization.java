@@ -6,7 +6,12 @@ import com.aijygr.LIB;
 import com.aijygr.ModConfig;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import com.aijygr.ModEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.fml.common.Mod;
 
@@ -44,12 +49,8 @@ public class GameInitialization {
         if(event.getLevel().isClientSide())
             return;
         ServerPlayer player = event.getPlayer();
-        for(ServerPlayer svplayer : event.getLevel().getServer().getPlayerList().getPlayers())
-        {
-            svplayer.setNoGravity(false);
-            svplayer.removeAllEffects();
-        }
 
+        //Reset SV
         LIB.tryBroadcastMessage(player," ");
         LIB.tryBroadcastMessage(player, "msg.aijbr.yellow","Starting INIT.");
         Game.r_ring_size.clear();
@@ -137,6 +138,26 @@ public class GameInitialization {
         }
         else
             LIB.tryBroadcastMessage(player,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
+
+        //Set Gamerule
+        ServerLevel level = event.getLevel();
+        GameRules rules = level.getGameRules();
+        rules.getRule(GameRules.RULE_DAYLIGHT).set(false,event.getLevel().getServer());
+        rules.getRule(GameRules.RULE_NATURAL_REGENERATION).set(false,event.getLevel().getServer());
+        rules.getRule(GameRules.RULE_DOMOBSPAWNING).set(false,event.getLevel().getServer());
+        rules.getRule(GameRules.RULE_DOINSOMNIA).set(false,event.getLevel().getServer());
+        rules.getRule(GameRules.RULE_SHOWDEATHMESSAGES).set(true,event.getLevel().getServer());
+        rules.getRule(GameRules.RULE_COMMANDBLOCKOUTPUT).set(true,event.getLevel().getServer());
+        rules.getRule(GameRules.RULE_RANDOMTICKING).set(0,event.getLevel().getServer());
+
+        //Set Player
+        LIB.PLAYERS(event.getLevel().getServer().getPlayerList().getPlayers(),(svplayer)->{
+            svplayer.setNoGravity(false);
+            svplayer.removeAllEffects();
+            svplayer.setGameMode(GameType.SURVIVAL);
+            player.addEffect(new MobEffectInstance(MobEffects.SATURATION, MobEffectInstance.INFINITE_DURATION, 0, false, false));
+            LIB.TPTop(svplayer,0,0);
+        });
 
         Game.isInitialized = true;
         LIB.tryBroadcastMessage(player,"msg.aijbr.bold","msg.aijbr.info.command_executed");

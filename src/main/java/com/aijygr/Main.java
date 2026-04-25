@@ -27,7 +27,8 @@ public class Main
         Reg.ENTITY_TYPES.register(bus);
 
         ModMessages.register();//reg net
-        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
+
+        modloadingcontext.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_CONFIG);
         modloadingcontext.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_CONFIG);
     }
 }

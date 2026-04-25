@@ -194,9 +194,8 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
     //runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
     runtimeOnly fg.deobf("curse.maven:timeless-and-classics-zero-1028108:7745481")
-    //runtimeOnly fg.deobf("curse.maven:inventory-free-406383:4658538")
     runtimeOnly fg.deobf("curse.maven:spark-361579:4738952")
-    //implementation fg.deobf("curse.maven:spark-361579:4738952")
+    runtimeOnly fg.deobf("curse.maven:cloth-config-348521:5729105")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

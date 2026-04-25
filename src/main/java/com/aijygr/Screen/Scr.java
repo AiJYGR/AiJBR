@@ -1,6 +1,5 @@
 package com.aijygr.Screen;
 
-import com.aijygr.ModConfig;
 import com.aijygr.Main;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -38,19 +37,12 @@ public class Scr extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-
         this.renderBackground(graphics);        // 背景
-
         final int PWIDTH = 206, PHEIGHT = 101;
         graphics.blit(TEXTURE, (this.width - PWIDTH) / 2 , (this.height - PHEIGHT) / 2 , 0, 0, PWIDTH, PHEIGHT, PWIDTH, PHEIGHT);      //图片
-
-        super.render(graphics, mouseX, mouseY, partialTick);  
-
+        super.render(graphics, mouseX, mouseY, partialTick);
         String str = "6";
-        
-
         graphics.drawString(this.font, str, this.width / 2 , this.height / 2 - 20, 0xf0f0f0, true);       //   文字
-
     }
 
     @Override

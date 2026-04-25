@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.util.ArrayList;
 import java.util.List;
 public abstract class ModConfig {
-    //public static ForgeConfigSpec COMMON_CONFIG;
+    public static ForgeConfigSpec CLIENT_CONFIG;
     public static ForgeConfigSpec SERVER_CONFIG;
 
     public static class Server {
@@ -117,11 +117,25 @@ public abstract class ModConfig {
             }
         }
     }
+    public static class Client {
+        public static class Config{
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWRINGINDICATOR;
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWACCURATEHEALTH;
+        }
+        public static final class Default{
+            public static final LIB.BOOL SHOWRINGINDICATOR = LIB.BOOL.TRUE;
+            public static final LIB.BOOL SHOWACCURATEHEALTH =  LIB.BOOL.TRUE;
+        }
+    }
 
     static {
-        //ForgeConfigSpec.Builder common_builder = new ForgeConfigSpec.Builder();
+        ForgeConfigSpec.Builder common_builder = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();//栈结构 builder
-        StringBuilder strbuilder = new StringBuilder();
+
+        Client.Config.SHOWRINGINDICATOR = common_builder.defineEnum("ShowRingIndicator", Client.Default.SHOWRINGINDICATOR);
+        Client.Config.SHOWACCURATEHEALTH = common_builder.defineEnum("ShowAccurateHealth", Client.Default.SHOWACCURATEHEALTH);
+
+        CLIENT_CONFIG = common_builder.build();
 
         server_builder.comment("Whether to log BR GAME Status like RingSize,Damage,AirRoute etc");
         Server.Config.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG",Server.Default.ALLOW_BRLOG);
@@ -170,6 +184,7 @@ public abstract class ModConfig {
                 "- MID_WEIGHTED: The next ring has more possibility to be at the middle" ,
                 "- TANGENT: The next ring must touch the edge. Possibilities of every points on the edge are equal" ,
                 "- RANDOM: Randomly choose one of above methods to generate");
+        StringBuilder strbuilder = new StringBuilder();
         strbuilder.delete(0, strbuilder.length());
         RingGeneration.GenerationMode[] generationModes = RingGeneration.GenerationMode.values();
         for (RingGeneration.GenerationMode it : generationModes) {
@@ -258,6 +273,7 @@ public abstract class ModConfig {
         Server.Config.PLAYER.FALLDAMAGEMUTIPIER = server_builder.defineInRange("FallDamageMutipier",Server.Default.PLAYER.FALLDAMAGEMUTIPIER,0.0,10);
         Server.Config.PLAYER.SURVIVALBREAK = server_builder.defineEnum("CanSurvivalPlayerBreakBlocks",Server.Default.PLAYER.SURVIVALBREAK);
         Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.defineEnum("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
+
         SERVER_CONFIG = server_builder.build();
     }
 }

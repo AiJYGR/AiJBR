@@ -15,7 +15,6 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -87,7 +86,9 @@ public class DropShip extends Entity implements GeoEntity{
             }
         }
         else{
-            passenger.startRiding(this,true);
+            if(!this.level().isClientSide){
+                passenger.startRiding(this,true);
+            }
         }
     }
 

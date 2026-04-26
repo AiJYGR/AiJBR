@@ -1,6 +1,7 @@
 package com.aijygr.AiJBP.SyncConfigJSON.BP;
 
 import com.aijygr.AiJBP.AiJBackpack;
+import com.aijygr.AiJGame.Client.ClientGame;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,7 +13,6 @@ public class Reload {
         JsonObject json = SyncBP.json;
         int i = 0;
         AiJBackpack.slots.clear();
-
         try {
             JsonArray array = json.getAsJsonArray("Inventory");
             if(array==null){
@@ -39,6 +39,7 @@ public class Reload {
                 AiJBackpack.slots.computeIfAbsent(tag, k -> new ArrayList<>()).add(new AiJBackpack.SlotwithPermissionLevel(slot,plvl));
                 i++;
             }
+            ClientGame.isBPSynced = true;
             return i;
         } catch (Exception e) {
             String str = ("at value "+i+": "+e.getMessage());

@@ -27,10 +27,11 @@ public class MSGClientBPJSON {
                 String hash = HASH(str);
                 SyncBP.saveLocalCache(str,hash);
                 Reload.ReloadBP();
+                LIB.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPJSON] Success.");
             }catch(Exception e){
                 Main.LOGGER.error("[MSGClientBPJSON]:{}", e.getMessage());
             }
-            LIB.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPJSON] Success.");
+
         });
         ctx.get().setPacketHandled(true);
     }

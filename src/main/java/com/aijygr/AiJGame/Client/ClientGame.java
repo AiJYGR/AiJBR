@@ -7,6 +7,9 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class ClientGame {
+    public static boolean isBPSynced = false;
+    public static boolean isTagSynced = false;
+
     public static int next_x;
     public static int next_z;
     public static double next_size;

@@ -1,5 +1,6 @@
 package com.aijygr.AiJBP.SyncConfigJSON.Tag;
 
+import com.aijygr.AiJGame.Client.ClientGame;
 import com.aijygr.LIB;
 import com.aijygr.Main;
 import com.aijygr.ModMessages;
@@ -26,6 +27,7 @@ public class MSGClientTagHash {
                 }
                 if(SyncTag.clienthash.equals(this.str)){
                     ModMessages.PlayerSendToServer(new MSGServerRequestSyncTagJSON("="));
+                    ClientGame.isTagSynced = true;
                     LIB.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient TagHASH] Success.");
                 }
                 else{

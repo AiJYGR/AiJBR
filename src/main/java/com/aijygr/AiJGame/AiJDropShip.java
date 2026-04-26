@@ -101,6 +101,9 @@ public class AiJDropShip {
     public static void playerLeave(ServerPlayer player){
         if (player != null) {
             dropshipPlayerlist.remove(player.getUUID());
+            for(UUID uuid : dropshipPlayerlist){
+                System.out.println(LIB.UUIDtoNames(player.getServer(),List.of(uuid)).toString());
+            }
             player.setNoGravity(false);
             player.removeEffect(MobEffects.INVISIBILITY);
             player.removeEffect(MobEffects.REGENERATION);

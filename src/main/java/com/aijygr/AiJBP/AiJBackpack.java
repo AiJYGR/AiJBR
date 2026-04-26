@@ -1,6 +1,6 @@
 package com.aijygr.AiJBP;
 
-import com.aijygr.AiJGame.Game;
+import com.aijygr.AiJGame.Client.ClientGame;
 import com.aijygr.Item.Lock;
 import com.aijygr.ModConfig;
 import com.aijygr.ModMessages;
@@ -96,7 +96,7 @@ public class AiJBackpack
                 playerPermission = Short.MAX_VALUE;
                 return;
             }
-            if(Game.isReloaded /*&& isAvailable*/){
+            if(ClientGame.isBPSynced && ClientGame.isTagSynced /*&& isAvailable*/){
                 //1.检查背包格位 计算PermissionLevel
                 //2.锁格子
                 //3.扫描所有未上锁格子 检查非法位置

@@ -7,7 +7,9 @@ import com.aijygr.AiJBP.SyncConfigJSON.BP.MSGServerRequestSyncBPJSON;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGClientTagJSON;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGClientTagHash;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGServerRequestSyncTagJSON;
-import com.aijygr.AiJGame.Map.MSGClientNextRing;
+import com.aijygr.AiJGame.Client.MSGClientGameInfo;
+import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
+import com.aijygr.AiJGame.Client.MSGClientRingInfo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -90,11 +92,22 @@ public class ModMessages {//GEMINI简直是我亲爹
                 .encoder(MSGServerMoveEmpty::encode)
                 .consumerMainThread(MSGServerMoveEmpty::handle)
                 .add();
-        net.messageBuilder(MSGClientNextRing.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(MSGClientNextRing::new)
-                .encoder(MSGClientNextRing::encode)
-                .consumerMainThread(MSGClientNextRing::handle)
+        net.messageBuilder(MSGClientRingInfo.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientRingInfo::new)
+                .encoder(MSGClientRingInfo::encode)
+                .consumerMainThread(MSGClientRingInfo::handle)
                 .add();
+        net.messageBuilder(MSGClientPlayerInfo.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientPlayerInfo::new)
+                .encoder(MSGClientPlayerInfo::encode)
+                .consumerMainThread(MSGClientPlayerInfo::handle)
+                .add();
+        net.messageBuilder(MSGClientGameInfo.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientGameInfo::new)
+                .encoder(MSGClientGameInfo::encode)
+                .consumerMainThread(MSGClientGameInfo::handle)
+                .add();
+
     }
     public static <MSG> void ServerSendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);

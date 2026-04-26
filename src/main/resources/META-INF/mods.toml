@@ -75,3 +75,10 @@ description='''${mod_description}'''
     versionRange = "[5.9.0,)"
     ordering = "NONE"
     side = "CLIENT"
+
+[[dependencies.${mod_id}]]
+modId = "geckolib"
+mandatory = true
+versionRange = "[4.8.3,)"
+ordering = "BEFORE"
+side = "CLIENT"

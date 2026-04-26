@@ -121,10 +121,12 @@ public abstract class ModConfig {
         public static class Config{
             public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWRINGINDICATOR;
             public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWACCURATEHEALTH;
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWCLIENTGAMEINFO;
         }
         public static final class Default{
             public static final LIB.BOOL SHOWRINGINDICATOR = LIB.BOOL.TRUE;
             public static final LIB.BOOL SHOWACCURATEHEALTH =  LIB.BOOL.TRUE;
+            public static final LIB.BOOL SHOWCLIENTGAMEINFO =  LIB.BOOL.TRUE;
         }
     }
 
@@ -134,6 +136,7 @@ public abstract class ModConfig {
 
         Client.Config.SHOWRINGINDICATOR = common_builder.defineEnum("ShowRingIndicator", Client.Default.SHOWRINGINDICATOR);
         Client.Config.SHOWACCURATEHEALTH = common_builder.defineEnum("ShowAccurateHealth", Client.Default.SHOWACCURATEHEALTH);
+        Client.Config.SHOWCLIENTGAMEINFO = common_builder.defineEnum("ShowClientGameInfo", Client.Default.SHOWCLIENTGAMEINFO);
 
         CLIENT_CONFIG = common_builder.build();
 

@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,6 +60,16 @@ public class LIB {
             player.getServer().getPlayerList().broadcastSystemMessage(component,false);
         else
             Main.LOGGER.info("[AiJBR]tryBroadcastMessage:{}", str);
+    }
+
+    public static MutableComponent makeComponent(MutableComponent component,String... messages) {
+        for(String message : messages) {
+            component.append(Component.translatable(message));
+        }
+        return component;
+    }
+    public static MutableComponent makeComponent(String... messages) {
+        return makeComponent(Component.empty(),messages);
     }
 
     public static void TPwithForceLoad(Entity entity, Vec3 vec3) {

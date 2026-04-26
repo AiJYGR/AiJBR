@@ -40,7 +40,10 @@
   "msg.aijbr.err.command_game_not_reloaded": "尚未重载游戏配置文件  请执行 /AiJBR reload",
   "msg.aijbr.err.command_no_enough_teams": "小队数量小于2 无法开始游戏",
 
+  "death.attack.aijbr.ring.message": "%1$s感觉到浑身酥酥麻麻的",
 
-
-  "death.attack.aijbr.ring.message": "%1$s感觉到浑身酥酥麻麻的"
+  "gui.aijbr.game_team_num": "队伍",
+  "gui.aijbr.game_player_num": "存活",
+  "gui.aijbr.game_round": "阶段",
+  "gui.aijbr.game_roundtick": "倒计时"
 }

@@ -1,10 +1,14 @@
 package com.aijygr.AiJGame;
 
 import com.aijygr.AiJGame.BR.GameInitialization;
+import com.aijygr.AiJGame.Client.MSGClientGameInfo;
+import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
+import com.aijygr.AiJGame.Client.MSGClientRingInfo;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import com.aijygr.LIB;
 import com.aijygr.ModConfig;
 import com.aijygr.ModEvents;
+import com.aijygr.ModMessages;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -77,5 +81,8 @@ public class Game {
     public static void onGameInit(ModEvents.GameInitEvent event) {
         GameInitialization.GameInit(event);
         AiJBRPlayer.initTeams(ModConfig.Server.Config.TEAM.TEAMNUM.get(), ModConfig.Server.Config.TEAM.TEAMSIZE.get(),event.getLevel().getScoreboard());
+        ModMessages.ServerSendToAll(new MSGClientGameInfo(0,0));
+        ModMessages.ServerSendToAll(new MSGClientPlayerInfo(0,0));
+        ModMessages.ServerSendToAll(new MSGClientRingInfo(0,0,0,""));
     }
 }

@@ -1,7 +1,8 @@
 package com.aijygr.AiJGame.Ring;
 
 import com.aijygr.AiJGame.Game;
-import com.aijygr.AiJGame.Map.MSGClientNextRing;
+import com.aijygr.AiJGame.Client.MSGClientGameInfo;
+import com.aijygr.AiJGame.Client.MSGClientRingInfo;
 import com.aijygr.LIB;
 import com.aijygr.ModMessages;
 import net.minecraft.network.chat.Component;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber()
 public class RingMove {
-    private static void PhaseChange(){
+    public static void PhaseChange(){
         LIB.BRLOG("PHASE CHANGE");
         if(Game.isRingClosing){//进入下一阶段 刷圈&等待缩圈
             Game.isRingClosing = false;
@@ -41,7 +42,8 @@ public class RingMove {
             Game.sv_roundtick = Game.sv_roundticktotal;
             Game.sv_damage_per_block=Game.r_damage_per_block.get(i*2);
             Game.sv_basicdamage=Game.r_basic_damage.get(i*2);
-            ModMessages.ServerSendToAll(new MSGClientNextRing(Game.sv_next_x,Game.sv_next_z,Game.sv_next_size));
+            ModMessages.ServerSendToAll(new MSGClientRingInfo(Game.sv_next_x,Game.sv_next_z,Game.sv_next_size,Game.r_generation_modes.get(i).name()));
+            ModMessages.ServerSendToAll(new MSGClientGameInfo(Game.sv_round,Game.sv_roundtick));
         }
         else{//开始缩圈
             Game.isRingClosing = true;
@@ -59,6 +61,7 @@ public class RingMove {
                 Game.sv_roundticktotal = Game.r_moving_tick.get(i);
                 Game.sv_roundtick = Game.sv_roundticktotal;
             }
+            ModMessages.ServerSendToAll(new MSGClientGameInfo(Game.sv_round,Game.sv_roundtick));
         }
     }
     public static void PhaseChange(MinecraftServer server,String message){
@@ -104,7 +107,7 @@ public class RingMove {
                 //    LogRingStatus();
                 Game.sv_roundtick--;
                 if(Game.sv_roundtick<0){
-                    PhaseChange(event.level.getServer(),"msg.aijbr.yellow");
+                    PhaseChange();
                     setWorldBorder(worldborder);
                 }
                 if(Game.isRingClosing&&Game.sv_round==0){

@@ -1,14 +1,12 @@
 package com.aijygr.AiJGame.BR;
 
+import com.aijygr.*;
 import com.aijygr.AiJGame.AiJBRPlayer;
 import com.aijygr.AiJGame.AiJDropShip;
 import com.aijygr.AiJGame.Game;
+import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.AiJGame.Ring.RingMove;
 import com.aijygr.Entity.DropShip;
-import com.aijygr.LIB;
-import com.aijygr.ModConfig;
-import com.aijygr.ModEvents;
-import com.aijygr.Reg;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -76,7 +74,8 @@ public class GameStart {
             return;
         }
 
-        RingMove.PhaseChange(event.getLevel().getServer(),"msg.aijbr.yellow");
+        RingMove.PhaseChange();
+        ModMessages.ServerSendToAll(new MSGClientPlayerInfo(Game.playerlist.size(),Game.teams.size()));
 
         Game.isGameStart  = true;
         LIB.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.yellow","msg.aijbr.info.command_game_started");

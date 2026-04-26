@@ -38,7 +38,9 @@
   "msg.aijbr.err.command_player_leave_team_failed": "离开队伍失败，你不在任何队伍中",
   "msg.aijbr.err.command_game_not_initialized": "尚未初始化游戏  请执行 /AiJBR init",
   "msg.aijbr.err.command_game_not_reloaded": "尚未重载游戏配置文件  请执行 /AiJBR reload",
-  "msg.aijbr.err.command_no_enough_teams": "小队数量小于2 无法开始游戏",
+  "msg.aijbr.err.command_no_enough_teams": "小队数量不足 无法开始游戏",
+
+  "msg.aijbr.warn.command_disabled_game_end_check": "小队数量为1 自动进入测试模式",
 
   "death.attack.aijbr.ring.message": "%1$s感觉到浑身酥酥麻麻的",
 

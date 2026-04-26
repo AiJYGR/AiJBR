@@ -38,6 +38,7 @@ public class Game {
     public static double r_initial_ringsize = 0;
     public static boolean isInitialized = false;
     public static boolean isReloaded = false;
+    public static int gameendteamcondition = 1;
     public static List<Integer> r_waiting_tick =new ArrayList<>();
     public static List<Integer> r_moving_tick = new ArrayList<>();
     public static List<Double> r_basic_damage= new ArrayList<>();
@@ -53,9 +54,20 @@ public class Game {
     public static int sv_roundticktotal = 0;
     //public static boolean enableAiJBP;
     public static final double R = 6000000.0d;
-    public static final int TRAVELTICKS = 100;
-    public static List<UUID> playerlist = new ArrayList<>();
-    public static List<String> teams = new ArrayList<>();
+    public static final int TRAVELTICKS = 300;
+
+    public static Map<String,TeamStatus> teamlist = new HashMap<>();
+    public static Map<UUID,PlayerStatus> playerlist = new HashMap<>();
+
+    public enum PlayerStatus{
+        ALIVE,
+        //DBNO,
+        DEAD
+    }
+    public enum TeamStatus{
+        ALIVE,
+        DEAD
+    }
 
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
@@ -63,7 +75,11 @@ public class Game {
         {
             gametime = event.level.getGameTime();
             if(Game.isGameStart)
+            {
                 BRGameTime++;
+                sv_roundtick--;
+            }
+
         }
     }
 
@@ -72,7 +88,7 @@ public class Game {
         Game.isReloaded = false;
         Game.isInitialized = false;
         Game.isGameStart = false;
-        Game.playerlist = new ArrayList<>();
+        Game.playerlist = new HashMap<>();
         Game.sv_damage_per_block = 0.00001;
         Game.sv_basicdamage = 0;
     }

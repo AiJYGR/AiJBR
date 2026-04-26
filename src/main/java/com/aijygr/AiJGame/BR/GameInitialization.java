@@ -53,16 +53,16 @@ public class GameInitialization {
         //Reset SV
         LIB.tryBroadcastMessage(player," ");
         LIB.tryBroadcastMessage(player, "msg.aijbr.yellow","Starting INIT.");
+        Game.isInitialized = false;
+        Game.isGameStart = false;
         Game.r_ring_size.clear();
         Game.r_waiting_tick.clear();
         Game.r_basic_damage.clear();
         Game.r_damage_per_block.clear();
         Game.r_moving_tick.clear();
         Game.r_generation_modes.clear();
-        Game.isInitialized = false;
 
         WorldBorder worldBorder = event.getLevel().getWorldBorder();
-        Game.isGameStart = false;
         Game.sv_next_x = 0;
         Game.sv_next_z = 0;
         Game.sv_curr_x = 0;
@@ -70,6 +70,9 @@ public class GameInitialization {
         Game.sv_r_x = Game.sv_curr_x;
         Game.sv_r_z = Game.sv_curr_z;
         Game.damage_tickingtime = ModConfig.Server.Config.RING.DAMAGE_TICKING_TIME.get();
+
+        Game.BRGameTime = 0;
+        Game.gameendteamcondition = 1;
 
         AiJDropShip.dropshipPlayerlist.clear();
         AiJDropShip.isTick = false;
@@ -139,7 +142,7 @@ public class GameInitialization {
         else
             LIB.tryBroadcastMessage(player,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
 
-        //Set Gamerule
+        //Set GameRule
         ServerLevel level = event.getLevel();
         GameRules rules = level.getGameRules();
         rules.getRule(GameRules.RULE_DAYLIGHT).set(false,event.getLevel().getServer());
@@ -159,6 +162,7 @@ public class GameInitialization {
             LIB.TPTop(svplayer,0,0);
         });
 
+        //结束指令
         Game.isInitialized = true;
         LIB.tryBroadcastMessage(player,"msg.aijbr.bold","msg.aijbr.info.command_executed");
     }

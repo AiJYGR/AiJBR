@@ -35,7 +35,10 @@ public class HealthGUI {
 
         int x = width / 2 + 55;
         int y = height - 50;
+        int w = font.width(healthstr)/2;
+        int h = 18;
 
+        graphics.fill(x-w-3,  y-3, x+w+2, y+h+2, 0x20001000);
         graphics.drawString(font, percentagestr, x - font.width(percentagestr)/2 , y, 0xFF5555,false);
         graphics.drawString(font, healthstr, x - font.width(healthstr)/2 , y+10, 0xFF5555,false);
 

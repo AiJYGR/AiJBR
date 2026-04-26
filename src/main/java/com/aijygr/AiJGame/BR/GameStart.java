@@ -4,7 +4,6 @@ import com.aijygr.*;
 import com.aijygr.AiJGame.AiJBRPlayer;
 import com.aijygr.AiJGame.AiJDropShip;
 import com.aijygr.AiJGame.Game;
-import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.AiJGame.Ring.RingMove;
 import com.aijygr.Entity.DropShip;
 import net.minecraft.server.MinecraftServer;
@@ -20,11 +19,7 @@ public class GameStart {
 
     @SubscribeEvent
     public static void onGameStart(ModEvents.GameStartEvent event) {
-        if(AiJBRPlayer.getTeamsNames(event.getLevel().getServer()).size()<=1)
-        {
-            LIB.tryPlayerMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err.command_no_enough_teams");
-            return;
-        }
+        //检查是否初始化/重载
         if(!(Game.isInitialized&&Game.isReloaded)){
             if(!Game.isInitialized){
                 LIB.tryPlayerMessage(event.getPlayer(), "msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
@@ -35,21 +30,41 @@ public class GameStart {
             return;
         }
 
+        //获取玩家和队伍列表
+        MinecraftServer server = event.getLevel().getServer();
+        for(String str : AiJBRPlayer.getTeamsNames(server))
+            Game.teamlist.put(str, Game.TeamStatus.ALIVE);
+        for(UUID uuid : AiJBRPlayer.getPlayers(server))
+            Game.playerlist.put(uuid, Game.PlayerStatus.ALIVE);
+
+        //检查队伍数量
+        AiJBRPlayer.updateAndBroadcastPlayerInfo(server);
+        if(AiJBRPlayer.getAliveTeamsCount(server)==0)
+        {
+            LIB.tryPlayerMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err.command_no_enough_teams");
+            return;
+        }
+        Game.gameendteamcondition = 1;
+        if(AiJBRPlayer.getAliveTeamsCount(server)==1)
+        {
+            LIB.tryPlayerMessage(event.getPlayer(),"msg.aijbr.yellow","msg.aijbr.warn.command_disabled_game_end_check");
+            Game.gameendteamcondition = 0;
+        }
+
+        //开启服务端参数
         Game.BRGameTime = 0;
         Game.sv_round = 0;
         Game.sv_roundticktotal = Game.r_initial_waitingtick+1;
         Game.sv_roundtick = Game.sv_roundticktotal;
         Game.isRingClosing = false;
 
-        MinecraftServer server = event.getLevel().getServer();
+        //生成DropShip
         double altitude = ModConfig.Server.Config.DROPSHIP.HEIGHT.get();
         if(LIB.SMwithForceLoad(server, Reg.DROPSHIP.get(), new Vec3(0,altitude,0)) instanceof DropShip dropship)
         {
             AiJDropShip.isTick = true;
             dropship.setUUID(AiJDropShip.DROPSHIPUUID);
             Vec3 pos = new Vec3(dropship.getX(), dropship.getY(), dropship.getZ());
-            Game.teams.addAll(AiJBRPlayer.getTeamsNames(server));
-            Game.playerlist = AiJBRPlayer.getPlayers(server);
 
             List<Double> d = AiJDropShip.generate();
             double v = ModConfig.Server.Config.DROPSHIP.SPEED.get();
@@ -61,7 +76,7 @@ public class GameStart {
 
             LIB.TPwithForceLoad(dropship,startingpoint);
 
-            for(UUID uuid : Game.playerlist){
+            for(UUID uuid : Game.playerlist.keySet()){
                 AiJDropShip.playerGetOn(server, uuid, dropship);
             }
             dropship.setMotion(motion);
@@ -75,8 +90,8 @@ public class GameStart {
         }
 
         RingMove.PhaseChange();
-        ModMessages.ServerSendToAll(new MSGClientPlayerInfo(Game.playerlist.size(),Game.teams.size()));
 
+        //结束指令
         Game.isGameStart  = true;
         LIB.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.yellow","msg.aijbr.info.command_game_started");
         LIB.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_executed");

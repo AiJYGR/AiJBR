@@ -192,21 +192,6 @@ public class ModCommands
     }
 
     public static class SVCommand {
-        private int PlayerLeave(ServerPlayer player) {
-            if(!Game.isInitialized){
-                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
-                return 1;
-            }
-            if(AiJBRPlayer.leaveTeam(player))
-            {
-                LIB.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_leave_team");
-                return 0;
-            }
-            else{
-                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_leave_team_failed");
-                return 1;
-            }
-        }
         public SVCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
                 return source.hasPermission(3);

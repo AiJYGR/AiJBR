@@ -24,10 +24,10 @@ public class ClientGame {
         ClientGame.roundtick = roundtick;
     }
     public static int getSecond(){
-        if(roundtick<=0){
+        if(roundtick<=20){
             return 0;
         }
-        else return (int)Math.ceil((double) roundtick / 20.0);
+        else return (int)Math.floor((double) roundtick / 20.0);
     }
 
     public static int players;

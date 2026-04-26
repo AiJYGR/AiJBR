@@ -105,7 +105,6 @@ public class RingMove {
                 //LOG
                 //if(Game.gametime%100==0)
                 //    LogRingStatus();
-                Game.sv_roundtick--;
                 if(Game.sv_roundtick<0){
                     PhaseChange();
                     setWorldBorder(worldborder);

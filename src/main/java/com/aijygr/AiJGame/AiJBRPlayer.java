@@ -1,8 +1,11 @@
 package com.aijygr.AiJGame;
 
+import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.Item.Lock;
+import com.aijygr.LIB;
 import com.aijygr.ModConfig;
 import com.aijygr.ModEvents;
+import com.aijygr.ModMessages;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -201,15 +204,80 @@ public class AiJBRPlayer {
     }
 
     @SubscribeEvent
-    public static void onPlayerDeath(LivingDeathEvent event) {
-        if(event.getEntity() instanceof ServerPlayer player)
-        {
+    public static void onEntityDeath(LivingDeathEvent event) {
+
+        if(event.getEntity() instanceof ServerPlayer player) {
             Inventory inventory = player.getInventory();
             for (int i = 0; i < inventory.getContainerSize(); i++) {
                 ItemStack stack = inventory.getItem(i);
                 if (!stack.isEmpty() && stack.getItem() instanceof Lock)
                     inventory.setItem(i, ItemStack.EMPTY);
-                }
+            }
+
+            UUID uuid = player.getUUID();
+            if(Game.playerlist.containsKey(uuid)){
+                Game.playerlist.put(uuid, Game.PlayerStatus.DEAD);
+            }
+            MinecraftServer server = event.getEntity().getServer();
+            updateAndBroadcastPlayerInfo(server);
         }
+
+
+    }
+
+    public static List<String> getAlivePlayers(MinecraftServer server){
+        List<UUID> list = new ArrayList<>();
+        for(UUID uuid : Game.playerlist.keySet()){
+            if(Game.playerlist.get(uuid)!= Game.PlayerStatus.DEAD){
+                list.add(uuid);
+            }
+        }
+        return LIB.UUIDtoNames(server,list);
+    }
+
+    public static int getAlivePlayersCount(MinecraftServer server){
+        return getAlivePlayers(server).size();
+    }
+
+    public static int teamcount = 0;
+    private static void updateAliveTeams(MinecraftServer server){
+        teamcount = 0;
+        for(String teamname : Game.teamlist.keySet()){
+            PlayerTeam team = server.getScoreboard().getPlayerTeam(teamname);
+            if (team != null) {
+                boolean flag = false;
+                for(String str : team.getPlayers()){
+                    UUID uuid = LIB.playerNametoUUID(server,str);
+                    if(uuid==null)
+                        uuid = UUID.fromString(str);
+                    if(Game.playerlist.containsKey(uuid)){
+                        if(Game.playerlist.get(uuid)!= Game.PlayerStatus.DEAD){
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                if(flag){
+                    teamcount++;
+                    System.out.println(teamname+"ALIVE");
+                    Game.teamlist.put(teamname, Game.TeamStatus.ALIVE);
+                }
+                else
+                {
+                    System.out.println(teamname+"DEAD");
+                    Game.teamlist.put(teamname, Game.TeamStatus.DEAD);
+                }
+
+            }
+        }
+    }
+
+    public static int getAliveTeamsCount(MinecraftServer server){
+        return teamcount;
+    }
+
+    public static void updateAndBroadcastPlayerInfo(MinecraftServer server){
+        updateAliveTeams(server);
+        ModMessages.ServerSendToAll(new MSGClientPlayerInfo(getAlivePlayersCount(server), getAliveTeamsCount(server)));
     }
 }

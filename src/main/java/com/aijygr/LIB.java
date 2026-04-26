@@ -131,6 +131,14 @@ public class LIB {
         }
         return list;
     }
+    public static UUID playerNametoUUID(MinecraftServer server,String str){
+        ServerPlayer player = server.getPlayerList().getPlayerByName(str);
+        if (player != null) {
+            return player.getUUID();
+        }
+        else
+            return null;
+    }
 
     public static boolean SV1TK(TickEvent.LevelTickEvent event){
         return event.level.dimension().equals(Level.OVERWORLD)

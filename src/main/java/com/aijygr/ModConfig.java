@@ -51,7 +51,7 @@ public abstract class ModConfig {
             public static class PLAYER{
                 public static ForgeConfigSpec.IntValue MAXHEALTH;
                 public static ForgeConfigSpec.DoubleValue MOVEMENTSPEED;
-                public static ForgeConfigSpec.DoubleValue FALLDAMAGEMUTIPIER;
+                public static ForgeConfigSpec.DoubleValue FALLDAMAGEMULTIPIER;
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAK;
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAKGLASS;
             }
@@ -96,7 +96,7 @@ public abstract class ModConfig {
                 public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 35;
             }
             public static final class DROPSHIP{
-                public static final double SPEED = 0.1d;
+                public static final double SPEED = 1.0d;
                 public static final short HEIGHT = 200;
             }
             public static class TEAM {
@@ -110,8 +110,8 @@ public abstract class ModConfig {
             }
             public static class PLAYER{
                 public static final int MAXHEALTH = 20;
-                public static final double MOVEMENTSPEED = 0.1000000014911612;
-                public static final double FALLDAMAGEMUTIPIER = 1.0;
+                public static final double MOVEMENTSPEED = 0.10f;
+                public static final double FALLDAMAGEMULTIPIER = 1.0;
                 public static final LIB.BOOL SURVIVALBREAK = LIB.BOOL.FALSE;
                 public static final LIB.BOOL SURVIVALBREAKGLASS = LIB.BOOL.TRUE;
             }
@@ -272,8 +272,9 @@ public abstract class ModConfig {
         server_builder.comment("Default Player Attributes");
         server_builder.push("Player");
         Server.Config.PLAYER.MAXHEALTH = server_builder.defineInRange("MaxHealth",Server.Default.PLAYER.MAXHEALTH,1,1000);
+        server_builder.comment("[Attention] This value is NOT the actual walking speed or sprinting speed, but only a index for calculating your speed. You may go to see \"Minecraft Wiki : Attributes\" for more details. ");
         Server.Config.PLAYER.MOVEMENTSPEED = server_builder.defineInRange("MaxMovementSpeed",Server.Default.PLAYER.MOVEMENTSPEED,0.001,0.5);
-        Server.Config.PLAYER.FALLDAMAGEMUTIPIER = server_builder.defineInRange("FallDamageMutipier",Server.Default.PLAYER.FALLDAMAGEMUTIPIER,0.0,10);
+        Server.Config.PLAYER.FALLDAMAGEMULTIPIER = server_builder.defineInRange("FallDamageMultiplier",Server.Default.PLAYER.FALLDAMAGEMULTIPIER,0.0,10);
         Server.Config.PLAYER.SURVIVALBREAK = server_builder.defineEnum("CanSurvivalPlayerBreakBlocks",Server.Default.PLAYER.SURVIVALBREAK);
         Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.defineEnum("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
 

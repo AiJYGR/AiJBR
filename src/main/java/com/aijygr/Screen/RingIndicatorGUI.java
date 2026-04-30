@@ -1,5 +1,6 @@
 package com.aijygr.Screen;
 
+import com.aijygr.AiJGame.Client.ClientGame;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.Ring.RingDamage;
 import com.aijygr.Main;
@@ -54,7 +55,7 @@ public class RingIndicatorGUI {
         var font = minecraft.font;
         int width = event.getWindow().getGuiScaledWidth();
         int height = event.getWindow().getGuiScaledHeight();
-        int x = width / 2 + 10;
+        int x = width / 2;
         int y = height - 50;
 
         RenderSystem.enableBlend();
@@ -77,11 +78,12 @@ public class RingIndicatorGUI {
     }
 
     private static void cal(LocalPlayer player){
-        double playerPosX = player.position().x;
-        double playerPosZ = player.position().z;
-        double ringPosX = Game.sv_next_x;
-        double ringPosZ = Game.sv_next_z;
-        double ringSize = Game.sv_next_size;
+        float pt = Minecraft.getInstance().getFrameTime();
+        double playerPosX = player.getPosition(pt).x();
+        double playerPosZ = player.getPosition(pt).z();
+        double ringPosX = ClientGame.next_x;
+        double ringPosZ = ClientGame.next_z;
+        double ringSize = ClientGame.next_size;
         final double f = RingDamage.PLAYER_HITBOXFIX;
 
         double r = ringSize / 2;

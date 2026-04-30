@@ -158,7 +158,7 @@ public class AiJBRPlayer {
     @SubscribeEvent
     public static void onPlayerFall(LivingFallEvent event) {
         if (event.getEntity() instanceof Player player) {
-            event.setDamageMultiplier(ModConfig.Server.Config.PLAYER.FALLDAMAGEMUTIPIER.get().floatValue());
+            event.setDamageMultiplier(ModConfig.Server.Config.PLAYER.FALLDAMAGEMULTIPIER.get().floatValue());
         }
     }
 
@@ -193,7 +193,7 @@ public class AiJBRPlayer {
             resetPlayerAttributes(List.of(player));
     }
 
-    @SubscribeEvent
+    ///{@link Game#onGameInit(ModEvents.GameInitEvent)}
     public static void onGameInit(ModEvents.GameInitEvent event) {
         resetPlayerAttributes(event.getLevel().getServer().getPlayerList().getPlayers());
     }

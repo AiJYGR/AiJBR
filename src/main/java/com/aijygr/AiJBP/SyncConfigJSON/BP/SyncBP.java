@@ -8,6 +8,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.File;
@@ -18,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+@Mod.EventBusSubscriber
 public class SyncBP {
     public static final String DEFAULTFILE = """
 {
@@ -112,14 +116,27 @@ public class SyncBP {
             Main.LOGGER.error("[AiJBR][SyncBP] Failed to write cache file.", e);
         }
     }
-    public static void reload(MinecraftServer server) throws Exception {
-        // serverconfig/AiJBP.json
-        Path jsonfilepath = server.getWorldPath(new LevelResource("serverconfig")).resolve("AiJBP.json");
-        File file = jsonfilepath.toFile();
+
+
+
+    @SubscribeEvent
+    public static void onServerStarting(ServerStartingEvent event) {
+        generateFile(event.getServer());
+    }
+
+    private static File file;
+    private static Path jsonfilepath;
+    public static void generateFile(MinecraftServer server) {
+        jsonfilepath = server.getWorldPath(new LevelResource("serverconfig")).resolve("AiJBP.json");
+        file = jsonfilepath.toFile();
         if (!file.exists()) {
             Main.LOGGER.info("[AiJBR][SyncBP]: JSON not found, try generating default file...");
             generateDefault(file);
         }
+    }
+    public static void reload(MinecraftServer server) throws Exception {
+        // serverconfig/AiJBP.json
+        generateFile(server);
         try (FileReader reader = new FileReader(file)) {
             rawjson = Files.readString(jsonfilepath, StandardCharsets.UTF_8);
             json = JsonParser.parseString(rawjson).getAsJsonObject();

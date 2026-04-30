@@ -208,7 +208,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:timeless-and-classics-zero-1028108:7745481")
     runtimeOnly fg.deobf("curse.maven:spark-361579:4738952")
     runtimeOnly fg.deobf("curse.maven:cloth-config-348521:5729105")
-
+    runtimeOnly fg.deobf("curse.maven:playeranimator-658587:4587214")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

@@ -36,19 +36,19 @@ public class Armor extends ArmorItem
 //        {
 //        }
 //    }
-    @Override
-    public @NotNull ItemStack getDefaultInstance()
-    {
-        ItemStack stack = super.getDefaultInstance();
-        CompoundTag tag = new CompoundTag();
-        ListTag enchantmentsList = new ListTag();
-        CompoundTag enchantment = new CompoundTag();
-        enchantment.putString("id", Enchantments.ALL_DAMAGE_PROTECTION.toString());
-        enchantment.putShort("lvl", (short)8);
-        enchantmentsList.add(enchantment);
-        tag.put("Enchantments", enchantmentsList);
-        stack.setTag(tag);
-        System.out.println("\n\n\n"+Enchantments.ALL_DAMAGE_PROTECTION.toString());
-        return stack;
-    }
+//    @Override
+//    public @NotNull ItemStack getDefaultInstance()
+//    {
+//        ItemStack stack = super.getDefaultInstance();
+//        CompoundTag tag = new CompoundTag();
+//        ListTag enchantmentsList = new ListTag();
+//        CompoundTag enchantment = new CompoundTag();
+//        enchantment.putString("id", Enchantments.ALL_DAMAGE_PROTECTION.toString());
+//        enchantment.putShort("lvl", (short)8);
+//        enchantmentsList.add(enchantment);
+//        tag.put("Enchantments", enchantmentsList);
+//        stack.setTag(tag);
+//        System.out.println("\n\n\n"+Enchantments.ALL_DAMAGE_PROTECTION.toString());
+//        return stack;
+//    }
 }

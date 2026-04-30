@@ -1,6 +1,7 @@
 package com.aijygr;
 
 import com.aijygr.Block.ContainerBlock;
+import com.aijygr.Effects.Flying;
 import com.aijygr.Entity.BlockEntity.LootContainer;
 import com.aijygr.Entity.DropShip;
 import com.aijygr.Item.*;
@@ -9,6 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.*;
@@ -27,11 +29,13 @@ public class Reg
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Main.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Main.MODID);
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Main.MODID);
+    public static final DeferredRegister<MobEffect> MOB_EFFECT = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, Main.MODID);
 
     public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe",()-> new Syringe(new Item.Properties()));
     public static final RegistryObject<Item> MEDKIT = ITEMS.register("medkit", () -> new Medkit(new Item.Properties()));
     public static final RegistryObject<Item> IRON_ARMOR = ITEMS.register("iron_armor", () -> new Armor(ArmorMaterials_override.IRON,new ArmorItem.Properties()));
     public static final RegistryObject<Item> DIAMOND_ARMOR = ITEMS.register("diamond_armor", () -> new Armor(ArmorMaterials_override.DIAMOND,new ArmorItem.Properties()));
+    public static final RegistryObject<Item> NETHERITE_ARMOR = ITEMS.register("netherite_armor", () -> new Armor(ArmorMaterials_override.NETHERITE,new ArmorItem.Properties()));
     public static final RegistryObject<Item> AiJBP_LVL1 = ITEMS.register("backpack_lvl1",()->new Backpack(new Item.Properties().fireResistant(),() -> ModConfig.Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL.get().shortValue()));
     public static final RegistryObject<Item> AiJBP_LVL2 = ITEMS.register("backpack_lvl2",()->new Backpack(new Item.Properties().fireResistant(),() -> ModConfig.Server.Config.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL.get().shortValue()));
     public static final RegistryObject<Item> AiJBP_LVL3 = ITEMS.register("backpack_lvl3",()->new Backpack(new Item.Properties().fireResistant(),() -> ModConfig.Server.Config.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL.get().shortValue()));
@@ -50,6 +54,8 @@ public class Reg
                     .noSave()
                     .fireImmune()
                     .build("dropship"));
+
+    public static final RegistryObject<MobEffect> FLYING = MOB_EFFECT.register("flying", Flying::new);
 
     public static final ResourceKey<DamageType> AIJBR_RING_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath(Main.MODID, "ring_damage"));
 }

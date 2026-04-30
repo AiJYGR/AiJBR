@@ -32,7 +32,7 @@ public enum ArmorMaterials_override implements StringRepresentable, ArmorMateria
      IRON("iron", 15, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266654_) -> {
         p_266654_.put(ArmorItem.Type.BOOTS, 0);
         p_266654_.put(ArmorItem.Type.LEGGINGS, 0);
-        p_266654_.put(ArmorItem.Type.CHESTPLATE, 0);
+        p_266654_.put(ArmorItem.Type.CHESTPLATE, 10);
         p_266654_.put(ArmorItem.Type.HELMET, 0);
      }), 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
         return Ingredient.of(Items.IRON_INGOT);
@@ -40,7 +40,7 @@ public enum ArmorMaterials_override implements StringRepresentable, ArmorMateria
      GOLD("gold", 7, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266650_) -> {
         p_266650_.put(ArmorItem.Type.BOOTS, 0);
         p_266650_.put(ArmorItem.Type.LEGGINGS, 0);
-        p_266650_.put(ArmorItem.Type.CHESTPLATE, 0);
+        p_266650_.put(ArmorItem.Type.CHESTPLATE, 16);
         p_266650_.put(ArmorItem.Type.HELMET, 0);
      }), 25, SoundEvents.ARMOR_EQUIP_GOLD, 0.0F, 0.0F, () -> {
         return Ingredient.of(Items.GOLD_INGOT);
@@ -48,7 +48,7 @@ public enum ArmorMaterials_override implements StringRepresentable, ArmorMateria
      DIAMOND("diamond", 33, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266649_) -> {
         p_266649_.put(ArmorItem.Type.BOOTS, 0);
         p_266649_.put(ArmorItem.Type.LEGGINGS, 0);
-        p_266649_.put(ArmorItem.Type.CHESTPLATE, 0);
+        p_266649_.put(ArmorItem.Type.CHESTPLATE, 16);
         p_266649_.put(ArmorItem.Type.HELMET, 0);
      }), 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F, 0.0F, () -> {
         return Ingredient.of(Items.DIAMOND);
@@ -64,7 +64,7 @@ public enum ArmorMaterials_override implements StringRepresentable, ArmorMateria
      NETHERITE("netherite", 37, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266655_) -> {
         p_266655_.put(ArmorItem.Type.BOOTS, 0);
         p_266655_.put(ArmorItem.Type.LEGGINGS, 0);
-        p_266655_.put(ArmorItem.Type.CHESTPLATE, 0);
+        p_266655_.put(ArmorItem.Type.CHESTPLATE, 20);
         p_266655_.put(ArmorItem.Type.HELMET, 0);
      }), 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 0.0F, 0.0F, () -> {
         return Ingredient.of(Items.NETHERITE_INGOT);

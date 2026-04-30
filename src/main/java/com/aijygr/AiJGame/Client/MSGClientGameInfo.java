@@ -1,5 +1,6 @@
 package com.aijygr.AiJGame.Client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -23,6 +24,7 @@ public class MSGClientGameInfo {
     }
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
+
             ClientGame.setClientRound(round,roundtick);
         });
         ctx.get().setPacketHandled(true);

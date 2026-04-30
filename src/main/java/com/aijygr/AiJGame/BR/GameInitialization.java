@@ -45,6 +45,7 @@ public class GameInitialization {
         }
     }
 
+    ///see this:{@link Game#onGameInit(ModEvents.GameInitEvent)}
     public static void GameInit(ModEvents.GameInitEvent event) {
         if(event.getLevel().isClientSide())
             return;
@@ -142,16 +143,7 @@ public class GameInitialization {
         else
             LIB.tryBroadcastMessage(player,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
 
-        //Set GameRule
-        ServerLevel level = event.getLevel();
-        GameRules rules = level.getGameRules();
-        rules.getRule(GameRules.RULE_DAYLIGHT).set(false,event.getLevel().getServer());
-        rules.getRule(GameRules.RULE_NATURAL_REGENERATION).set(false,event.getLevel().getServer());
-        rules.getRule(GameRules.RULE_DOMOBSPAWNING).set(false,event.getLevel().getServer());
-        rules.getRule(GameRules.RULE_DOINSOMNIA).set(false,event.getLevel().getServer());
-        rules.getRule(GameRules.RULE_SHOWDEATHMESSAGES).set(true,event.getLevel().getServer());
-        rules.getRule(GameRules.RULE_COMMANDBLOCKOUTPUT).set(true,event.getLevel().getServer());
-        rules.getRule(GameRules.RULE_RANDOMTICKING).set(0,event.getLevel().getServer());
+
 
         //Set Player
         LIB.PLAYERS(event.getLevel().getServer().getPlayerList().getPlayers(),(svplayer)->{

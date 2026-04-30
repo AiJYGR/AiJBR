@@ -9,12 +9,19 @@ import com.aijygr.LIB;
 import com.aijygr.ModConfig;
 import com.aijygr.ModEvents;
 import com.aijygr.ModMessages;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 @Mod.EventBusSubscriber()
 public class Game {
@@ -97,8 +104,32 @@ public class Game {
     public static void onGameInit(ModEvents.GameInitEvent event) {
         GameInitialization.GameInit(event);
         AiJBRPlayer.initTeams(ModConfig.Server.Config.TEAM.TEAMNUM.get(), ModConfig.Server.Config.TEAM.TEAMSIZE.get(),event.getLevel().getScoreboard());
+        AiJBRPlayer.onGameInit(event);
         ModMessages.ServerSendToAll(new MSGClientGameInfo(0,0));
         ModMessages.ServerSendToAll(new MSGClientPlayerInfo(0,0));
         ModMessages.ServerSendToAll(new MSGClientRingInfo(0,0,0,""));
+    }
+
+    @SubscribeEvent
+    public static void onServerStarting(ServerStartingEvent event) {
+        //Set GameRule
+        MinecraftServer server = event.getServer();
+        GameRules rules = server.getGameRules();
+        //Spawns
+        rules.getRule(GameRules.RULE_DOINSOMNIA).set(false,server);
+        rules.getRule(GameRules.RULE_DOMOBSPAWNING).set(false,server);
+        rules.getRule(GameRules.RULE_DO_PATROL_SPAWNING).set(false,server);
+        rules.getRule(GameRules.RULE_DO_TRADER_SPAWNING).set(false,server);
+        rules.getRule(GameRules.RULE_DO_WARDEN_SPAWNING).set(false,server);
+
+        rules.getRule(GameRules.RULE_DAYLIGHT).set(false,server);
+        rules.getRule(GameRules.RULE_NATURAL_REGENERATION).set(false,server);
+
+        rules.getRule(GameRules.RULE_SHOWDEATHMESSAGES).set(true,server);
+        rules.getRule(GameRules.RULE_COMMANDBLOCKOUTPUT).set(true,server);
+        rules.getRule(GameRules.RULE_RANDOMTICKING).set(0,server);
+
+        server.getLevel(ServerLevel.OVERWORLD).getWorldBorder().setDamagePerBlock(0.0);
+        server.getLevel(ServerLevel.OVERWORLD).getWorldBorder().setWarningBlocks(1);
     }
 }

@@ -1,6 +1,5 @@
 package com.aijygr.AiJGame.Client;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,17 +14,21 @@ public class ClientGame {
     public static int next_z;
     public static double next_size;
     public static String generationMode;
+    public static int round;
+    public static int roundtick;
+    public static boolean isShrinking;
+    public static int players;
+    public static int teams;
     public static void setClientRing(int x, int z, double size, String mode) {
         next_x = x;
         next_z = z;
         next_size = size;
         generationMode = mode;
     }
-    public static int round;
-    public static int roundtick;
-    public static void setClientRound(int round,int roundtick){
+    public static void setClientRing(int round, int roundtick, boolean isShrinking){
         ClientGame.round = round;
         ClientGame.roundtick = roundtick;
+        ClientGame.isShrinking = isShrinking;
     }
     public static int getSecond(){
         if(roundtick<=20){
@@ -33,9 +36,6 @@ public class ClientGame {
         }
         else return (int)Math.floor((double) roundtick / 20.0);
     }
-
-    public static int players;
-    public static int teams;
     public static void setClientGame(int players, int teams){
         ClientGame.players = players;
         ClientGame.teams = teams;

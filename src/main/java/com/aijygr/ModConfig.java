@@ -34,6 +34,10 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.ConfigValue<Integer> MEDKIT_USEDURATION;
                 public static ForgeConfigSpec.ConfigValue<Integer> MEDKIT_MAXSTACKSIZE;
                 public static ForgeConfigSpec.DoubleValue MEDKIT_HEALAMOUNT;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_MAXDAMAGE;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_IRON_DEFENSE;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_DIAMOND_DEFENSE;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_NETHERITE_DEFENSE;
             }
             public static class DROPSHIP{
                 public static ForgeConfigSpec.DoubleValue SPEED;
@@ -54,6 +58,7 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.DoubleValue FALLDAMAGEMULTIPIER;
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAK;
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAKGLASS;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> RESPAWNATDEATHPOINT;
             }
         }
 
@@ -94,6 +99,11 @@ public abstract class ModConfig {
                 public static final short BACKPACK_LVL2_PERMISSIONLEVEL = 12;
                 public static final short BACKPACK_LVL3_PERMISSIONLEVEL = 18;
                 public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 35;
+                public static final int ITEM_ARMOR_MAXDAMAGE = 40;
+                public static final int ITEM_ARMOR_IRON_DEFENSE = 10;
+                public static final int ITEM_ARMOR_DIAMOND_DEFENSE = 15;
+                public static final int ITEM_ARMOR_NETHERITE_DEFENSE = 20;
+
             }
             public static final class DROPSHIP{
                 public static final double SPEED = 1.0d;
@@ -114,6 +124,7 @@ public abstract class ModConfig {
                 public static final double FALLDAMAGEMULTIPIER = 1.0;
                 public static final LIB.BOOL SURVIVALBREAK = LIB.BOOL.FALSE;
                 public static final LIB.BOOL SURVIVALBREAKGLASS = LIB.BOOL.TRUE;
+                public static final LIB.BOOL RESPAWNATDEATHPOINT = LIB.BOOL.TRUE;
             }
         }
     }
@@ -242,19 +253,21 @@ public abstract class ModConfig {
         Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.ITEM.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
         server_builder.pop();
         server_builder.pop();
+
+        server_builder.push("ARMOR");
+        server_builder.comment("Also known as: MaxDamage.");
+        Server.Config.ITEM.ITEM_ARMOR_MAXDAMAGE = server_builder.defineInRange("Durability", Server.Default.ITEM.ITEM_ARMOR_MAXDAMAGE,1,2000);
+        Server.Config.ITEM.ITEM_ARMOR_IRON_DEFENSE = server_builder.defineInRange("LVL1ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_IRON_DEFENSE,1,200);
+        Server.Config.ITEM.ITEM_ARMOR_DIAMOND_DEFENSE = server_builder.defineInRange("LVL2ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_DIAMOND_DEFENSE,1,200);
+        Server.Config.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE = server_builder.defineInRange("LVL3ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE,1,200);
+        server_builder.pop();
         server_builder.comment("PermissionLevel: Used with BackpackSlotAttributes together.");
         server_builder.push("BACKPACK");
         Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL = server_builder.defineInRange("LVL1Permission",Server.Default.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL = server_builder.defineInRange("LVL2Permission",Server.Default.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL = server_builder.defineInRange("LVL3Permission",Server.Default.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL4_PERMISSIONLEVEL = server_builder.defineInRange("LVL4Permission",Server.Default.ITEM.BACKPACK_LVL4_PERMISSIONLEVEL,0,Short.MAX_VALUE);
-
         server_builder.pop();
-        server_builder.push("ARMOR");
-        //server_builder.comment("");
-        //CFGDOUBLE = server_builder.comment("comment.cfg.time").translation("translate.cfg.time").defineInRange("t", 200.0d, 0.0d, 20000.0d);
-        server_builder.pop();
-
 
         server_builder.pop();
 
@@ -277,6 +290,7 @@ public abstract class ModConfig {
         Server.Config.PLAYER.FALLDAMAGEMULTIPIER = server_builder.defineInRange("FallDamageMultiplier",Server.Default.PLAYER.FALLDAMAGEMULTIPIER,0.0,10);
         Server.Config.PLAYER.SURVIVALBREAK = server_builder.defineEnum("CanSurvivalPlayerBreakBlocks",Server.Default.PLAYER.SURVIVALBREAK);
         Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.defineEnum("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
+        Server.Config.PLAYER.RESPAWNATDEATHPOINT = server_builder.defineEnum("RespawnAtDeathPoint",Server.Default.PLAYER.RESPAWNATDEATHPOINT);
 
         SERVER_CONFIG = server_builder.build();
     }

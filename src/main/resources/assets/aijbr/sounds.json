@@ -1,0 +1,28 @@
+{
+  "ring_damage": {
+    "replace": true,
+    "subtitle": "subtitles.aijbr.ring_damage",
+    "sounds": [
+      {
+        "name": "aijbr:ring_damage/drown1",
+        "weight": 1,
+        "volume": 1
+      },
+      {
+        "name": "aijbr:ring_damage/drown2",
+        "weight": 1,
+        "volume": 1
+      },
+      {
+        "name": "aijbr:ring_damage/drown3",
+        "weight": 1,
+        "volume": 1
+      },
+      {
+        "name": "aijbr:ring_damage/drown4",
+        "weight": 2,
+        "volume": 1
+      }
+    ]
+  }
+}

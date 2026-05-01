@@ -43,7 +43,7 @@ public class RingMove {
             Game.sv_damage_per_block=Game.r_damage_per_block.get(i*2);
             Game.sv_basicdamage=Game.r_basic_damage.get(i*2);
             ModMessages.ServerSendToAll(new MSGClientRingInfo(Game.sv_next_x,Game.sv_next_z,Game.sv_next_size,Game.r_generation_modes.get(i).name()));
-            ModMessages.ServerSendToAll(new MSGClientGameInfo(Game.sv_round,Game.sv_roundtick));
+            ModMessages.ServerSendToAll(new MSGClientGameInfo(Game.sv_round,Game.sv_roundtick,false));
         }
         else{//开始缩圈
             Game.isRingClosing = true;
@@ -61,7 +61,7 @@ public class RingMove {
                 Game.sv_roundticktotal = Game.r_moving_tick.get(i);
                 Game.sv_roundtick = Game.sv_roundticktotal;
             }
-            ModMessages.ServerSendToAll(new MSGClientGameInfo(Game.sv_round,Game.sv_roundtick));
+            ModMessages.ServerSendToAll(new MSGClientGameInfo(Game.sv_round,Game.sv_roundtick,true));
         }
     }
     public static void PhaseChange(MinecraftServer server,String message){

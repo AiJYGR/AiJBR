@@ -37,7 +37,7 @@ public class ModCommands
 //                });
                 Minecraft.getInstance().setScreen(new Scr(Component.translatable("title.singleplayer")));
                 //Player player = command.getSource().getPlayer();
-                return 0;
+                return 1;
             })));
         }
     }
@@ -51,13 +51,13 @@ public class ModCommands
             }).then(Commands.literal("sync").executes((command) -> {
                 SYNC();
                 LIB.tryPlayerMessage(command.getSource().getPlayer(),"msg.aijbr.yellow","Refreshed your backpack.");
-                return 0;
+                return 1;
             })));
         }
     }
 
     private static class ReloadCommand {
-        private void Reload(CommandSourceStack source) {
+        private void reload(CommandSourceStack source) {
             ServerPlayer player = source.getPlayer();
             LIB.tryBroadcastMessage(player,"\n","msg.aijbr.yellow","msg.server","Start to SYNC JSON...");
             Game.isReloaded = false;
@@ -76,14 +76,14 @@ public class ModCommands
             dispatcher.register(Commands.literal("reload").requires((source) -> {
                 return source.hasPermission(3);
             }).then(Commands.literal("AiJBR").executes((command) -> {
-                this.Reload(command.getSource());
-                return 0;
+                reload(command.getSource());
+                return 1;
             })));
             dispatcher.register(Commands.literal("AiJBR")
                     .then(Commands.literal("reload").requires(s -> s.hasPermission(3))
                             .executes((command) -> {
-                                this.Reload(command.getSource());
-                                return 0;
+                                reload(command.getSource());
+                                return 1;
                             })));
         }
     }
@@ -96,7 +96,7 @@ public class ModCommands
                 ServerPlayer player = command.getSource().getPlayer();
                 MinecraftServer server = command.getSource().getServer();
                 MinecraftForge.EVENT_BUS.post(new ModEvents.GameStartEvent(server.overworld(),player));//向EVENT_BUS传递一个事件
-                return 0;
+                return 1;
             })));
             dispatcher.register(
                     Commands.literal("AiJBR").requires((r)->{return true;})
@@ -117,7 +117,7 @@ public class ModCommands
                 ServerPlayer player = command.getSource().getPlayer();
                 MinecraftServer server = command.getSource().getServer();
                 MinecraftForge.EVENT_BUS.post(new ModEvents.GameInitEvent(server.overworld(),player));
-                return 0;
+                return 1;
             })));
         }
     }
@@ -144,16 +144,16 @@ public class ModCommands
         private int PlayerJoin(ServerPlayer player, int team) {
             if(!Game.isInitialized){
                 LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
-                return 1;
+                return 0;
             }
             if(player!=null){
                 if(AiJBRPlayer.joinTeam(player,team)){
                     LIB.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_join_team_p1",AiJBRPlayer.toTeamName(team),"msg.aijbr.info.command_player_join_team_p2");
-                    return 0;
+                    return 1;
                 }
             }
             LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_join_team_failed_p1",AiJBRPlayer.toTeamName(team),"msg.aijbr.err.command_player_join_team_failed_p2");
-            return 1;
+            return 0;
         }
         public PlayerJoinCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
@@ -170,12 +170,12 @@ public class ModCommands
         private int PlayerLeave(ServerPlayer player) {
             if(!Game.isInitialized){
                 LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
-                return 1;
+                return 0;
             }
             if(AiJBRPlayer.leaveTeam(player))
             {
                 LIB.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_leave_team");
-                return 0;
+                return 1;
             }
             else{
                 LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_leave_team_failed");
@@ -200,9 +200,25 @@ public class ModCommands
                 StringBuilder str = new StringBuilder();
                 str.append("TeamList:").append(AiJBRPlayer.getTeamsNames(command.getSource().getServer())).append("\n");
                 str.append("PlayerList:").append(LIB.UUIDtoNames(command.getSource().getServer(),AiJBRPlayer.getPlayers(command.getSource().getServer())));
+
                 LIB.tryPlayerMessage(command.getSource().getPlayer(),str.toString());
-                return 0;
+                return AiJBRPlayer.getAliveTeamsCount(command.getSource().getServer());
             })));
+        }
+    }
+
+    public static class RefillCommand {
+        public int refill(){
+            return ++Game.refillTick;
+        }
+        public RefillCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+            dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
+                return source.hasPermission(2);
+            }).then(Commands.literal("refill")
+                    .executes((command)->{
+                        LIB.tryPlayerMessage(command.getSource().getPlayer(),String.format("RefillTick = %d",refill()));
+                        return 1;
+                    })));
         }
     }
 
@@ -215,12 +231,13 @@ public class ModCommands
         new PlayerJoinCommand(event.getDispatcher());
         new PlayerLeaveCommand(event.getDispatcher());
         new SVCommand(event.getDispatcher());
+        new RefillCommand(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }
 
     @SubscribeEvent
     public static void onClientCommandsRegister(RegisterClientCommandsEvent event){
-        new ScrCommand(event.getDispatcher());
+        //new ScrCommand(event.getDispatcher());
         new SyncBPCommand(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }

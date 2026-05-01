@@ -17,19 +17,20 @@ public class Main
     public static final int MODUUIDP2 = 0x00004252;
 
     public static final Logger LOGGER = LogUtils.getLogger();
-    public Main(FMLJavaModLoadingContext modloadingcontext)
+    public Main(FMLJavaModLoadingContext ctx)
     {
-        var bus = modloadingcontext.getModEventBus();
+        var bus = ctx.getModEventBus();
         Reg.ITEMS.register(bus);
         Reg.BLOCKS.register(bus);
         Reg.CREATIVE_MODE_TABS.register(bus);
         Reg.BLOCK_ENTITIES.register(bus);
         Reg.ENTITY_TYPES.register(bus);
         Reg.MOB_EFFECT.register(bus);
+        Reg.SOUND_EVENTS.register(bus);
 
         ModMessages.register();//reg net
 
-        modloadingcontext.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_CONFIG);
-        modloadingcontext.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_CONFIG);
+        ctx.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_CONFIG);
+        ctx.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_CONFIG);
     }
 }

@@ -33,8 +33,8 @@ public class ContainerBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
 
-    public ContainerBlock(Properties p_49795_) {
-        super(p_49795_);
+    public ContainerBlock(Properties properties) {
+        super(properties);
         this.registerDefaultState(
                 this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(OPEN, false));
     }
@@ -50,7 +50,6 @@ public class ContainerBlock extends BaseEntityBlock {
         return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
-    
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
             BlockHitResult blockHitResult) {

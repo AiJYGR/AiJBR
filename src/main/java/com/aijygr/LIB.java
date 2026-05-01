@@ -61,6 +61,16 @@ public class LIB {
         else
             Main.LOGGER.info("[AiJBR]tryBroadcastMessage:{}", str);
     }
+    public static void tryBroadcastMessage(MinecraftServer server, String... messages) {
+        messages = Arrays.copyOf(messages, messages.length);
+        MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
+        StringBuilder str = new StringBuilder();
+        for (String message : messages) {
+            component.append(Component.translatable(message));
+            str.append(message).append(" ");
+        }
+        server.getPlayerList().broadcastSystemMessage(component,false);
+    }
 
     public static MutableComponent makeComponent(MutableComponent component,String... messages) {
         for(String message : messages) {

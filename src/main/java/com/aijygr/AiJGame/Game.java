@@ -15,11 +15,9 @@ import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -63,6 +61,9 @@ public class Game {
     public static final double R = 6000000.0d;
     public static final int TRAVELTICKS = 300;
 
+    /// 这个名字只是用惯了，和游戏刻tick没什么关系。
+    /// 大概含义就是服务器存储的一个数值，如果和箱子的这个数值不同就需要刷新一下箱子的战利品表
+    public static int refillTick = 0;
     public static Map<String,TeamStatus> teamlist = new HashMap<>();
     public static Map<UUID,PlayerStatus> playerlist = new HashMap<>();
 
@@ -105,7 +106,7 @@ public class Game {
         GameInitialization.GameInit(event);
         AiJBRPlayer.initTeams(ModConfig.Server.Config.TEAM.TEAMNUM.get(), ModConfig.Server.Config.TEAM.TEAMSIZE.get(),event.getLevel().getScoreboard());
         AiJBRPlayer.onGameInit(event);
-        ModMessages.ServerSendToAll(new MSGClientGameInfo(0,0));
+        ModMessages.ServerSendToAll(new MSGClientGameInfo(0,0,false));
         ModMessages.ServerSendToAll(new MSGClientPlayerInfo(0,0));
         ModMessages.ServerSendToAll(new MSGClientRingInfo(0,0,0,""));
     }
@@ -128,6 +129,10 @@ public class Game {
         rules.getRule(GameRules.RULE_SHOWDEATHMESSAGES).set(true,server);
         rules.getRule(GameRules.RULE_COMMANDBLOCKOUTPUT).set(true,server);
         rules.getRule(GameRules.RULE_RANDOMTICKING).set(0,server);
+
+        rules.getRule(GameRules.RULE_SPAWN_RADIUS).set(0,server);
+        rules.getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(false,server);
+
 
         server.getLevel(ServerLevel.OVERWORLD).getWorldBorder().setDamagePerBlock(0.0);
         server.getLevel(ServerLevel.OVERWORLD).getWorldBorder().setWarningBlocks(1);

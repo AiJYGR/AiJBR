@@ -17,9 +17,8 @@ public class GameEnd {
             MinecraftServer server = event.getServer();
             if(Game.isGameStart && AiJBRPlayer.getAliveTeamsCount(server) <= Game.gameendteamcondition) {
                 Game.isGameStart = false;
-                System.out.println("Game End");
+                LIB.tryBroadcastMessage(server,"Game End");
             }
         }
     }
-
 }

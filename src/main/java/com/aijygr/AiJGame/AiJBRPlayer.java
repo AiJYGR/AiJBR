@@ -15,6 +15,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
@@ -78,7 +79,6 @@ public class AiJBRPlayer {
     public static String toTeamID(int i){
         return "AiJBR"+ toTeamName(i);
     }
-
     public static boolean joinTeam(ServerPlayer player, int index) {
         Scoreboard scoreboard = player.getServer().getScoreboard();
         if (scoreboard != null) {
@@ -98,7 +98,6 @@ public class AiJBRPlayer {
         }
         return false;
     }
-
     public static List<String> getTeamsNames(MinecraftServer server){
         List<String> list = new ArrayList<>();
         for(PlayerTeam team : server.getScoreboard().getPlayerTeams())
@@ -125,7 +124,6 @@ public class AiJBRPlayer {
         }
         return list;
     }
-
     public static void initTeams(int team_num, int team_size, Scoreboard scoreboard) {
         for(int i=1;i<=team_num;i++){
             int color;
@@ -155,76 +153,6 @@ public class AiJBRPlayer {
         }
     }
 
-    @SubscribeEvent
-    public static void onPlayerFall(LivingFallEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            event.setDamageMultiplier(ModConfig.Server.Config.PLAYER.FALLDAMAGEMULTIPIER.get().floatValue());
-        }
-    }
-
-    @SubscribeEvent
-    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        BlockState blockstate = event.getState();
-        Player player = event.getEntity();
-        if(!ModConfig.Server.Config.PLAYER.SURVIVALBREAK.get().get()){
-            if(ModConfig.Server.Config.PLAYER.SURVIVALBREAKGLASS.get().get()){
-                if(blockstate.is(Tags.Blocks.GLASS)||blockstate.is(Tags.Blocks.GLASS_PANES)){
-                    event.setNewSpeed(event.getOriginalSpeed());
-                    return;
-                }
-            }
-            event.setNewSpeed(-1);
-        }
-    }
-
-
-
-    private static void resetPlayerAttributes(List<ServerPlayer> players){
-        for (ServerPlayer player : players) {
-            player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModConfig.Server.Config.PLAYER.MOVEMENTSPEED.get());
-            player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
-            player.setHealth(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
-        if(event.getEntity() instanceof ServerPlayer player)
-            resetPlayerAttributes(List.of(player));
-    }
-
-    ///{@link Game#onGameInit(ModEvents.GameInitEvent)}
-    public static void onGameInit(ModEvents.GameInitEvent event) {
-        resetPlayerAttributes(event.getLevel().getServer().getPlayerList().getPlayers());
-    }
-
-    @SubscribeEvent
-    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event){
-        Game.isReloaded = false;
-    }
-
-    @SubscribeEvent
-    public static void onEntityDeath(LivingDeathEvent event) {
-
-        if(event.getEntity() instanceof ServerPlayer player) {
-            Inventory inventory = player.getInventory();
-            for (int i = 0; i < inventory.getContainerSize(); i++) {
-                ItemStack stack = inventory.getItem(i);
-                if (!stack.isEmpty() && stack.getItem() instanceof Lock)
-                    inventory.setItem(i, ItemStack.EMPTY);
-            }
-
-            UUID uuid = player.getUUID();
-            if(Game.playerlist.containsKey(uuid)){
-                Game.playerlist.put(uuid, Game.PlayerStatus.DEAD);
-            }
-            MinecraftServer server = event.getEntity().getServer();
-            updateAndBroadcastPlayerInfo(server);
-        }
-
-
-    }
-
     public static List<String> getAlivePlayers(MinecraftServer server){
         List<UUID> list = new ArrayList<>();
         for(UUID uuid : Game.playerlist.keySet()){
@@ -234,11 +162,9 @@ public class AiJBRPlayer {
         }
         return LIB.UUIDtoNames(server,list);
     }
-
     public static int getAlivePlayersCount(MinecraftServer server){
         return getAlivePlayers(server).size();
     }
-
     public static int teamcount = 0;
     private static void updateAliveTeams(MinecraftServer server){
         teamcount = 0;
@@ -271,13 +197,89 @@ public class AiJBRPlayer {
             }
         }
     }
-
     public static int getAliveTeamsCount(MinecraftServer server){
         return teamcount;
     }
-
     public static void updateAndBroadcastPlayerInfo(MinecraftServer server){
         updateAliveTeams(server);
         ModMessages.ServerSendToAll(new MSGClientPlayerInfo(getAlivePlayersCount(server), getAliveTeamsCount(server)));
+    }
+
+    @SubscribeEvent
+    public static void onPlayerFall(LivingFallEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            event.setDamageMultiplier(ModConfig.Server.Config.PLAYER.FALLDAMAGEMULTIPIER.get().floatValue());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+        BlockState blockstate = event.getState();
+        Player player = event.getEntity();
+        if(!ModConfig.Server.Config.PLAYER.SURVIVALBREAK.get().get()){
+            if(ModConfig.Server.Config.PLAYER.SURVIVALBREAKGLASS.get().get()){
+                if(blockstate.is(Tags.Blocks.GLASS)||blockstate.is(Tags.Blocks.GLASS_PANES)){
+                    event.setNewSpeed(event.getOriginalSpeed());
+                    return;
+                }
+            }
+            event.setNewSpeed(-1);
+        }
+    }
+    private static void resetPlayerAttributes(ServerPlayer player){
+        resetPlayerAttributes(List.of(player));
+    }
+    private static void resetPlayerAttributes(List<ServerPlayer> players){
+        for (ServerPlayer player : players) {
+            player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModConfig.Server.Config.PLAYER.MOVEMENTSPEED.get());
+            player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
+            player.setHealth(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
+        }
+    }
+
+
+    ///{@link Game#onGameInit(ModEvents.GameInitEvent)}
+    public static void onGameInit(ModEvents.GameInitEvent event) {
+        resetPlayerAttributes(event.getLevel().getServer().getPlayerList().getPlayers());
+    }
+    private static void setSpectator(ServerPlayer player){
+        player.setGameMode(GameType.SPECTATOR);
+    }
+    @SubscribeEvent
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event){
+        Game.isReloaded = false;
+        if(Game.isGameStart&&event.getEntity() instanceof ServerPlayer player)
+            setSpectator(player);
+    }
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
+        if(event.getEntity() instanceof ServerPlayer player)
+        {
+            setSpectator(player);
+            resetPlayerAttributes(player);
+        }
+    }
+    @SubscribeEvent
+    public static void onEntityDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            //清除身上的Lock
+            Inventory inventory = player.getInventory();
+            for (int i = 0; i < inventory.getContainerSize(); i++) {
+                ItemStack stack = inventory.getItem(i);
+                if (!stack.isEmpty() && stack.getItem() instanceof Lock)
+                    inventory.setItem(i, ItemStack.EMPTY);
+            }
+            //设置状态
+            UUID uuid = player.getUUID();
+            if (Game.playerlist.containsKey(uuid)) {
+                Game.playerlist.put(uuid, Game.PlayerStatus.DEAD);
+            }
+            MinecraftServer server = event.getEntity().getServer();
+            updateAndBroadcastPlayerInfo(server);
+            //设置重生点
+            if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get().get())
+                player.setRespawnPosition(player.level().dimension(),player.blockPosition(),player.getYRot(),true,false);
+
+        }
     }
 }

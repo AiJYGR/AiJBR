@@ -2,6 +2,9 @@ package com.aijygr.AiJBP;
 
 import com.aijygr.Item.Lock;
 import com.aijygr.ModMessages;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -82,6 +85,9 @@ public class InventoryLock {
     public static void onSlotKey(ScreenEvent.KeyPressed.Pre event){
         if(event.getScreen() instanceof AbstractContainerScreen<?> screen){
             if(event.getKeyCode()==GLFW_KEY_ESCAPE)
+                return;
+            KeyMapping KEY_E = Minecraft.getInstance().options.keyInventory;
+            if (KEY_E.isActiveAndMatches(InputConstants.getKey(event.getKeyCode(),event.getScanCode())))
                 return;
             Slot slot = screen.getSlotUnderMouse();
             if (slot != null && slot.container instanceof Inventory) {

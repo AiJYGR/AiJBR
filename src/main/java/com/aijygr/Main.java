@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 public class Main
 {
     public static final String MODID = "aijbr";
+    public static final String MOD_DISPLAY_NAME = "AiJBR";
     public static final int MODUUIDP1 = 0x0041694A;
     public static final int MODUUIDP2 = 0x00004252;
 

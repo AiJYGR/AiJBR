@@ -5,11 +5,12 @@ import com.aijygr.AiJBP.SyncConfigJSON.BP.SyncBP;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.SyncTag;
 import com.aijygr.AiJGame.AiJBRPlayer;
 import com.aijygr.AiJGame.Game;
-
 import com.aijygr.Screen.Scr;
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -19,20 +20,63 @@ import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.server.command.ConfigCommand;
 
-import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModCommands
 {
     private static class AiJBR{
+        IModInfo info = ModList.get().getModContainerById(Main.MODID).get().getModInfo();
+        final String LICENSE = info.getOwningFile().getLicense();
+        final String VERSION = info.getVersion().toString();
+        final String NAME = info.getDisplayName();
+//        final String json =
+//"""
+//[
+//{"text": "%s ","color":"#ff5555","clickEvent":{"action": "open_url","value": "https://github.com/AiJYGR/AiJBR"},"hoverEvent": {"action": "show_text","contents":{"text": "Github Repository","color": "#00c897"}}},
+//{"text": " Ver ","color": "#1bbbbb"},{"text": "%s\\n","color": "#0eeeee"},
+//{"text": "License: ","color": "#1bbbbb"},{"text": "%s\\n","color": "#0eeeee"},
+//{"text": "made by ","color": "#1bbbbb"},
+//{"text": "AiJYGR\\n","bold": false,"color": "#FFC060","clickEvent": {"action": "open_url","value": "https://space.bilibili.com/1788766018"},"hoverEvent": {"action": "show_text","contents":{"text": "Plz DM me if you meet bugs!","color": "#00c897"}}},
+//{"text": "Thanks to everyone who helped me with this!\\n","color": "#eeeeee"},
+//{"text": "But no one has helped me so far QwQ","color": "#DDDDDD","obfuscated": true}
+//]
+//""".formatted(NAME, VERSION, LICENSE);
+        final String json = """
+{
+"text": "\\n","extra":
+    [
+        {"text": "%s ", "color": "#ff5555", "clickEvent": {"action": "open_url", "value": "https://github.com/AiJYGR/AiJBR"}, "hoverEvent": {"action": "show_text", "contents": {"text": "Github Repository", "color": "#00c897"}}},
+        {"text": " Ver ", "color": "#1bbbbb", "clickEvent": {"action": "copy_to_clipboard", "value": ""}, "hoverEvent": { "action": "show_text", "contents": "" }},
+        {"text": "%s\\n", "color": "#0eeeee"},
+        {"text": "License: ", "color": "#1bbbbb"},
+        {"text": "%s\\n", "color": "#0eeeee"},
+        {"text": "made by ", "color": "#1bbbbb"},
+        {
+            "text": "AiJYGR\\n",
+            "bold": false,
+            "color": "#FFC060",
+            "clickEvent": {"action": "open_url", "value": "https://space.bilibili.com/1788766018"},
+            "hoverEvent": {"action": "show_text", "contents": {"text": "Plz DM me if you meet bugs!", "color": "#00c897"}}
+        },
+        {"text": "Thanks to everyone who helped me with this!\\n", "color": "#eeeeee"},
+        {"text": "But no one has helped me so far QwQ", "color": "#DDDDDD", "obfuscated": true}
+    ]
+}""".formatted(NAME, VERSION, LICENSE);
         public AiJBR(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(
                     Commands.literal("AiJBR").requires((r)->{return true;})
                             .executes((commmand)->{
-
+                                //commmand.getSource().getPlayer().sendSystemMessage(Component.Serializer.fromJson(json));
+                                LocalPlayer player = Minecraft.getInstance().player;
+                                Component component = Component.Serializer.fromJson(json);
+                                if (player != null && component != null) {
+                                    player.displayClientMessage(component,false);
+                                }
                                 return 1;
                             })
             );
@@ -242,6 +286,7 @@ public class ModCommands
     @SubscribeEvent
     public static void onClientCommandsRegister(RegisterClientCommandsEvent event){
         //new ScrCommand(event.getDispatcher());
+        new AiJBR(event.getDispatcher());
         new SyncBPCommand(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }

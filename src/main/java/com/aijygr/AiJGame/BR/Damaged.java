@@ -7,6 +7,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+@Deprecated
 @Mod.EventBusSubscriber
 public class Damaged {
     @SubscribeEvent

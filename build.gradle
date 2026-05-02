@@ -197,18 +197,19 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    //runtimeOnly fg.deobf("curse.maven:spark-361579:4738952")
+    //runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
+
     implementation fg.deobf("curse.maven:geckolib-388172:7553267")
     //implementation minecraft.dependency("com.geckolib:geckolib-forge-${minecraft_version}:${geckolibVersion}")
 
     compileOnly fg.deobf(group: 'info.journeymap', name: 'journeymap-api', version: project.journeymap_api_version, changing: true)
     runtimeOnly fg.deobf("curse.maven:journeymap-32274:5789363")
-
     runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
-    //runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
     runtimeOnly fg.deobf("curse.maven:timeless-and-classics-zero-1028108:7745481")
-    runtimeOnly fg.deobf("curse.maven:spark-361579:4738952")
     runtimeOnly fg.deobf("curse.maven:cloth-config-348521:5729105")
     runtimeOnly fg.deobf("curse.maven:playeranimator-658587:4587214")
+    runtimeOnly fg.deobf("curse.maven:ibe-editor-256822:4994072")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

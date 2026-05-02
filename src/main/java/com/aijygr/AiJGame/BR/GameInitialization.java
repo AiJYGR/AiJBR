@@ -6,11 +6,9 @@ import com.aijygr.LIB;
 import com.aijygr.ModConfig;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import com.aijygr.ModEvents;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraftforge.fml.common.Mod;
@@ -50,10 +48,10 @@ public class GameInitialization {
         if(event.getLevel().isClientSide())
             return;
         ServerPlayer player = event.getPlayer();
-
-        //Reset SV
         LIB.tryBroadcastMessage(player," ");
         LIB.tryBroadcastMessage(player, "msg.aijbr.yellow","Starting INIT.");
+
+        //清空已经读取的配置
         Game.isInitialized = false;
         Game.isGameStart = false;
         Game.r_ring_size.clear();
@@ -76,7 +74,7 @@ public class GameInitialization {
         Game.gameendteamcondition = 1;
 
         AiJDropShip.dropshipPlayerlist.clear();
-        AiJDropShip.isTick = false;
+        AiJDropShip.isDropShipTickking = false;
 
         //Read RingAttributes CFG
         var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();

@@ -47,11 +47,14 @@ public class GameGUI {
 
         x = width;
         y = height/2 - 30;
+        int color = 0xE0E0E0;
+        if(ClientGame.isShrinking)
+            color =0xFFC060;
         component = LIB.makeComponent("gui.aijbr.game_round",String.format(" %d", ClientGame.round));
         textWidth = font.width(component);
         x-=(textWidth+10);
         graphics.fill(x-3,  y-3, x+textWidth+2, y+textHeight+2, 0x80000000);
-        graphics.drawString(font, component, x , y, 0xE0E0E0,false);
+        graphics.drawString(font, component, x , y, color,false);
 
         x = width;
         y += textHeight+10;

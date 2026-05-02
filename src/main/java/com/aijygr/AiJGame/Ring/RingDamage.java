@@ -19,6 +19,8 @@ public class RingDamage {
     private static final String DATA_LastHurtTick = "AiJBR_LastRingHurtTick";
     public static final double PLAYER_HITBOXFIX = 0.3d;
     public static void hurtPlayer(ServerPlayer player, float damage, boolean isClientSoundOnly) {
+        if(player.isCreative() || player.isSpectator())
+            return;
         if(isClientSoundOnly && player.getHealth() >= damage)
         {
             player.setHealth(player.getHealth()-damage);

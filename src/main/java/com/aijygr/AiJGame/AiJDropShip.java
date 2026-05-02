@@ -5,6 +5,7 @@ import com.aijygr.Entity.DropShip;
 import com.aijygr.LIB;
 import com.aijygr.Main;
 import com.aijygr.ModConfig;
+import com.aijygr.Reg;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -24,7 +25,7 @@ public class AiJDropShip {
     public static long dropship_forceejecttick = 2000;
     public static long dropship_allowejecttick = 100;
     public static boolean canleave = false;
-    public static boolean isTick = false;
+    public static boolean isDropShipTickking = false;
     public static List<Double> generate(){
         double x1,z1,x2,z2;
         final double Range = Game.r_initial_ringsize / 2;
@@ -62,9 +63,10 @@ public class AiJDropShip {
     }
 
     public static void tick(MinecraftServer server, DropShip dropship){
-        if(!isTick) return;
+        if(!isDropShipTickking) return;
         if(dropshipPlayerlist.isEmpty()){
             dropship.setUUID(UUID.randomUUID());
+            isDropShipTickking = false;
         }
         if(Game.BRGameTime>=dropship_allowejecttick && !canleave)
         {
@@ -89,7 +91,6 @@ public class AiJDropShip {
             ServerPlayer player = server.getPlayerList().getPlayer(uuid);
             if (player != null) {
                 dropshipPlayerlist.add(uuid);
-                //player.setNoGravity(true);
                 player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, MobEffectInstance.INFINITE_DURATION, 0, false, false));
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, MobEffectInstance.INFINITE_DURATION, 4, false, false));
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, MobEffectInstance.INFINITE_DURATION, 4, false, false));
@@ -108,6 +109,8 @@ public class AiJDropShip {
             player.removeEffect(MobEffects.INVISIBILITY);
             player.removeEffect(MobEffects.REGENERATION);
             player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+
+            player.addEffect(new MobEffectInstance(Reg.FLYING_EFFECT.get(), MobEffectInstance.INFINITE_DURATION, 0, false, true));
         }
     }
 

@@ -1,6 +1,7 @@
 package com.aijygr;
 
 import com.aijygr.GeckoClient.DropShipEntityRenderer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

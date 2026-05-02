@@ -208,7 +208,7 @@ public class ModCommands
     }
 
     public static class RefillCommand {
-        public int refill(){
+        public static int refill(){
             return ++Game.refillTick;
         }
         public RefillCommand(CommandDispatcher<CommandSourceStack> dispatcher) {

@@ -2,9 +2,11 @@ package com.aijygr.Entity;
 
 import com.aijygr.AiJGame.AiJDropShip;
 import com.aijygr.LIB;
+import com.aijygr.Reg;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -21,7 +23,7 @@ import java.util.UUID;
 
 public class DropShip extends Entity implements GeoEntity{
 
-    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public DropShip(EntityType<? extends Entity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -95,6 +97,7 @@ public class DropShip extends Entity implements GeoEntity{
     public void ejectAllPassengers(MinecraftServer server, List<UUID> passengers) {
         LIB.PLAYERS(server,passengers,player -> {
             player.stopRiding();
+            player.addEffect(new MobEffectInstance(Reg.FLYING_EFFECT.get(), MobEffectInstance.INFINITE_DURATION, 0, false, true));
         });
     }
 
@@ -112,12 +115,12 @@ public class DropShip extends Entity implements GeoEntity{
     }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "wdnmd", 5, a -> {
-            return a.setAndContinue(RawAnimation.begin().thenLoop("spin"));
+        controllers.add(new AnimationController<>(this, "wdnmd", 5, aState -> {
+            return aState.setAndContinue(RawAnimation.begin().thenLoop("spin"));
         }));
     }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.geoCache;
+        return this.cache;
     }
 }

@@ -1,11 +1,8 @@
 package com.aijygr.AiJGame;
 
+import com.aijygr.*;
 import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.Item.Lock;
-import com.aijygr.LIB;
-import com.aijygr.ModConfig;
-import com.aijygr.ModEvents;
-import com.aijygr.ModMessages;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -17,9 +14,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;

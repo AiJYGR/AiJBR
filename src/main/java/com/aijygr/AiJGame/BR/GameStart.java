@@ -7,6 +7,7 @@ import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.Ring.RingMove;
 import com.aijygr.Entity.DropShip;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,6 +28,11 @@ public class GameStart {
             if(!Game.isReloaded){
                 LIB.tryPlayerMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err.command_game_not_reloaded");
             }
+            return;
+        }
+
+        if(Game.isGameStart){
+            LIB.tryPlayerMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err.command_game_started");
             return;
         }
 
@@ -57,12 +63,36 @@ public class GameStart {
         Game.sv_roundticktotal = Game.r_initial_waitingtick+1;
         Game.sv_roundtick = Game.sv_roundticktotal;
         Game.isRingClosing = false;
+        AiJDropShip.canleave = false;
+        //以下片段摘自GameInitialization 2026 05 02
+        {
+            WorldBorder worldBorder = event.getLevel().getWorldBorder();
+            Game.sv_next_x = 0;
+            Game.sv_next_z = 0;
+            Game.sv_curr_x = 0;
+            Game.sv_curr_z = 0;
+            Game.sv_r_x = Game.sv_curr_x;
+            Game.sv_r_z = Game.sv_curr_z;
+            Game.damage_tickingtime = ModConfig.Server.Config.RING.DAMAGE_TICKING_TIME.get();
+
+            Game.BRGameTime = 0;
+
+
+            AiJDropShip.dropshipPlayerlist.clear();
+            Game.sv_curr_size = Game.r_initial_ringsize;
+            worldBorder.setSize(Game.sv_curr_size);
+            worldBorder.setCenter(Game.sv_curr_x,Game.sv_curr_z);
+            Game.sv_next_size = Game.r_initial_ringsize;
+
+            Game.sv_damage_per_block = Game.r_damage_per_block.get(0);
+            Game.sv_basicdamage = Game.r_basic_damage.get(0);
+        }
 
         //生成DropShip
         double altitude = ModConfig.Server.Config.DROPSHIP.HEIGHT.get();
         if(LIB.SMwithForceLoad(server, Reg.DROPSHIP.get(), new Vec3(0,altitude,0)) instanceof DropShip dropship)
         {
-            AiJDropShip.isTick = true;
+            AiJDropShip.isDropShipTickking = true;
             dropship.setUUID(AiJDropShip.DROPSHIPUUID);
             Vec3 pos = new Vec3(dropship.getX(), dropship.getY(), dropship.getZ());
 
@@ -92,6 +122,9 @@ public class GameStart {
         RingMove.PhaseChange();
 
         //结束指令
+
+        ModCommands.RefillCommand.refill();
+
         Game.isGameStart  = true;
         LIB.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.yellow","msg.aijbr.info.command_game_started");
         LIB.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_executed");

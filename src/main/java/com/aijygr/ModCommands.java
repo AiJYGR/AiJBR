@@ -27,6 +27,18 @@ import java.util.Objects;
 @Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModCommands
 {
+    private static class AiJBR{
+        public AiJBR(CommandDispatcher<CommandSourceStack> dispatcher) {
+            dispatcher.register(
+                    Commands.literal("AiJBR").requires((r)->{return true;})
+                            .executes((commmand)->{
+
+                                return 1;
+                            })
+            );
+        }
+    }
+
     private static class ScrCommand {
         public ScrCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
@@ -98,14 +110,6 @@ public class ModCommands
                 MinecraftForge.EVENT_BUS.post(new ModEvents.GameStartEvent(server.overworld(),player));//向EVENT_BUS传递一个事件
                 return 1;
             })));
-            dispatcher.register(
-                    Commands.literal("AiJBR").requires((r)->{return true;})
-                            .executes((commmand)->{
-                                Objects.requireNonNull(commmand.getSource().getPlayer()).sendSystemMessage(Component.literal(
-                                        "[AiJBR]\n"+ "Auth: AiJYGR"));
-                                return 1;
-                            })
-            );
         }
     }
 

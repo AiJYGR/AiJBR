@@ -18,15 +18,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-public class LIB {
+@Mod.EventBusSubscriber(modid = Main.MODID)
+public abstract class LIB {
     public static void tryPlayerMessage(Player player, String message) {
         if(player!=null)
             player.sendSystemMessage(Component.translatable(message));
@@ -201,4 +201,23 @@ public class LIB {
             return this;
         }
     }
+
+    private static final Map<Long, List<Runnable>> SCHEDULED_TASKS = new ConcurrentHashMap<>();
+    public static void schedule(MinecraftServer server, int delaytick, Runnable task) {
+        if (server == null) return;
+        long targetTick = server.getTickCount() + delaytick;
+        SCHEDULED_TASKS.computeIfAbsent(targetTick, k -> new ArrayList<>()).add(task);
+    }
+    @SubscribeEvent
+    public static void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END && event.getServer() != null) {
+            long currentTick = event.getServer().getTickCount();
+            List<Runnable> tasks = SCHEDULED_TASKS.remove(currentTick);
+            if (tasks != null)
+                for (Runnable task : tasks)
+                    task.run();
+        }
+    }
 }
+
+

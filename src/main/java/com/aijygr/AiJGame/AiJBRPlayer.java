@@ -14,11 +14,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -225,14 +223,16 @@ public class AiJBRPlayer {
             event.setNewSpeed(-1);
         }
     }
-    private static void resetPlayerAttributes(ServerPlayer player){
+    public static void resetPlayerAttributes(ServerPlayer player){
         resetPlayerAttributes(List.of(player));
     }
-    private static void resetPlayerAttributes(List<ServerPlayer> players){
+    public static void resetPlayerAttributes(List<ServerPlayer> players){
         for (ServerPlayer player : players) {
+            player.setGameMode(GameType.SURVIVAL);
             player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModConfig.Server.Config.PLAYER.MOVEMENTSPEED.get());
             player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
             player.setHealth(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
+            player.setRemainingFireTicks(0);
         }
     }
 
@@ -241,7 +241,8 @@ public class AiJBRPlayer {
     public static void onGameInit(ModEvents.GameInitEvent event) {
         resetPlayerAttributes(event.getLevel().getServer().getPlayerList().getPlayers());
     }
-    private static void setSpectator(ServerPlayer player){
+
+    public static void setSpectator(ServerPlayer player){
         player.setGameMode(GameType.SPECTATOR);
     }
     @SubscribeEvent
@@ -254,9 +255,9 @@ public class AiJBRPlayer {
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
         if(event.getEntity() instanceof ServerPlayer player)
         {
-            setSpectator(player);
-            resetPlayerAttributes(player);
+            //setSpectator(player);
         }
+
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
@@ -278,6 +279,11 @@ public class AiJBRPlayer {
             //设置重生点
             if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get().get())
                 player.setRespawnPosition(player.level().dimension(),player.blockPosition(),player.getYRot(),true,false);
+
+            LIB.schedule(server,10,()->{
+                if(player!=null)
+                    player.setGameMode(GameType.SPECTATOR);
+            });
 
         }
     }

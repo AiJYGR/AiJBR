@@ -7,6 +7,7 @@ import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.Ring.RingMove;
 import com.aijygr.Entity.DropShip;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,10 +16,9 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber()
 public class GameStart {
 
-    @SubscribeEvent
+    ///{@link Game#onGameStart(ModEvents.GameStartEvent)}
     public static void onGameStart(ModEvents.GameStartEvent event) {
         //检查是否初始化/重载
         if(!(Game.isInitialized&&Game.isReloaded)){
@@ -42,6 +42,16 @@ public class GameStart {
             Game.teamlist.put(str, Game.TeamStatus.ALIVE);
         for(UUID uuid : AiJBRPlayer.getPlayers(server))
             Game.playerlist.put(uuid, Game.PlayerStatus.ALIVE);
+
+        for(ServerPlayer player : server.getPlayerList().getPlayers()){
+            if(Game.playerlist.containsKey(player.getUUID())){
+                AiJBRPlayer.resetPlayerAttributes(player);
+            }
+            else
+            {
+                AiJBRPlayer.setSpectator(player);
+            }
+        }
 
         //检查队伍数量
         AiJBRPlayer.updateAndBroadcastPlayerInfo(server);

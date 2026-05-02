@@ -1,6 +1,7 @@
 package com.aijygr.AiJGame;
 
 import com.aijygr.AiJGame.BR.GameInitialization;
+import com.aijygr.AiJGame.BR.GameStart;
 import com.aijygr.AiJGame.Client.MSGClientGameInfo;
 import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.AiJGame.Client.MSGClientRingInfo;
@@ -109,6 +110,11 @@ public class Game {
         ModMessages.ServerSendToAll(new MSGClientGameInfo(0,0,false));
         ModMessages.ServerSendToAll(new MSGClientPlayerInfo(0,0));
         ModMessages.ServerSendToAll(new MSGClientRingInfo(0,0,0,""));
+    }
+    @SubscribeEvent
+    public static void onGameStart(ModEvents.GameStartEvent event) {
+        ModMessages.ServerSendToAll(new MSGClientRingInfo(0,0,0,""));
+        GameStart.onGameStart(event);
     }
 
     @SubscribeEvent

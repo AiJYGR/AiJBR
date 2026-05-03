@@ -1,0 +1,93 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "group",
+                    "children": [
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/light_extended_mag_1",
+                            "weight":70
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/light_extended_mag_2",
+                            "weight":25
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/light_extended_mag_3",
+                            "weight":5
+                        }
+                    ],
+                    "weight":2
+                },
+                {
+                    "type": "group",
+                    "children": [
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/extended_mag_1",
+                            "weight":70
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/extended_mag_2",
+                            "weight":25
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/extended_mag_3",
+                            "weight":5
+                        }
+                    ],
+                    "weight":2
+                },
+                {
+                    "type": "group",
+                    "children": [
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/sniper_extended_mag_1",
+                            "weight":70
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/sniper_extended_mag_2",
+                            "weight":25
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/sniper_extended_mag_3",
+                            "weight":5
+                        }
+                    ],
+                    "weight":1
+                },
+                {
+                    "type": "group",
+                    "children": [
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/shotgun_extended_mag_1",
+                            "weight":70
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/shotgun_extended_mag_2",
+                            "weight":25
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/mag/shotgun_extended_mag_3",
+                            "weight":5
+                        }
+                    ],
+                    "weight":1
+                }
+            ]
+        }
+    ]
+}

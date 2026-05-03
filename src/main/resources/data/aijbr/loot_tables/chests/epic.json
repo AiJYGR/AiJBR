@@ -1,0 +1,159 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/mg/minigun",
+                    "weight":5
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/mg/fn_evolys",
+                    "weight":5
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/dmr/scar_h",
+                    "weight":10
+
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/sg/spas_12",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/sr/ai_awp",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/smg/p90",
+                    "weight":10
+                }
+            ]
+        },
+        {
+            "rolls":{
+                "type": "binomial",
+                "n": 3,
+                "p": 0.5
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/healths/health/medkit"
+                }
+            ]
+        },
+        {
+            "rolls":{
+                "type": "binomial",
+                "n": 3,
+                "p": 0.5
+            },
+            "entries": [
+                {
+                    "type": "group",
+                    "children": [
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/backpacks/backpack/lvl3_backpack",
+                            "weight": 9
+                            
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/backpacks/backpack/lvl3_backpack",
+                            "weight": 1
+                        }
+                    ],
+                    "weight":1
+                },
+                {
+                    "type": "group",
+                    "children": [
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/armors/armor/lvl3_armor",
+                            "weight": 7
+                            
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/armors/armor/lvl2_armor",
+                            "weight": 3
+                        }
+                    ],
+                    "weight":1
+                },
+                {
+                    "type": "group",
+                    "children": [
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/missiles/grenade/baseball_grenade"
+                        }
+                    ],
+                    "weight":1
+                },
+                {
+                    "type": "group",
+                    "children": [
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/sight/scope_standard_8x",
+                            "weight": 2
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/sight/scope_vudu",
+                            "weight": 2
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/sight/scope_lpvo_1_6",
+                            "weight": 2
+                        }
+                    ],
+                    "weight":1
+                }
+            ]
+        },
+        {
+            "rolls":{
+                "type": "binomial",
+                "n": 3,
+                "p": 0.2
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/mag/extended_mag_3"
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/mag/light_extended_mag_3"
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/mag/sniper_extended_mag_3"
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/mag/shotgun_extended_mag_3"
+                }
+            ]
+        }
+    ]
+}
+
+
+
+
+
+
+

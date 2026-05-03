@@ -1,0 +1,23 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tacz:attachment",
+                    "functions": [
+                        {
+                            "function": "set_nbt",
+                            "tag":"{\"AttachmentId\":\"tacz:scope_lpvo_1_6\"}"
+                        },
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

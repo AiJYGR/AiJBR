@@ -1,0 +1,116 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/num/weapon",
+                    "weight":50
+                },
+                {
+                    "type":"empty",
+                    "weight":50
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/num/module",
+                    "weight":50
+                },
+                {
+                    "type":"empty",
+                    "weight":50
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/num/backpack",
+                    "weight":10
+                },
+                {
+                    "type":"empty",
+                    "weight":90
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/num/health",
+                    "weight":40
+                },
+                {
+                    "type":"empty",
+                    "weight":60
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/num/bullet",
+                    "weight":40
+                },
+                {
+                    "type":"empty",
+                    "weight":60
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/num/armor",
+                    "weight":20
+                },
+                {
+                    "type":"empty",
+                    "weight":80
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/num/missile",
+                    "weight":20
+                },
+                {
+                    "type":"empty",
+                    "weight":80
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/items/items",
+                    "weight":10
+                },
+                {
+                    "type":"empty",
+                    "weight":90
+                }
+            ]
+        }
+    ]
+}

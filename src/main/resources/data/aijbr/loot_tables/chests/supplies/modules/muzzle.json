@@ -1,0 +1,69 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_brake_cthulhu",
+                    "weight":8
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_brake_cyclone_d2",
+                    "weight":8
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_brake_pioneer",
+                    "weight":8
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_brake_trex",
+                    "weight":8
+                },
+
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_compensator_trident",
+                    "weight":8
+                },
+                
+                
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_silencer_mirage",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_silencer_phantom_s1",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_silencer_knight_qd",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_silencer_ursus",
+                    "weight":10
+                },
+                
+                
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_choke_sg",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle/muzzle_brake_mastiff_sg",
+                    "weight":10
+                }
+            ]
+        }
+    ]
+}

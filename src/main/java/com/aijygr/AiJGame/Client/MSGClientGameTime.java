@@ -5,17 +5,17 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MSGClientGameInfo {
+public class MSGClientGameTime {
     private final int round;
     private final int roundtick;
     private final boolean isShrinking;
 
-    public MSGClientGameInfo(int round,int roundtick,boolean isShrinking) {
+    public MSGClientGameTime(int round, int roundtick, boolean isShrinking) {
         this.round = round;
         this.roundtick = roundtick;
         this.isShrinking = isShrinking;
     }
-    public MSGClientGameInfo(FriendlyByteBuf buf) {
+    public MSGClientGameTime(FriendlyByteBuf buf) {
         this.round = buf.readInt();
         this.roundtick = buf.readInt();
         this.isShrinking = buf.readBoolean();
@@ -27,7 +27,7 @@ public class MSGClientGameInfo {
     }
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ClientGame.setClientRing(round,roundtick,isShrinking);
+            ClientGame.setClientTime(round,roundtick,isShrinking);
         });
         ctx.get().setPacketHandled(true);
     }

@@ -2,7 +2,7 @@ package com.aijygr.AiJGame;
 
 import com.aijygr.AiJGame.BR.GameInitialization;
 import com.aijygr.AiJGame.BR.GameStart;
-import com.aijygr.AiJGame.Client.MSGClientGameInfo;
+import com.aijygr.AiJGame.Client.MSGClientGameTime;
 import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.AiJGame.Client.MSGClientRingInfo;
 import com.aijygr.AiJGame.Ring.RingGeneration;
@@ -107,7 +107,7 @@ public class Game {
         GameInitialization.GameInit(event);
         AiJBRPlayer.initTeams(ModConfig.Server.Config.TEAM.TEAMNUM.get(), ModConfig.Server.Config.TEAM.TEAMSIZE.get(),event.getLevel().getScoreboard());
         AiJBRPlayer.onGameInit(event);
-        ModMessages.ServerSendToAll(new MSGClientGameInfo(0,0,false));
+        ModMessages.ServerSendToAll(new MSGClientGameTime(0,0,false));
         ModMessages.ServerSendToAll(new MSGClientPlayerInfo(0,0));
         ModMessages.ServerSendToAll(new MSGClientRingInfo(0,0,0,""));
     }

@@ -1,0 +1,56 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/ak47",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/aug",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/g36k",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/hk416d",
+                    "weight":10
+                },
+                
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/m4a1",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/m16a4",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/qbz_191",
+                    "weight":10
+                },
+                
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/scar_l",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/ar/type_81",
+                    "weight":10
+                }
+            ]
+        }
+    ]
+}

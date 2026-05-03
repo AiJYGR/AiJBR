@@ -1,0 +1,33 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "tacz:modern_kinetic_gun",
+                    "functions": [
+                        {
+                            "function": "set_nbt",
+                            "tag":"{\"GunId\":\"tacz:p90\",\"GunFireMode\":\"AUTO\"}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": {
+                "type":"uniform",
+                "min":3,
+                "max":4
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/57x28",
+                    "weight":50
+                }
+            ]
+        }
+    ]
+}

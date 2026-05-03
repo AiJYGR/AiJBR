@@ -1,0 +1,19 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/backpacks/backpack/lvl1_backpack",
+                    "weight":4
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/backpacks/backpack/lvl2_backpack",
+                    "weight":1
+                }
+            ]
+        }
+    ]
+}

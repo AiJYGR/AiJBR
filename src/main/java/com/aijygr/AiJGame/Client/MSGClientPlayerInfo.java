@@ -23,7 +23,7 @@ public class MSGClientPlayerInfo {
     }
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ClientGame.setClientGame(players, teams);
+            ClientGame.setClientPlayer(players, teams);
         });
         ctx.get().setPacketHandled(true);
     }

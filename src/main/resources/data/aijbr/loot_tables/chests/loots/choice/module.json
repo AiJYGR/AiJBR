@@ -1,0 +1,39 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/grip",
+                    "weight": 10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/laser",
+                    "weight": 10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/mag",
+                    "weight": 10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/muzzle",
+                    "weight": 10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight",
+                    "weight": 10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/stock",
+                    "weight": 10
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/sr/ai_awp",
+                    "weight":0
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/sr/m700",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/sr/springfield1873",
+                    "weight":10
+                }
+            ]
+        }
+    ]   
+}

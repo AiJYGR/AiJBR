@@ -1,0 +1,63 @@
+{
+    "pools":[
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "aimcontainer:iron_armor",
+                    "functions": [
+                        {
+                            "function": "set_attributes",
+                            "modifiers": [
+                                {
+                                    "amount": 0,
+                                    "attribute": "generic.armor",
+                                    "name": "盔甲值",
+                                    "operation": "multiply_total",
+                                    "slot": "chest"
+                                },
+                                {
+                                    "amount": 0,
+                                    "attribute": "generic.armor_toughness",
+                                    "name": "盔甲韧性",
+                                    "operation": "multiply_total",
+                                    "slot": "chest"
+                                },
+                                {
+                                    "amount": 0,
+                                    "attribute": "generic.knockback_resistance",
+                                    "name": "击退抗性",
+                                    "operation": "multiply_total",
+                                    "slot": "chest"
+                                }
+                            ]
+                        },
+                        {
+                            "function": "set_lore",
+                            "lore": [
+                                {
+                                    "text": "减伤0%"
+                                }
+                            ]
+                        },
+                        {
+                            "function": "set_name",
+                            "name": "头盔"
+                        },
+                        {
+                            "function": "set_enchantments",
+                            "enchantments": {
+                                "protection":0
+                            }
+                        },
+                        {
+                            "function": "set_nbt",
+                            "tag": "{\"typetag\":\"armor\"}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

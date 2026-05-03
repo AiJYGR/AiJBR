@@ -1,0 +1,64 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/9mm",
+                    "weight":50
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/12g",
+                    "weight":50
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/30_06",
+                    "weight":20
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/45_70",
+                    "weight":20
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/45acp",
+                    "weight":50
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/50ae",
+                    "weight":20
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/57x28",
+                    "weight":0
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/308",
+                    "weight":50
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/338",
+                    "weight":0
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/556x45",
+                    "weight":50
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/762x39",
+                    "weight":50
+                }
+            ]
+        }
+    ]
+}

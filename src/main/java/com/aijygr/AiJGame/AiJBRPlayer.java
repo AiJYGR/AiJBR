@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -231,6 +232,7 @@ public class AiJBRPlayer {
             player.setGameMode(GameType.SURVIVAL);
             player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModConfig.Server.Config.PLAYER.MOVEMENTSPEED.get());
             player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
+            player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
             player.setHealth(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
             player.setRemainingFireTicks(0);
         }

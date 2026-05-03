@@ -1,0 +1,31 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:bamboo_raft",
+                    "weight": 95,
+                    "functions": [
+                        {
+                            "function": "set_lore",
+                            "lore": [{"text": "作者的小乔四,"}]
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:cherry_boat",
+                    "weight": 5,
+                    "functions": [
+                        {
+                            "function": "set_lore",
+                            "lore": [{"text": "???你从哪里找到这个的"}]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

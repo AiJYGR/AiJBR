@@ -4,23 +4,45 @@
     "subtitle": "subtitles.aijbr.ring_damage",
     "sounds": [
       {
-        "name": "aijbr:ring_damage/drown1",
+        "name": "aijbr:ring/damage1",
         "weight": 1,
         "volume": 1
       },
       {
-        "name": "aijbr:ring_damage/drown2",
+        "name": "aijbr:ring/damage2",
         "weight": 1,
         "volume": 1
       },
       {
-        "name": "aijbr:ring_damage/drown3",
+        "name": "aijbr:ring/damage3",
         "weight": 1,
         "volume": 1
       },
       {
-        "name": "aijbr:ring_damage/drown4",
+        "name": "aijbr:ring/damage4",
         "weight": 2,
+        "volume": 1
+      }
+    ]
+  },
+  "ring_phase":{
+    "replace":true,
+    "subtitle":"subtitles.aijbr.ring_phase",
+    "sounds":[
+      {
+        "name": "aijbr:ring/phase",
+        "weight": 1,
+        "volume": 1
+      }
+    ]
+  },
+  "ring_close":{
+    "replace":true,
+    "subtitle":"subtitles.aijbr.ring_close",
+    "sounds":[
+      {
+        "name": "aijbr:ring/close",
+        "weight": 1,
         "volume": 1
       }
     ]

@@ -1,0 +1,39 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/dmr/fn_fal",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/dmr/hk_g3",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/dmr/mk14",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/dmr/scar_h",
+                    "weight":0
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/dmr/sks_tactical",
+                    "weight":20
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/dmr/spr15hb",
+                    "weight":20
+                }
+            ]
+        }
+    ]
+}

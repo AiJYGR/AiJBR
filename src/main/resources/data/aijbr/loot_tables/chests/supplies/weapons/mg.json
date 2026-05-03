@@ -1,0 +1,29 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/mg/m249",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/mg/rpk",
+                    "weight":10
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/mg/minigun",
+                    "weight":0
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/weapons/mg/fn_evolys",
+                    "weight":0
+                }
+            ]
+        }
+    ]   
+}

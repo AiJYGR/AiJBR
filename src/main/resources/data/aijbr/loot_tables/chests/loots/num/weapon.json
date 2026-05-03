@@ -1,0 +1,26 @@
+{
+    "pools": [
+        {
+            "rolls":{
+                "type": "binomial",
+                "n": 2,
+                "p": 0.15
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/choice/weapon"
+                }
+            ]
+        },
+        {
+            "rolls":1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/choice/weapon"
+                }
+            ]
+        }
+    ]
+}

@@ -34,18 +34,6 @@ public class ModCommands
         final String LICENSE = info.getOwningFile().getLicense();
         final String VERSION = info.getVersion().toString();
         final String NAME = info.getDisplayName();
-//        final String json =
-//"""
-//[
-//{"text": "%s ","color":"#ff5555","clickEvent":{"action": "open_url","value": "https://github.com/AiJYGR/AiJBR"},"hoverEvent": {"action": "show_text","contents":{"text": "Github Repository","color": "#00c897"}}},
-//{"text": " Ver ","color": "#1bbbbb"},{"text": "%s\\n","color": "#0eeeee"},
-//{"text": "License: ","color": "#1bbbbb"},{"text": "%s\\n","color": "#0eeeee"},
-//{"text": "made by ","color": "#1bbbbb"},
-//{"text": "AiJYGR\\n","bold": false,"color": "#FFC060","clickEvent": {"action": "open_url","value": "https://space.bilibili.com/1788766018"},"hoverEvent": {"action": "show_text","contents":{"text": "Plz DM me if you meet bugs!","color": "#00c897"}}},
-//{"text": "Thanks to everyone who helped me with this!\\n","color": "#eeeeee"},
-//{"text": "But no one has helped me so far QwQ","color": "#DDDDDD","obfuscated": true}
-//]
-//""".formatted(NAME, VERSION, LICENSE);
         final String json = """
 {
 "text": "\\n","extra":
@@ -69,7 +57,8 @@ public class ModCommands
 }""".formatted(NAME, VERSION, LICENSE);
         public AiJBR(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(
-                    Commands.literal("AiJBR").requires((r)->{return true;})
+                    Commands.literal("AiJBR").requires((source) -> {
+                        return source.hasPermission(0);})
                             .executes((commmand)->{
                                 //commmand.getSource().getPlayer().sendSystemMessage(Component.Serializer.fromJson(json));
                                 LocalPlayer player = Minecraft.getInstance().player;
@@ -242,7 +231,7 @@ public class ModCommands
     public static class SVCommand {
         public SVCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
-                return source.hasPermission(3);
+                return source.hasPermission(2);
             }).then(Commands.literal("SV")
                     .executes((command)->{
                 StringBuilder str = new StringBuilder();

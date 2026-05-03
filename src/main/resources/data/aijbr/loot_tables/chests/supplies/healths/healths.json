@@ -1,0 +1,19 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/healths/health/syringe",
+                    "weight":6
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/healths/health/medkit",
+                    "weight":1
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "pools": [
+        {
+            "rolls":{
+                "type": "binomial",
+                "n": 3,
+                "p": 0.1
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/choice/missile"
+                }
+            ]
+        },
+        {
+            "rolls":1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/loots/choice/missile"
+                }
+            ]
+        }
+    ]
+}

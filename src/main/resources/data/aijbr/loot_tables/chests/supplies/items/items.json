@@ -1,0 +1,14 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/items/item/boat",
+                    "weight":1
+                }
+            ]
+        }
+    ]
+}

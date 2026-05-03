@@ -4,6 +4,7 @@
   "item.aijbr.medkit": "医疗包",
   "item.aijbr.iron_armor": "一级护甲",
   "item.aijbr.diamond_armor": "二级护甲",
+  "item.aijbr.netherite_armor": "三级护甲",
   "item.aijbr.loot_container": "战利品箱",
   "item.aijbr.lock": "",
 
@@ -36,10 +37,9 @@
   "msg.aijbr.err.command_player_join_team_failed_p1": "加入队伍",
   "msg.aijbr.err.command_player_join_team_failed_p2": "失败\n队伍不存在，队伍已满或者你已在此队伍",
   "msg.aijbr.err.command_player_leave_team_failed": "离开队伍失败，你不在任何队伍中",
-  "msg.aijbr.err.command_game_not_initialized": "尚未初始化游戏  请执行 /AiJBR init",
-  "msg.aijbr.err.command_game_not_reloaded": "尚未重载游戏配置文件  请执行 /AiJBR reload",
+  "msg.aijbr.err.command_game_not_initialized": "需要初始化游戏  请执行 /AiJBR init",
+  "msg.aijbr.err.command_game_not_reloaded": "需要重载游戏配置文件  请执行 /AiJBR reload",
   "msg.aijbr.err.command_no_enough_teams": "小队数量不足 无法开始游戏",
-
   "msg.aijbr.warn.command_disabled_game_end_check": "小队数量为1 自动进入测试模式",
 
   "death.attack.aijbr.ring.message": "%1$s感觉到浑身酥酥麻麻的",
@@ -47,5 +47,13 @@
   "gui.aijbr.game_team_num": "队伍",
   "gui.aijbr.game_player_num": "存活",
   "gui.aijbr.game_round": "阶段",
-  "gui.aijbr.game_roundtick": "倒计时"
+  "gui.aijbr.game_roundtick": "倒计时",
+
+  "subtitles.aijbr.ring_damage": "!!毒圈伤害!!",
+  "subtitles.aijbr.ring_phase": "通知: 进入下一阶段",
+  "subtitles.aijbr.ring_close": "通知: 开始缩小安全区",
+
+  "enchantment.level.12": "!",
+
+  "effect.aijbr.flying": "战斗意识"
 }

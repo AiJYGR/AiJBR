@@ -1,0 +1,20 @@
+{
+    "pools":[
+            {
+            "rolls":1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/normal",
+                    "weight":80
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/epic",
+                    "weight":20
+                }
+            ]
+        }
+    ]
+    
+}

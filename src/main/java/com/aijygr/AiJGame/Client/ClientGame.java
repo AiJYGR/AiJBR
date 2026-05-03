@@ -1,5 +1,8 @@
 package com.aijygr.AiJGame.Client;
 
+import com.aijygr.Reg;
+import net.minecraft.client.Minecraft;
+import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,10 +28,16 @@ public class ClientGame {
         next_size = size;
         generationMode = mode;
     }
-    public static void setClientRing(int round, int roundtick, boolean isShrinking){
+    public static void setClientTime(int round, int roundtick, boolean isShrinking){
         ClientGame.round = round;
         ClientGame.roundtick = roundtick;
         ClientGame.isShrinking = isShrinking;
+        if(round>0)
+            if(isShrinking)
+                Minecraft.getInstance().player.playNotifySound(Reg.RING_CLOSE_SOUND.get(), SoundSource.AMBIENT,1.0f,1.0f);
+            else
+                Minecraft.getInstance().player.playNotifySound(Reg.RING_PHASE_SOUND.get(), SoundSource.AMBIENT,1.0f,1.0f);
+
     }
     public static int getSecond(){
         if(roundtick<=20){
@@ -36,7 +45,7 @@ public class ClientGame {
         }
         else return (int)Math.floor((double) roundtick / 20.0);
     }
-    public static void setClientGame(int players, int teams){
+    public static void setClientPlayer(int players, int teams){
         ClientGame.players = players;
         ClientGame.teams = teams;
     }

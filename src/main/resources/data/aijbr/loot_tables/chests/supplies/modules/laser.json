@@ -1,0 +1,19 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/laser/laser_nightstick",
+                    "weight":1
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/laser/laser_compact",
+                    "weight":1
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,68 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/sight_deltapoint_pistol",
+                    "weight":50
+                },
+
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/sight_coyote",
+                    "weight":30
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/sight_srs_02",
+                    "weight":30
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/sight_552",
+                    "weight":30
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/sight_uh1",
+                    "weight":30
+                },      
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/sight_exp3",
+                    "weight":30
+                },
+
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/scope_acog_ta31",
+                    "weight":50
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/scope_qmk152",
+                    "weight":50
+                },
+                
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/scope_hamr",
+                    "weight":35
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/scope_elcan_4x",
+                    "weight":35
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/modules/sight/scope_lpvo_1_6",
+                    "weight":30
+                }
+            ]
+        }
+    ]
+}

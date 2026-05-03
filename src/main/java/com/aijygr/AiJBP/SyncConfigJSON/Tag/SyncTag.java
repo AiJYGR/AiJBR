@@ -35,32 +35,83 @@ public class SyncTag {
   "tacz:modern_kinetic_gun": {
     "GunId": {
       "tacz:ak47":["MAINWPN"],
+      "tacz:aug":["MAINWPN"],
+      "tacz:g36k":["MAINWPN"],
+      "tacz:hk416d":["MAINWPN"],
+      "tacz:m4a1":["MAINWPN"],
+      "tacz:m16a4":["MAINWPN"],
+      "tacz:qbz_191":["MAINWPN"],
       "tacz:scar_l":["MAINWPN"],
+      "tacz:type_81":["MAINWPN"],
+
+      "tacz:fn_fal":["MAINWPN"],
+      "tacz:hk_g3":["MAINWPN"],
+      "tacz:mk14":["MAINWPN"],
+      "tacz:scar_h":["MAINWPN"],
+      "tacz:sks_tactical":["MAINWPN"],
+      "tacz:spr15hb":["MAINWPN"],
+
+      "tacz:fn_evolys":["MAINWPN"],
+      "tacz:minigun":["MAINWPN"],
+      "tacz:m249":["MAINWPN"],
+      "tacz:rpk":["MAINWPN"],
+
+      "tacz:b93r":["MAINWPN","SUBWPN"],
+      "tacz:cz75":["MAINWPN","SUBWPN"],
+      "tacz:deagle":["MAINWPN","SUBWPN"],
+      "tacz:glock_17":["MAINWPN","SUBWPN"],
+      "tacz:m1911":["MAINWPN","SUBWPN"],
+      "tacz:p320":["MAINWPN","SUBWPN"],
+      "tacz:timeless50":["MAINWPN","SUBWPN"],
+
+      "tacz:aa12":["MAINWPN"],
+      "tacz:db_long":["MAINWPN"],
+      "tacz:db_short":["MAINWPN","SUBWPN"],
+      "tacz:m870":["MAINWPN"],
+      "tacz:m1014":["MAINWPN"],
+      "tacz:spas_12":["MAINWPN"],
+
+      "tacz:hk_mp5a5":["MAINWPN"],
+      "tacz:mac10":["MAINWPN"],
+      "tacz:p90":["MAINWPN"],
+      "tacz:ump45":["MAINWPN"],
+      "tacz:uzi":["MAINWPN"],
+      "tacz:vector45":["MAINWPN"],
+
       "tacz:ai_awp":["MAINWPN"],
-      "tacz:p320":["SUBWPN","MAINWPN"]
+      "tacz:m700":["MAINWPN"],
+      "tacz:springfield1873":["MAINWPN"]
     }
   },
+
   "tacz:attachment":["SUPPLIES"],
   "tacz:ammo":["SUPPLIES"],
-  "aijbr:medkit":"SUPPLIES",
+
+  "aijbr:medkit":["SUPPLIES"],
   "aijbr:syringe":["SUPPLIES"],
   "aijbr:backpack_lvl1":["BACKPACK"],
   "aijbr:backpack_lvl2":["BACKPACK"],
   "aijbr:backpack_lvl3":["BACKPACK"],
+  "aijbr:backpack_lvl4":["BACKPACK"],
 
-  "minecraft:diamond_sword":["MAINWPN","BACKPACK"],
-  "minecraft:iron_sword":["MAINWPN","BACKPACK"],
-  "minecraft:netherite_sword":["MAINWPN","BACKPACK"],
   "aijbr:iron_armor":["ARMOR"],
   "aijbr:diamond_armor":["ARMOR"],
   "aijbr:netherite_armor":["ARMOR"],
+
+  "minecraft:cherry_boat":["SUPPLIES"],
+  "minecraft:bamboo_raft":["SUPPLIES"],
+  "minecraft:netherite_hoe":["SUPPLIES"],
+
+  "minecraft:diamond_sword":["MAINWPN"],
+  "minecraft:iron_sword":["MAINWPN"],
+  "minecraft:netherite_sword":["MAINWPN"],
   "minecraft:potion":{
     "Potion":{
       "minecraft:strong_swiftness":["SUPPLIES"]
     }
   }
 }
-        """;
+""";
     public static final int PMAXLENGTH = 262144; //!!!!!文件最大长度 256KB
     public static JsonObject json = new JsonObject();
     public static String rawjson = "";

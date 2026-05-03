@@ -119,6 +119,8 @@ public class AiJBackpack
                     }
                     playerPermission = i;
                 }
+                else
+                    playerPermission = ModConfig.Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL.get().shortValue();
                 //Step2
                 for(Map.Entry<String, List<SlotwithPermissionLevel>> entry: slots.entrySet()){
                     for(SlotwithPermissionLevel slot:entry.getValue()){

@@ -9,7 +9,7 @@
                     "functions": [
                         {
                             "function": "set_nbt",
-                            "tag":"{\"GunId\":\"tacz:qbz_191\",\"GunFireMode\":\"AUTO\"}"
+                            "tag":"{\"GunId\":\"tacz:minigun\",\"GunFireMode\":\"AUTO\",\"GunCurrentAmmoCount\":200}"
                         }
                     ]
                 }
@@ -18,13 +18,13 @@
         {
             "rolls": {
                 "type":"uniform",
-                "min":1,
-                "max":2
+                "min":4,
+                "max":6
             },
             "entries": [
                 {
                     "type": "loot_table",
-                    "name": "aijbr:chests/supplies/bullets/bullet/58x42",
+                    "name": "aijbr:chests/supplies/bullets/bullet/308",
                     "weight":50
                 }
             ]

@@ -107,6 +107,11 @@ public class ModMessages {//GEMINI简直是我亲爹
                 .encoder(MSGClientGameTime::encode)
                 .consumerMainThread(MSGClientGameTime::handle)
                 .add();
+        net.messageBuilder(MSGClientExecSync.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientExecSync::new)
+                .encoder(MSGClientExecSync::encode)
+                .consumerMainThread(MSGClientExecSync::handle)
+                .add();
 
     }
     public static <MSG> void ServerSendToPlayer(MSG message, ServerPlayer player) {

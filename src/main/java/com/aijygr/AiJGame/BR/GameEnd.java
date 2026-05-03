@@ -18,6 +18,10 @@ public class GameEnd {
             if(Game.isGameStart && AiJBRPlayer.getAliveTeamsCount(server) <= Game.gameendteamcondition) {
                 Game.isGameStart = false;
                 LIB.tryBroadcastMessage(server,"Game End");
+                Game.sv_damage_per_block = 0.00001;
+                Game.sv_basicdamage = 0.0;
+                LIB.schedule(server,1,()->{LIB.killItemEntities(server);});
+
             }
         }
     }

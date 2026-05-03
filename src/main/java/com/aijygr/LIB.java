@@ -1,5 +1,6 @@
 package com.aijygr;
 
+import com.aijygr.AiJBP.MSGClientExecSync;
 import com.aijygr.AiJGame.Game;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -13,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -200,6 +202,29 @@ public abstract class LIB {
             LIB.BRLOG("("+this.x+","+this.z+")");
             return this;
         }
+    }
+
+    public static int killItemEntities(MinecraftServer server){
+//        int i = 0;
+//        for(ServerLevel level : server.getAllLevels()){
+//            for(Entity entity : level.getAllEntities()){
+//                if(entity instanceof ItemEntity){
+//                    entity.discard();
+//                    i++;
+//                }
+//            }
+//        }
+//        return i;
+        return server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),"kill @e[type=minecraft:item]");
+    }
+    public static int clearPlayersInv(MinecraftServer server){
+        int i = 0;
+        for(ServerPlayer player : server.getPlayerList().getPlayers()){
+            player.getInventory().clearContent();
+            ModMessages.ServerSendToPlayer(new MSGClientExecSync(), player);
+            i++;
+        }
+        return i;
     }
 
     private static final Map<Long, List<Runnable>> SCHEDULED_TASKS = new ConcurrentHashMap<>();

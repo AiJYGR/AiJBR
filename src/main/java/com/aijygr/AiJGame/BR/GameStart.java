@@ -97,7 +97,9 @@ public class GameStart {
             Game.sv_damage_per_block = Game.r_damage_per_block.get(0);
             Game.sv_basicdamage = Game.r_basic_damage.get(0);
         }
-
+        //清理掉落物 清空背包
+        LIB.killItemEntities(server);
+        LIB.clearPlayersInv(server);
         //生成DropShip
         double altitude = ModConfig.Server.Config.DROPSHIP.HEIGHT.get();
         if(LIB.SMwithForceLoad(server, Reg.DROPSHIP.get(), new Vec3(0,altitude,0)) instanceof DropShip dropship)

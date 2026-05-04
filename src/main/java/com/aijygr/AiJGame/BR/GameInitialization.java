@@ -141,8 +141,6 @@ public class GameInitialization {
         else
             LIB.tryBroadcastMessage(player,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
 
-
-
         //Set Player
         LIB.PLAYERS(event.getLevel().getServer().getPlayerList().getPlayers(),(svplayer)->{
             svplayer.setNoGravity(false);
@@ -151,6 +149,10 @@ public class GameInitialization {
             player.addEffect(new MobEffectInstance(MobEffects.SATURATION, MobEffectInstance.INFINITE_DURATION, 0, false, false));
             LIB.TPTop(svplayer,0,0);
         });
+
+        //清空forceload
+        LIB.clearForceLoadChunks(event.getLevel());
+
 
         //结束指令
         Game.isInitialized = true;

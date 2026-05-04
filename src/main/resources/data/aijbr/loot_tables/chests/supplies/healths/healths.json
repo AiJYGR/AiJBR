@@ -6,12 +6,12 @@
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/healths/health/syringe",
-                    "weight":6
+                    "weight":5
                 },
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/healths/health/medkit",
-                    "weight":1
+                    "weight":2
                 }
             ]
         }

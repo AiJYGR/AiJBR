@@ -2,6 +2,8 @@ package com.aijygr;
 
 import com.aijygr.AiJBP.MSGClientExecSync;
 import com.aijygr.AiJGame.Game;
+import it.unimi.dsi.fastutil.longs.LongArraySet;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
@@ -225,6 +228,15 @@ public abstract class LIB {
             i++;
         }
         return i;
+    }
+
+    public static void clearForceLoadChunks(ServerLevel level){
+        LongSet chunks = new LongArraySet(level.getForcedChunks());
+        for (long posLong : chunks) {
+            ChunkPos pos = new ChunkPos(posLong);
+            level.setChunkForced(pos.x, pos.z, false);
+        }
+        level.getLevel().setChunkForced(0,0, true);
     }
 
     private static final Map<Long, List<Runnable>> SCHEDULED_TASKS = new ConcurrentHashMap<>();

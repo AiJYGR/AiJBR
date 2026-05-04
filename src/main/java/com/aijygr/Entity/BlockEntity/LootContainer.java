@@ -3,6 +3,7 @@ package com.aijygr.Entity.BlockEntity;
 import javax.annotation.Nullable;
 
 import com.aijygr.AiJGame.Game;
+import com.aijygr.Main;
 import com.aijygr.Reg;
 import com.aijygr.Block.ContainerBlock;
 
@@ -125,6 +126,8 @@ public class LootContainer extends RandomizableContainerBlockEntity{
                 this.setItem(i,itemstack);
                 i++;
             }
+            if(i>=8)
+                Main.LOGGER.info("哥们儿 你叼爆了！你把LootContainer刷爆了！");
         }
     }
     public static List<ItemStack> mergeLootList(ObjectArrayList<ItemStack> items) {

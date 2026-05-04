@@ -162,20 +162,12 @@ public abstract class ModConfig {
         server_builder.comment("Whether to log BR GAME Status like RingSize,Damage,AirRoute etc");
         Server.Config.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG",Server.Default.ALLOW_BRLOG);
 
-        server_builder.comment("AiJYGR Backpack Management System");
-        server_builder.push("AiJBackpack");    //AiJBackpack
-        server_builder.comment(
-                "# Default Permission Level",
-                "- Define the permission level that the player has without a backpack.");
-        Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",Server.Default.BACKPACK.DEFAULT_PERMISSIONLEVEL,Short.MIN_VALUE,Short.MAX_VALUE);
-        server_builder.pop();
-
         server_builder.comment("Ring Settings used in the game");
         server_builder.push("Ring");    //Ring
         server_builder.comment(
                 "# Ring Initial Attributes",
                 "- Format: InitialRingSize, WaitingTick",
-                "- Default: 1024,1200   Must be Integer."
+                "- Default: 1023,1200   Must be Integer."
         );
         Server.Config.RING.RING_INITIAL_ATTRUBUTES = server_builder.defineList("RingInitialAttributes", Server.Default.RING.RING_INITIAL_ATTRUBUTES,(obj)->{return obj instanceof Integer;});
 
@@ -283,6 +275,10 @@ public abstract class ModConfig {
         server_builder.pop();
         server_builder.comment("PermissionLevel: Used with BackpackSlotAttributes together.");
         server_builder.push("BACKPACK");
+        server_builder.comment(
+                "# Default Permission Level",
+                "- Define the permission level that the player has without a backpack.");
+        Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",Server.Default.BACKPACK.DEFAULT_PERMISSIONLEVEL,Short.MIN_VALUE,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL = server_builder.defineInRange("LVL1Permission",Server.Default.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL = server_builder.defineInRange("LVL2Permission",Server.Default.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL = server_builder.defineInRange("LVL3Permission",Server.Default.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL,0,Short.MAX_VALUE);

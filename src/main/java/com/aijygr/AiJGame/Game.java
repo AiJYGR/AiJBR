@@ -7,28 +7,17 @@ import com.aijygr.AiJGame.Client.MSGClientGameTime;
 import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.AiJGame.Client.MSGClientRingInfo;
 import com.aijygr.AiJGame.Ring.RingGeneration;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.MissingMappingsEvent;
 
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Mod.EventBusSubscriber()
 public class Game {
@@ -141,7 +130,7 @@ public class Game {
         rules.getRule(GameRules.RULE_NATURAL_REGENERATION).set(false,server);
 
         rules.getRule(GameRules.RULE_SHOWDEATHMESSAGES).set(true,server);
-        rules.getRule(GameRules.RULE_COMMANDBLOCKOUTPUT).set(true,server);
+        //rules.getRule(GameRules.RULE_COMMANDBLOCKOUTPUT).set(true,server);
         rules.getRule(GameRules.RULE_RANDOMTICKING).set(0,server);
 
         rules.getRule(GameRules.RULE_SPAWN_RADIUS).set(0,server);

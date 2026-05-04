@@ -210,6 +210,8 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:cloth-config-348521:5729105")
     runtimeOnly fg.deobf("curse.maven:playeranimator-658587:4587214")
     runtimeOnly fg.deobf("curse.maven:ibe-editor-256822:4994072")
+    runtimeOnly fg.deobf("curse.maven:neat-238372:5838485")
+    runtimeOnly fg.deobf("curse.maven:damage-number-998849:7060656")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

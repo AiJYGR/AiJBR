@@ -34,10 +34,12 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.ConfigValue<Integer> MEDKIT_USEDURATION;
                 public static ForgeConfigSpec.ConfigValue<Integer> MEDKIT_MAXSTACKSIZE;
                 public static ForgeConfigSpec.DoubleValue MEDKIT_HEALAMOUNT;
-                public static ForgeConfigSpec.IntValue ITEM_ARMOR_MAXDAMAGE;
-                public static ForgeConfigSpec.IntValue ITEM_ARMOR_IRON_DEFENSE;
-                public static ForgeConfigSpec.IntValue ITEM_ARMOR_DIAMOND_DEFENSE;
-                public static ForgeConfigSpec.IntValue ITEM_ARMOR_NETHERITE_DEFENSE;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_IRON_MAXDAMAGE;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_DIAMOND_MAXDAMAGE;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_NETHERITE_MAXDAMAGE;
+                public static ForgeConfigSpec.DoubleValue ITEM_ARMOR_IRON_DEFENSE;
+                public static ForgeConfigSpec.DoubleValue ITEM_ARMOR_DIAMOND_DEFENSE;
+                public static ForgeConfigSpec.DoubleValue ITEM_ARMOR_NETHERITE_DEFENSE;
             }
             public static class DROPSHIP{
                 public static ForgeConfigSpec.DoubleValue SPEED;
@@ -99,10 +101,12 @@ public abstract class ModConfig {
                 public static final short BACKPACK_LVL2_PERMISSIONLEVEL = 8;
                 public static final short BACKPACK_LVL3_PERMISSIONLEVEL = 12;
                 public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 20;
-                public static final int ITEM_ARMOR_MAXDAMAGE = 40;
-                public static final int ITEM_ARMOR_IRON_DEFENSE = 10;
-                public static final int ITEM_ARMOR_DIAMOND_DEFENSE = 15;
-                public static final int ITEM_ARMOR_NETHERITE_DEFENSE = 20;
+                public static final int ITEM_ARMOR_IRON_MAXDAMAGE = 20;
+                public static final int ITEM_ARMOR_DIAMOND_MAXDAMAGE = 30;
+                public static final int ITEM_ARMOR_NETHERITE_MAXDAMAGE = 40;
+                public static final float ITEM_ARMOR_IRON_DEFENSE = 20.0f;
+                public static final float ITEM_ARMOR_DIAMOND_DEFENSE = 40.0f;
+                public static final float ITEM_ARMOR_NETHERITE_DEFENSE = 60.0f;
 
             }
             public static final class DROPSHIP{
@@ -256,10 +260,17 @@ public abstract class ModConfig {
 
         server_builder.push("ARMOR");
         server_builder.comment("Also known as: MaxDamage.");
-        Server.Config.ITEM.ITEM_ARMOR_MAXDAMAGE = server_builder.defineInRange("Durability", Server.Default.ITEM.ITEM_ARMOR_MAXDAMAGE,1,2000);
-        Server.Config.ITEM.ITEM_ARMOR_IRON_DEFENSE = server_builder.defineInRange("LVL1ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_IRON_DEFENSE,1,200);
-        Server.Config.ITEM.ITEM_ARMOR_DIAMOND_DEFENSE = server_builder.defineInRange("LVL2ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_DIAMOND_DEFENSE,1,200);
-        Server.Config.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE = server_builder.defineInRange("LVL3ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE,1,200);
+        Server.Config.ITEM.ITEM_ARMOR_IRON_MAXDAMAGE = server_builder.defineInRange("LVL1ArmorDurability", Server.Default.ITEM.ITEM_ARMOR_IRON_MAXDAMAGE,0,10000);
+        server_builder.comment("Also known as: MaxDamage.");
+        Server.Config.ITEM.ITEM_ARMOR_DIAMOND_MAXDAMAGE = server_builder.defineInRange("LVL2ArmorDurability", Server.Default.ITEM.ITEM_ARMOR_DIAMOND_MAXDAMAGE,0,10000);
+        server_builder.comment("Also known as: MaxDamage.");
+        Server.Config.ITEM.ITEM_ARMOR_NETHERITE_MAXDAMAGE = server_builder.defineInRange("LVL3ArmorDurability", Server.Default.ITEM.ITEM_ARMOR_NETHERITE_MAXDAMAGE,0,10000);
+        server_builder.comment("The percentage(%) of damage absorbed.");
+        Server.Config.ITEM.ITEM_ARMOR_IRON_DEFENSE = server_builder.defineInRange("LVL1ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_IRON_DEFENSE,0.0,100.0);
+        server_builder.comment("The percentage(%) of damage absorbed.");
+        Server.Config.ITEM.ITEM_ARMOR_DIAMOND_DEFENSE = server_builder.defineInRange("LVL2ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_DIAMOND_DEFENSE,0.0,100.0);
+        server_builder.comment("The percentage(%) of damage absorbed.");
+        Server.Config.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE = server_builder.defineInRange("LVL3ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE,0.0,100.0);
         server_builder.pop();
         server_builder.comment("PermissionLevel: Used with BackpackSlotAttributes together.");
         server_builder.push("BACKPACK");

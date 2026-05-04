@@ -63,10 +63,15 @@ public class AiJDropShip {
     }
 
     public static void tick(MinecraftServer server, DropShip dropship){
-        if(!isDropShipTickking) return;
+        if(Game.shouldTravel)
+            isDropShipTickking = true;
+        else if(Game.BRGameTime >= Game.travelTick)
+            isDropShipTickking = true;
+        if(!isDropShipTickking)
+            return;
         if(dropshipPlayerlist.isEmpty()){
             dropship.setUUID(UUID.randomUUID());
-            isDropShipTickking = false;
+            //isDropShipTickking = false;
         }
         if(Game.BRGameTime>=dropship_allowejecttick && !canleave)
         {

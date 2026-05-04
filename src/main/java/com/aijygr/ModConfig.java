@@ -44,6 +44,8 @@ public abstract class ModConfig {
             public static class DROPSHIP{
                 public static ForgeConfigSpec.DoubleValue SPEED;
                 public static ForgeConfigSpec.IntValue HEIGHT;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOULDFLYTOBATTLEFIELD;
+                public static ForgeConfigSpec.IntValue PREWAITINGTICK;
             }
             public static class TEAM {
                 public static ForgeConfigSpec.IntValue TEAMNUM;
@@ -67,22 +69,22 @@ public abstract class ModConfig {
         public static final class Default {
             public static LIB.BOOL ALLOW_BRLOG = LIB.BOOL.TRUE;
             public static class BACKPACK{
-                public static final int DEFAULT_PERMISSIONLEVEL = 0;
+                public static final int DEFAULT_PERMISSIONLEVEL = 2;
             }
             public static class RING{
-                public static final List<Integer> RING_INITIAL_ATTRUBUTES =  new ArrayList<>(List.of(512,300));
+                public static final List<Integer> RING_INITIAL_ATTRUBUTES =  new ArrayList<>(List.of(1023,1200));
                 public static final List<String> RING_ATTRIBUTES = new ArrayList<>(List.of(
-                        "256,200,0.2,0.005,200,0.2,0.005",
-                        "128,200,0.5,0.005,200,0.5,0.005",
-                        "64,200,0.5,0.01 ,100,1  ,0.01",
-                        "32 ,100,1  ,0.01 ,100,1.5,0.01",
-                        "16 ,100,2  ,0.05 ,100,2.5  ,0.05",
-                        "0.1,100,3  ,0.1  ,500,3    ,0.1"
+                        "576,2000,0.2,0.005,4000,0.2,0.005",
+                        "384,2400,0.5,0.005,2000,0.5,0.005",
+                        "192,2000,0.5,0.01 ,1000,1  ,0.01",
+                        "96 ,1500,1  ,0.01 ,1000,1.5,0.01",
+                        "48 ,1500,2  ,0.05 ,1000,2.5,0.05",
+                        "0.1,1500,3  ,0.05 ,1500,3 ,0.05"
                 ));
                 public static final int DAMAGE_TICKING_TIME = 30;
                 public static final List<String> GENERATIONMODES = new ArrayList<>(List.of(
                         RingGeneration.GenerationMode.EDGE_WEIGHTED.name(),
-                        RingGeneration.GenerationMode.UNIFORM.name(),
+                        RingGeneration.GenerationMode.EDGE_WEIGHTED.name(),
                         RingGeneration.GenerationMode.TANGENT.name(),
                         RingGeneration.GenerationMode.RANDOM.name(),
                         RingGeneration.GenerationMode.RANDOM.name(),
@@ -101,17 +103,19 @@ public abstract class ModConfig {
                 public static final short BACKPACK_LVL2_PERMISSIONLEVEL = 8;
                 public static final short BACKPACK_LVL3_PERMISSIONLEVEL = 12;
                 public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 20;
-                public static final int ITEM_ARMOR_IRON_MAXDAMAGE = 20;
-                public static final int ITEM_ARMOR_DIAMOND_MAXDAMAGE = 30;
-                public static final int ITEM_ARMOR_NETHERITE_MAXDAMAGE = 40;
+                public static final int ITEM_ARMOR_IRON_MAXDAMAGE = 40;
+                public static final int ITEM_ARMOR_DIAMOND_MAXDAMAGE = 50;
+                public static final int ITEM_ARMOR_NETHERITE_MAXDAMAGE = 60;
                 public static final float ITEM_ARMOR_IRON_DEFENSE = 20.0f;
                 public static final float ITEM_ARMOR_DIAMOND_DEFENSE = 40.0f;
                 public static final float ITEM_ARMOR_NETHERITE_DEFENSE = 60.0f;
 
             }
             public static final class DROPSHIP{
-                public static final double SPEED = 1.0d;
+                public static final double SPEED = 1.5d;
                 public static final short HEIGHT = 200;
+                public static final LIB.BOOL SHOULDFLYTOBATTLEFIELD = LIB.BOOL.FALSE;
+                public static final int PREWAITINGTICK = 300;
             }
             public static class TEAM {
                 public static final int TEAMNUM = 20;
@@ -123,7 +127,7 @@ public abstract class ModConfig {
                 public static final LIB.BOOL SEEFRIENTLYINVISIBLES = LIB.BOOL.TRUE;
             }
             public static class PLAYER{
-                public static final int MAXHEALTH = 20;
+                public static final int MAXHEALTH = 40;
                 public static final double MOVEMENTSPEED = 0.10f;
                 public static final double FALLDAMAGEMULTIPIER = 1.0;
                 public static final LIB.BOOL SURVIVALBREAK = LIB.BOOL.FALSE;
@@ -171,7 +175,7 @@ public abstract class ModConfig {
         server_builder.comment(
                 "# Ring Initial Attributes",
                 "- Format: InitialRingSize, WaitingTick",
-                "- Default: 512, 300   Must be Integer."
+                "- Default: 1024,1200   Must be Integer."
         );
         Server.Config.RING.RING_INITIAL_ATTRUBUTES = server_builder.defineList("RingInitialAttributes", Server.Default.RING.RING_INITIAL_ATTRUBUTES,(obj)->{return obj instanceof Integer;});
 
@@ -229,14 +233,19 @@ public abstract class ModConfig {
         Server.Config.RING.WEIGHTEDMODE = server_builder.defineEnum("WeightedMode", Server.Default.RING.WEIGHTEDMODE, RingGeneration.WeightedMode.values());
         server_builder.pop();
 
-        server_builder.comment("Dropship Settings used in the game");
-        server_builder.push("Dropship");
+        server_builder.comment("DropShip Settings used in the game");
+        server_builder.push("DropShip");
         server_builder.comment("# SPEED",
                 "- Unit: Blocks per tick (Meters per tick)");
         Server.Config.DROPSHIP.SPEED = server_builder.defineInRange("Speed", Server.Default.DROPSHIP.SPEED,0.01,10.0);
         server_builder.comment("# Height",
-                "Altitude that the Dropship travels on.");
+                "Altitude that the DropShip travels on.");
         Server.Config.DROPSHIP.HEIGHT = server_builder.defineInRange("Height", Server.Default.DROPSHIP.HEIGHT,-60,500);
+        server_builder.comment("# If NOT, the DropShip will wait at the edge of the border, instead of flying into the battle field.");
+        Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD = server_builder.defineEnum("ShouldFlyToBattleField",Server.Default.DROPSHIP.SHOULDFLYTOBATTLEFIELD);
+        server_builder.comment("# PreWaitingTick","Ticks waited for the DropShip to enter the battle field. A low value is not recommended.");
+        Server.Config.DROPSHIP.PREWAITINGTICK = server_builder.defineInRange("PreWaitingTick",Server.Default.DROPSHIP.PREWAITINGTICK,100,6000);
+
         server_builder.pop();
 
         server_builder.comment("AiJBR Mod Items Config");

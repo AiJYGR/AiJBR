@@ -20,7 +20,7 @@ public class GameEnd {
                 LIB.tryBroadcastMessage(server,"Game End");
                 Game.sv_damage_per_block = 0.00001;
                 Game.sv_basicdamage = 0.0;
-                LIB.schedule(server,1,()->{LIB.killItemEntities(server);});
+                LIB.schedule(server,2,()->{LIB.killItemEntities(server);});
 
             }
         }

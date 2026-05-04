@@ -282,7 +282,7 @@ public class AiJBRPlayer {
             if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get().get())
                 player.setRespawnPosition(player.level().dimension(),player.blockPosition(),player.getYRot(),true,false);
 
-            LIB.schedule(server,10,()->{
+            LIB.schedule(server,11,()->{
                 if(player!=null)
                     player.setGameMode(GameType.SPECTATOR);
             });

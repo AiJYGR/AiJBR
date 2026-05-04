@@ -3,8 +3,8 @@
         {
             "rolls":{
                 "type": "binomial",
-                "n": 2,
-                "p": 0.1
+                "n": 3,
+                "p": 0.15
             },
             "entries": [
                 {

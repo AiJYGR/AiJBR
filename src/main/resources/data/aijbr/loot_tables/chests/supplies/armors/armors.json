@@ -6,12 +6,12 @@
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/armors/armor/lvl1_armor",
-                    "weight":8
+                    "weight":7
                 },
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/armors/armor/lvl2_armor",
-                    "weight":2
+                    "weight":3
                 }
             ]
         }

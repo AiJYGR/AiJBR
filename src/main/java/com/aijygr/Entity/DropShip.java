@@ -52,7 +52,8 @@ public class DropShip extends Entity implements GeoEntity{
             float pitch = (float) (Math.atan2(-motion1.y, horizontalDistance) * (180.0 / Math.PI));
             this.setXRot(pitch);
         }
-        this.move(MoverType.SELF, motion1);
+        if(AiJDropShip.isDropShipTickking)
+            this.move(MoverType.SELF, motion1);//移动
 //        Vec3 motion2 = this.getDeltaMovement();
 //        if (!motion1.equals(motion2)) {
 //            this.setDeltaMovement(Vec3.ZERO);

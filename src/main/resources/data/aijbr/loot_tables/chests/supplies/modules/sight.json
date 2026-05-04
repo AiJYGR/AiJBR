@@ -13,27 +13,27 @@
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/modules/sight/sight_coyote",
-                    "weight":30
+                    "weight":40
                 },
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/modules/sight/sight_srs_02",
-                    "weight":30
+                    "weight":40
                 },
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/modules/sight/sight_552",
-                    "weight":30
+                    "weight":40
                 },
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/modules/sight/sight_uh1",
-                    "weight":30
+                    "weight":40
                 },      
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/modules/sight/sight_exp3",
-                    "weight":30
+                    "weight":40
                 },
 
                 {

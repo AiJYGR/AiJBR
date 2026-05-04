@@ -39,6 +39,7 @@ public class SyncTag {
       "tacz:g36k":["MAINWPN"],
       "tacz:hk416d":["MAINWPN"],
       "tacz:m4a1":["MAINWPN"],
+      "tacz:m16a1":["MAINWPN"],
       "tacz:m16a4":["MAINWPN"],
       "tacz:qbz_191":["MAINWPN"],
       "tacz:scar_l":["MAINWPN"],
@@ -59,6 +60,7 @@ public class SyncTag {
       "tacz:b93r":["MAINWPN","SUBWPN"],
       "tacz:cz75":["MAINWPN","SUBWPN"],
       "tacz:deagle":["MAINWPN","SUBWPN"],
+      "tacz:deagle_golden":["MAINWPN","SUBWPN"],
       "tacz:glock_17":["MAINWPN","SUBWPN"],
       "tacz:m1911":["MAINWPN","SUBWPN"],
       "tacz:p320":["MAINWPN","SUBWPN"],
@@ -72,7 +74,6 @@ public class SyncTag {
       "tacz:spas_12":["MAINWPN"],
 
       "tacz:hk_mp5a5":["MAINWPN"],
-      "tacz:mac10":["MAINWPN"],
       "tacz:p90":["MAINWPN"],
       "tacz:ump45":["MAINWPN"],
       "tacz:uzi":["MAINWPN"],
@@ -80,7 +81,13 @@ public class SyncTag {
 
       "tacz:ai_awp":["MAINWPN"],
       "tacz:m700":["MAINWPN"],
-      "tacz:springfield1873":["MAINWPN"]
+      "tacz:springfield1873":["MAINWPN"],
+
+      "tacz:m107":["MAINWPN"],
+      "tacz:m95":["MAINWPN"],
+
+      "tacz:rpg7":["MAINWPN"],
+      "tacz:m320":["MAINWPN"]
     }
   },
 
@@ -110,8 +117,7 @@ public class SyncTag {
       "minecraft:strong_swiftness":["SUPPLIES"]
     }
   }
-}
-""";
+}""";
     public static final int PMAXLENGTH = 262144; //!!!!!文件最大长度 256KB
     public static JsonObject json = new JsonObject();
     public static String rawjson = "";

@@ -57,7 +57,8 @@ public class Game {
     public static int sv_roundticktotal = 0;
     //public static boolean enableAiJBP;
     public static final double R = 6000000.0d;
-    public static final int TRAVELTICKS = 300;
+    public static int travelTick = 300;
+    public static boolean shouldTravel = true;
 
     /// 这个名字只是用惯了，和游戏刻tick没什么关系。
     /// 大概含义就是服务器存储的一个数值，如果和箱子的这个数值不同就需要刷新一下箱子的战利品表

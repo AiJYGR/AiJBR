@@ -48,11 +48,11 @@
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/loots/num/health",
-                    "weight":40
+                    "weight":50
                 },
                 {
                     "type":"empty",
-                    "weight":60
+                    "weight":50
                 }
             ]
         },

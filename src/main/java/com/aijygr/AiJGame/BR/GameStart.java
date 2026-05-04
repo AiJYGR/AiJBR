@@ -10,8 +10,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 import java.util.UUID;
@@ -104,7 +102,7 @@ public class GameStart {
         double altitude = ModConfig.Server.Config.DROPSHIP.HEIGHT.get();
         if(LIB.SMwithForceLoad(server, Reg.DROPSHIP.get(), new Vec3(0,altitude,0)) instanceof DropShip dropship)
         {
-            AiJDropShip.isDropShipTickking = true;
+            AiJDropShip.isDropShipTickking = false;
             dropship.setUUID(AiJDropShip.DROPSHIPUUID);
             Vec3 pos = new Vec3(dropship.getX(), dropship.getY(), dropship.getZ());
 
@@ -114,7 +112,15 @@ public class GameStart {
             Vec3 pos2 = new Vec3(d.get(2),altitude,d.get(3));
             Vec3 facing = pos2.subtract(pos1).normalize();
             Vec3 motion = facing.scale(v);
-            Vec3 startingpoint = pos1.subtract(motion.scale(Game.TRAVELTICKS));
+            Game.travelTick = ModConfig.Server.Config.DROPSHIP.PREWAITINGTICK.get();
+            Game.shouldTravel = ModConfig.Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD.get().get();
+            Vec3 startingpoint;
+            if(Game.shouldTravel) {
+                AiJDropShip.isDropShipTickking = true;
+                startingpoint = pos1.subtract(motion.scale(Game.travelTick));
+            }
+            else
+                startingpoint = pos1;
 
             LIB.TPwithForceLoad(dropship,startingpoint);
 
@@ -123,8 +129,8 @@ public class GameStart {
             }
             dropship.setMotion(motion);
             double distance = pos1.distanceTo(pos2);
-            AiJDropShip.dropship_allowejecttick = (int)Math.ceil( distance/v*0.05 + Game.TRAVELTICKS);
-            AiJDropShip.dropship_forceejecttick = (int)Math.ceil( distance/v*0.95 + Game.TRAVELTICKS);
+            AiJDropShip.dropship_allowejecttick = (int)Math.ceil( distance/v*0.05 + Game.travelTick);
+            AiJDropShip.dropship_forceejecttick = (int)Math.ceil( distance/v*0.95 + Game.travelTick);
         }
         else{
             LIB.tryBroadcastMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err");

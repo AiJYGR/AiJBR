@@ -18,8 +18,8 @@
         {
             "rolls": {
                 "type":"uniform",
-                "min":4,
-                "max":6
+                "min":3,
+                "max":5
             },
             "entries": [
                 {

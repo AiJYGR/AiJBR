@@ -7,6 +7,7 @@ import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.Ring.RingMove;
 import com.aijygr.Entity.DropShip;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.phys.Vec3;
@@ -71,7 +72,6 @@ public class GameStart {
         Game.sv_roundticktotal = Game.r_initial_waitingtick+1;
         Game.sv_roundtick = Game.sv_roundticktotal;
         Game.isRingClosing = false;
-        AiJDropShip.canleave = false;
         //以下片段摘自GameInitialization 2026 05 02
         {
             WorldBorder worldBorder = event.getLevel().getWorldBorder();
@@ -86,7 +86,7 @@ public class GameStart {
             Game.BRGameTime = 0;
 
 
-            AiJDropShip.dropshipPlayerlist.clear();
+
             Game.sv_curr_size = Game.r_initial_ringsize;
             worldBorder.setSize(Game.sv_curr_size);
             worldBorder.setCenter(Game.sv_curr_x,Game.sv_curr_z);
@@ -99,7 +99,18 @@ public class GameStart {
         LIB.killItemEntities(server);
         LIB.clearPlayersInv(server);
         //生成DropShip
+        for (ServerLevel level : server.getAllLevels()) {
+            level.getEntities().getAll().forEach(entity -> {
+                if (entity.getType() == Reg.DROPSHIP.get()) {
+                    UUID uuid = UUID.randomUUID();
+                    entity.setUUID(uuid);
+                    System.out.println("Dropship " + entity.getId() + " UUID reset: " + uuid);
+                }
+            });
+        }
         double altitude = ModConfig.Server.Config.DROPSHIP.HEIGHT.get();
+        AiJDropShip.dropshipPlayerlist.clear();
+        AiJDropShip.canleave = false;
         if(LIB.SMwithForceLoad(server, Reg.DROPSHIP.get(), new Vec3(0,altitude,0)) instanceof DropShip dropship)
         {
             AiJDropShip.isDropShipTickking = false;

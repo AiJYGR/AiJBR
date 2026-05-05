@@ -10,20 +10,20 @@
   "item.aijbr.backpack_lvl3": "三级背包",
   "item.aijbr.loot_container": "战利品箱",
   "item.aijbr.lock": "",
-
+  "item.lore.self_defense_wpn": "Nice Self Defense Weapon",
+  "item.lore.auths_intentional_idea": "作者的小乔四，",
+  "item.lore.wtf": "???你从哪里弄到这个的",
+  "item.lore.increase_capacity": "增加容量",
   "block.aijbr.loot_container": "战利品箱",
-
   "msg.aijtag": "[AiJTAG]",
-
   "msg.aijbr": "[AiJBR]",
   "msg.aijbr.red": "§c[AiJBR]§r",
   "msg.aijbr.yellow": "§e[AiJBR]§r",
   "msg.aijbr.green": "§a[AiJBR]§r",
   "msg.aijbr.bold": "§d§l[AiJBR]§r",
-  "msg.server":"[SV]",
+  "msg.server": "[SV]",
   "msg.client": "[CL]",
-
-  "msg.aijbr.info.command_executed":"已成功执行指令",
+  "msg.aijbr.info.command_executed": "已成功执行指令",
   "msg.aijbr.info.command_game_started": "已成功开始游戏",
   "msg.aijbr.info.player_get_ready": "已准备",
   "msg.aijbr.info.player_cancel_ready": "已取消准备",
@@ -31,11 +31,10 @@
   "msg.aijbr.info.command_player_join_team_p1": "成功加入队伍",
   "msg.aijbr.info.command_player_join_team_p2": "",
   "msg.aijbr.info.command_player_leave_team": "成功离开队伍",
-
   "msg.aijbr.err": "发生了意外错误  请重试",
-  "msg.aijbr.err.command_game_started":"游戏已经开始!",
-  "msg.aijbr.err.command_game_ended":"游戏未开始!",
-  "msg.aijbr.err.command_executed_failed":"执行指令失败",
+  "msg.aijbr.err.command_game_started": "游戏已经开始!",
+  "msg.aijbr.err.command_game_ended": "游戏未开始!",
+  "msg.aijbr.err.command_executed_failed": "执行指令失败",
   "msg.aijbr.err.command_player_join_team_failed": "加入队伍失败",
   "msg.aijbr.err.command_player_join_team_failed_p1": "加入队伍",
   "msg.aijbr.err.command_player_join_team_failed_p2": "失败\n队伍不存在，队伍已满或者你已在此队伍",
@@ -44,19 +43,14 @@
   "msg.aijbr.err.command_game_not_reloaded": "需要重载游戏配置文件  请执行 /AiJBR reload",
   "msg.aijbr.err.command_no_enough_teams": "小队数量不足 无法开始游戏",
   "msg.aijbr.warn.command_disabled_game_end_check": "小队数量为1 自动进入测试模式",
-
   "death.attack.aijbr.ring.message": "%1$s感觉到浑身酥酥麻麻的",
-
   "gui.aijbr.game_team_num": "队伍",
   "gui.aijbr.game_player_num": "存活",
   "gui.aijbr.game_round": "阶段",
   "gui.aijbr.game_roundtick": "倒计时",
-
   "subtitles.aijbr.ring_damage": "!!毒圈伤害!!",
   "subtitles.aijbr.ring_phase": "通知: 进入下一阶段",
   "subtitles.aijbr.ring_close": "通知: 开始缩小安全区",
-
   "enchantment.level.12": "!",
-
   "effect.aijbr.flying": "战斗意识"
 }

@@ -19,11 +19,12 @@
                         },
                         {
                             "function": "set_name",
-                            "name": "\"防身利器\""
+                            
+                            "name": [{"translate": "item.lore.self_defense_wpn"}]
                         },
                         {
                             "function": "set_lore",
-                            "lore": [{"text": "作者的小乔四,"}]
+                            "lore": [{"translate": "item.lore.auths_intentional_idea"}]
                         }
                     ]
                 }

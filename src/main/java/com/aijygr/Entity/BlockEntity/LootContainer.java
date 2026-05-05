@@ -122,12 +122,18 @@ public class LootContainer extends RandomizableContainerBlockEntity{
             var generatedLoot = loottable.getRandomItems(params, this.lootTableSeed);
             this.clearContent();//清空物品
             int i = 0;
-            for(ItemStack itemstack : mergeLootList(generatedLoot)){
-                this.setItem(i,itemstack);
+            for(ItemStack itemstack : mergeLootList(generatedLoot)) {
+                if (i >= this.getContainerSize()) {
+                    String name = "滚木";
+                    if (player != null) {
+                        name = player.getName().getString();
+                    }
+                    Main.LOGGER.warn("[Tick:{}] @{} 不是哥们儿 你叼爆了！你把LootContainer刷爆了！",Game.gametime,name);
+                    break;
+                }
+                this.setItem(i, itemstack);
                 i++;
             }
-            if(i>=8)
-                Main.LOGGER.info("哥们儿 你叼爆了！你把LootContainer刷爆了！");
         }
     }
     public static List<ItemStack> mergeLootList(ObjectArrayList<ItemStack> items) {

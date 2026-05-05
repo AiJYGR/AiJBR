@@ -11,6 +11,11 @@
   "item.aijbr.loot_container": "Loot Container",
   "item.aijbr.lock": "",
 
+  "item.lore.self_defense_wpn": "Nice Self Defense Weapon",
+  "item.lore.auths_intentional_idea": "Intentional Idea from the Author",
+  "item.lore.wtf": "???Where did you found this???",
+  "item.lore.increase_capacity": "Increase capacity.",
+
   "block.aijbr.loot_container": "Loot Container",
 
   "msg.aijtag": "[AiJTAG]",

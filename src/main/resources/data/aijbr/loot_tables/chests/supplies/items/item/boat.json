@@ -6,22 +6,22 @@
                 {
                     "type": "item",
                     "name": "minecraft:bamboo_raft",
-                    "weight": 95,
+                    "weight": 99,
                     "functions": [
                         {
                             "function": "set_lore",
-                            "lore": [{"text": "作者的小乔四,"}]
+                            "lore": [{"translate": "item.lore.auths_intentional_idea"}]
                         }
                     ]
                 },
                 {
                     "type": "item",
                     "name": "minecraft:cherry_boat",
-                    "weight": 5,
+                    "weight": 1,
                     "functions": [
                         {
                             "function": "set_lore",
-                            "lore": [{"text": "???你从哪里找到这个的"}]
+                            "lore": [{"translate": "item.lore.wtf"}]
                         }
                     ]
                 }

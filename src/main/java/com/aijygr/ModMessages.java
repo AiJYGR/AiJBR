@@ -71,12 +71,11 @@ public class ModMessages {//GEMINI简直是我亲爹
                 .encoder(MSGServerUnlockInv::encode)
                 .consumerMainThread(MSGServerUnlockInv::handle)
                 .add();
-        /*
         net.messageBuilder(MSGServerSwapItem.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(MSGServerSwapItem::new)
                 .encoder(MSGServerSwapItem::encode)
                 .consumerMainThread(MSGServerSwapItem::handle)
-                .add();*/
+                .add();
         net.messageBuilder(MSGClientFinished.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(MSGClientFinished::new)
                 .encoder(MSGClientFinished::encode)

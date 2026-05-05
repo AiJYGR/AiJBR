@@ -28,12 +28,23 @@ public class MSGServerMoveEmpty {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
             Inventory inventory = player.getInventory();
+            ItemStack item1 = player.getInventory().getItem(index).copy();
+            ItemStack item2 = player.getInventory().getItem(target).copy();
             if(inventory.getItem(target).isEmpty())
             {
-                ItemStack item1 = player.getInventory().getItem(index).copy();
-                ItemStack item2 = player.getInventory().getItem(target).copy();
                 inventory.setItem(index,item2.copy());
                 inventory.setItem(target,item1.copy());
+            }
+            else if (ItemStack.isSameItemSameTags(item1, item2)) {
+                int transfer = Math.min(item1.getCount(), item2.getMaxStackSize() - item2.getCount());
+                if (transfer > 0) {
+                    item2.grow(transfer);
+                    item1.shrink(transfer);
+                    inventory.setItem(target, item2);
+                    inventory.setItem(index, item1.isEmpty() ? ItemStack.EMPTY : item1);
+                } else {
+                    System.out.println("REJECTED2");
+                }
             }
             else{
                 System.out.print("REJECTED");

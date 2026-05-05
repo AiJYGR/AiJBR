@@ -5,10 +5,12 @@ import com.aijygr.Item.Lock;
 import com.aijygr.ModConfig;
 import com.aijygr.ModMessages;
 
+import com.aijygr.Reg;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
@@ -20,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class AiJBackpack
@@ -84,8 +87,40 @@ public class AiJBackpack
         }
         ModMessages.PlayerSendToServer(new MSGServerMoveEmpty(index,target));
     }
+    /// try not to use this one.
+    /// Use{@link AiJBackpack#serverMoveEmpty(LocalPlayer, short, short)} instead
+    public static void serverSwapItem(LocalPlayer player, short index, short target) {
+        isAvailable = false;
+        ModMessages.PlayerSendToServer(new MSGServerSwapItem(index,target));
+    }
 
+    public static final Map<Supplier<? extends Item>, Integer> ITEM_LEVEL = new HashMap<>();
 
+    static {
+        // 注册等级：数字越高，物品越强
+        ITEM_LEVEL.put(Reg.AiJBP_LVL1, 1);
+        ITEM_LEVEL.put(Reg.AiJBP_LVL2, 2);
+        ITEM_LEVEL.put(Reg.AiJBP_LVL3, 3);
+        ITEM_LEVEL.put(Reg.IRON_ARMOR, 1);
+        ITEM_LEVEL.put(Reg.DIAMOND_ARMOR, 2);
+        ITEM_LEVEL.put(Reg.NETHERITE_ARMOR, 3);
+    }
+    public static int getLevel(ItemStack stack) {
+        for (Map.Entry<Supplier<? extends Item>, Integer> entry : ITEM_LEVEL.entrySet()) {
+            if (stack.is(entry.getKey().get())) {
+                return entry.getValue();
+            }
+        }
+        return 0;
+    }
+    public static boolean isBetterEquipment(ItemStack newStack, ItemStack oldStack) {
+        int oldlevel = getLevel(oldStack);
+        int newlevel = getLevel(newStack);
+        if(oldlevel==0 || newlevel==0)
+            return false;
+        else
+            return newlevel > oldlevel;
+    }
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event){
         LocalPlayer player = Minecraft.getInstance().player;
@@ -161,7 +196,19 @@ public class AiJBackpack
                                         if(slot2.equals(slot1))
                                             continue;
                                         ItemStack i = inventory.getItem(slot2.index);
-                                        if (i.isEmpty()) {
+                                        if (!i.isEmpty()) {//尝试堆叠并且叠加物品
+                                            if (ItemStack.isSameItemSameTags(itemstack, i) && i.getCount() < i.getMaxStackSize()) {
+                                                serverMoveEmpty(player, slot1.index, slot2.index);
+                                                return;
+                                            }
+                                            else if (isBetterEquipment(itemstack, i)) {
+                                                //serverRemove(slot2.index,true);
+                                                //serverMoveEmpty(player, slot1.index, slot2.index);
+                                                serverSwapItem(player, slot1.index, slot2.index);
+                                                return;
+                                            }
+                                        }
+                                        else if (i.isEmpty()) {
                                             serverMoveEmpty(player,slot1.index,slot2.index);
                                             return;
                                         }
@@ -177,4 +224,6 @@ public class AiJBackpack
             }
         }
     }
+
+
 }

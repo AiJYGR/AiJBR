@@ -113,7 +113,7 @@ public class GameStart {
         AiJDropShip.canleave = false;
         if(LIB.SMwithForceLoad(server, Reg.DROPSHIP.get(), new Vec3(0,altitude,0)) instanceof DropShip dropship)
         {
-            AiJDropShip.isDropShipTickking = false;
+
             dropship.setUUID(AiJDropShip.DROPSHIPUUID);
             Vec3 pos = new Vec3(dropship.getX(), dropship.getY(), dropship.getZ());
 
@@ -127,11 +127,14 @@ public class GameStart {
             Game.shouldTravel = ModConfig.Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD.get().get();
             Vec3 startingpoint;
             if(Game.shouldTravel) {
-                AiJDropShip.isDropShipTickking = true;
+                AiJDropShip.setandSendClientIsDropShipTickking(true);
                 startingpoint = pos1.subtract(motion.scale(Game.travelTick));
             }
             else
+            {
+                AiJDropShip.setandSendClientIsDropShipTickking(false);
                 startingpoint = pos1;
+            }
 
             LIB.TPwithForceLoad(dropship,startingpoint);
 

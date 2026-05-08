@@ -8,6 +8,7 @@ import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGClientTagJSON;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGClientTagHash;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGServerRequestSyncTagJSON;
 import com.aijygr.AiJGame.Client.MSGClientGameTime;
+import com.aijygr.AiJGame.Client.MSGClientIsDropShipTicking;
 import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.AiJGame.Client.MSGClientRingInfo;
 import net.minecraft.resources.ResourceLocation;
@@ -110,6 +111,11 @@ public class ModMessages {//GEMINI简直是我亲爹
                 .decoder(MSGClientExecSync::new)
                 .encoder(MSGClientExecSync::encode)
                 .consumerMainThread(MSGClientExecSync::handle)
+                .add();
+        net.messageBuilder(MSGClientIsDropShipTicking.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MSGClientIsDropShipTicking::new)
+                .encoder(MSGClientIsDropShipTicking::encode)
+                .consumerMainThread(MSGClientIsDropShipTicking::handle)
                 .add();
 
     }

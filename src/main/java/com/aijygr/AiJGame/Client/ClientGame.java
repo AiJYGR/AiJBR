@@ -1,5 +1,6 @@
 package com.aijygr.AiJGame.Client;
 
+import com.aijygr.AiJGame.AiJDropShip;
 import com.aijygr.Reg;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundSource;
@@ -50,8 +51,14 @@ public class ClientGame {
         ClientGame.teams = teams;
     }
 
+    public static void setIsDropShipTicking(boolean bool){
+        AiJDropShip.setIsDropShipTickking(bool);
+    }
+
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if(Minecraft.getInstance().isPaused())
+            return;
         if(event.phase == TickEvent.Phase.START && event.side.isClient()) {
             ClientGame.roundtick--;
         }

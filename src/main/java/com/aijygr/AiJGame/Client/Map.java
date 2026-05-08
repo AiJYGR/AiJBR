@@ -13,6 +13,8 @@ public class Map {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if(Minecraft.getInstance().isPaused())
+            return;
         ClientLevel level = Minecraft.getInstance().level;
         if (event.phase == TickEvent.Phase.END && level != null) {
             var border = level.getWorldBorder();

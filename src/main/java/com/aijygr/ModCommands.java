@@ -59,13 +59,14 @@ public class ModCommands
             dispatcher.register(
                     Commands.literal("AiJBR").requires((source) -> {
                         return source.hasPermission(0);})
-                            .executes((commmand)->{
+                            .executes((command)->{
                                 //commmand.getSource().getPlayer().sendSystemMessage(Component.Serializer.fromJson(json));
                                 LocalPlayer player = Minecraft.getInstance().player;
                                 Component component = Component.Serializer.fromJson(json);
                                 if (player != null && component != null) {
                                     player.displayClientMessage(component,false);
                                 }
+                                //command.getSource().sendSuccess(()->{return Component.literal("");},false);
                                 return 1;
                             })
             );
@@ -125,7 +126,7 @@ public class ModCommands
                 return 1;
             })));
             dispatcher.register(Commands.literal("AiJBR")
-                    .then(Commands.literal("reload").requires(s -> s.hasPermission(3))
+                    .then(Commands.literal("reload").requires(source -> source.hasPermission(3))
                             .executes((command) -> {
                                 reload(command.getSource());
                                 return 1;
@@ -136,7 +137,7 @@ public class ModCommands
     private static class StartCommand {
         public StartCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
-                return source.hasPermission(3);//权限等级
+                return source.hasPermission(2);
             }).then(Commands.literal("start").executes((command) -> {
                 ServerPlayer player = command.getSource().getPlayer();
                 MinecraftServer server = command.getSource().getServer();
@@ -212,12 +213,11 @@ public class ModCommands
             if(AiJBRPlayer.leaveTeam(player))
             {
                 LIB.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_leave_team");
-                return 1;
             }
             else{
                 LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_leave_team_failed");
-                return 1;
             }
+            return 1;
         }
         public PlayerLeaveCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
@@ -234,12 +234,11 @@ public class ModCommands
                 return source.hasPermission(2);
             }).then(Commands.literal("SV")
                     .executes((command)->{
-                StringBuilder str = new StringBuilder();
-                str.append("TeamList:").append(AiJBRPlayer.getTeamsNames(command.getSource().getServer())).append("\n");
-                str.append("PlayerList:").append(LIB.UUIDtoNames(command.getSource().getServer(),AiJBRPlayer.getPlayers(command.getSource().getServer())));
-
-                LIB.tryPlayerMessage(command.getSource().getPlayer(),str.toString());
-                return AiJBRPlayer.getAliveTeamsCount(command.getSource().getServer());
+                        String str = "TeamList:" + AiJBRPlayer.getTeamsNames(command.getSource().getServer()) + "\n" +
+                                "PlayerList:" + LIB.UUIDtoNames(command.getSource().getServer(), AiJBRPlayer.getPlayers(command.getSource().getServer()));
+                        command.getSource().sendSuccess(()->Component.literal(str), false);
+                        //LIB.tryPlayerMessage(command.getSource().getPlayer(),str.toString());
+                        return AiJBRPlayer.getAliveTeamsCount(command.getSource().getServer());
             })));
         }
     }
@@ -250,7 +249,7 @@ public class ModCommands
         }
         public RefillCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("AiJBR").requires((source) -> {
-                return source.hasPermission(2);
+                return source.hasPermission(3);
             }).then(Commands.literal("refill")
                     .executes((command)->{
                         LIB.tryPlayerMessage(command.getSource().getPlayer(),String.format("RefillTick = %d",refill()));

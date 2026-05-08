@@ -74,7 +74,7 @@ public class GameInitialization {
         Game.gameendteamcondition = 1;
 
         AiJDropShip.dropshipPlayerlist.clear();
-        AiJDropShip.isDropShipTickking = false;
+        AiJDropShip.setandSendClientIsDropShipTickking(false);
 
         //Read RingAttributes CFG
         var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();

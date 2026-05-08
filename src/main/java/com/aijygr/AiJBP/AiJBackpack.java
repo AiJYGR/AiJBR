@@ -123,6 +123,8 @@ public class AiJBackpack
     }
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event){
+        if(Minecraft.getInstance().isPaused())
+            return;
         LocalPlayer player = Minecraft.getInstance().player;
         if(player != null && event.side == LogicalSide.CLIENT && event.phase == Phase.END)
         {

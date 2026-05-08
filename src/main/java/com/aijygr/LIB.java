@@ -208,17 +208,16 @@ public abstract class LIB {
     }
 
     public static int killItemEntities(MinecraftServer server){
-//        int i = 0;
-//        for(ServerLevel level : server.getAllLevels()){
-//            for(Entity entity : level.getAllEntities()){
-//                if(entity instanceof ItemEntity){
-//                    entity.discard();
-//                    i++;
-//                }
-//            }
-//        }
-//        return i;
-        return server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),"kill @e[type=minecraft:item]");
+        int i = 0;
+        for(ServerLevel level : server.getAllLevels()){
+            for(Entity entity : level.getAllEntities()){
+                if(entity instanceof ItemEntity){
+                    entity.discard();
+                    i++;
+                }
+            }
+        }
+        return i;
     }
     public static int clearPlayersInv(MinecraftServer server){
         int i = 0;

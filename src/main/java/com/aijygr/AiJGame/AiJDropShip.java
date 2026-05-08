@@ -1,11 +1,9 @@
 package com.aijygr.AiJGame;
 
 
+import com.aijygr.*;
+import com.aijygr.AiJGame.Client.MSGClientIsDropShipTicking;
 import com.aijygr.Entity.DropShip;
-import com.aijygr.LIB;
-import com.aijygr.Main;
-import com.aijygr.ModConfig;
-import com.aijygr.Reg;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,7 +23,18 @@ public class AiJDropShip {
     public static long dropship_forceejecttick = 2000;
     public static long dropship_allowejecttick = 100;
     public static boolean canleave = false;
-    public static boolean isDropShipTickking = false;
+    private static boolean isDropShipTicking = false;
+    public static boolean isDropShipTicking(){
+        return isDropShipTicking;
+    }
+    public static void setandSendClientIsDropShipTickking(boolean bool) {
+        System.out.println("setandSendClientIsDropShipTickking " + bool);
+        isDropShipTicking = bool;
+        ModMessages.ServerSendToAll(new MSGClientIsDropShipTicking(bool));
+    }
+    public static void setIsDropShipTickking(boolean bool) {
+        isDropShipTicking = bool;
+    }
     public static List<Double> generate(){
         double x1,z1,x2,z2;
         final double Range = Game.r_initial_ringsize / 2;
@@ -63,15 +72,14 @@ public class AiJDropShip {
     }
 
     public static void tick(MinecraftServer server, DropShip dropship){
-        if(Game.shouldTravel)
-            isDropShipTickking = true;
-        else if(Game.BRGameTime >= Game.travelTick)
-            isDropShipTickking = true;
-        if(!isDropShipTickking)
+        if(Game.shouldTravel && !isDropShipTicking())
+            setandSendClientIsDropShipTickking(true);
+        else if(Game.BRGameTime >= Game.travelTick && !isDropShipTicking())
+            setandSendClientIsDropShipTickking(true);
+        if(!isDropShipTicking())
             return;
         if(dropshipPlayerlist.isEmpty()){
             dropship.setUUID(UUID.randomUUID());
-            //isDropShipTickking = false;
         }
         if(Game.BRGameTime>=dropship_allowejecttick && !canleave)
         {

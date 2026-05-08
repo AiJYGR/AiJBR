@@ -114,7 +114,7 @@ public class AiJBRPlayer {
             if(team != null)
                 for(String playername : team.getPlayers())
                     for (ServerPlayer player : server.getPlayerList().getPlayers())
-                        if(player.getName().getString().equals(playername))
+                        if(player.getName().getString().equals(playername) && player.isAlive())
                         {
                             list.add(player.getUUID());
                             break;

@@ -3,6 +3,7 @@ package com.aijygr.AiJGame.BR;
 import com.aijygr.*;
 import com.aijygr.AiJGame.AiJBRPlayer;
 import com.aijygr.AiJGame.AiJDropShip;
+import com.aijygr.AiJGame.Client.MSGClientGameTime;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.Ring.RingMove;
 import com.aijygr.Entity.DropShip;
@@ -152,6 +153,8 @@ public class GameStart {
         }
 
         RingMove.PhaseChange();
+        if(!Game.shouldTravel)
+            ModMessages.ServerSendToAll(new MSGClientGameTime(0,Game.travelTick,false));
 
         //结束指令
 

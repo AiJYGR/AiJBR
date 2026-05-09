@@ -2,6 +2,7 @@ package com.aijygr.AiJGame;
 
 import com.aijygr.*;
 import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
+import com.aijygr.Entity.DropShip;
 import com.aijygr.Item.Lock;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -20,6 +21,7 @@ import net.minecraft.world.scores.Scoreboard;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -237,8 +239,6 @@ public class AiJBRPlayer {
             player.setRemainingFireTicks(0);
         }
     }
-
-
     ///{@link Game#onGameInit(ModEvents.GameInitEvent)}
     public static void onGameInit(ModEvents.GameInitEvent event) {
         resetPlayerAttributes(event.getLevel().getServer().getPlayerList().getPlayers());
@@ -288,5 +288,10 @@ public class AiJBRPlayer {
             });
 
         }
+    }
+    @SubscribeEvent
+    public static void onPlayerAttack(AttackEntityEvent  event) {
+        if(event.getEntity().getVehicle() instanceof DropShip)
+            event.setCanceled(true);
     }
 }

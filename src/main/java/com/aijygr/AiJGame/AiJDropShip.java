@@ -2,6 +2,7 @@ package com.aijygr.AiJGame;
 
 
 import com.aijygr.*;
+import com.aijygr.AiJGame.Client.MSGClientGameTime;
 import com.aijygr.AiJGame.Client.MSGClientIsDropShipTicking;
 import com.aijygr.Entity.DropShip;
 import net.minecraft.server.MinecraftServer;
@@ -31,6 +32,7 @@ public class AiJDropShip {
         System.out.println("setandSendClientIsDropShipTickking " + bool);
         isDropShipTicking = bool;
         ModMessages.ServerSendToAll(new MSGClientIsDropShipTicking(bool));
+        ModMessages.ServerSendToAll(new MSGClientGameTime(Game.sv_round,Game.sv_roundtick,false));
     }
     public static void setIsDropShipTickking(boolean bool) {
         isDropShipTicking = bool;
@@ -84,7 +86,8 @@ public class AiJDropShip {
         if(Game.BRGameTime>=dropship_allowejecttick && !canleave)
         {
             canleave = true;
-            LIB.BRLOG("CanLeave");
+            //LIB.BRLOG("CanLeave");
+            LIB.tryBroadcastMessage(server,"msg.aijbr.green","msg.aijbr.info.canleave");
         }
         if(Game.BRGameTime == dropship_forceejecttick && !dropshipPlayerlist.isEmpty()){
             LIB.BRLOG("ForceEject");

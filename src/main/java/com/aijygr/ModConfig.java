@@ -242,20 +242,19 @@ public abstract class ModConfig {
 
         server_builder.comment("AiJBR Mod Items Config");
         server_builder.push("Items");   //ITEMS
-        server_builder.comment(
-                "UseDuration: Define ticks cost when using an item." ,
-                "MaxStackSize: The stack size of a slot of this item",
-                "HealAmount: Define Health gained after finishing using it.");
+        String comment_useduration = "UseDuration: Define ticks cost when using an item.";
+        String comment_maxstackstze = "MaxStackSize: The stack size of a slot of this item";
+        String comment_healamount = "HealAmount: Define Health gained after finishing using it.";
         server_builder.push("MEDS");
         server_builder.push("SYRINGE");
-        Server.Config.ITEM.SYRINGE_USEDURATION = server_builder.defineInRange("UseDuration", Server.Default.ITEM.ITEM_SYRINGE_USEDURATION,1,6000);
-        Server.Config.ITEM.SYRINGE_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_SYRINGE_MAXSTACKSIZE,1,6000);
-        Server.Config.ITEM.SYRINGE_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.ITEM.ITEM_SYRINGE_HEALAMOUNT, 0.0f, 10000.0f);
+        Server.Config.ITEM.SYRINGE_USEDURATION = server_builder.comment(comment_useduration).defineInRange("UseDuration", Server.Default.ITEM.ITEM_SYRINGE_USEDURATION,1,6000);
+        Server.Config.ITEM.SYRINGE_MAXSTACKSIZE = server_builder.comment(comment_maxstackstze).defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_SYRINGE_MAXSTACKSIZE,1,6000);
+        Server.Config.ITEM.SYRINGE_HEALAMOUNT = server_builder.comment(comment_healamount).defineInRange("HealAmount", Server.Default.ITEM.ITEM_SYRINGE_HEALAMOUNT, 0.0f, 10000.0f);
         server_builder.pop();
         server_builder.push("MEDKIT");
-        Server.Config.ITEM.MEDKIT_USEDURATION = server_builder.defineInRange("UseDuration", Server.Default.ITEM.ITEM_MEDKIT_USEDURATION,1,6000);
-        Server.Config.ITEM.MEDKIT_MAXSTACKSIZE = server_builder.defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_MEDKIT_MAXSTACKSIZE,1,6000);
-        Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.defineInRange("HealAmount", Server.Default.ITEM.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
+        Server.Config.ITEM.MEDKIT_USEDURATION = server_builder.comment(comment_useduration).defineInRange("UseDuration", Server.Default.ITEM.ITEM_MEDKIT_USEDURATION,1,6000);
+        Server.Config.ITEM.MEDKIT_MAXSTACKSIZE = server_builder.comment(comment_maxstackstze).defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_MEDKIT_MAXSTACKSIZE,1,6000);
+        Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.comment(comment_healamount).defineInRange("HealAmount", Server.Default.ITEM.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
         server_builder.pop();
         server_builder.pop();
 
@@ -293,7 +292,7 @@ public abstract class ModConfig {
         Server.Config.TEAM.TEAMSIZE = server_builder.defineInRange( "TeamSize", Server.Default.TEAM.TEAMSIZE,1,30);
         Server.Config.TEAM.DEATHMSG_VISIBILITY = server_builder.defineEnum("DeathMessageVisibility",Server.Default.TEAM.DEATHMSG_VISIBILITY);
         Server.Config.TEAM.NAMETAG_VISIBILITY = server_builder.defineEnum("NameTagVisibility",Server.Default.TEAM.NAMETAG_VISIBILITY);
-        Server.Config.TEAM.COLLISION_RULE = server_builder.defineEnum("Collision_Rule",Server.Default.TEAM.COLLISION_RULE);
+        Server.Config.TEAM.COLLISION_RULE = server_builder.defineEnum("CollisionRule",Server.Default.TEAM.COLLISION_RULE);
         Server.Config.TEAM.ALLOWFRIENDLYFIRE = server_builder.defineEnum("FriendlyFire",Server.Default.TEAM.ALLOWFRIENDLYFIRE);
         Server.Config.TEAM.SEEFRIENTLYINVISIBLES = server_builder.defineEnum("SeeFriendlyInvisibles",Server.Default.TEAM.SEEFRIENTLYINVISIBLES);
         server_builder.pop();

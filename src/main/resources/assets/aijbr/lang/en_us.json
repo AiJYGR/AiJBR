@@ -36,6 +36,7 @@
   "msg.aijbr.info.command_player_join_team_p1": "Successfully joined team",
   "msg.aijbr.info.command_player_join_team_p2": "",
   "msg.aijbr.info.command_player_leave_team": "Successfully left team",
+  "msg.aijbr.info.canleave": "Now you can leave the dropship",
 
   "msg.aijbr.err": "Unexpected ERROR occurred  Please try again",
   "msg.aijbr.err.command_game_started":"Game had started!",
@@ -48,18 +49,18 @@
   "msg.aijbr.err.command_game_not_initialized": "Initialization needed. Please execute /AiJBR init",
   "msg.aijbr.err.command_game_not_reloaded": "Reload needed.  Please execute /AiJBR reload",
   "msg.aijbr.err.command_no_enough_teams": "No enough teams  Cannot start the game",
-  "msg.aijbr.warn.command_disabled_game_end_check": "Team number is only 1  Automatically enabled test mode.",
+  "msg.aijbr.warn.command_disabled_game_end_check": "Only 1 team found  Automatically enabled test mode.",
 
-  "death.attack.aijbr.ring.message": "%1$s feels so itchy.",
+  "death.attack.aijbr.ring.message": "%1$s has no way out",
 
-  "gui.aijbr.game_team_num": "SQUADS",
-  "gui.aijbr.game_player_num": "ALIVES",
+  "gui.aijbr.game_team_num": "SQUAD",
+  "gui.aijbr.game_player_num": "ALIVE",
   "gui.aijbr.game_round": "PHASE",
   "gui.aijbr.game_roundtick": "CD",
 
   "subtitles.aijbr.ring_damage": "!!RING DAMAGE!!",
   "subtitles.aijbr.ring_phase": "Attention: Stepping into next phase",
-  "subtitles.aijbr.ring_close": "Attention: Ring start to close",
+  "subtitles.aijbr.ring_close": "Attention: Ring starts to close",
 
   "enchantment.level.12": "!",
 

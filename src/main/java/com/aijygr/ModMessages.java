@@ -7,10 +7,7 @@ import com.aijygr.AiJBP.SyncConfigJSON.BP.MSGServerRequestSyncBPJSON;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGClientTagJSON;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGClientTagHash;
 import com.aijygr.AiJBP.SyncConfigJSON.Tag.MSGServerRequestSyncTagJSON;
-import com.aijygr.AiJGame.Client.MSGClientGameTime;
-import com.aijygr.AiJGame.Client.MSGClientIsDropShipTicking;
-import com.aijygr.AiJGame.Client.MSGClientPlayerInfo;
-import com.aijygr.AiJGame.Client.MSGClientRingInfo;
+import com.aijygr.AiJGame.Client.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -112,12 +109,6 @@ public class ModMessages {//GEMINI简直是我亲爹
                 .encoder(MSGClientExecSync::encode)
                 .consumerMainThread(MSGClientExecSync::handle)
                 .add();
-        net.messageBuilder(MSGClientIsDropShipTicking.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(MSGClientIsDropShipTicking::new)
-                .encoder(MSGClientIsDropShipTicking::encode)
-                .consumerMainThread(MSGClientIsDropShipTicking::handle)
-                .add();
-
     }
     public static <MSG> void ServerSendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);

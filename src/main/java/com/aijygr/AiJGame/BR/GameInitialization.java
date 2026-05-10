@@ -6,6 +6,7 @@ import com.aijygr.LIB;
 import com.aijygr.ModConfig;
 import com.aijygr.AiJGame.Ring.RingGeneration;
 import com.aijygr.ModEvents;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -47,9 +48,8 @@ public class GameInitialization {
     public static void GameInit(ModEvents.GameInitEvent event) {
         if(event.getLevel().isClientSide())
             return;
-        ServerPlayer player = event.getPlayer();
-        LIB.tryBroadcastMessage(player," ");
-        LIB.tryBroadcastMessage(player, "msg.aijbr.yellow","Starting INIT.");
+        MinecraftServer server = event.getLevel().getServer();
+        LIB.tryBroadcastMessage(server, "\n","msg.aijbr.yellow",event.getPlayer().getName().getString(),"msg.aijbr.info.player_starting_init");
 
         //清空已经读取的配置
         Game.isInitialized = false;
@@ -74,7 +74,7 @@ public class GameInitialization {
         Game.gameendteamcondition = 1;
 
         AiJDropShip.dropshipPlayerlist.clear();
-        AiJDropShip.setandSendClientIsDropShipTickking(false);
+        //AiJDropShip.setandSendClientIsDropShipTickking(false);
 
         //Read RingAttributes CFG
         var ring_initial = ModConfig.Server.Config.RING.RING_INITIAL_ATTRUBUTES.get();
@@ -86,25 +86,25 @@ public class GameInitialization {
         var ring_initial_attributes = ModConfig.Server.Config.RING.RING_ATTRIBUTES.get();
         try {
             readRingAttributesConfig(ring_initial_attributes);
-            LIB.tryBroadcastMessage(player, "msg.aijbr.green","Successfully loaded RingAttributes, "+(Game.totalrounds)+" rounds read.");
+            LIB.tryBroadcastMessage(server, "msg.aijbr.green","Successfully loaded RingAttributes, "+(Game.totalrounds)+" rounds read.");
         }catch(Exception e){
             String str = ("RingAttributesInitialization failed. "+e.getMessage()+" *Please check the TOML file.");
-            LIB.tryBroadcastMessage(player,"msg.aijbr.red", str);
+            LIB.tryBroadcastMessage(server,"msg.aijbr.red", str);
             boolean usingDefaultsWhenFailed = false;//Don't use default config.
             if(usingDefaultsWhenFailed){
                 String str2 = "Trying to use Default RingAttributesConfig.";
-                LIB.tryBroadcastMessage(player,"msg.aijbr.yellow", str2);
+                LIB.tryBroadcastMessage(server,"msg.aijbr.yellow", str2);
                 var default_ring_initial_attributes = ModConfig.Server.Default.RING.RING_ATTRIBUTES;
                 try{
                     readRingAttributesConfig(default_ring_initial_attributes);
                     String str3 = "Default RingAttributesConfig Loaded. "+Game.totalrounds+" rounds read.";
-                    LIB.tryBroadcastMessage(player, "msg.aijbr.yellow",str3);
+                    LIB.tryBroadcastMessage(server, "msg.aijbr.yellow",str3);
                 }
                 catch (Exception e1){
                     String str4 = ("Hey AiJYGR, what are you doing? "+e1.getMessage());
                     String str5 = "Initialization failed";
-                    LIB.tryBroadcastMessage(player, "msg.aijbr.red",str4);
-                    LIB.tryBroadcastMessage(player,"msg.aijbr.red",str5);
+                    LIB.tryBroadcastMessage(server, "msg.aijbr.red",str4);
+                    LIB.tryBroadcastMessage(server,"msg.aijbr.red",str5);
                     return ;
                 }
             }
@@ -135,27 +135,27 @@ public class GameInitialization {
             {
                 str.append(it.next()).append(",");
             }
-            LIB.tryBroadcastMessage(player, "msg.aijbr.red","Failed to load GenerationModes.\nGet: "+str+" only "+Game.r_generation_modes.size()+" values read.");
+            LIB.tryBroadcastMessage(server, "msg.aijbr.red","Failed to load GenerationModes.\nGet: "+str+" only "+Game.r_generation_modes.size()+" values read.");
             return ;
         }
         else
-            LIB.tryBroadcastMessage(player,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
+            LIB.tryBroadcastMessage(server,"msg.aijbr.green","Successfully loaded GenerationModes, "+Game.r_generation_modes.size()+" values read.");
 
         //Set Player
-        LIB.PLAYERS(event.getLevel().getServer().getPlayerList().getPlayers(),(svplayer)->{
-            svplayer.setNoGravity(false);
-            svplayer.removeAllEffects();
-            svplayer.setGameMode(GameType.SURVIVAL);
+        LIB.PLAYERS(event.getLevel().getServer().getPlayerList().getPlayers(),(player)->{
+            player.setNoGravity(false);
+            player.removeAllEffects();
+            player.setGameMode(GameType.SURVIVAL);
             player.addEffect(new MobEffectInstance(MobEffects.SATURATION, MobEffectInstance.INFINITE_DURATION, 0, false, false));
-            LIB.TPTop(svplayer,0,0);
+            LIB.TPTop(player,0,0);
         });
 
         //清空forceload
-        LIB.clearForceLoadChunks(event.getLevel());
+        LIB.clearForceLoadChunks(server.overworld());
 
 
         //结束指令
         Game.isInitialized = true;
-        LIB.tryBroadcastMessage(player,"msg.aijbr.bold","msg.aijbr.info.command_executed");
+        LIB.tryBroadcastMessage(server,"msg.aijbr.bold","msg.aijbr.info.command_executed");
     }
 }

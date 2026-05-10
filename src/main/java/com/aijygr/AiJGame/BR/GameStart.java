@@ -7,6 +7,7 @@ import com.aijygr.AiJGame.Client.MSGClientGameTime;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.AiJGame.Ring.RingMove;
 import com.aijygr.Entity.DropShip;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -102,10 +103,10 @@ public class GameStart {
         //生成DropShip
         for (ServerLevel level : server.getAllLevels()) {
             level.getEntities().getAll().forEach(entity -> {
-                if (entity.getType() == Reg.DROPSHIP.get()) {
-                    UUID uuid = UUID.randomUUID();
-                    entity.setUUID(uuid);
-                    System.out.println("Dropship " + entity.getId() + " UUID reset: " + uuid);
+                if (entity instanceof DropShip dropship) {
+                    dropship.setISTICKING(false);
+                    dropship.setNAME(" ");
+                    System.out.println("Dropship " + entity.getId() + " Tag reset.");
                 }
             });
         }
@@ -114,8 +115,8 @@ public class GameStart {
         AiJDropShip.canleave = false;
         if(LIB.SMwithForceLoad(server, Reg.DROPSHIP.get(), new Vec3(0,altitude,0)) instanceof DropShip dropship)
         {
-
-            dropship.setUUID(AiJDropShip.DROPSHIPUUID);
+            dropship.setISTICKING(false);
+            dropship.setNAME(AiJDropShip.DROPSHIPTAG);
             Vec3 pos = new Vec3(dropship.getX(), dropship.getY(), dropship.getZ());
 
             List<Double> d = AiJDropShip.generate();
@@ -128,12 +129,14 @@ public class GameStart {
             Game.shouldTravel = ModConfig.Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD.get().get();
             Vec3 startingpoint;
             if(Game.shouldTravel) {
-                AiJDropShip.setandSendClientIsDropShipTickking(true);
+                //AiJDropShip.setandSendClientIsDropShipTickking(true);
+                dropship.setISTICKING(true);
                 startingpoint = pos1.subtract(motion.scale(Game.travelTick));
             }
             else
             {
-                AiJDropShip.setandSendClientIsDropShipTickking(false);
+                //AiJDropShip.setandSendClientIsDropShipTickking(false);
+                dropship.setISTICKING(false);
                 startingpoint = pos1;
             }
 
@@ -148,7 +151,7 @@ public class GameStart {
             AiJDropShip.dropship_forceejecttick = (int)Math.ceil( distance/v*0.95 + Game.travelTick);
         }
         else{
-            LIB.tryBroadcastMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err");
+            LIB.tryPlayerMessage(event.getPlayer(),"msg.aijbr.red","msg.aijbr.err");
             return;
         }
 
@@ -161,7 +164,6 @@ public class GameStart {
         ModCommands.RefillCommand.refill();
 
         Game.isGameStart  = true;
-        LIB.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.yellow","msg.aijbr.info.command_game_started");
-        LIB.tryBroadcastMessage(event.getPlayer(), "msg.aijbr.bold","msg.aijbr.info.command_executed");
+        LIB.tryBroadcastMessage(event.getPlayer(), "\n","msg.aijbr.bold",event.getPlayer().getName().getString(),"msg.aijbr.info.player_started_game");
     }
 }

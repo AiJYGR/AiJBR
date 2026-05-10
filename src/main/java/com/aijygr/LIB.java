@@ -13,13 +13,16 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
@@ -208,16 +211,18 @@ public abstract class LIB {
     }
 
     public static int killItemEntities(MinecraftServer server){
-        int i = 0;
-        for(ServerLevel level : server.getAllLevels()){
-            for(Entity entity : level.getAllEntities()){
-                if(entity instanceof ItemEntity){
-                    entity.discard();
-                    i++;
-                }
-            }
-        }
-        return i;
+//        int i = 0;
+//        for(ServerLevel level : server.getAllLevels()){
+//            for(Entity entity : level.getAllEntities()){
+//                if(entity instanceof ItemEntity){
+//                    entity.remove(Entity.RemovalReason.KILLED);
+//                    //entity.discard();
+//                    i++;
+//                }
+//            }
+//        }
+//        return i;
+        return server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),"kill @e[type=minecraft:item]");
     }
     public static int clearPlayersInv(MinecraftServer server){
         int i = 0;

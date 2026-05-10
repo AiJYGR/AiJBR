@@ -37,6 +37,10 @@
   "msg.aijbr.info.command_player_join_team_p2": "",
   "msg.aijbr.info.command_player_leave_team": "Successfully left team",
   "msg.aijbr.info.canleave": "Now you can leave the dropship",
+  "msg.aijbr.info.player_starting_reload": " starts the reload",
+  "msg.aijbr.info.player_starting_init": " starts the initialization",
+  "msg.aijbr.info.player_started_game": " started the game",
+  "msg.aijbr.info.gameover": "Game Over",
 
   "msg.aijbr.err": "Unexpected ERROR occurred  Please try again",
   "msg.aijbr.err.command_game_started":"Game had started!",

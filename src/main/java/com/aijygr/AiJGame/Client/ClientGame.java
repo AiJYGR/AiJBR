@@ -51,10 +51,6 @@ public class ClientGame {
         ClientGame.teams = teams;
     }
 
-    public static void setIsDropShipTicking(boolean bool){
-        AiJDropShip.setIsDropShipTickking(bool);
-    }
-
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if(Minecraft.getInstance().isPaused())

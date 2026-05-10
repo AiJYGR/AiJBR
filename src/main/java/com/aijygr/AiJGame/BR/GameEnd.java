@@ -3,6 +3,7 @@ package com.aijygr.AiJGame.BR;
 import com.aijygr.AiJGame.AiJBRPlayer;
 import com.aijygr.AiJGame.Game;
 import com.aijygr.LIB;
+import com.aijygr.ModEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,13 +17,17 @@ public class GameEnd {
         {
             MinecraftServer server = event.getServer();
             if(Game.isGameStart && AiJBRPlayer.getAliveTeamsCount(server) <= Game.gameendteamcondition) {
-                Game.isGameStart = false;
-                LIB.tryBroadcastMessage(server,"Game End");
-                Game.sv_damage_per_block = 0.00001;
-                Game.sv_basicdamage = 0.0;
-                LIB.schedule(server,2,()->{LIB.killItemEntities(server);});
-
+                onGameEnd(new ModEvents.GameEndEvent(event.getServer()));
             }
         }
+    }
+    @SubscribeEvent
+    public static void onGameEnd(ModEvents.GameEndEvent event) {
+        Game.isGameStart = false;
+        MinecraftServer server = event.getServer();
+        Game.sv_damage_per_block = 0.00001;
+        Game.sv_basicdamage = 0.0;
+        LIB.schedule(server,20,()->{LIB.killItemEntities(server);});
+        LIB.tryBroadcastMessage(server,"\n","msg.aijbr.bold","msg.aijbr.info.gameover");
     }
 }

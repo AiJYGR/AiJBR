@@ -2,8 +2,6 @@ package com.aijygr.AiJGame;
 
 
 import com.aijygr.*;
-import com.aijygr.AiJGame.Client.MSGClientGameTime;
-import com.aijygr.AiJGame.Client.MSGClientIsDropShipTicking;
 import com.aijygr.Entity.DropShip;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,24 +17,12 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class AiJDropShip {
-    public static final UUID DROPSHIPUUID = LIB.makeUUID(Main.MODUUIDP1,Main.MODUUIDP2,1,0);
+    //public static final UUID DROPSHIPUUID = LIB.makeUUID(Main.MODUUIDP1,Main.MODUUIDP2,1,0);
+    public static final String DROPSHIPTAG = Main.MOD_DISPLAY_NAME + "_DROPSHIP";
     public static List<UUID> dropshipPlayerlist = new ArrayList<>();
     public static long dropship_forceejecttick = 2000;
     public static long dropship_allowejecttick = 100;
     public static boolean canleave = false;
-    private static boolean isDropShipTicking = false;
-    public static boolean isDropShipTicking(){
-        return isDropShipTicking;
-    }
-    public static void setandSendClientIsDropShipTickking(boolean bool) {
-        System.out.println("setandSendClientIsDropShipTickking " + bool);
-        isDropShipTicking = bool;
-        ModMessages.ServerSendToAll(new MSGClientIsDropShipTicking(bool));
-        ModMessages.ServerSendToAll(new MSGClientGameTime(Game.sv_round,Game.sv_roundtick,false));
-    }
-    public static void setIsDropShipTickking(boolean bool) {
-        isDropShipTicking = bool;
-    }
     public static List<Double> generate(){
         double x1,z1,x2,z2;
         final double Range = Game.r_initial_ringsize / 2;
@@ -74,14 +60,18 @@ public class AiJDropShip {
     }
 
     public static void tick(MinecraftServer server, DropShip dropship){
-        if(Game.shouldTravel && !isDropShipTicking())
-            setandSendClientIsDropShipTickking(true);
-        else if(Game.BRGameTime >= Game.travelTick && !isDropShipTicking())
-            setandSendClientIsDropShipTickking(true);
-        if(!isDropShipTicking())
+        if(Game.shouldTravel && !dropship.getISTICKING())
+        {
+            dropship.setISTICKING(true);
+        }
+        else if(Game.BRGameTime >= Game.travelTick && !dropship.getISTICKING())
+        {
+            dropship.setISTICKING(true);
+        }
+        if(!dropship.getISTICKING())
             return;
         if(dropshipPlayerlist.isEmpty()){
-            dropship.setUUID(UUID.randomUUID());
+            dropship.setNAME("");
         }
         if(Game.BRGameTime>=dropship_allowejecttick && !canleave)
         {

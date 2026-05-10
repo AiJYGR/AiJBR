@@ -51,7 +51,7 @@ public class Reg
             EntityType.Builder.<DropShip>of(DropShip::new, MobCategory.MISC)
                     .sized(2.0f,2.0f)
                     .clientTrackingRange(255)
-                    .setUpdateInterval(20)
+                    //.setUpdateInterval(20)
                     .setShouldReceiveVelocityUpdates(true)
                     .noSave()
                     .fireImmune()

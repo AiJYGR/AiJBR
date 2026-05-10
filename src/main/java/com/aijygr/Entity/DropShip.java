@@ -61,8 +61,7 @@ public class DropShip extends Entity implements GeoEntity{
             this.move(MoverType.SELF, motion1);
         else
             this.move(MoverType.SELF, Vec3.ZERO);
-
-
+        //服务端DropShip逻辑
         if (this.isAiJDropShip() && !this.level().isClientSide)
         {
             Vec3 pos = this.position();
@@ -106,11 +105,9 @@ public class DropShip extends Entity implements GeoEntity{
             player.addEffect(new MobEffectInstance(Reg.FLYING_EFFECT.get(), MobEffectInstance.INFINITE_DURATION, 0, false, true));
         });
     }
-    private static final EntityDataAccessor<String> DATA_NAME =
-            SynchedEntityData.defineId(DropShip.class, EntityDataSerializers.STRING);
-    private static final EntityDataAccessor<Boolean> DATA_ISTICKING =
-            SynchedEntityData.defineId(DropShip.class, EntityDataSerializers.BOOLEAN);
-
+    private static final EntityDataAccessor<String> DATA_NAME = SynchedEntityData.defineId(DropShip.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Boolean> DATA_ISTICKING = SynchedEntityData.defineId(DropShip.class, EntityDataSerializers.BOOLEAN);
+    //private static final EntityDataAccessor<Boolean> DATA_CANLEAVE = SynchedEntityData.defineId(DropShip.class, EntityDataSerializers.BOOLEAN);
     @Override
     protected void defineSynchedData() {
         this.entityData.define(DATA_NAME, "");
@@ -123,18 +120,17 @@ public class DropShip extends Entity implements GeoEntity{
     }
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
-        if (tag.contains("NAME")) {
-            this.entityData.set(DATA_NAME, tag.getString("NAME"));
-        }
-        if (tag.contains("ISTICKING")) {
-            this.entityData.set(DATA_ISTICKING, tag.getBoolean("ISTICKING"));
-        }
+        this.entityData.set(DATA_NAME, tag.getString("NAME"));
+        this.entityData.set(DATA_ISTICKING, tag.getBoolean("ISTICKING"));
     }
     public String getNAME(){
         return this.entityData.get(DATA_NAME);
     }
+    public void setNAMEAiJDropShip(){
+        setNAME(AiJDropShip.DROPSHIPTAG);
+    }
     public boolean isAiJDropShip(){
-        return getNAME() == AiJDropShip.DROPSHIPTAG;
+        return getNAME().equals(AiJDropShip.DROPSHIPTAG);
     }
     public void setNAME(String name){
         this.entityData.set(DATA_NAME, name);

@@ -17,7 +17,6 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class AiJDropShip {
-    //public static final UUID DROPSHIPUUID = LIB.makeUUID(Main.MODUUIDP1,Main.MODUUIDP2,1,0);
     public static final String DROPSHIPTAG = Main.MOD_DISPLAY_NAME + "_DROPSHIP";
     public static List<UUID> dropshipPlayerlist = new ArrayList<>();
     public static long dropship_forceejecttick = 2000;
@@ -61,13 +60,9 @@ public class AiJDropShip {
 
     public static void tick(MinecraftServer server, DropShip dropship){
         if(Game.shouldTravel && !dropship.getISTICKING())
-        {
             dropship.setISTICKING(true);
-        }
         else if(Game.BRGameTime >= Game.travelTick && !dropship.getISTICKING())
-        {
             dropship.setISTICKING(true);
-        }
         if(!dropship.getISTICKING())
             return;
         if(dropshipPlayerlist.isEmpty()){
@@ -76,7 +71,6 @@ public class AiJDropShip {
         if(Game.BRGameTime>=dropship_allowejecttick && !canleave)
         {
             canleave = true;
-            //LIB.BRLOG("CanLeave");
             LIB.tryBroadcastMessage(server,"msg.aijbr.green","msg.aijbr.info.canleave");
         }
         if(Game.BRGameTime == dropship_forceejecttick && !dropshipPlayerlist.isEmpty()){
@@ -86,9 +80,8 @@ public class AiJDropShip {
             LIB.PLAYERS(server, dropshipPlayerlist, player -> {
                 str.append(player.getName().getString()).append(" ");
             });
-            str.append("]");
+            str.deleteCharAt(str.length()-1).append("]");
             LIB.BRLOG(str.toString());
-
             dropship.ejectAllPassengers(server,dropshipPlayerlist);
         }
     }
@@ -117,15 +110,6 @@ public class AiJDropShip {
             player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
 
             player.addEffect(new MobEffectInstance(Reg.FLYING_EFFECT.get(), MobEffectInstance.INFINITE_DURATION, 0, false, true));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onLevelTick(TickEvent.LevelTickEvent event) {
-        if(LIB.SV1TK(event)){
-            LIB.PLAYERS(event.level.getServer(), dropshipPlayerlist,(player)->{
-                //player.teleportTo();
-            });
         }
     }
 }

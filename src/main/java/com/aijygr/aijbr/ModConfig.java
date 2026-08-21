@@ -1,0 +1,312 @@
+package com.aijygr.aijbr;
+
+import com.aijygr.aijbr.AiJGame.Ring.RingGeneration;
+import net.minecraft.world.scores.Team;
+import net.minecraftforge.common.ForgeConfigSpec;
+
+import java.util.ArrayList;
+import java.util.List;
+public abstract class ModConfig {
+    public static ForgeConfigSpec CLIENT_CONFIG;
+    public static ForgeConfigSpec SERVER_CONFIG;
+
+    public static class Server {
+        public static class Config {
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOW_BRLOG;
+            public static class BACKPACK {
+                public static ForgeConfigSpec.IntValue DEFAULT_PERMISSIONLEVEL;
+            }
+            public static class RING{
+                public static ForgeConfigSpec.EnumValue<RingGeneration.WeightedMode> WEIGHTEDMODE;
+                public static ForgeConfigSpec.ConfigValue<List<? extends Integer>> RING_INITIAL_ATTRUBUTES;
+                public static ForgeConfigSpec.ConfigValue<Integer> DAMAGE_TICKING_TIME;
+                public static ForgeConfigSpec.ConfigValue<List<? extends String>> RING_ATTRIBUTES;
+                public static ForgeConfigSpec.ConfigValue<List<? extends String>> GENERATIONMODES;
+            }
+            public static class ITEM{
+                public static ForgeConfigSpec.IntValue BACKPACK_LVL1_PERMISSIONLEVEL;
+                public static ForgeConfigSpec.IntValue BACKPACK_LVL2_PERMISSIONLEVEL;
+                public static ForgeConfigSpec.IntValue BACKPACK_LVL3_PERMISSIONLEVEL;
+                public static ForgeConfigSpec.IntValue BACKPACK_LVL4_PERMISSIONLEVEL;
+                public static ForgeConfigSpec.ConfigValue<Integer> SYRINGE_USEDURATION;
+                public static ForgeConfigSpec.ConfigValue<Integer> SYRINGE_MAXSTACKSIZE;
+                public static ForgeConfigSpec.DoubleValue SYRINGE_HEALAMOUNT;
+                public static ForgeConfigSpec.ConfigValue<Integer> MEDKIT_USEDURATION;
+                public static ForgeConfigSpec.ConfigValue<Integer> MEDKIT_MAXSTACKSIZE;
+                public static ForgeConfigSpec.DoubleValue MEDKIT_HEALAMOUNT;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_IRON_MAXDAMAGE;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_DIAMOND_MAXDAMAGE;
+                public static ForgeConfigSpec.IntValue ITEM_ARMOR_NETHERITE_MAXDAMAGE;
+                public static ForgeConfigSpec.DoubleValue ITEM_ARMOR_IRON_DEFENSE;
+                public static ForgeConfigSpec.DoubleValue ITEM_ARMOR_DIAMOND_DEFENSE;
+                public static ForgeConfigSpec.DoubleValue ITEM_ARMOR_NETHERITE_DEFENSE;
+            }
+            public static class DROPSHIP{
+                public static ForgeConfigSpec.DoubleValue SPEED;
+                public static ForgeConfigSpec.IntValue HEIGHT;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOULDFLYTOBATTLEFIELD;
+                public static ForgeConfigSpec.IntValue PREWAITINGTICK;
+            }
+            public static class TEAM {
+                public static ForgeConfigSpec.IntValue TEAMNUM;
+                public static ForgeConfigSpec.IntValue TEAMSIZE;
+                public static ForgeConfigSpec.EnumValue<Team.CollisionRule> COLLISION_RULE;
+                public static ForgeConfigSpec.EnumValue<Team.Visibility> DEATHMSG_VISIBILITY;
+                public static ForgeConfigSpec.EnumValue<Team.Visibility> NAMETAG_VISIBILITY;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOWFRIENDLYFIRE;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SEEFRIENTLYINVISIBLES;
+            }
+            public static class PLAYER{
+                public static ForgeConfigSpec.IntValue MAXHEALTH;
+                public static ForgeConfigSpec.DoubleValue MOVEMENTSPEED;
+                public static ForgeConfigSpec.DoubleValue FALLDAMAGEMULTIPIER;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAK;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAKGLASS;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> RESPAWNATDEATHPOINT;
+            }
+        }
+
+        public static final class Default {
+            public static LIB.BOOL ALLOW_BRLOG = LIB.BOOL.TRUE;
+            public static class BACKPACK{
+                public static final int DEFAULT_PERMISSIONLEVEL = 2;
+            }
+            public static class RING{
+                public static final List<Integer> RING_INITIAL_ATTRUBUTES =  new ArrayList<>(List.of(1023,1200));
+                public static final List<String> RING_ATTRIBUTES = new ArrayList<>(List.of(
+                        "576,2000,0.2,0.005,4000,0.2,0.005",
+                        "384,2400,0.5,0.005,2000,0.5,0.005",
+                        "192,2000,0.5,0.01 ,1000,1  ,0.01",
+                        "96 ,1500,1  ,0.01 ,1000,1.5,0.01",
+                        "48 ,1500,2  ,0.05 ,1000,2.5,0.05",
+                        "0.1,1500,3  ,0.05 ,1500,3 ,0.05"
+                ));
+                public static final int DAMAGE_TICKING_TIME = 30;
+                public static final List<String> GENERATIONMODES = new ArrayList<>(List.of(
+                        RingGeneration.GenerationMode.EDGE_WEIGHTED.name(),
+                        RingGeneration.GenerationMode.EDGE_WEIGHTED.name(),
+                        RingGeneration.GenerationMode.TANGENT.name(),
+                        RingGeneration.GenerationMode.RANDOM.name(),
+                        RingGeneration.GenerationMode.RANDOM.name(),
+                        RingGeneration.GenerationMode.UNIFORM.name()
+                ));
+                public static final RingGeneration.WeightedMode WEIGHTEDMODE = RingGeneration.WeightedMode.MUL2;
+            }
+            public static class ITEM{
+                public static final int ITEM_SYRINGE_USEDURATION = 50;
+                public static final int ITEM_SYRINGE_MAXSTACKSIZE = 5;
+                public static final double ITEM_SYRINGE_HEALAMOUNT = 5.0f;
+                public static final int ITEM_MEDKIT_USEDURATION = 100;
+                public static final int ITEM_MEDKIT_MAXSTACKSIZE = 2;
+                public static final double ITEM_MEDKIT_HEALAMOUNT = 12.0f;
+                public static final short BACKPACK_LVL1_PERMISSIONLEVEL = 4;
+                public static final short BACKPACK_LVL2_PERMISSIONLEVEL = 8;
+                public static final short BACKPACK_LVL3_PERMISSIONLEVEL = 12;
+                public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 20;
+                public static final int ITEM_ARMOR_IRON_MAXDAMAGE = 40;
+                public static final int ITEM_ARMOR_DIAMOND_MAXDAMAGE = 50;
+                public static final int ITEM_ARMOR_NETHERITE_MAXDAMAGE = 60;
+                public static final float ITEM_ARMOR_IRON_DEFENSE = 20.0f;
+                public static final float ITEM_ARMOR_DIAMOND_DEFENSE = 40.0f;
+                public static final float ITEM_ARMOR_NETHERITE_DEFENSE = 60.0f;
+
+            }
+            public static final class DROPSHIP{
+                public static final double SPEED = 1.5d;
+                public static final short HEIGHT = 200;
+                public static final LIB.BOOL SHOULDFLYTOBATTLEFIELD = LIB.BOOL.FALSE;
+                public static final int PREWAITINGTICK = 300;
+            }
+            public static class TEAM {
+                public static final int TEAMNUM = 20;
+                public static final int TEAMSIZE = 1;
+                public static final Team.CollisionRule COLLISION_RULE = Team.CollisionRule.ALWAYS;
+                public static final Team.Visibility DEATHMSG_VISIBILITY = Team.Visibility.ALWAYS;
+                public static final Team.Visibility NAMETAG_VISIBILITY = Team.Visibility.HIDE_FOR_OTHER_TEAMS;
+                public static final LIB.BOOL ALLOWFRIENDLYFIRE =  LIB.BOOL.TRUE;
+                public static final LIB.BOOL SEEFRIENTLYINVISIBLES = LIB.BOOL.TRUE;
+            }
+            public static class PLAYER{
+                public static final int MAXHEALTH = 40;
+                public static final double MOVEMENTSPEED = 0.10f;
+                public static final double FALLDAMAGEMULTIPIER = 1.0;
+                public static final LIB.BOOL SURVIVALBREAK = LIB.BOOL.FALSE;
+                public static final LIB.BOOL SURVIVALBREAKGLASS = LIB.BOOL.TRUE;
+                public static final LIB.BOOL RESPAWNATDEATHPOINT = LIB.BOOL.TRUE;
+            }
+        }
+    }
+    public static class Client {
+        public static class Config{
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWRINGINDICATOR;
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWACCURATEHEALTH;
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWCLIENTGAMEINFO;
+        }
+        public static final class Default{
+            public static final LIB.BOOL SHOWRINGINDICATOR = LIB.BOOL.TRUE;
+            public static final LIB.BOOL SHOWACCURATEHEALTH =  LIB.BOOL.TRUE;
+            public static final LIB.BOOL SHOWCLIENTGAMEINFO =  LIB.BOOL.TRUE;
+        }
+    }
+
+    static {
+        ForgeConfigSpec.Builder common_builder = new ForgeConfigSpec.Builder();
+        ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();//栈结构 builder
+
+        Client.Config.SHOWRINGINDICATOR = common_builder.defineEnum("ShowRingIndicator", Client.Default.SHOWRINGINDICATOR);
+        Client.Config.SHOWACCURATEHEALTH = common_builder.defineEnum("ShowAccurateHealth", Client.Default.SHOWACCURATEHEALTH);
+        Client.Config.SHOWCLIENTGAMEINFO = common_builder.defineEnum("ShowClientGameInfo", Client.Default.SHOWCLIENTGAMEINFO);
+
+        CLIENT_CONFIG = common_builder.build();
+
+        server_builder.comment("Whether to log BR GAME Status like RingSize,Damage,AirRoute etc");
+        Server.Config.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG",Server.Default.ALLOW_BRLOG);
+
+        server_builder.comment("Ring Settings used in the game");
+        server_builder.push("Ring");    //Ring
+        server_builder.comment(
+                "# Ring Initial Attributes",
+                "- Format: InitialRingSize, WaitingTick",
+                "- Default: 1023,1200   Must be Integer."
+        );
+        Server.Config.RING.RING_INITIAL_ATTRUBUTES = server_builder.defineList("RingInitialAttributes", Server.Default.RING.RING_INITIAL_ATTRUBUTES,(obj)->{return obj instanceof Integer;});
+
+        server_builder.comment(
+                "# Rings Phase Attributes",
+                "- For Each String, the format is: \"RingSize,WaitingTick,BasicDamage,DamagePerBlock,ClosingTick,BasicDamage,DamagePerBlock \"",
+                "- Example:  \"512,200,0.2,0.005,200,0.2,0.005\"",
+                "- RingSize: The radius of a ring at the Phase End.",
+                "- WaitingTick: Ticks waited for each phase before the ring starts to close.",
+                "- BasicDamage: The basic damage player would take for being outside the ring.",
+                "- DamagePerBlock: Penalties for being very far from the ring.",
+                "- ClosingTick: Ticks for ring to close of this round.",
+                "# The Total Rounds is defined here, by the number of inputs."
+        );
+        Server.Config.RING.RING_ATTRIBUTES =  server_builder.defineList("RingAttributes", Server.Default.RING.RING_ATTRIBUTES,(obj)->{return obj instanceof String;});
+
+        server_builder.comment(
+                "# Ring Damage Ticking Time",
+                "- Interval ticks between two ring damages."
+        );
+        Server.Config.RING.DAMAGE_TICKING_TIME = server_builder.defineInRange("DamageTickingTime", Server.Default.RING.DAMAGE_TICKING_TIME,1,Short.MAX_VALUE);
+
+        server_builder.comment(
+                "# Ring Generation Mode",
+                "- For each String, it decides the algorithm used in generation of the ring of this round.",
+                "- UNIFORM: Possibilities of every points in the map are equal",
+                "- EDGE_WEIGHTED: The next ring has more possibility to be at the edge" ,
+                "- MID_WEIGHTED: The next ring has more possibility to be at the middle" ,
+                "- TANGENT: The next ring must touch the edge. Possibilities of every points on the edge are equal" ,
+                "- RANDOM: Randomly choose one of above methods to generate");
+        StringBuilder strbuilder = new StringBuilder();
+        strbuilder.delete(0, strbuilder.length());
+        RingGeneration.GenerationMode[] generationModes = RingGeneration.GenerationMode.values();
+        for (RingGeneration.GenerationMode it : generationModes) {
+            strbuilder.append(it.name());
+            strbuilder.append(" ");
+        }
+        server_builder.comment(("Allowed Values: "+strbuilder));
+        Server.Config.RING.GENERATIONMODES =  server_builder.defineList("GenerationModes", Server.Default.RING.GENERATIONMODES,(obj)->{
+            if (!(obj instanceof String)) {
+                System.out.println("[AiJBR] GenerationModes Config ERR: "+obj.toString()+" is not a String");
+                return false;
+            }
+            for (RingGeneration.GenerationMode it: generationModes)
+                if (obj.equals(it.name()))
+                    return true;
+            System.out.println("[AiJBR] GenerationModes Config ERR: Incorrect value \""+obj+"\"");
+            return false;
+        });
+        server_builder.comment(
+                "# Weighted Algorithm",
+                "- Decides the method used to weight the points",
+                "- Available when the Generation Mode is weighted (EDGE_WEIGHTED/MID_WEIGHTED) "
+        );
+        Server.Config.RING.WEIGHTEDMODE = server_builder.defineEnum("WeightedMode", Server.Default.RING.WEIGHTEDMODE, RingGeneration.WeightedMode.values());
+        server_builder.pop();
+
+        server_builder.comment("DropShip Settings used in the game");
+        server_builder.push("DropShip");
+        server_builder.comment("# SPEED",
+                "- Unit: Blocks per tick (Meters per tick)");
+        Server.Config.DROPSHIP.SPEED = server_builder.defineInRange("Speed", Server.Default.DROPSHIP.SPEED,0.01,10.0);
+        server_builder.comment("# Height",
+                "Altitude that the DropShip travels on.");
+        Server.Config.DROPSHIP.HEIGHT = server_builder.defineInRange("Height", Server.Default.DROPSHIP.HEIGHT,-60,500);
+        server_builder.comment("# If NOT, the DropShip will wait at the edge of the border, instead of flying into the battle field.");
+        Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD = server_builder.defineEnum("ShouldFlyToBattleField",Server.Default.DROPSHIP.SHOULDFLYTOBATTLEFIELD);
+        server_builder.comment("# PreWaitingTick","Ticks waited for the DropShip to enter the battle field. A low value is not recommended.");
+        Server.Config.DROPSHIP.PREWAITINGTICK = server_builder.defineInRange("PreWaitingTick",Server.Default.DROPSHIP.PREWAITINGTICK,100,6000);
+
+        server_builder.pop();
+
+        server_builder.comment("AiJBR Mod Items Config");
+        server_builder.push("Items");   //ITEMS
+        String comment_useduration = "UseDuration: Define ticks cost when using an item.";
+        String comment_maxstackstze = "MaxStackSize: The stack size of a slot of this item";
+        String comment_healamount = "HealAmount: Define Health gained after finishing using it.";
+        server_builder.push("MEDS");
+        server_builder.push("SYRINGE");
+        Server.Config.ITEM.SYRINGE_USEDURATION = server_builder.comment(comment_useduration).defineInRange("UseDuration", Server.Default.ITEM.ITEM_SYRINGE_USEDURATION,1,6000);
+        Server.Config.ITEM.SYRINGE_MAXSTACKSIZE = server_builder.comment(comment_maxstackstze).defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_SYRINGE_MAXSTACKSIZE,1,6000);
+        Server.Config.ITEM.SYRINGE_HEALAMOUNT = server_builder.comment(comment_healamount).defineInRange("HealAmount", Server.Default.ITEM.ITEM_SYRINGE_HEALAMOUNT, 0.0f, 10000.0f);
+        server_builder.pop();
+        server_builder.push("MEDKIT");
+        Server.Config.ITEM.MEDKIT_USEDURATION = server_builder.comment(comment_useduration).defineInRange("UseDuration", Server.Default.ITEM.ITEM_MEDKIT_USEDURATION,1,6000);
+        Server.Config.ITEM.MEDKIT_MAXSTACKSIZE = server_builder.comment(comment_maxstackstze).defineInRange("MaxStackSize", Server.Default.ITEM.ITEM_MEDKIT_MAXSTACKSIZE,1,6000);
+        Server.Config.ITEM.MEDKIT_HEALAMOUNT = server_builder.comment(comment_healamount).defineInRange("HealAmount", Server.Default.ITEM.ITEM_MEDKIT_HEALAMOUNT,0.0f,10000.0f);
+        server_builder.pop();
+        server_builder.pop();
+
+        server_builder.push("ARMOR");
+        server_builder.comment("Also known as: MaxDamage.");
+        Server.Config.ITEM.ITEM_ARMOR_IRON_MAXDAMAGE = server_builder.defineInRange("LVL1ArmorDurability", Server.Default.ITEM.ITEM_ARMOR_IRON_MAXDAMAGE,0,10000);
+        server_builder.comment("Also known as: MaxDamage.");
+        Server.Config.ITEM.ITEM_ARMOR_DIAMOND_MAXDAMAGE = server_builder.defineInRange("LVL2ArmorDurability", Server.Default.ITEM.ITEM_ARMOR_DIAMOND_MAXDAMAGE,0,10000);
+        server_builder.comment("Also known as: MaxDamage.");
+        Server.Config.ITEM.ITEM_ARMOR_NETHERITE_MAXDAMAGE = server_builder.defineInRange("LVL3ArmorDurability", Server.Default.ITEM.ITEM_ARMOR_NETHERITE_MAXDAMAGE,0,10000);
+        server_builder.comment("The percentage(%) of damage absorbed.");
+        Server.Config.ITEM.ITEM_ARMOR_IRON_DEFENSE = server_builder.defineInRange("LVL1ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_IRON_DEFENSE,0.0,100.0);
+        server_builder.comment("The percentage(%) of damage absorbed.");
+        Server.Config.ITEM.ITEM_ARMOR_DIAMOND_DEFENSE = server_builder.defineInRange("LVL2ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_DIAMOND_DEFENSE,0.0,100.0);
+        server_builder.comment("The percentage(%) of damage absorbed.");
+        Server.Config.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE = server_builder.defineInRange("LVL3ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE,0.0,100.0);
+        server_builder.pop();
+        server_builder.comment("PermissionLevel: Used with BackpackSlotAttributes together.");
+        server_builder.push("BACKPACK");
+        server_builder.comment(
+                "# Default Permission Level",
+                "- Define the permission level that the player has without a backpack.");
+        Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",Server.Default.BACKPACK.DEFAULT_PERMISSIONLEVEL,Short.MIN_VALUE,Short.MAX_VALUE);
+        Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL = server_builder.defineInRange("LVL1Permission",Server.Default.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+        Server.Config.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL = server_builder.defineInRange("LVL2Permission",Server.Default.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+        Server.Config.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL = server_builder.defineInRange("LVL3Permission",Server.Default.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+        Server.Config.ITEM.BACKPACK_LVL4_PERMISSIONLEVEL = server_builder.defineInRange("LVL4Permission",Server.Default.ITEM.BACKPACK_LVL4_PERMISSIONLEVEL,0,Short.MAX_VALUE);
+        server_builder.pop();
+
+        server_builder.pop();
+
+        server_builder.comment("Team-UP Attributes");
+        server_builder.push("Team");
+        Server.Config.TEAM.TEAMNUM = server_builder.defineInRange("TeamNumber", Server.Default.TEAM.TEAMNUM,2,30);
+        Server.Config.TEAM.TEAMSIZE = server_builder.defineInRange( "TeamSize", Server.Default.TEAM.TEAMSIZE,1,30);
+        Server.Config.TEAM.DEATHMSG_VISIBILITY = server_builder.defineEnum("DeathMessageVisibility",Server.Default.TEAM.DEATHMSG_VISIBILITY);
+        Server.Config.TEAM.NAMETAG_VISIBILITY = server_builder.defineEnum("NameTagVisibility",Server.Default.TEAM.NAMETAG_VISIBILITY);
+        Server.Config.TEAM.COLLISION_RULE = server_builder.defineEnum("CollisionRule",Server.Default.TEAM.COLLISION_RULE);
+        Server.Config.TEAM.ALLOWFRIENDLYFIRE = server_builder.defineEnum("FriendlyFire",Server.Default.TEAM.ALLOWFRIENDLYFIRE);
+        Server.Config.TEAM.SEEFRIENTLYINVISIBLES = server_builder.defineEnum("SeeFriendlyInvisibles",Server.Default.TEAM.SEEFRIENTLYINVISIBLES);
+        server_builder.pop();
+
+        server_builder.comment("Default Player Attributes");
+        server_builder.push("Player");
+        Server.Config.PLAYER.MAXHEALTH = server_builder.defineInRange("MaxHealth",Server.Default.PLAYER.MAXHEALTH,1,1000);
+        server_builder.comment("[Attention] This value is NOT the actual walking speed or sprinting speed, but only a index for calculating your speed. You may go to see \"Minecraft Wiki : Attributes\" for more details. ");
+        Server.Config.PLAYER.MOVEMENTSPEED = server_builder.defineInRange("MaxMovementSpeed",Server.Default.PLAYER.MOVEMENTSPEED,0.001,0.5);
+        Server.Config.PLAYER.FALLDAMAGEMULTIPIER = server_builder.defineInRange("FallDamageMultiplier",Server.Default.PLAYER.FALLDAMAGEMULTIPIER,0.0,10);
+        Server.Config.PLAYER.SURVIVALBREAK = server_builder.defineEnum("CanSurvivalPlayerBreakBlocks",Server.Default.PLAYER.SURVIVALBREAK);
+        Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.defineEnum("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
+        Server.Config.PLAYER.RESPAWNATDEATHPOINT = server_builder.defineEnum("RespawnAtDeathPoint",Server.Default.PLAYER.RESPAWNATDEATHPOINT);
+
+        SERVER_CONFIG = server_builder.build();
+    }
+}

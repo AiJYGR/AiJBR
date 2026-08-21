@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -57,7 +58,7 @@ public class AiJBackpack
         isAvailable = false;
         ModMessages.PlayerSendToServer(new MSGServerRemoveItem(index,remove));
     }
-    public static void serverMoveEmpty(LocalPlayer player,short index, short target) {
+    public static void serverMoveEmpty(Player player, short index, short target) {
         isAvailable = false;
         Inventory inventory = player.getInventory();
         switch (target) {
@@ -89,8 +90,8 @@ public class AiJBackpack
         ModMessages.PlayerSendToServer(new MSGServerMoveEmpty(index,target));
     }
     /// try not to use this one.
-    /// Use{@link AiJBackpack#serverMoveEmpty(LocalPlayer, short, short)} instead
-    public static void serverSwapItem(LocalPlayer player, short index, short target) {
+    /// Use{@link AiJBackpack#serverMoveEmpty(Player, short, short)} instead
+    public static void serverSwapItem(short index, short target) {
         isAvailable = false;
         ModMessages.PlayerSendToServer(new MSGServerSwapItem(index,target));
     }
@@ -207,7 +208,7 @@ public class AiJBackpack
                                             else if (isBetterEquipment(itemstack, i)) {
                                                 //serverRemove(slot2.index,true);
                                                 //serverMoveEmpty(player, slot1.index, slot2.index);
-                                                serverSwapItem(player, slot1.index, slot2.index);
+                                                serverSwapItem(slot1.index, slot2.index);
                                                 return;
                                             }
                                         }

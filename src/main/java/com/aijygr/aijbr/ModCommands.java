@@ -58,7 +58,7 @@ public class ModCommands
         public AiJBR(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(
                     Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
-                        return source.hasPermission(0);})
+                                return source.hasPermission(0);})
                             .executes((command)->{
                                 //commmand.getSource().getPlayer().sendSystemMessage(Component.Serializer.fromJson(json));
                                 LocalPlayer player = Minecraft.getInstance().player;
@@ -75,9 +75,9 @@ public class ModCommands
 
     private static class ScrCommand {
         public ScrCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).then(Commands.literal("scr").requires((source) -> {
                 return source.hasPermission(0);
-            }).then(Commands.literal("scr").executes((command) -> {
+            }).executes((command) -> {
 //                Minecraft.getInstance().tell(() -> {
 //                    Minecraft.getInstance().setScreen(new Scr(Component.translatable("title.singleplayer")));
 //                });
@@ -92,9 +92,9 @@ public class ModCommands
             AiJBackpack.clientsync();
         }
         public SyncBPCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).then(Commands.literal("sync").requires((source) -> {
                 return source.hasPermission(0);
-            }).then(Commands.literal("sync").executes((command) -> {
+            }).executes((command) -> {
                 SYNC();
                 LIB.tryPlayerMessage(command.getSource().getPlayer(),"msg.aijbr.yellow","Refreshed your backpack.");
                 return 1;
@@ -137,9 +137,9 @@ public class ModCommands
 
     private static class StartCommand {
         public StartCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
-                return source.hasPermission(2);
-            }).then(Commands.literal("start").executes((command) -> {
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).then(Commands.literal("start")
+                    .requires((source) -> {return source.hasPermission(2);})
+                    .executes((command) -> {
                 ServerPlayer player = command.getSource().getPlayer();
                 MinecraftServer server = command.getSource().getServer();
                 MinecraftForge.EVENT_BUS.post(new ModEvents.GameStartEvent(server.overworld(),player));
@@ -150,9 +150,9 @@ public class ModCommands
 
     private static class InitCommand {
         public InitCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
-                return source.hasPermission(3);
-            }).then(Commands.literal("init").executes((command) -> {
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
+                    .then(Commands.literal("init").requires((source) -> {return source.hasPermission(3);})
+                        .executes((command) -> {
                 ServerPlayer player = command.getSource().getPlayer();
                 MinecraftServer server = command.getSource().getServer();
                 MinecraftForge.EVENT_BUS.post(new ModEvents.GameInitEvent(server.overworld(),player));
@@ -195,9 +195,9 @@ public class ModCommands
             return 0;
         }
         public PlayerJoinCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
-                return source.hasPermission(0);
-            }).then(Commands.literal("join").executes((command)->{
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
+                    .then(Commands.literal("join").requires((source) -> {return source.hasPermission(0);})
+                            .executes((command)->{
                 return PlayerJoin(command.getSource().getPlayer());
             }).then(Commands.argument("team_num", IntegerArgumentType.integer()).executes((command) -> {
                 return PlayerJoin(command.getSource().getPlayer(),IntegerArgumentType.getInteger(command,"team_num"));
@@ -221,9 +221,9 @@ public class ModCommands
             return 1;
         }
         public PlayerLeaveCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
-                return source.hasPermission(0);
-            }).then(Commands.literal("leave").executes((command)->{
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
+                    .then(Commands.literal("leave").requires((source) -> {return source.hasPermission(0);})
+                            .executes((command)->{
                 return PlayerLeave(command.getSource().getPlayer());
             })));
         }
@@ -231,9 +231,8 @@ public class ModCommands
 
     public static class SVCommand {
         public SVCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
-                return source.hasPermission(2);
-            }).then(Commands.literal("SV")
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
+                    .then(Commands.literal("SV").requires((source) -> {return source.hasPermission(2);})
                     .executes((command)->{
                         String str = "TeamList:" + AiJBRPlayer.getTeamsNames(command.getSource().getServer()) + "\n" +
                                 "PlayerList:" + LIB.UUIDtoNames(command.getSource().getServer(), AiJBRPlayer.getPlayers(command.getSource().getServer()));
@@ -249,9 +248,8 @@ public class ModCommands
             return ++Game.refillTick;
         }
         public RefillCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME).requires((source) -> {
-                return source.hasPermission(3);
-            }).then(Commands.literal("refill")
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
+                    .then(Commands.literal("refill").requires((source) -> {return source.hasPermission(3);})
                     .executes((command)->{
                         LIB.tryPlayerMessage(command.getSource().getPlayer(),String.format("RefillTick = %d",refill()));
                         return 1;

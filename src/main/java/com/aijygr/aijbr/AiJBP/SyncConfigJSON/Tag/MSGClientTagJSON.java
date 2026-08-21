@@ -5,12 +5,15 @@ import com.aijygr.aijbr.LIB;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
 import static com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag.SyncTag.HASH;
 
+@OnlyIn(Dist.CLIENT)
 public class MSGClientTagJSON {
     private final String str;
     public MSGClientTagJSON(String str) { this.str = str; }

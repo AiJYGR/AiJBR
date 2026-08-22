@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-
-  "textures": {
-    "layer0": "aijbr:item/aijbackpack_lvl1"
-  }
-}

@@ -7,13 +7,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
 import static com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag.SyncTag.HASH;
 
-@OnlyIn(Dist.CLIENT)
+//@OnlyIn(Dist.CLIENT)
 public class MSGClientTagJSON {
     private final String str;
     public MSGClientTagJSON(String str) { this.str = str; }
@@ -26,11 +27,11 @@ public class MSGClientTagJSON {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            SyncTag.json = JsonParser.parseString(str).getAsJsonObject();
-            String hash = HASH(str);
-            SyncTag.saveLocalCache(str,hash);
-            ClientGame.isTagSynced = true;
-            LIB.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient TagJSON] Success.");
+            DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> {SyncTag.json = JsonParser.parseString(str).getAsJsonObject();
+                String hash = HASH(str);
+                SyncTag.saveLocalCache(str,hash);
+                ClientGame.isTagSynced = true;
+                LIB.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient TagJSON] Success.");});
         });
         ctx.get().setPacketHandled(true);
     }

@@ -31,3 +31,5 @@ forge*changelog.txt
 
 /src/test/
 /src/generated/
+/src/main/resources/
+

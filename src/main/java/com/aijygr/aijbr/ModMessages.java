@@ -18,17 +18,20 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
+import java.util.Optional;
+
 public class ModMessages {//GEMINI简直是我亲爹
     private static SimpleChannel INSTANCE;
+    private static final String VERSION = "1.0";
     private static int packetId = 0;
     private static int id() { return packetId++; }
 
     public static void register() {
         SimpleChannel net = NetworkRegistry.ChannelBuilder
                 .named(ResourceLocation.fromNamespaceAndPath(Main.MODID, "main"))
-                .networkProtocolVersion(() -> "1.0")
-                .clientAcceptedVersions(s -> true)
-                .serverAcceptedVersions(s -> true)
+                .networkProtocolVersion(() -> VERSION)
+                .clientAcceptedVersions(s -> s.equals(VERSION))
+                .serverAcceptedVersions(s -> s.equals(VERSION))
                 .simpleChannel();
         INSTANCE = net;
         // 注册包

@@ -2,6 +2,7 @@ package com.aijygr.aijbr;
 
 import com.aijygr.aijbr.AiJBP.MSGClientExecSync;
 import com.aijygr.aijbr.AiJGame.Game;
+import com.aijygr.aijbr.Network.ModMessages;
 import it.unimi.dsi.fastutil.longs.LongArraySet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.client.Minecraft;

@@ -1,6 +1,9 @@
 package com.aijygr.aijbr.AiJGame.Client;
 
+import com.aijygr.aijbr.Network.ClientPackageHandler;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -15,19 +18,19 @@ public class MSGClientGameTime {
         this.roundtick = roundtick;
         this.isShrinking = isShrinking;
     }
-    public MSGClientGameTime(FriendlyByteBuf buf) {
-        this.round = buf.readInt();
-        this.roundtick = buf.readInt();
-        this.isShrinking = buf.readBoolean();
+    public static MSGClientGameTime decoder(FriendlyByteBuf buf) {
+        return new MSGClientGameTime(buf.readInt(),buf.readInt(),buf.readBoolean());
     }
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeInt(round);
         buf.writeInt(roundtick);
         buf.writeBoolean(isShrinking);
     }
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ClientGame.setClientTime(round,roundtick,isShrinking);
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                ClientPackageHandler.MSGClientGameTime(this.round,this.roundtick,this.isShrinking);
+            });
         });
         ctx.get().setPacketHandled(true);
     }

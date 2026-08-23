@@ -4,7 +4,7 @@ import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.AiJGame.Client.MSGClientGameTime;
 import com.aijygr.aijbr.AiJGame.Client.MSGClientRingInfo;
 import com.aijygr.aijbr.LIB;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.border.WorldBorder;

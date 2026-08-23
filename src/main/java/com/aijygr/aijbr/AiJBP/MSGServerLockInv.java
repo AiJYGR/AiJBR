@@ -12,10 +12,10 @@ import java.util.function.Supplier;
 public class MSGServerLockInv {
     private Short value;
     public MSGServerLockInv(Short value) { this.value = value; }
-    public MSGServerLockInv(FriendlyByteBuf buf) {
-        this.value = buf.readShort();
+    public static MSGServerLockInv decoder(FriendlyByteBuf buf) {
+        return new MSGServerLockInv(buf.readShort());
     }
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeShort(this.value);
     }
 

@@ -1,6 +1,9 @@
 package com.aijygr.aijbr.AiJGame.Client;
 
+import com.aijygr.aijbr.Network.ClientPackageHandler;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -17,13 +20,10 @@ public class MSGClientRingInfo {
         this.size = size;
         this.generationmode = generationmode;
     }
-    public MSGClientRingInfo(FriendlyByteBuf buf) {
-        this.x = buf.readInt();
-        this.z = buf.readInt();
-        this.size = buf.readDouble();
-        this.generationmode = buf.readUtf();
+    public static MSGClientRingInfo decoder(FriendlyByteBuf buf) {
+        return new MSGClientRingInfo(buf.readInt(), buf.readInt(), buf.readDouble(), buf.readUtf());
     }
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeInt(x);
         buf.writeInt(z);
         buf.writeDouble(size);
@@ -31,7 +31,9 @@ public class MSGClientRingInfo {
     }
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ClientGame.setClientRing(x, z, size,generationmode);
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                ClientPackageHandler.MSGClientRingInfo(this.x, this.z, this.size, this.generationmode);
+            });
         });
         ctx.get().setPacketHandled(true);
     }

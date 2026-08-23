@@ -1,6 +1,6 @@
 package com.aijygr.aijbr.AiJBP;
 
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,11 +17,10 @@ public class MSGServerRemoveItem {
         this.index = index;
         this.remove = remove;
     }
-    public MSGServerRemoveItem(FriendlyByteBuf buf) {
-        this.index = buf.readShort();
-        this.remove = buf.readBoolean();
+    public static MSGServerRemoveItem decoder(FriendlyByteBuf buf) {
+        return new MSGServerRemoveItem(buf.readShort(), buf.readBoolean());
     }
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeShort(index);
         buf.writeBoolean(remove);
     }

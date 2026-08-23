@@ -1,6 +1,6 @@
 package com.aijygr.aijbr.AiJBP;
 
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,11 +17,10 @@ public class MSGServerSwapItem {
         this.value1 = vaule1;
         this.value2 = value2;
     }
-    public MSGServerSwapItem(FriendlyByteBuf buf) {
-        this.value1 = buf.readShort();
-        this.value2 = buf.readShort();
+    public static MSGServerSwapItem decoder(FriendlyByteBuf buf) {
+        return new MSGServerSwapItem(buf.readShort(), buf.readShort());
     }
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeShort(this.value1);
         buf.writeShort(this.value2);
     }

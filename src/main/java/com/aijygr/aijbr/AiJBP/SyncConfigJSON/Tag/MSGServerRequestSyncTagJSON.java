@@ -1,7 +1,7 @@
 package com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag;
 
 import com.aijygr.aijbr.Main;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
@@ -11,11 +11,11 @@ import java.util.function.Supplier;
 public class MSGServerRequestSyncTagJSON {
     private final String str;
     public MSGServerRequestSyncTagJSON(String str) { this.str = str; }
-    public MSGServerRequestSyncTagJSON(FriendlyByteBuf buf) {
+    public static MSGServerRequestSyncTagJSON decoder(FriendlyByteBuf buf) {
         // 给 256KB 的宽限，防止大型配置包溢出 GEMINI
-        this.str = buf.readUtf(SyncTag.PMAXLENGTH);
+        return new MSGServerRequestSyncTagJSON(buf.readUtf());
     }
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeUtf(this.str, SyncTag.PMAXLENGTH);
     }
     public void handle(Supplier<NetworkEvent.Context> ctx) {

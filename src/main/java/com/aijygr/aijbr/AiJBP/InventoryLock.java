@@ -1,7 +1,7 @@
 package com.aijygr.aijbr.AiJBP;
 
 import com.aijygr.aijbr.Item.Lock;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;

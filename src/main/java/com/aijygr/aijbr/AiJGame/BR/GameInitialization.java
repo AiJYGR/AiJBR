@@ -48,7 +48,10 @@ public class GameInitialization {
         if(event.getLevel().isClientSide())
             return;
         MinecraftServer server = event.getLevel().getServer();
-        LIB.tryBroadcastMessage(server, "\n","msg.aijbr.yellow",event.getPlayer().getName().getString(),"msg.aijbr.info.player_starting_init");
+        if(event.getPlayer()!=null)
+            LIB.tryBroadcastMessage(server, "\n","msg.aijbr.yellow",event.getPlayer().getName().getString(),"msg.aijbr.info.player_starting_init");
+        else
+            LIB.tryBroadcastMessage(server, "\n","msg.aijbr.yellow","{SV}","msg.aijbr.info.player_starting_init");
 
         //清空已经读取的配置
         Game.isInitialized = false;

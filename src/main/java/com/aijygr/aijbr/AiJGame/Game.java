@@ -9,7 +9,7 @@ import com.aijygr.aijbr.AiJGame.Ring.RingGeneration;
 import com.aijygr.aijbr.LIB;
 import com.aijygr.aijbr.ModConfig;
 import com.aijygr.aijbr.ModEvents;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.GameRules;

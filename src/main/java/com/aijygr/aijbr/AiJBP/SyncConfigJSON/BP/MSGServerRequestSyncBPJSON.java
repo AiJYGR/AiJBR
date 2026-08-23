@@ -1,7 +1,7 @@
 package com.aijygr.aijbr.AiJBP.SyncConfigJSON.BP;
 
 import com.aijygr.aijbr.Main;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
@@ -11,12 +11,11 @@ import java.util.function.Supplier;
 public class MSGServerRequestSyncBPJSON {
     private final String str;
     public MSGServerRequestSyncBPJSON(String str) { this.str = str; }
-    public MSGServerRequestSyncBPJSON(FriendlyByteBuf buf) {
-        // 给 256KB 的宽限，防止大型配置包溢出 GEMINI
-        this.str = buf.readUtf(SyncBP.PMAXLENGTH);
+    public static MSGServerRequestSyncBPJSON decoder(FriendlyByteBuf buf) {
+        return  new MSGServerRequestSyncBPJSON(buf.readUtf());
     }
 
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeUtf(this.str, SyncBP.PMAXLENGTH);
     }
 

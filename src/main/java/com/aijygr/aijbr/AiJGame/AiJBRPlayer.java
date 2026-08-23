@@ -6,7 +6,7 @@ import com.aijygr.aijbr.Item.Lock;
 import com.aijygr.aijbr.LIB;
 import com.aijygr.aijbr.ModConfig;
 import com.aijygr.aijbr.ModEvents;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;

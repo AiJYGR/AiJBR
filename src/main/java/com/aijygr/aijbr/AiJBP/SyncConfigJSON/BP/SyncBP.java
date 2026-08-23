@@ -1,7 +1,7 @@
 package com.aijygr.aijbr.AiJBP.SyncConfigJSON.BP;
 
 import com.aijygr.aijbr.Main;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import com.google.common.base.CharMatcher;
 import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
@@ -134,7 +134,7 @@ public class SyncBP {
         }
     }
     public static void reload(MinecraftServer server) throws Exception {
-        // serverconfig/AiJBP.json
+        // world/serverconfig/AiJBP.json
         generateFile(server);
         try (FileReader reader = new FileReader(file)) {
             rawjson = Files.readString(jsonfilepath, StandardCharsets.UTF_8);

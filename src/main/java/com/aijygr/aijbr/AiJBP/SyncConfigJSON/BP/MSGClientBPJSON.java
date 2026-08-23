@@ -2,9 +2,12 @@ package com.aijygr.aijbr.AiJBP.SyncConfigJSON.BP;
 
 import com.aijygr.aijbr.LIB;
 import com.aijygr.aijbr.Main;
+import com.aijygr.aijbr.Network.ClientPackageHandler;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -14,24 +17,17 @@ import static com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag.SyncTag.HASH;
 public class MSGClientBPJSON {
     private final String str;
     public MSGClientBPJSON(String str) { this.str = str; }
-    public MSGClientBPJSON(FriendlyByteBuf buf) {
-        this.str = buf.readUtf(SyncBP.PMAXLENGTH);
+    public static MSGClientBPJSON decoder(FriendlyByteBuf buf) {
+        return new MSGClientBPJSON(buf.readUtf(SyncBP.PMAXLENGTH));
     }
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeUtf(this.str, SyncBP.PMAXLENGTH);
     }
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            try{
-                SyncBP.json = JsonParser.parseString(str).getAsJsonObject();
-                String hash = HASH(str);
-                SyncBP.saveLocalCache(str,hash);
-                Reload.ReloadBP();
-                LIB.tryPlayerMessage(Minecraft.getInstance().player,"msg.aijbr.green","[MSGClient BPJSON] Success.");
-            }catch(Exception e){
-                Main.LOGGER.error("[MSGClientBPJSON]:{}", e.getMessage());
-            }
-
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                ClientPackageHandler.MSGClientBPJson(this.str);
+            });
         });
         ctx.get().setPacketHandled(true);
     }

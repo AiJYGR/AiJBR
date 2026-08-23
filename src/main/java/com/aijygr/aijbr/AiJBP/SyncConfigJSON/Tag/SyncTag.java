@@ -1,7 +1,7 @@
 package com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag;
 
 import com.aijygr.aijbr.Main;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import com.google.common.base.CharMatcher;
 import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
@@ -180,7 +180,7 @@ public class SyncTag {
 
 
     public static void reload(MinecraftServer server) throws Exception { //  /AiJBR reload
-        // serverconfig/AiJTAG.json
+        // world/serverconfig/AiJTAG.json
         generateFile(server);
         try (FileReader reader = new FileReader(file)) {
             rawjson = Files.readString(jsonfilepath, StandardCharsets.UTF_8);

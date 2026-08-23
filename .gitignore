@@ -29,7 +29,7 @@ run
 # Files from Forge MDK
 forge*changelog.txt
 
-/src/main/resources/
+/src/main/resources/assets
 /src/test/
 /src/generated/
 

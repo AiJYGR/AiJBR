@@ -1,6 +1,6 @@
 package com.aijygr.aijbr.AiJBP;
 
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,11 +16,10 @@ public class MSGServerMoveEmpty {
         this.index = vaule1;
         this.target = target;
     }
-    public MSGServerMoveEmpty(FriendlyByteBuf buf) {
-        this.index = buf.readShort();
-        this.target = buf.readShort();
+    public static MSGServerMoveEmpty decoder(FriendlyByteBuf buf) {
+        return new MSGServerMoveEmpty(buf.readShort(),buf.readShort());
     }
-    public void encode(FriendlyByteBuf buf) {
+    public void encoder(FriendlyByteBuf buf) {
         buf.writeShort(this.index);
         buf.writeShort(this.target);
     }

@@ -4,7 +4,7 @@ import com.aijygr.aijbr.AiJGame.Client.ClientGame;
 import com.aijygr.aijbr.Item.Backpack;
 import com.aijygr.aijbr.Item.Lock;
 import com.aijygr.aijbr.ModConfig;
-import com.aijygr.aijbr.ModMessages;
+import com.aijygr.aijbr.Network.ModMessages;
 
 import com.aijygr.aijbr.Reg;
 import net.minecraft.client.Minecraft;

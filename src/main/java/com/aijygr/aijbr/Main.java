@@ -1,5 +1,6 @@
 package com.aijygr.aijbr;
 
+import com.aijygr.aijbr.Network.ModMessages;
 import com.mojang.logging.LogUtils;
 
 import net.minecraftforge.fml.common.Mod;
@@ -29,7 +30,7 @@ public class Main
         Reg.MOB_EFFECT.register(bus);
         Reg.SOUND_EVENTS.register(bus);
 
-        ModMessages.register();//reg net
+        ModMessages.register();
 
         ctx.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_CONFIG);
         ctx.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_CONFIG);

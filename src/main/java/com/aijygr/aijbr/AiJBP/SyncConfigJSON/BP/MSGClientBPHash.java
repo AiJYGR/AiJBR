@@ -1,10 +1,6 @@
 package com.aijygr.aijbr.AiJBP.SyncConfigJSON.BP;
 
-import com.aijygr.aijbr.LIB;
-import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.Network.ClientPackageHandler;
-import com.aijygr.aijbr.Network.ModMessages;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;

@@ -84,6 +84,6 @@ displayURL="https://github.com/AiJYGR"
 [[dependencies.${mod_id}]]
 modId = "geckolib"
 mandatory = true
-versionRange = "[4.8.3,)"
+versionRange = "[4.8.4,)"
 ordering = "BEFORE"
 side = "CLIENT"

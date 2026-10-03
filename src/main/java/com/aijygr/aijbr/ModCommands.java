@@ -104,18 +104,29 @@ public class ModCommands
 
     private static class ReloadCommand {
         private void reload(CommandSourceStack source) {
-            ServerPlayer player = source.getPlayer();
-            LIB.tryBroadcastMessage(player,"\n","msg.aijbr.yellow",player.getName().getString(),"msg.aijbr.info.player_starting_reload");
-            LIB.tryBroadcastMessage(player,"msg.aijbr.yellow","msg.server","Start to SYNC JSON...");
+
+            if(source.isPlayer()){
+                ServerPlayer player = source.getPlayer();
+                LIB.tryBroadcastMessage(player,"\n","msg.aijbr.yellow",player.getName().getString(),"msg.aijbr.info.player_starting_reload");
+                LIB.tryBroadcastMessage(player,"msg.aijbr.yellow","msg.server","Start to SYNC JSON...");
+            }
+            else{
+                LIB.tryBroadcastMessage(source.getServer(),"\n","msg.aijbr.yellow","SV","msg.aijbr.info.player_starting_reload");
+                LIB.tryBroadcastMessage(source.getServer(),"msg.aijbr.yellow","msg.server","Start to SYNC JSON...");
+            }
+
             Game.isReloaded = false;
             try{
                 SyncTag.reload(source.getServer());
                 SyncBP.reload(source.getServer());
                 Game.isReloaded = true;
             }catch(Exception e){
-                LIB.tryBroadcastMessage(player,"msg.aijbr.red","msg.server","Reload failed:");
-                LIB.tryBroadcastMessage(player,e.getMessage(),"\nPlease check the JSON file.");
-                LIB.tryBroadcastMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
+//                LIB.tryBroadcastMessage(player,"msg.aijbr.red","msg.server","Reload failed:");
+//                LIB.tryBroadcastMessage(player,e.getMessage(),"\nPlease check the JSON file.");
+//                LIB.tryBroadcastMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
+                LIB.tryBroadcastMessage(source.getServer(),"msg.aijbr.red","msg.server","Reload failed:");
+                LIB.tryBroadcastMessage(source.getServer(),e.getMessage(),"\nPlease check the JSON file.");
+                LIB.tryBroadcastMessage(source.getServer(),"msg.aijbr.red","msg.aijbr.err.command_executed_failed");
             }
             //Game.tryBroadcastMessage(player,"msg.aijbr.bold"," SYNC SUCCESSFULLY.");
         }

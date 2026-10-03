@@ -233,7 +233,7 @@ public abstract class ModConfig {
         server_builder.comment("# Height",
                 "Altitude that the DropShip travels on.");
         Server.Config.DROPSHIP.HEIGHT = server_builder.defineInRange("Height", Server.Default.DROPSHIP.HEIGHT,-60,500);
-        server_builder.comment("# If NOT, the DropShip will wait at the edge of the border, instead of flying into the battle field.");
+        server_builder.comment("# If NOT, the DropShip will wait at the border, instead of flying into the battle field.");
         Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD = server_builder.defineEnum("ShouldFlyToBattleField",Server.Default.DROPSHIP.SHOULDFLYTOBATTLEFIELD);
         server_builder.comment("# PreWaitingTick","Ticks waited for the DropShip to enter the battle field. A low value is not recommended.");
         Server.Config.DROPSHIP.PREWAITINGTICK = server_builder.defineInRange("PreWaitingTick",Server.Default.DROPSHIP.PREWAITINGTICK,100,6000);

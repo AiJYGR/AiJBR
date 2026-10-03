@@ -83,6 +83,7 @@ minecraft {
     runs {
         // applies to all the run configs below
         configureEach {
+            property 'geckolib.disable_examples', 'true'
             workingDirectory project.file('run')
 
             // Recommended logging data for a userdev environment
@@ -97,7 +98,6 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
-            property 'geckolib.disable_examples', 'true'///////////////////////////
 
             mods {
                 "${mod_id}" {
@@ -200,7 +200,8 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:spark-361579:4738952")
     //runtimeOnly fg.deobf("curse.maven:jei-238222:7391695")
 
-    implementation fg.deobf("curse.maven:geckolib-388172:7553267")
+    //implementation fg.deobf("curse.maven:geckolib-388172:7553267")
+    implementation fg.deobf("curse.maven:geckolib-388172:8285794")
     //implementation minecraft.dependency("com.geckolib:geckolib-forge-${minecraft_version}:${geckolibVersion}")
 
     compileOnly fg.deobf(group: 'info.journeymap', name: 'journeymap-api', version: project.journeymap_api_version, changing: true)

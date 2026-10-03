@@ -240,6 +240,10 @@ public class AiJBRPlayer {
             player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
             player.setHealth(ModConfig.Server.Config.PLAYER.MAXHEALTH.get());
             player.setRemainingFireTicks(0);
+            player.setExperienceLevels(0);
+            player.setExperiencePoints(0);
+            player.setSilent(false);
+            player.resetFallDistance();
         }
     }
     ///{@link Game#onGameInit(ModEvents.GameInitEvent)}
@@ -269,6 +273,8 @@ public class AiJBRPlayer {
         if (event.getEntity() instanceof ServerPlayer player) {
             //清除身上的Lock
             Inventory inventory = player.getInventory();
+            player.setExperienceLevels(0);
+            player.setExperiencePoints(0);
             for (int i = 0; i < inventory.getContainerSize(); i++) {
                 ItemStack stack = inventory.getItem(i);
                 if (!stack.isEmpty() && stack.getItem() instanceof Lock)

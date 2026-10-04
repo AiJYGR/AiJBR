@@ -29,8 +29,11 @@ run
 # Files from Forge MDK
 forge*changelog.txt
 
-/src/main/resources/assets
 /src/test/
 /src/generated/
 
 
+/src/main/resources/assets/aijbr/sounds-deprecated/ring/
+/src/main/resources/assets/aijbr/models/block/container.json.old
+/src/main/resources/assets/aijbr/models/block/container_open.json.old
+/src/main/resources/assets/aijbr/textures/block/barrel_bottom-deprecated.png

@@ -48,11 +48,12 @@ public class LootContainer extends RandomizableContainerBlockEntity{
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
             level.setBlock(pos, state.setValue(ContainerBlock.OPEN, true), 3);
-            LootContainer.this.playSound(state, SoundEvents.BARREL_OPEN);
+            LootContainer.this.playSound(state, Reg.CONTAINER_OPEN_SOUND.get());
+            System.out.println(123);
         }
         protected void onClose(Level level, BlockPos pos, BlockState state) {
             level.setBlock(pos, state.setValue(ContainerBlock.OPEN, false), 3);
-            LootContainer.this.playSound(state, SoundEvents.BARREL_CLOSE);
+            LootContainer.this.playSound(state, Reg.CONTAINER_CLOSE_SOUND.get());
         }
 
         protected void openerCountChanged(Level level, BlockPos pos, BlockState state, int p_155466_, int p_155467_) {

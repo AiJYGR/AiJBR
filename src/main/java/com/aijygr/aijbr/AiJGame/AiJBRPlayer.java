@@ -24,6 +24,7 @@ import net.minecraft.world.scores.Scoreboard;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -302,5 +303,13 @@ public class AiJBRPlayer {
     public static void onPlayerAttack(AttackEntityEvent  event) {
         if(event.getEntity().getVehicle() instanceof DropShip)
             event.setCanceled(true);
+    }
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event){
+        if(event.getSource().getEntity() instanceof ServerPlayer player)
+        {
+            if(player.getMainHandItem().isEmpty())
+                event.setAmount(event.getAmount() * ModConfig.Server.Config.PLAYER.EMPTYHANDMELEEDAMAGEMULTIPLIER.get().floatValue() );
+        }
     }
 }

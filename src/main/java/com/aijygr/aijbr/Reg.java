@@ -62,5 +62,8 @@ public class Reg
     public static final RegistryObject<SoundEvent> RING_DAMAGE_SOUND = SOUND_EVENTS.register("ring_damage", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Main.MODID, "ring_damage")));
     public static final RegistryObject<SoundEvent> RING_PHASE_SOUND = SOUND_EVENTS.register("ring_phase", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Main.MODID, "ring_phase")));
     public static final RegistryObject<SoundEvent> RING_CLOSE_SOUND = SOUND_EVENTS.register("ring_close", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Main.MODID, "ring_close")));
+    public static final RegistryObject<SoundEvent> CONTAINER_OPEN_SOUND = SOUND_EVENTS.register("container_open", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Main.MODID,"container_open")));
+    public static final RegistryObject<SoundEvent> CONTAINER_CLOSE_SOUND = SOUND_EVENTS.register("container_close", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Main.MODID,"container_close")));
     public static final ResourceKey<DamageType> AIJBR_RING_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath(Main.MODID, "ring_damage"));
+
 }

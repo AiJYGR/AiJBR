@@ -63,6 +63,7 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAK;
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAKGLASS;
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> RESPAWNATDEATHPOINT;
+                public static ForgeConfigSpec.DoubleValue EMPTYHANDMELEEDAMAGEMULTIPLIER;
             }
         }
 
@@ -133,6 +134,7 @@ public abstract class ModConfig {
                 public static final LIB.BOOL SURVIVALBREAK = LIB.BOOL.FALSE;
                 public static final LIB.BOOL SURVIVALBREAKGLASS = LIB.BOOL.TRUE;
                 public static final LIB.BOOL RESPAWNATDEATHPOINT = LIB.BOOL.TRUE;
+                public static final double EMPTYHANDMELEEDAMAGEMULTIPIER = 2.0;
             }
         }
     }
@@ -300,12 +302,13 @@ public abstract class ModConfig {
         server_builder.comment("Default Player Attributes");
         server_builder.push("Player");
         Server.Config.PLAYER.MAXHEALTH = server_builder.defineInRange("MaxHealth",Server.Default.PLAYER.MAXHEALTH,1,1000);
-        server_builder.comment("[Attention] This value is NOT the actual walking speed or sprinting speed, but only a index for calculating your speed. You may go to see \"Minecraft Wiki : Attributes\" for more details. ");
+        server_builder.comment("[Attention] This value is NOT the actual walking or sprinting speed, but merely an index for calculating your speed. You may go to see \"Minecraft Wiki : Attributes\" for more details. ");
         Server.Config.PLAYER.MOVEMENTSPEED = server_builder.defineInRange("MaxMovementSpeed",Server.Default.PLAYER.MOVEMENTSPEED,0.001,0.5);
         Server.Config.PLAYER.FALLDAMAGEMULTIPIER = server_builder.defineInRange("FallDamageMultiplier",Server.Default.PLAYER.FALLDAMAGEMULTIPIER,0.0,10);
         Server.Config.PLAYER.SURVIVALBREAK = server_builder.defineEnum("CanSurvivalPlayerBreakBlocks",Server.Default.PLAYER.SURVIVALBREAK);
         Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.defineEnum("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
         Server.Config.PLAYER.RESPAWNATDEATHPOINT = server_builder.defineEnum("RespawnAtDeathPoint",Server.Default.PLAYER.RESPAWNATDEATHPOINT);
+        Server.Config.PLAYER.EMPTYHANDMELEEDAMAGEMULTIPLIER = server_builder.defineInRange("EmptyHandMeleeDamageMultiplier",Server.Default.PLAYER.EMPTYHANDMELEEDAMAGEMULTIPIER,0.01,100.0);
 
         SERVER_CONFIG = server_builder.build();
     }

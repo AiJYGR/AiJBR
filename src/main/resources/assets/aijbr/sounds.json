@@ -1,0 +1,64 @@
+{
+  "ring_damage": {
+    "replace": false,
+    "subtitle": "subtitles.aijbr.ring_damage",
+    "sounds": [
+      {
+        "name": "minecraft:entity/player/hurt/drown1",
+        "weight": 1,
+        "volume": 1
+      },
+      {
+        "name": "minecraft:entity/player/hurt/drown2",
+        "weight": 1,
+        "volume": 1
+      },
+      {
+        "name": "minecraft:entity/player/hurt/drown3",
+        "weight": 1,
+        "volume": 1
+      },
+      {
+        "name": "minecraft:entity/player/hurt/drown4",
+        "weight": 2,
+        "volume": 1
+      }
+    ]
+  },
+  "ring_phase":{
+    "replace":false,
+    "subtitle":"subtitles.aijbr.ring_phase",
+    "sounds":[
+      {
+        "name": "minecraft:random/levelup",
+        "weight": 1,
+        "volume": 1
+      }
+    ]
+  },
+  "ring_close":{
+    "replace":false,
+    "subtitle":"subtitles.aijbr.ring_close",
+    "sounds":[
+      {
+        "name": "minecraft:random/orb",
+        "weight": 1,
+        "volume": 1
+      }
+    ]
+  },
+
+  "container_open": {
+    "sounds": [
+      "minecraft:block/barrel/open1",
+      "minecraft:block/barrel/open2"
+    ],
+    "subtitle": "subtitles.aijbr.barrel.open"
+  },
+  "container_close": {
+    "sounds": [
+      "minecraft:block/barrel/close"
+    ],
+    "subtitle": "subtitles.aijbr.barrel.close"
+  }
+}

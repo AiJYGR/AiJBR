@@ -145,11 +145,15 @@ public abstract class ModConfig {
             public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWRINGINDICATOR;
             public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWACCURATEHEALTH;
             public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWCLIENTGAMEINFO;
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> HIDEHEALTHBAR;
+            public static ForgeConfigSpec.EnumValue<LIB.BOOL> HIDEFOODLEVEL;
         }
         public static final class Default{
             public static final LIB.BOOL SHOWRINGINDICATOR = LIB.BOOL.TRUE;
             public static final LIB.BOOL SHOWACCURATEHEALTH =  LIB.BOOL.TRUE;
             public static final LIB.BOOL SHOWCLIENTGAMEINFO =  LIB.BOOL.TRUE;
+            public static final LIB.BOOL HIDEHEALTHBAR = LIB.BOOL.FALSE;
+            public static final LIB.BOOL HIDEFOODLEVEL = LIB.BOOL.TRUE;
         }
     }
 
@@ -157,12 +161,17 @@ public abstract class ModConfig {
         ForgeConfigSpec.Builder common_builder = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();//栈结构 builder
 
+        //CLIENT
         Client.Config.SHOWRINGINDICATOR = common_builder.defineEnum("ShowRingIndicator", Client.Default.SHOWRINGINDICATOR);
         Client.Config.SHOWACCURATEHEALTH = common_builder.defineEnum("ShowAccurateHealth", Client.Default.SHOWACCURATEHEALTH);
         Client.Config.SHOWCLIENTGAMEINFO = common_builder.defineEnum("ShowClientGameInfo", Client.Default.SHOWCLIENTGAMEINFO);
+        Client.Config.HIDEHEALTHBAR = common_builder.defineEnum("HideHealthBar", Client.Default.HIDEHEALTHBAR);
+        Client.Config.HIDEFOODLEVEL = common_builder.defineEnum("HideFoodLevel", Client.Default.HIDEFOODLEVEL);
+
         CLIENT_CONFIG = common_builder.build();
 
 
+        //SERVER
         server_builder.comment("Ring Settings used in the game");
         server_builder.push("Ring");    //Ring
         server_builder.comment(

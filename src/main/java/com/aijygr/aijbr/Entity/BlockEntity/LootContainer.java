@@ -196,12 +196,6 @@ public class LootContainer extends RandomizableContainerBlockEntity{
 //        }
     }
 
-    public void recheckOpen(Player player) {
-        if (!this.remove) {
-            this.openersCounter.recheckOpeners(this.getLevel(), this.getBlockPos(), this.getBlockState());
-        }
-    }
-
     @Override
     public void stopOpen(Player player) {
         if (!this.remove && !player.isSpectator()) {

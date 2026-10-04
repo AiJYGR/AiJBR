@@ -1,5 +1,6 @@
 package com.aijygr.aijbr.Screen;
 
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -8,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 
-@Mod.EventBusSubscriber(modid = "aijbr", value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
 public class HealthGUI {
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {

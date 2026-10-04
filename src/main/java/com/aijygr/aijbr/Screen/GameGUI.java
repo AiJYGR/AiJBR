@@ -2,6 +2,7 @@ package com.aijygr.aijbr.Screen;
 
 import com.aijygr.aijbr.AiJGame.Client.ClientGame;
 import com.aijygr.aijbr.LIB;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.MutableComponent;
@@ -11,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 
-@Mod.EventBusSubscriber(modid = "aijbr", value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
 public class GameGUI {
 
     @SubscribeEvent

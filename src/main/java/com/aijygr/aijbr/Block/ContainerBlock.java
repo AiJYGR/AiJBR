@@ -63,13 +63,6 @@ public class ContainerBlock extends BaseEntityBlock {
         return InteractionResult.CONSUME;
     }
 
-//    @Override
-//    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource randomSource) {
-//        BlockEntity blockentity = level.getBlockEntity(pos);
-//        if (blockentity instanceof LootContainer) {
-//            ((LootContainer) blockentity).recheckOpen(null);
-//        }
-//    }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state2, boolean p_60519_) {

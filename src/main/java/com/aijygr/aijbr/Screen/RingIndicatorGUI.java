@@ -15,7 +15,7 @@ import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
 public class RingIndicatorGUI {
 
     public static void drawRotatedTexture(GuiGraphics graphics, ResourceLocation texture, int x, int y, int width, int height, float angle) {

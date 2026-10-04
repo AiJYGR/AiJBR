@@ -12,10 +12,6 @@ public abstract class ModConfig {
 
     public static class Server {
         public static class Config {
-            public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOW_BRLOG;
-            public static class BACKPACK {
-                public static ForgeConfigSpec.IntValue DEFAULT_PERMISSIONLEVEL;
-            }
             public static class RING{
                 public static ForgeConfigSpec.EnumValue<RingGeneration.WeightedMode> WEIGHTEDMODE;
                 public static ForgeConfigSpec.ConfigValue<List<? extends Integer>> RING_INITIAL_ATTRUBUTES;
@@ -24,6 +20,7 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.ConfigValue<List<? extends String>> GENERATIONMODES;
             }
             public static class ITEM{
+                public static ForgeConfigSpec.IntValue BACKPACK_DEFAULT_PERMISSIONLEVEL;
                 public static ForgeConfigSpec.IntValue BACKPACK_LVL1_PERMISSIONLEVEL;
                 public static ForgeConfigSpec.IntValue BACKPACK_LVL2_PERMISSIONLEVEL;
                 public static ForgeConfigSpec.IntValue BACKPACK_LVL3_PERMISSIONLEVEL;
@@ -65,13 +62,13 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> RESPAWNATDEATHPOINT;
                 public static ForgeConfigSpec.DoubleValue EMPTYHANDMELEEDAMAGEMULTIPLIER;
             }
+            public static class MISCELLANEOUS{
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOW_BRLOG;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SAVE_LOOTCONTAINERS_ITEMS;
+            }
         }
 
         public static final class Default {
-            public static LIB.BOOL ALLOW_BRLOG = LIB.BOOL.TRUE;
-            public static class BACKPACK{
-                public static final int DEFAULT_PERMISSIONLEVEL = 2;
-            }
             public static class RING{
                 public static final List<Integer> RING_INITIAL_ATTRUBUTES =  new ArrayList<>(List.of(1023,1200));
                 public static final List<String> RING_ATTRIBUTES = new ArrayList<>(List.of(
@@ -94,16 +91,17 @@ public abstract class ModConfig {
                 public static final RingGeneration.WeightedMode WEIGHTEDMODE = RingGeneration.WeightedMode.MUL2;
             }
             public static class ITEM{
+                public static final int BACKPACK_DEFAULT_PERMISSIONLEVEL = 2;
+                public static final short BACKPACK_LVL1_PERMISSIONLEVEL = 4;
+                public static final short BACKPACK_LVL2_PERMISSIONLEVEL = 8;
+                public static final short BACKPACK_LVL3_PERMISSIONLEVEL = 12;
+                public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 20;
                 public static final int ITEM_SYRINGE_USEDURATION = 50;
                 public static final int ITEM_SYRINGE_MAXSTACKSIZE = 5;
                 public static final double ITEM_SYRINGE_HEALAMOUNT = 5.0f;
                 public static final int ITEM_MEDKIT_USEDURATION = 100;
                 public static final int ITEM_MEDKIT_MAXSTACKSIZE = 2;
                 public static final double ITEM_MEDKIT_HEALAMOUNT = 12.0f;
-                public static final short BACKPACK_LVL1_PERMISSIONLEVEL = 4;
-                public static final short BACKPACK_LVL2_PERMISSIONLEVEL = 8;
-                public static final short BACKPACK_LVL3_PERMISSIONLEVEL = 12;
-                public static final short BACKPACK_LVL4_PERMISSIONLEVEL = 20;
                 public static final int ITEM_ARMOR_IRON_MAXDAMAGE = 40;
                 public static final int ITEM_ARMOR_DIAMOND_MAXDAMAGE = 50;
                 public static final int ITEM_ARMOR_NETHERITE_MAXDAMAGE = 60;
@@ -136,6 +134,10 @@ public abstract class ModConfig {
                 public static final LIB.BOOL RESPAWNATDEATHPOINT = LIB.BOOL.TRUE;
                 public static final double EMPTYHANDMELEEDAMAGEMULTIPIER = 2.0;
             }
+            public static class MISCELLANEOUS{
+                public static LIB.BOOL ALLOW_BRLOG = LIB.BOOL.TRUE;
+                public static LIB.BOOL SAVE_LOOTCONTAINERS_ITEMS = LIB.BOOL.TRUE;
+            }
         }
     }
     public static class Client {
@@ -158,11 +160,8 @@ public abstract class ModConfig {
         Client.Config.SHOWRINGINDICATOR = common_builder.defineEnum("ShowRingIndicator", Client.Default.SHOWRINGINDICATOR);
         Client.Config.SHOWACCURATEHEALTH = common_builder.defineEnum("ShowAccurateHealth", Client.Default.SHOWACCURATEHEALTH);
         Client.Config.SHOWCLIENTGAMEINFO = common_builder.defineEnum("ShowClientGameInfo", Client.Default.SHOWCLIENTGAMEINFO);
-
         CLIENT_CONFIG = common_builder.build();
 
-        server_builder.comment("Whether to log BR GAME Status like RingSize,Damage,AirRoute etc");
-        Server.Config.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG",Server.Default.ALLOW_BRLOG);
 
         server_builder.comment("Ring Settings used in the game");
         server_builder.push("Ring");    //Ring
@@ -274,12 +273,13 @@ public abstract class ModConfig {
         server_builder.comment("The percentage(%) of damage absorbed.");
         Server.Config.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE = server_builder.defineInRange("LVL3ArmorDefense", Server.Default.ITEM.ITEM_ARMOR_NETHERITE_DEFENSE,0.0,100.0);
         server_builder.pop();
+
         server_builder.comment("PermissionLevel: Used with BackpackSlotAttributes together.");
         server_builder.push("BACKPACK");
         server_builder.comment(
                 "# Default Permission Level",
                 "- Define the permission level that the player has without a backpack.");
-        Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",Server.Default.BACKPACK.DEFAULT_PERMISSIONLEVEL,Short.MIN_VALUE,Short.MAX_VALUE);
+        Server.Config.ITEM.BACKPACK_DEFAULT_PERMISSIONLEVEL = server_builder.defineInRange("DefaultPermissionLevel",Server.Default.ITEM.BACKPACK_DEFAULT_PERMISSIONLEVEL,Short.MIN_VALUE,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL = server_builder.defineInRange("LVL1Permission",Server.Default.ITEM.BACKPACK_LVL1_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL = server_builder.defineInRange("LVL2Permission",Server.Default.ITEM.BACKPACK_LVL2_PERMISSIONLEVEL,0,Short.MAX_VALUE);
         Server.Config.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL = server_builder.defineInRange("LVL3Permission",Server.Default.ITEM.BACKPACK_LVL3_PERMISSIONLEVEL,0,Short.MAX_VALUE);
@@ -309,7 +309,13 @@ public abstract class ModConfig {
         Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.defineEnum("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
         Server.Config.PLAYER.RESPAWNATDEATHPOINT = server_builder.defineEnum("RespawnAtDeathPoint",Server.Default.PLAYER.RESPAWNATDEATHPOINT);
         Server.Config.PLAYER.EMPTYHANDMELEEDAMAGEMULTIPLIER = server_builder.defineInRange("EmptyHandMeleeDamageMultiplier",Server.Default.PLAYER.EMPTYHANDMELEEDAMAGEMULTIPIER,0.01,100.0);
+        server_builder.pop();
 
+        server_builder.push("Dev Tools");
+        server_builder.comment("Whether to log BR GAME Status like RingSize, Damage, AirRoute, etc.");
+        Server.Config.MISCELLANEOUS.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG",Server.Default.MISCELLANEOUS.ALLOW_BRLOG);
+        server_builder.comment("Whether to save LootContainers' items when deleting the instances(e.g. when chunks are deleted). For Dev's use, choose false when testing the map or game. In other cases this option should be kept true.");
+        Server.Config.MISCELLANEOUS.SAVE_LOOTCONTAINERS_ITEMS = server_builder.defineEnum("SaveLootContainersItems",Server.Default.MISCELLANEOUS.SAVE_LOOTCONTAINERS_ITEMS);
         SERVER_CONFIG = server_builder.build();
     }
 }

@@ -1,5 +1,6 @@
 package com.aijygr.aijbr.ItemCleaner;
 
+import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.Main;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
@@ -17,9 +18,9 @@ public class ItemCleaner {
     public static final String TAG = "ItemCleaner";
     public static long time = -1;
 
-    public static int cleanitems(long time, MinecraftServer server)
+    public static int cleanitems(MinecraftServer server)
     {
-        updatetime(time);
+        updatetime(Game.gametime);
         int i = 0;
         for(ServerLevel level : server.getAllLevels()){
             var items = level.getEntities(EntityTypeTest.forClass(ItemEntity.class), item -> true);

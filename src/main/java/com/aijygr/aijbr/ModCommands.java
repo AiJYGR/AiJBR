@@ -256,8 +256,9 @@ public class ModCommands
     }
 
     public static class RefillCommand {
-        public static int refill(){
-            return ++Game.refillTick;
+        public static long refill(){
+            Game.refillTick = Game.gametime;
+            return Game.refillTick;
         }
         public RefillCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
@@ -270,7 +271,7 @@ public class ModCommands
     }
     public static class CleanItemsCommand {
         public static int cleanitems(long time,MinecraftServer server){
-            return ItemCleaner.cleanitems(time,server);
+            return ItemCleaner.cleanitems(server);
         }
         public CleanItemsCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)

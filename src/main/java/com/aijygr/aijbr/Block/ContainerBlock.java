@@ -6,14 +6,11 @@ import com.aijygr.aijbr.Entity.BlockEntity.LootContainer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -60,19 +57,19 @@ public class ContainerBlock extends BaseEntityBlock {
             if (blockentity instanceof LootContainer) {
                 player.openMenu((LootContainer) blockentity);
                 player.awardStat(Stats.OPEN_CHEST);
-                PiglinAi.angerNearbyPiglins(player, false);
+                //PiglinAi.angerNearbyPiglins(player, false);
             }
         }
         return InteractionResult.CONSUME;
     }
 
-    @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource randomSource) {
-        BlockEntity blockentity = level.getBlockEntity(pos);
-        if (blockentity instanceof LootContainer) {
-            ((LootContainer) blockentity).recheckOpen(null);
-        }
-    }
+//    @Override
+//    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource randomSource) {
+//        BlockEntity blockentity = level.getBlockEntity(pos);
+//        if (blockentity instanceof LootContainer) {
+//            ((LootContainer) blockentity).recheckOpen(null);
+//        }
+//    }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state2, boolean p_60519_) {

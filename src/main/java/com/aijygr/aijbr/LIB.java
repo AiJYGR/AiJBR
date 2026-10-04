@@ -124,7 +124,7 @@ public abstract class LIB {
     }
 
     private static boolean allowBRLOG(){
-        return ModConfig.Server.Config.ALLOW_BRLOG.get().get();
+        return ModConfig.Server.Config.MISCELLANEOUS.ALLOW_BRLOG.get().get();
     }
     private static long memTime = Long.MIN_VALUE;
     public static void BRLOG(String string){

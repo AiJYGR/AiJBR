@@ -14,7 +14,6 @@ import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.GameRules;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -26,6 +25,7 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class Game {
+    /// 随服务器刷新的gametime
     public static long gametime;
     public static long BRGameTime = 0;
     public static int damage_tickingtime = 30;
@@ -65,9 +65,8 @@ public class Game {
     public static int travelTick = 300;
     public static boolean shouldTravel = true;
 
-    /// 这个名字只是用惯了，和游戏刻tick没什么关系。
     /// 大概含义就是服务器存储的一个数值，如果和箱子的这个数值不同就需要刷新一下箱子的战利品表
-    public static int refillTick = 0;
+    public static long refillTick = 0;
     public static Map<String,TeamStatus> teamlist = new HashMap<>();
     public static Map<UUID,PlayerStatus> playerlist = new HashMap<>();
 

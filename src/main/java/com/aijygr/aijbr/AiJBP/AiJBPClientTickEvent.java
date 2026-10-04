@@ -47,7 +47,7 @@ public class AiJBPClientTickEvent {
                 List<SlotwithPermissionLevel> bp = slots.get("BACKPACK");
                 Inventory inventory = player.getInventory();
                 if(bp != null){
-                    short i = ModConfig.Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL.get().shortValue();
+                    short i = ModConfig.Server.Config.ITEM.BACKPACK_DEFAULT_PERMISSIONLEVEL.get().shortValue();
                     for(SlotwithPermissionLevel it : bp){
                         ItemStack itemstack = inventory.getItem(it.index);
                         if(!itemstack.isEmpty() && itemstack.getItem() instanceof Backpack backpack){
@@ -61,7 +61,7 @@ public class AiJBPClientTickEvent {
                     playerPermission = i;
                 }
                 else
-                    playerPermission = ModConfig.Server.Config.BACKPACK.DEFAULT_PERMISSIONLEVEL.get().shortValue();
+                    playerPermission = ModConfig.Server.Config.ITEM.BACKPACK_DEFAULT_PERMISSIONLEVEL.get().shortValue();
                 //Step2
                 for(Map.Entry<String, List<SlotwithPermissionLevel>> entry: slots.entrySet()){
                     for(SlotwithPermissionLevel slot:entry.getValue()){

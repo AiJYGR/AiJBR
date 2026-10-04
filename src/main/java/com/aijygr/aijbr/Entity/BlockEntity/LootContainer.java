@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.Main;
+import com.aijygr.aijbr.ModConfig;
 import com.aijygr.aijbr.Reg;
 import com.aijygr.aijbr.Block.ContainerBlock;
 
@@ -17,7 +18,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.CompoundContainer;
 import net.minecraft.world.Container;
@@ -44,7 +44,8 @@ import java.util.List;
 
 public class LootContainer extends RandomizableContainerBlockEntity{
     private NonNullList<ItemStack> items = NonNullList.withSize(9, ItemStack.EMPTY);
-    private long lastopenedtick = 0;
+    private long lastRefilledTick = 0;
+    private final String TAG = "LastRefilledTick";
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
             level.setBlock(pos, state.setValue(ContainerBlock.OPEN, true), 3);
@@ -102,18 +103,18 @@ public class LootContainer extends RandomizableContainerBlockEntity{
     @Override
     public void unpackLootTable(@Nullable Player player)
     {
-        if(Game.refillTick == lastopenedtick)
+        if(Game.refillTick == lastRefilledTick || Game.refillTick == 0)
             return ;
         if (this.lootTable != null && this.level.getServer() != null)
         {
+            lastRefilledTick = Game.refillTick;
+
             LootTable loottable = this.level.getServer().getLootData().getLootTable(this.lootTable);
             if (player instanceof ServerPlayer) {
                 CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayer) player, this.lootTable);
             }
             items = NonNullList.withSize(9, ItemStack.EMPTY);
-            lastopenedtick = Game.refillTick;
-            LootParams.Builder lootparams$builder = (new LootParams.Builder((ServerLevel) this.level))
-                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition));
+            LootParams.Builder lootparams$builder = (new LootParams.Builder((ServerLevel) this.level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition));
             if (player != null) {
                 lootparams$builder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
             }
@@ -164,19 +165,35 @@ public class LootContainer extends RandomizableContainerBlockEntity{
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, items);
+//        //如果有战利品表就不保存Items
+//        if (!this.trySaveLootTable(tag)) {
+//            ContainerHelper.saveAllItems(tag, items);
+//        }
+        trySaveLootTable(tag);//保存战利品表
+        if(ModConfig.Server.Config.MISCELLANEOUS.SAVE_LOOTCONTAINERS_ITEMS.get().get())
+        {
+            ContainerHelper.saveAllItems(tag,items);
+            tag.putLong(TAG,this.lastRefilledTick);//保存LastRefillTick
         }
     }
 
     @Override
     public void load(CompoundTag tag) {
-
         super.load(tag);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        if (!this.tryLoadLootTable(tag)) {
-            ContainerHelper.loadAllItems(tag, this.items);
-        }
+//        //如果有战利品表就不加载Items
+//        if (!this.tryLoadLootTable(tag)) {
+//            ContainerHelper.loadAllItems(tag, this.items);
+//        }
+        tryLoadLootTable(tag);
+        ContainerHelper.loadAllItems(tag,items);
+        if(tag.contains(TAG))
+            this.lastRefilledTick = tag.getLong(TAG);
+//        else
+//        {
+//            this.lastRefilledTick = 0;
+//            tag.putLong(TAG,this.lastRefilledTick);
+//        }
     }
 
     public void recheckOpen(Player player) {

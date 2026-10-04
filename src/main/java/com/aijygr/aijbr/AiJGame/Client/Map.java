@@ -1,5 +1,6 @@
 package com.aijygr.aijbr.AiJGame.Client;
 
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.plugin.AiJBRMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -8,7 +9,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid= Main.MODID,value = Dist.CLIENT)
 public class Map {
 
     @SubscribeEvent

@@ -4,6 +4,7 @@ import com.aijygr.aijbr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.aijbr.Entity.DropShip;
 import com.aijygr.aijbr.Item.Lock;
 import com.aijygr.aijbr.LIB;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.ModConfig;
 import com.aijygr.aijbr.ModEvents;
 import com.aijygr.aijbr.Network.ModMessages;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Main.MODID)
 public class AiJBRPlayer {
     private static int toTeamColor(int i){
         return switch (i){

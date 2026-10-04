@@ -17,9 +17,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
@@ -207,20 +209,24 @@ public abstract class LIB {
         }
     }
 
-    public static int killItemEntities(MinecraftServer server){
-//        int i = 0;
-//        for(ServerLevel level : server.getAllLevels()){
-//            for(Entity entity : level.getAllEntities()){
-//                if(entity instanceof ItemEntity){
-//                    entity.remove(Entity.RemovalReason.KILLED);
-//                    //entity.discard();
-//                    i++;
-//                }
-//            }
-//        }
-//        return i;
+    public static int killItemEntitiesByCMD(MinecraftServer server){
         return server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),"kill @e[type=minecraft:item]");
     }
+    public static int killItemEntities(MinecraftServer server){
+        int i = 0;
+        for(ServerLevel level : server.getAllLevels()){
+            var items = level.getEntities(EntityTypeTest.forClass(ItemEntity.class), item -> true);
+            for(Entity item : items){
+                if(item instanceof ItemEntity){
+                    item.remove(Entity.RemovalReason.KILLED);
+                    //item.discard();
+                    i++;
+                }
+            }
+        }
+        return i;
+    }
+
     public static int clearPlayersInv(MinecraftServer server){
         int i = 0;
         for(ServerPlayer player : server.getPlayerList().getPlayers()){

@@ -5,6 +5,7 @@ import com.aijygr.aijbr.AiJBP.SyncConfigJSON.BP.SyncBP;
 import com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag.SyncTag;
 import com.aijygr.aijbr.AiJGame.AiJBRPlayer;
 import com.aijygr.aijbr.AiJGame.Game;
+import com.aijygr.aijbr.ItemCleaner.ItemCleaner;
 import com.aijygr.aijbr.Screen.Scr;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -267,6 +268,21 @@ public class ModCommands
                     })));
         }
     }
+    public static class CleanItemsCommand {
+        public static int cleanitems(long time,MinecraftServer server){
+            return ItemCleaner.cleanitems(time,server);
+        }
+        public CleanItemsCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
+                    .then(Commands.literal("cleanitems").requires((source) -> {return source.hasPermission(3);})
+                            .executes((command)->{
+                                long time = command.getSource().getLevel().getGameTime();
+                                LIB.tryPlayerMessage(command.getSource().getPlayer(),String.format("CleanItemsTick = %d  Count = %d",time,cleanitems(time,command.getSource().getServer())));
+
+                                return 1;
+                            })));
+        }
+    }
 
     @SubscribeEvent
     public static void onServerCommandsRegister(RegisterCommandsEvent event)
@@ -278,6 +294,7 @@ public class ModCommands
         new PlayerLeaveCommand(event.getDispatcher());
         new SVCommand(event.getDispatcher());
         new RefillCommand(event.getDispatcher());
+        new CleanItemsCommand(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }
 

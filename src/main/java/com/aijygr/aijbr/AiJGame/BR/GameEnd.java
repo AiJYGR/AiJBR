@@ -27,7 +27,7 @@ public class GameEnd {
         MinecraftServer server = event.getServer();
         Game.sv_damage_per_block = 0.00001;
         Game.sv_basicdamage = 0.0;
-        LIB.schedule(server,20,()->{LIB.killItemEntities(server);});
+        LIB.schedule(server,20,()->{LIB.killItemEntitiesByCMD(server);});
         LIB.tryBroadcastMessage(server,"\n","msg.aijbr.bold","msg.aijbr.info.gameover");
     }
 }

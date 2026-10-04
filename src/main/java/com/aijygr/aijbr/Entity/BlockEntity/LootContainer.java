@@ -49,7 +49,6 @@ public class LootContainer extends RandomizableContainerBlockEntity{
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
             level.setBlock(pos, state.setValue(ContainerBlock.OPEN, true), 3);
             LootContainer.this.playSound(state, Reg.CONTAINER_OPEN_SOUND.get());
-            System.out.println(123);
         }
         protected void onClose(Level level, BlockPos pos, BlockState state) {
             level.setBlock(pos, state.setValue(ContainerBlock.OPEN, false), 3);

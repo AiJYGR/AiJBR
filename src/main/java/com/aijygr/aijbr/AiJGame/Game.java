@@ -7,12 +7,14 @@ import com.aijygr.aijbr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.aijbr.AiJGame.Client.MSGClientRingInfo;
 import com.aijygr.aijbr.AiJGame.Ring.RingGeneration;
 import com.aijygr.aijbr.LIB;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.ModConfig;
 import com.aijygr.aijbr.ModEvents;
 import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.GameRules;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -22,7 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.*;
 import java.util.List;
 
-@Mod.EventBusSubscriber()
+@Mod.EventBusSubscriber(modid = Main.MODID)
 public class Game {
     public static long gametime;
     public static long BRGameTime = 0;

@@ -98,7 +98,7 @@ public class GameStart {
             Game.sv_basicdamage = Game.r_basic_damage.get(0);
         }
         //清理掉落物 清空背包
-        LIB.killItemEntities(server);
+        LIB.killItemEntitiesByCMD(server);
         LIB.clearPlayersInv(server);
         //生成DropShip
         for (ServerLevel level : server.getAllLevels()) {

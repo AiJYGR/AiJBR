@@ -56,7 +56,7 @@ public class ModCommands
             "hoverEvent": {"action": "show_text", "contents": {"text": "Plz DM me if you meet bugs!", "color": "#00c897"}}
         },
         {"text": "Thanks to everyone who helped me with this!\\n", "color": "#eeeeee"},
-        {"text": "But no one has helped me so far QwQ", "color": "#DDDDDD", "obfuscated": true}
+        {"text": "I'm sooooo alone for sooooo looong", "color": "#DDDDDD", "obfuscated": true}
     ]
 }""".formatted(NAME, VERSION, LICENSE);
         public AiJBR(CommandDispatcher<CommandSourceStack> dispatcher) {

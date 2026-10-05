@@ -32,12 +32,7 @@ public class AiJBPClientTickEvent {
         LocalPlayer player = Minecraft.getInstance().player;
         if(player != null && event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END)
         {
-            if(player.isCreative()){
-                InventoryLock.unlockAll();
-                playerPermission = Short.MAX_VALUE;
-                return;
-            }
-            if(ClientGame.isBPSynced && ClientGame.isTagSynced /*&& isAvailable*/){
+            if((!player.isCreative()) && ClientGame.isBPSynced && ClientGame.isTagSynced /*&& isAvailable*/){
                 //1.检查背包格位 计算PermissionLevel
                 //2.锁格子
                 //3.扫描所有未上锁格子 检查非法位置
@@ -127,6 +122,19 @@ public class AiJBPClientTickEvent {
                         }
                     }
                 }
+            }
+            else
+            {
+                InventoryLock.unlockAll();
+                playerPermission = Short.MAX_VALUE;
+
+//                Inventory inventory = player.getInventory();
+//                for(int i=0;i<inventory.getContainerSize();i++){
+//                    if(inventory.getItem(i).getItem() instanceof Lock){
+//                        serverRemove((short) i,true);
+//                    }
+//                }
+                return;
             }
         }
     }

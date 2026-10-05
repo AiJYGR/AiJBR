@@ -42,6 +42,7 @@ public class AiJBackpack
         setAvailable();
         InventoryLock.unlockAll();
     }
+    ///remove:是否移除物品 否则掉落
     public static void serverRemove(short index, boolean remove){
         isAvailable = false;
         ModMessages.PlayerSendToServer(new MSGServerRemoveItem(index,remove));

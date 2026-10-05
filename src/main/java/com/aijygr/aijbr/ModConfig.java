@@ -140,7 +140,7 @@ public abstract class ModConfig {
                 public static LIB.BOOL ALLOW_BRLOG = LIB.BOOL.TRUE;
                 public static LIB.BOOL SAVE_LOOTCONTAINERS_ITEMS = LIB.BOOL.TRUE;
                 public static LIB.BOOL ENABLE_MAPRESETTER = LIB.BOOL.TRUE;
-                public static List<String> MAPRESETTER_EXCLUSIONS = new ArrayList<>(List.of("minecraft:iron_block","aijbr:loot_container"));
+                public static List<String> MAPRESETTER_EXCLUSIONS = new ArrayList<>(List.of("minecraft:command_block","aijbr:loot_container"));
             }
         }
     }
@@ -329,9 +329,10 @@ public abstract class ModConfig {
         Server.Config.DEV.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG", Server.Default.DEV.ALLOW_BRLOG);
         server_builder.comment("Whether to save LootContainers' items when deleting the instances(e.g. when chunks are deleted). For Dev's use, choose false when testing the map or game. In other cases this option should be kept true.");
         Server.Config.DEV.SAVE_LOOTCONTAINERS_ITEMS = server_builder.defineEnum("SaveLootContainersItems", Server.Default.DEV.SAVE_LOOTCONTAINERS_ITEMS);
-        server_builder.comment("New Feature of v1.1, allows you to record any block changes of the world. Restore all block changes recorded");
+        server_builder.comment("New test feature of v1.1. Subscribes and records any BlockState(Not NBT) changes of the world. Restore all changes(include NBTs) recorded.");
         Server.Config.DEV.ENABLE_MAPRESETTER = server_builder.defineEnum("EnableMapResetter", Server.Default.DEV.ENABLE_MAPRESETTER);
-        server_builder.comment("Exclusion block list of MapResetter. Blocks match the list will not be recorded.");
+        server_builder.comment("Exclusion block list of MapResetter. Blocks that match the list will not be recorded.",
+                "Default:[minecraft:command_block,aijbr:loot_container]");
         Server.Config.DEV.MAPRESETTER_EXCLUSIONS = server_builder.defineList("MapResetterExclusions", Server.Default.DEV.MAPRESETTER_EXCLUSIONS,(obj)->{return obj instanceof String;});
         SERVER_CONFIG = server_builder.build();
     }

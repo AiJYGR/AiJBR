@@ -5,10 +5,11 @@ import com.aijygr.aijbr.AiJBP.SyncConfigJSON.BP.SyncBP;
 import com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag.SyncTag;
 import com.aijygr.aijbr.AiJGame.AiJBRPlayer;
 import com.aijygr.aijbr.AiJGame.Game;
-import com.aijygr.aijbr.ItemCleaner.ItemCleaner;
-import com.aijygr.aijbr.MapResetter.MapResetSavedData;
+import com.aijygr.aijbr.AiJGameUtils.ItemCleaner;
+import com.aijygr.aijbr.AiJGameUtils.MapResetter.MapResetter;
 import com.aijygr.aijbr.Screen.Scr;
 
+import com.ibm.icu.impl.Pair;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.client.Minecraft;
@@ -288,15 +289,19 @@ public class ModCommands
     }
 
     public static class MapResetCommand {
-        public static int resetMap(ServerLevel serverLevel){
-            return MapResetSavedData.getInstance(serverLevel).resetMap(serverLevel);
+        public static Pair<Integer,Integer> resetMap(ServerLevel serverLevel){
+            return MapResetter.getInstance(serverLevel).resetMap(serverLevel);
+        }
+        public static int clearData(ServerLevel serverLevel){
+            return MapResetter.getInstance(serverLevel).clearData(serverLevel);
         }
         public MapResetCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
-                    .then(Commands.literal("resetmap").requires((source) -> {return source.hasPermission(3);})
+                    .then(Commands.literal("mapresetter")
+                    .then(Commands.literal("reset").requires((source) -> {return source.hasPermission(3);})
                             .executes((command)->{
-                                int i =resetMap(command.getSource().getLevel());
-                                String str = String.format("BlocksReset:%d",i);
+                                var result =resetMap(command.getSource().getLevel());
+                                String str = String.format("BlocksReset:%d BlockEntities:%d",result.first,result.second);
                                 try{
                                     LIB.tryPlayerMessage(command.getSource().getPlayerOrException(),str);
                                 }
@@ -304,7 +309,20 @@ public class ModCommands
                                     System.out.println("[Server]"+str);
                                 }
                                 return 1;
-                            })));
+                            }))
+                    .then(Commands.literal("cleardata").requires((source) -> {return source.hasPermission(3);})
+                            .executes((command)->{
+                                int result = clearData(command.getSource().getLevel());
+                                String str = String.format("DataCleared:%d",result);
+                                try{
+                                    LIB.tryPlayerMessage(command.getSource().getPlayerOrException(),str);
+                                }
+                                catch(Exception e){
+                                    System.out.println("[Server]"+str);
+                                }
+                                return 1;
+                            }))
+            ));
         }
     }
 

@@ -1,4 +1,4 @@
-package com.aijygr.aijbr.ItemCleaner;
+package com.aijygr.aijbr.AiJGameUtils;
 
 import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.Main;

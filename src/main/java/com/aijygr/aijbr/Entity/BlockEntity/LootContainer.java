@@ -15,6 +15,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -170,7 +171,7 @@ public class LootContainer extends RandomizableContainerBlockEntity{
 //            ContainerHelper.saveAllItems(tag, items);
 //        }
         trySaveLootTable(tag);//保存战利品表
-        if(ModConfig.Server.Config.MISCELLANEOUS.SAVE_LOOTCONTAINERS_ITEMS.get().get())
+        if(ModConfig.Server.Config.DEV.SAVE_LOOTCONTAINERS_ITEMS.get().get())
         {
             ContainerHelper.saveAllItems(tag,items);
             tag.putLong(TAG,this.lastRefilledTick);//保存LastRefillTick
@@ -218,4 +219,15 @@ public class LootContainer extends RandomizableContainerBlockEntity{
       double d2 = (double)this.worldPosition.getZ() + 0.5D + (double)vec3i.getZ() / 2.0D;
       this.getLevel().playSound(null, d0, d1, d2, pSound, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
    }
+
+    @Override
+    public boolean canOpen(Player player) {
+        //让旁观模式也能打开战利品表
+        ResourceLocation savedLootTable = this.lootTable;
+        this.lootTable = null;
+        boolean canOpen = super.canOpen(player);
+        this.lootTable = savedLootTable;
+
+        return canOpen;
+    }
 }

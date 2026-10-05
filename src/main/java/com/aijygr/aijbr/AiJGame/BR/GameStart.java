@@ -8,6 +8,7 @@ import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.AiJGame.Ring.RingMove;
 import com.aijygr.aijbr.Entity.DropShip;
 import com.aijygr.aijbr.ItemCleaner.ItemCleaner;
+import com.aijygr.aijbr.MapResetter.MapResetSavedData;
 import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -98,10 +99,12 @@ public class GameStart {
             Game.sv_damage_per_block = Game.r_damage_per_block.get(0);
             Game.sv_basicdamage = Game.r_basic_damage.get(0);
         }
-        //清理掉落物 清空背包
-        //LIB.killItemEntitiesByCMD(server);
+
+        //清理掉落物 清空背包 清理地图
         ItemCleaner.cleanitems(server);
+        MapResetSavedData.getInstance(server.overworld()).resetMap(server.overworld());
         LIB.clearPlayersInv(server);
+
         //生成DropShip
         for (ServerLevel level : server.getAllLevels()) {
             level.getEntities().getAll().forEach(entity -> {

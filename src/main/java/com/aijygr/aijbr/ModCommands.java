@@ -6,6 +6,7 @@ import com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag.SyncTag;
 import com.aijygr.aijbr.AiJGame.AiJBRPlayer;
 import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.ItemCleaner.ItemCleaner;
+import com.aijygr.aijbr.MapResetter.MapResetSavedData;
 import com.aijygr.aijbr.Screen.Scr;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -16,6 +17,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -285,6 +287,27 @@ public class ModCommands
         }
     }
 
+    public static class MapResetCommand {
+        public static int resetMap(ServerLevel serverLevel){
+            return MapResetSavedData.getInstance(serverLevel).resetMap(serverLevel);
+        }
+        public MapResetCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+            dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
+                    .then(Commands.literal("resetmap").requires((source) -> {return source.hasPermission(3);})
+                            .executes((command)->{
+                                int i =resetMap(command.getSource().getLevel());
+                                String str = String.format("BlocksReset:%d",i);
+                                try{
+                                    LIB.tryPlayerMessage(command.getSource().getPlayerOrException(),str);
+                                }
+                                catch(Exception e){
+                                    System.out.println("[Server]"+str);
+                                }
+                                return 1;
+                            })));
+        }
+    }
+
     @SubscribeEvent
     public static void onServerCommandsRegister(RegisterCommandsEvent event)
     {
@@ -296,6 +319,7 @@ public class ModCommands
         new SVCommand(event.getDispatcher());
         new RefillCommand(event.getDispatcher());
         new CleanItemsCommand(event.getDispatcher());
+        new MapResetCommand(event.getDispatcher());
         ConfigCommand.register(event.getDispatcher());
     }
 

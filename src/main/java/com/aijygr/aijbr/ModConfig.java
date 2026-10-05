@@ -62,9 +62,11 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> RESPAWNATDEATHPOINT;
                 public static ForgeConfigSpec.DoubleValue EMPTYHANDMELEEDAMAGEMULTIPLIER;
             }
-            public static class MISCELLANEOUS{
+            public static class DEV {
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOW_BRLOG;
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> SAVE_LOOTCONTAINERS_ITEMS;
+                public static ForgeConfigSpec.EnumValue<LIB.BOOL> ENABLE_MAPRESETTER;
+                public static ForgeConfigSpec.ConfigValue<List<? extends String>> MAPRESETTER_EXCLUSIONS;
             }
         }
 
@@ -134,9 +136,11 @@ public abstract class ModConfig {
                 public static final LIB.BOOL RESPAWNATDEATHPOINT = LIB.BOOL.TRUE;
                 public static final double EMPTYHANDMELEEDAMAGEMULTIPIER = 2.0;
             }
-            public static class MISCELLANEOUS{
+            public static class DEV {
                 public static LIB.BOOL ALLOW_BRLOG = LIB.BOOL.TRUE;
                 public static LIB.BOOL SAVE_LOOTCONTAINERS_ITEMS = LIB.BOOL.TRUE;
+                public static LIB.BOOL ENABLE_MAPRESETTER = LIB.BOOL.TRUE;
+                public static List<String> MAPRESETTER_EXCLUSIONS = new ArrayList<>(List.of("minecraft:iron_block","aijbr:loot_container"));
             }
         }
     }
@@ -322,9 +326,13 @@ public abstract class ModConfig {
 
         server_builder.push("Dev Tools");
         server_builder.comment("Whether to log BR GAME Status like RingSize, Damage, AirRoute, etc.");
-        Server.Config.MISCELLANEOUS.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG",Server.Default.MISCELLANEOUS.ALLOW_BRLOG);
+        Server.Config.DEV.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG", Server.Default.DEV.ALLOW_BRLOG);
         server_builder.comment("Whether to save LootContainers' items when deleting the instances(e.g. when chunks are deleted). For Dev's use, choose false when testing the map or game. In other cases this option should be kept true.");
-        Server.Config.MISCELLANEOUS.SAVE_LOOTCONTAINERS_ITEMS = server_builder.defineEnum("SaveLootContainersItems",Server.Default.MISCELLANEOUS.SAVE_LOOTCONTAINERS_ITEMS);
+        Server.Config.DEV.SAVE_LOOTCONTAINERS_ITEMS = server_builder.defineEnum("SaveLootContainersItems", Server.Default.DEV.SAVE_LOOTCONTAINERS_ITEMS);
+        server_builder.comment("New Feature of v1.1, allows you to record any block changes of the world. Restore all block changes recorded");
+        Server.Config.DEV.ENABLE_MAPRESETTER = server_builder.defineEnum("EnableMapResetter", Server.Default.DEV.ENABLE_MAPRESETTER);
+        server_builder.comment("Exclusion block list of MapResetter. Blocks match the list will not be recorded.");
+        Server.Config.DEV.MAPRESETTER_EXCLUSIONS = server_builder.defineList("MapResetterExclusions", Server.Default.DEV.MAPRESETTER_EXCLUSIONS,(obj)->{return obj instanceof String;});
         SERVER_CONFIG = server_builder.build();
     }
 }

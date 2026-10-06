@@ -31,9 +31,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class AiJBRPlayer {
@@ -160,8 +158,8 @@ public class AiJBRPlayer {
 
     public static List<String> getAlivePlayers(MinecraftServer server){
         List<UUID> list = new ArrayList<>();
-        for(UUID uuid : Game.playerlist.keySet()){
-            if(Game.playerlist.get(uuid)!= Game.PlayerStatus.DEAD){
+        for(UUID uuid : Game.getPlayerlist().keySet()){
+            if(!Game.getPlayerlist().get(uuid).isDEAD()){
                 list.add(uuid);
             }
         }
@@ -181,8 +179,8 @@ public class AiJBRPlayer {
                     UUID uuid = LIB.playerNametoUUID(server,str);
                     if(uuid==null)
                         uuid = UUID.fromString(str);
-                    if(Game.playerlist.containsKey(uuid)){
-                        if(Game.playerlist.get(uuid)!= Game.PlayerStatus.DEAD){
+                    if(Game.getPlayerlist().containsKey(uuid)){
+                        if(!Game.getPlayerlist().get(uuid).isDEAD()){
                             flag = true;
                             break;
                         }
@@ -273,6 +271,43 @@ public class AiJBRPlayer {
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            Map<UUID, Game.PlayerStatus> playerlist = Game.getPlayerlist();
+            Game.PlayerStatus status = playerlist.get(player.getUUID());
+            if(status!=null)
+            {
+                UUID uuid = player.getUUID();
+                if(status.isALIVE())//ALIVE->DBNO
+                {
+                    Game.setPlayerStatus(uuid, Game.PlayerStatus.DBNO);
+                    player.setHealth(1.0f);
+                    if (event.getSource().getEntity() != null)
+                        LIB.tryBroadcastMessage(event.getEntity().getServer(),event.getSource().getEntity().getName(),LIB.makeComponent(" -DBNO> "),player.getName());
+                    else
+                        LIB.tryBroadcastMessage(event.getEntity().getServer(),LIB.makeComponent(" -DBNO> "),player.getName());
+
+
+                    event.setCanceled(true);
+                    return;
+                }
+                else if(status.isDBNO())//DBNO->DEAD
+                {
+                    //设置状态
+                    if (playerlist.containsKey(uuid)) {
+                        Game.setPlayerStatus(uuid, Game.PlayerStatus.DEAD);
+                    }
+                    MinecraftServer server = event.getEntity().getServer();
+                    updateAndBroadcastPlayerInfo(server);
+                    //设置重生点
+                    if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get().get())
+                        player.setRespawnPosition(player.level().dimension(),player.blockPosition(),player.getYRot(),true,false);
+
+                    LIB.schedule(server,11,() -> player.setGameMode(GameType.SPECTATOR));
+                }
+            }
+            else
+            {
+                Main.LOGGER.info("PlayerStatus is null, game is not started/player did not join the game");
+            }
             //清除身上的Lock
             Inventory inventory = player.getInventory();
             player.setExperienceLevels(0);
@@ -282,22 +317,6 @@ public class AiJBRPlayer {
                 if (!stack.isEmpty() && stack.getItem() instanceof Lock)
                     inventory.setItem(i, ItemStack.EMPTY);
             }
-            //设置状态
-            UUID uuid = player.getUUID();
-            if (Game.playerlist.containsKey(uuid)) {
-                Game.playerlist.put(uuid, Game.PlayerStatus.DEAD);
-            }
-            MinecraftServer server = event.getEntity().getServer();
-            updateAndBroadcastPlayerInfo(server);
-            //设置重生点
-            if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get().get())
-                player.setRespawnPosition(player.level().dimension(),player.blockPosition(),player.getYRot(),true,false);
-
-            LIB.schedule(server,11,()->{
-                if(player!=null)
-                    player.setGameMode(GameType.SPECTATOR);
-            });
-
         }
     }
     @SubscribeEvent

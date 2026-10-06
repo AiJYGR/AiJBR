@@ -68,12 +68,30 @@ public class Game {
     /// 大概含义就是服务器存储的一个数值，如果和箱子的这个数值不同就需要刷新一下箱子的战利品表
     public static long refillTick = 0;
     public static Map<String,TeamStatus> teamlist = new HashMap<>();
-    public static Map<UUID,PlayerStatus> playerlist = new HashMap<>();
+    private static Map<UUID,PlayerStatus> playerlist = new HashMap<>();
+
+    public static Map<UUID,PlayerStatus> getPlayerlist() {
+        return playerlist;
+    }
+    public static void setPlayerStatus(UUID uuid, PlayerStatus status)
+    {
+        playerlist.put(uuid,status);
+    }
 
     public enum PlayerStatus{
         ALIVE,
-        //DBNO,
-        DEAD
+        DBNO,
+        DEAD;
+        public boolean  isALIVE(){
+            return this == PlayerStatus.ALIVE;
+        }
+        public boolean isDEAD(){
+            return this == PlayerStatus.DEAD;
+        }
+
+        public boolean isDBNO() {
+            return this == PlayerStatus.DBNO;
+        }
     }
     public enum TeamStatus{
         ALIVE,
@@ -90,7 +108,6 @@ public class Game {
                 BRGameTime++;
                 sv_roundtick--;
             }
-
         }
     }
 
@@ -139,7 +156,7 @@ public class Game {
         rules.getRule(GameRules.RULE_RANDOMTICKING).set(0,server);
 
         rules.getRule(GameRules.RULE_SPAWN_RADIUS).set(0,server);
-        rules.getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(false,server);
+        //rules.getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(false,server);
 
 
         server.getLevel(ServerLevel.OVERWORLD).getWorldBorder().setDamagePerBlock(0.0);

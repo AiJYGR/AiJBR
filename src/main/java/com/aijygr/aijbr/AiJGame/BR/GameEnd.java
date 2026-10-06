@@ -2,6 +2,7 @@ package com.aijygr.aijbr.AiJGame.BR;
 
 import com.aijygr.aijbr.AiJGame.AiJBRPlayer;
 import com.aijygr.aijbr.AiJGame.Game;
+import com.aijygr.aijbr.AiJGameUtils.ItemCleaner;
 import com.aijygr.aijbr.LIB;
 import com.aijygr.aijbr.ModEvents;
 import net.minecraft.server.MinecraftServer;
@@ -27,7 +28,7 @@ public class GameEnd {
         MinecraftServer server = event.getServer();
         Game.sv_damage_per_block = 0.00001;
         Game.sv_basicdamage = 0.0;
-        LIB.schedule(server,20,()->{LIB.killItemEntitiesByCMD(server);});
+        LIB.schedule(server,20,()->{ItemCleaner.cleanitems(server);});
         LIB.tryBroadcastMessage(server,"\n","msg.aijbr.bold","msg.aijbr.info.gameover");
     }
 }

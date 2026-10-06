@@ -56,20 +56,21 @@ public abstract class LIB {
     }
 
     public static void tryBroadcastMessage(Player player, String... messages) {
-        messages = Arrays.copyOf(messages, messages.length);
-        MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
-        StringBuilder str = new StringBuilder();
-        for (String message : messages) {
-            component.append(Component.translatable(message));
-            str.append(message).append(" ");
-        }
         if(player!=null)
-            player.getServer().getPlayerList().broadcastSystemMessage(component,false);
+            tryBroadcastMessage(player.getServer(), messages);
         else
+        {
+            StringBuilder str = new StringBuilder();
+            MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
+            for (String message : messages) {
+                component.append(Component.translatable(message));
+                str.append(message).append(" ");
+            }
             Main.LOGGER.info("[AiJBR]tryBroadcastMessage:{}", str);
+        }
+
     }
     public static void tryBroadcastMessage(MinecraftServer server, String... messages) {
-        messages = Arrays.copyOf(messages, messages.length);
         MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
         StringBuilder str = new StringBuilder();
         for (String message : messages) {
@@ -77,6 +78,14 @@ public abstract class LIB {
             str.append(message).append(" ");
         }
         server.getPlayerList().broadcastSystemMessage(component,false);
+    }
+
+    public static void tryBroadcastMessage(MinecraftServer server, Component... components) {
+        MutableComponent message = MutableComponent.create(ComponentContents.EMPTY);
+        for (Component part : components) {
+            message.append(part);
+        }
+        server.getPlayerList().broadcastSystemMessage(message,false);
     }
 
     public static MutableComponent makeComponent(MutableComponent component,String... messages) {

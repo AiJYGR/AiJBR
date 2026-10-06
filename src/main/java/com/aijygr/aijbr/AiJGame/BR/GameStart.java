@@ -44,10 +44,10 @@ public class GameStart {
         for(String str : AiJBRPlayer.getTeamsNames(server))
             Game.teamlist.put(str, Game.TeamStatus.ALIVE);
         for(UUID uuid : AiJBRPlayer.getPlayers(server))
-            Game.playerlist.put(uuid, Game.PlayerStatus.ALIVE);
+            Game.setPlayerStatus(uuid, Game.PlayerStatus.ALIVE);
 
         for(ServerPlayer player : server.getPlayerList().getPlayers()){
-            if(Game.playerlist.containsKey(player.getUUID())){
+            if(Game.getPlayerlist().containsKey(player.getUUID())){
                 AiJBRPlayer.resetPlayerAttributes(player);
             }
             else
@@ -145,7 +145,7 @@ public class GameStart {
 
             LIB.TPwithForceLoad(dropship,startingpoint);
 
-            for(UUID uuid : Game.playerlist.keySet()){
+            for(UUID uuid : Game.getPlayerlist().keySet()){
                 AiJDropShip.playerGetOn(server, uuid, dropship);
             }
             dropship.setMotion(motion);

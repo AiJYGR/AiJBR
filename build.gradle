@@ -214,6 +214,9 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:neat-238372:5838485")
     runtimeOnly fg.deobf("curse.maven:damage-number-998849:7060656")
 
+    //runtimeOnly fg.deobf("curse.maven:revive-me-676140:8715922")
+    //runtimeOnly fg.deobf("curse.maven:invocore-utility-mod-693881:6773723")
+
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

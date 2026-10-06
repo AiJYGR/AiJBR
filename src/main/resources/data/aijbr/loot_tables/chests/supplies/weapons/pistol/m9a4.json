@@ -9,7 +9,7 @@
                     "functions": [
                         {
                             "function": "set_nbt",
-                            "tag":"{\"GunId\":\"tacz:springfield1873\",\"GunFireMode\":\"SEMI\",\"AttachmentLock\":1b,\"AttachmentSCOPE\":{\"id\":\"tacz:attachment\",\"Count\":1b,\"tag\":{\"AttachmentId\":\"tacz:scope_1873_6x\"}}}"
+                            "tag":"{\"GunId\":\"tacz:m9a4\",\"GunFireMode\":\"SEMI\"}"
                         }
                     ]
                 }
@@ -19,12 +19,12 @@
             "rolls": {
                 "type":"uniform",
                 "min":1,
-                "max":1
+                "max":2
             },
             "entries": [
                 {
                     "type": "loot_table",
-                    "name": "aijbr:chests/supplies/bullets/bullet/45_70",
+                    "name": "aijbr:chests/supplies/bullets/bullet/9mm",
                     "weight":50
                 }
             ]

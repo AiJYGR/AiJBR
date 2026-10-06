@@ -79,13 +79,13 @@
                         {
                             "type": "loot_table",
                             "name": "aijbr:chests/supplies/armors/armor/lvl3_armor",
-                            "weight": 7
+                            "weight": 8
                             
                         },
                         {
                             "type": "loot_table",
                             "name": "aijbr:chests/supplies/armors/armor/lvl2_armor",
-                            "weight": 3
+                            "weight": 2
                         }
                     ],
                     "weight":1
@@ -117,6 +117,11 @@
                             "type": "loot_table",
                             "name": "aijbr:chests/supplies/modules/sight/scope_lpvo_1_6",
                             "weight": 2
+                        },
+                        {
+                            "type": "loot_table",
+                            "name": "aijbr:chests/supplies/modules/sight/scope_mk5hd",
+                            "weight": 1
                         }
                     ],
                     "weight":1

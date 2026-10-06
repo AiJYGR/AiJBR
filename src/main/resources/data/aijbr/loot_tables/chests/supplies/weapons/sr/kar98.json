@@ -9,7 +9,7 @@
                     "functions": [
                         {
                             "function": "set_nbt",
-                            "tag":"{\"GunId\":\"tacz:springfield1873\",\"GunFireMode\":\"SEMI\",\"AttachmentLock\":1b,\"AttachmentSCOPE\":{\"id\":\"tacz:attachment\",\"Count\":1b,\"tag\":{\"AttachmentId\":\"tacz:scope_1873_6x\"}}}"
+                            "tag":"{\"GunId\":\"tacz:kar98\",\"GunFireMode\":\"SEMI\",\"AttachmentLock\":1b,\"AttachmentSCOPE\":{\"id\":\"tacz:attachment\",\"Count\":1b,\"tag\":{\"AttachmentId\":\"tacz:scope_98k\"}}}"
                         }
                     ]
                 }
@@ -24,7 +24,7 @@
             "entries": [
                 {
                     "type": "loot_table",
-                    "name": "aijbr:chests/supplies/bullets/bullet/45_70",
+                    "name": "aijbr:chests/supplies/bullets/bullet/792x57",
                     "weight":50
                 }
             ]

@@ -57,6 +57,11 @@
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/bullets/bullet/762x39",
                     "weight":50
+                },
+                {
+                    "type": "loot_table",
+                    "name": "aijbr:chests/supplies/bullets/bullet/792x57",
+                    "weight":20
                 }
             ]
         }

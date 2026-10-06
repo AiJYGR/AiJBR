@@ -156,6 +156,7 @@ public class Game {
         rules.getRule(GameRules.RULE_RANDOMTICKING).set(0,server);
 
         rules.getRule(GameRules.RULE_SPAWN_RADIUS).set(0,server);
+        rules.getRule(GameRules.RULE_DOMOBLOOT).set(false,server);
         //rules.getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(false,server);
 
 

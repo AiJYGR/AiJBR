@@ -42,7 +42,6 @@ public abstract class LIB {
     }
 
     public static void tryPlayerMessage(Player player, String... messages) {
-        messages = Arrays.copyOf(messages, messages.length);
         MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
         StringBuilder str = new StringBuilder();
         for (String message : messages) {
@@ -53,6 +52,16 @@ public abstract class LIB {
             player.sendSystemMessage(component);
         else
             Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", str);
+    }
+    public static void tryPlayerMessage(Player player, Component... components) {
+        MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
+        for(Component comp : components) {
+            component.append(comp);
+        }
+        if (player!=null)
+            player.sendSystemMessage(component);
+        else
+            Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", component.getString());
     }
 
     public static void tryBroadcastMessage(Player player, String... messages) {

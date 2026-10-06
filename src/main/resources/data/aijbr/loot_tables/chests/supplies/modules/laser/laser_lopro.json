@@ -9,7 +9,7 @@
                     "functions": [
                         {
                             "function": "set_nbt",
-                            "tag":"{\"AttachmentId\":\"suffuse:pistollaser\"}"
+                            "tag":"{\"AttachmentId\":\"tacz:laser_lopro\"}"
                         },
                         {
                             "function": "set_count",

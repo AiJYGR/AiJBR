@@ -187,7 +187,7 @@ public class ModCommands
                 {
                     if(AiJBRPlayer.joinTeam(player,i))
                     {
-                        LIB.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_join_team_p1",AiJBRPlayer.toTeamName(i),"msg.aijbr.info.command_player_join_team_p2");
+                        LIB.tryPlayerMessage(player,Component.translatable("msg.aijbr.green"),Component.translatable("msg.aijbr.info.command_player_join_team",AiJBRPlayer.toTeamName(i)));
                         return 0;
                     }
                 }
@@ -202,11 +202,11 @@ public class ModCommands
             }
             if(player!=null){
                 if(AiJBRPlayer.joinTeam(player,team)){
-                    LIB.tryPlayerMessage(player,"msg.aijbr.green","msg.aijbr.info.command_player_join_team_p1",AiJBRPlayer.toTeamName(team),"msg.aijbr.info.command_player_join_team_p2");
+                    LIB.tryPlayerMessage(player,Component.translatable("msg.aijbr.green"),Component.translatable("msg.aijbr.info.command_player_join_team",AiJBRPlayer.toTeamName(team)));
                     return 1;
                 }
             }
-            LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_player_join_team_failed_p1",AiJBRPlayer.toTeamName(team),"msg.aijbr.err.command_player_join_team_failed_p2");
+            LIB.tryPlayerMessage(player,Component.translatable("msg.aijbr.red"),Component.translatable("msg.aijbr.err.command_player_join_team_failed",AiJBRPlayer.toTeamName(team)));
             return 0;
         }
         public PlayerJoinCommand(CommandDispatcher<CommandSourceStack> dispatcher) {

@@ -18,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.scores.PlayerTeam;
@@ -264,9 +265,8 @@ public class AiJBRPlayer {
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
         if(event.getEntity() instanceof ServerPlayer player)
         {
-            //setSpectator(player);
+            setSpectator(player);
         }
-
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
@@ -276,20 +276,21 @@ public class AiJBRPlayer {
             if(status!=null)
             {
                 UUID uuid = player.getUUID();
-                if(status.isALIVE())//ALIVE->DBNO
-                {
-                    Game.setPlayerStatus(uuid, Game.PlayerStatus.DBNO);
-                    player.setHealth(1.0f);
-                    if (event.getSource().getEntity() != null)
-                        LIB.tryBroadcastMessage(event.getEntity().getServer(),event.getSource().getEntity().getName(),LIB.makeComponent(" -DBNO> "),player.getName());
-                    else
-                        LIB.tryBroadcastMessage(event.getEntity().getServer(),LIB.makeComponent(" -DBNO> "),player.getName());
-
-
-                    event.setCanceled(true);
-                    return;
-                }
-                else if(status.isDBNO())//DBNO->DEAD
+//                if(status.isALIVE())//ALIVE->DBNO
+//                {
+//                    Game.setPlayerStatus(uuid, Game.PlayerStatus.DBNO);
+//                    player.setHealth(1.0f);
+//                    MinecraftServer server = player.getServer();
+//                    if (event.getSource().getEntity() != null)
+//                        LIB.tryBroadcastMessage(server,Component.translatable("msg.aijbr.info.dbno_by",player.getName(),event.getSource().getEntity().getName()));
+//                    else
+//                        LIB.tryBroadcastMessage(server,Component.translatable("msg.aijbr.info.dbno",player.getName()));
+//
+//
+//                    event.setCanceled(true);
+//                    return;
+//                }
+                if(status.isALIVE() ||status.isDBNO())//DBNO->DEAD
                 {
                     //设置状态
                     if (playerlist.containsKey(uuid)) {
@@ -297,11 +298,10 @@ public class AiJBRPlayer {
                     }
                     MinecraftServer server = event.getEntity().getServer();
                     updateAndBroadcastPlayerInfo(server);
-                    //设置重生点
-                    if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get().get())
-                        player.setRespawnPosition(player.level().dimension(),player.blockPosition(),player.getYRot(),true,false);
-
-                    LIB.schedule(server,11,() -> player.setGameMode(GameType.SPECTATOR));
+                    if(server.getGameRules().getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).get())
+                        player.setGameMode(GameType.SPECTATOR);
+                    else
+                        LIB.schedule(server,11,() -> player.setGameMode(GameType.SPECTATOR));
                 }
             }
             else
@@ -317,6 +317,9 @@ public class AiJBRPlayer {
                 if (!stack.isEmpty() && stack.getItem() instanceof Lock)
                     inventory.setItem(i, ItemStack.EMPTY);
             }
+            //设置重生点
+            if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get().get())
+                player.setRespawnPosition(player.level().dimension(),player.blockPosition(),player.getYRot(),true,false);
         }
     }
     @SubscribeEvent

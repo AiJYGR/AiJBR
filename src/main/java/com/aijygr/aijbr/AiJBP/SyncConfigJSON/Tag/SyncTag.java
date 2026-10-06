@@ -62,9 +62,16 @@ public class SyncTag {
       "tacz:deagle":["MAINWPN","SUBWPN"],
       "tacz:deagle_golden":["MAINWPN","SUBWPN"],
       "tacz:glock_17":["MAINWPN","SUBWPN"],
+      "tacz:lonetrail":["MAINWPN","SUBWPN"],
       "tacz:m1911":["MAINWPN","SUBWPN"],
+      "tacz:m9a4":["MAINWPN","SUBWPN"],
+      "tacz:mk23":["MAINWPN","SUBWPN"],
       "tacz:p320":["MAINWPN","SUBWPN"],
+      "tacz:rhino357":["MAINWPN","SUBWPN"],
+      "tacz:taurus500":["MAINWPN","SUBWPN"],
+      "tacz:taurus943":["MAINWPN","SUBWPN"],
       "tacz:timeless50":["MAINWPN","SUBWPN"],
+      
 
       "tacz:aa12":["MAINWPN"],
       "tacz:db_long":["MAINWPN"],
@@ -80,6 +87,7 @@ public class SyncTag {
       "tacz:vector45":["MAINWPN"],
 
       "tacz:ai_awp":["MAINWPN"],
+      "tacz:kar98":["MAINWPN"],
       "tacz:m700":["MAINWPN"],
       "tacz:springfield1873":["MAINWPN"],
 

@@ -265,7 +265,7 @@ public class ModCommands
         }
         public RefillCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
-                    .then(Commands.literal("refill").requires((source) -> {return source.hasPermission(3);})
+                    .then(Commands.literal("refill").requires((source) -> {return source.hasPermission(2);})
                     .executes((command)->{
                         LIB.tryPlayerMessage(command.getSource().getPlayer(),String.format("RefillTick = %d",refill()));
                         return 1;
@@ -274,7 +274,7 @@ public class ModCommands
     }
     public static class CleanItemsCommand {
         public static int cleanitems(long time,MinecraftServer server){
-            return ItemCleaner.cleanitems(server);
+            return ItemCleaner.cleanAllItems(server);
         }
         public CleanItemsCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
@@ -297,8 +297,8 @@ public class ModCommands
         }
         public MapResetCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
-                    .then(Commands.literal("mapresetter")
-                    .then(Commands.literal("reset").requires((source) -> {return source.hasPermission(3);})
+                    .then(Commands.literal("mapresetter").requires((source) -> {return source.hasPermission(3);})
+                    .then(Commands.literal("reset")
                             .executes((command)->{
                                 var result =resetMap(command.getSource().getLevel());
                                 String str = String.format("BlocksReset:%d BlockEntities:%d",result.first,result.second);

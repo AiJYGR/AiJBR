@@ -101,7 +101,7 @@ public class GameStart {
         }
 
         //清理掉落物 清空背包 清理地图
-        ItemCleaner.cleanitems(server);
+        ItemCleaner.cleanAllItems(server);
         MapResetter.getInstance(server.overworld()).resetMap(server.overworld());
         LIB.clearPlayersInv(server);
 

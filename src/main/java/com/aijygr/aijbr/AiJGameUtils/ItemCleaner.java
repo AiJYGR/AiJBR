@@ -20,13 +20,19 @@ public class ItemCleaner {
     public static final String TAG = "ItemCleaner";
     public static long time = -1;
 
-    public static int cleanitems(MinecraftServer server)
+    public static int cleanAllItems(MinecraftServer server)
     {
         updatetime(Game.gametime);
+        return cleanOldItems(server);
+    }
+    public static int cleanOldItems(MinecraftServer server)
+    {
         int i = 0;
         for(ServerLevel level : server.getAllLevels()){
             var entities = level.getAllEntities();
             for(Entity entity : entities){
+                if(entity==null)
+                    continue;
                 if(isTarget(entity)){
                     entity.remove(Entity.RemovalReason.KILLED);
                     i++;

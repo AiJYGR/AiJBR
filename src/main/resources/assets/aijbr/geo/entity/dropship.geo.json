@@ -1,9 +1,9 @@
 {
-	"format_version": "1.21.0",
+	"format_version": "1.12.0",
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.unknown",
+				"identifier": "geometry.dropship",
 				"texture_width": 64,
 				"texture_height": 64,
 				"visible_bounds_width": 5,
@@ -24,7 +24,7 @@
 								"north": {"uv": [16, 0], "uv_size": [48, 16]},
 								"east": {"uv": [0, 0], "uv_size": [16, 16]},
 								"south": {"uv": [16, 0], "uv_size": [48, 16]},
-								"west": {"uv": [48, 15.25], "uv_size": [16, 16]},
+								"west": {"uv": [31.75, 0], "uv_size": [16, 16]},
 								"up": {"uv": [16, 0], "uv_size": [48, 16]},
 								"down": {"uv": [16, 16], "uv_size": [48, -16]}
 							}

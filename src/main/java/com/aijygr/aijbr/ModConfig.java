@@ -113,7 +113,7 @@ public abstract class ModConfig {
 
             }
             public static final class DROPSHIP{
-                public static final double SPEED = 1.5d;
+                public static final double SPEED = 1.0d;
                 public static final short HEIGHT = 200;
                 public static final LIB.BOOL SHOULDFLYTOBATTLEFIELD = LIB.BOOL.FALSE;
                 public static final int PREWAITINGTICK = 300;

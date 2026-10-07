@@ -56,7 +56,7 @@
                 {
                     "type": "loot_table",
                     "name": "aijbr:chests/supplies/weapons/pistol/lonetrail",
-                    "weight":10
+                    "weight":0
                 }
             ]
         }

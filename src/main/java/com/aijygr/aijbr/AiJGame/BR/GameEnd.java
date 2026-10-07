@@ -12,7 +12,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.awt.*;
 import java.util.List;
 
 @Mod.EventBusSubscriber
@@ -33,7 +32,7 @@ public class GameEnd {
         MinecraftServer server = event.getServer();
         Game.sv_damage_per_block = 0.00001;
         Game.sv_basicdamage = 0.0;
-        LIB.schedule(server,20,()->{ItemCleaner.cleanitems(server);});
+        LIB.schedule(server,20,()->{ItemCleaner.cleanAllItems(server);});
         LIB.tryBroadcastMessage(server,"\n","msg.aijbr.bold","msg.aijbr.info.gameover");
 
 

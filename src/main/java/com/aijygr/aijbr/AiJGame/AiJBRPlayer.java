@@ -160,7 +160,7 @@ public class AiJBRPlayer {
     public static List<String> getAlivePlayers(MinecraftServer server){
         List<UUID> list = new ArrayList<>();
         for(UUID uuid : Game.getPlayerlist().keySet()){
-            if(!Game.getPlayerlist().get(uuid).isDEAD()){
+            if(Game.getPlayerlist().get(uuid).isNotDEAD()){
                 list.add(uuid);
             }
         }
@@ -179,9 +179,13 @@ public class AiJBRPlayer {
                 for(String str : team.getPlayers()){
                     UUID uuid = LIB.playerNametoUUID(server,str);
                     if(uuid==null)
-                        uuid = UUID.fromString(str);
+                    {
+                        //可能是玩家加入队伍后，退出了游戏
+                        break;
+                    }
+
                     if(Game.getPlayerlist().containsKey(uuid)){
-                        if(!Game.getPlayerlist().get(uuid).isDEAD()){
+                        if(Game.getPlayerlist().get(uuid).isNotDEAD()){
                             flag = true;
                             break;
                         }
@@ -261,6 +265,11 @@ public class AiJBRPlayer {
         if(Game.isGameStart&&event.getEntity() instanceof ServerPlayer player)
             setSpectator(player);
     }
+    @SubscribeEvent
+    public static void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event){
+        Game.removePlayer(event.getEntity().getUUID());
+    }
+
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
         if(event.getEntity() instanceof ServerPlayer player)

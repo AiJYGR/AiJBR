@@ -6,6 +6,7 @@ import com.aijygr.aijbr.AiJGame.Client.MSGClientGameTime;
 import com.aijygr.aijbr.AiJGame.Client.MSGClientPlayerInfo;
 import com.aijygr.aijbr.AiJGame.Client.MSGClientRingInfo;
 import com.aijygr.aijbr.AiJGame.Ring.RingGeneration;
+import com.aijygr.aijbr.AiJGameUtils.ItemCleaner;
 import com.aijygr.aijbr.LIB;
 import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.ModConfig;
@@ -79,6 +80,10 @@ public class Game {
     {
         playerlist.put(uuid,status);
     }
+    public static void removePlayer(UUID uuid)
+    {
+        playerlist.remove(uuid);
+    }
 
     public enum PlayerStatus{
         ALIVE,
@@ -89,6 +94,9 @@ public class Game {
         }
         public boolean isDEAD(){
             return this == PlayerStatus.DEAD;
+        }
+        public boolean isNotDEAD(){
+            return this != PlayerStatus.DEAD;
         }
 
         public boolean isDBNO() {
@@ -149,6 +157,9 @@ public class Game {
                 BRGameTime++;
                 sv_roundtick--;
             }
+            //清理旧物品
+            if(gametime%1200==0 && event.level.getServer()!=null)
+                ItemCleaner.cleanOldItems(event.level.getServer());
         }
     }
 

@@ -65,7 +65,7 @@ public class SyncTag {
       "tacz:lonetrail":["MAINWPN","SUBWPN"],
       "tacz:m1911":["MAINWPN","SUBWPN"],
       "tacz:m9a4":["MAINWPN","SUBWPN"],
-      "tacz:mk23":["MAINWPN","SUBWPN"],
+      "tacz:hk_mk23":["MAINWPN","SUBWPN"],
       "tacz:p320":["MAINWPN","SUBWPN"],
       "tacz:rhino357":["MAINWPN","SUBWPN"],
       "tacz:taurus500":["MAINWPN","SUBWPN"],

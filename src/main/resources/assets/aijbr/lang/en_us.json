@@ -54,6 +54,9 @@
 
   "msg.aijbr.warn.command_disabled_game_end_check": "Only 1 team found  Automatically enabled test mode.",
 
+  "title.aijbr.info.gameover_title": "Game Over",
+  "title.aijbr.info.gameover_subtitle": "Champion Team:[%1$s] Players:%2$s",
+
   "death.attack.aijbr.ring.message": "%1$s has no way out",
 
   "gui.aijbr.game_team_num": "SQUAD",

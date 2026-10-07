@@ -13,7 +13,9 @@ import com.aijygr.aijbr.ModEvents;
 import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.scores.PlayerTeam;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -95,7 +97,46 @@ public class Game {
     }
     public enum TeamStatus{
         ALIVE,
-        DEAD
+        DEAD;
+        public boolean isALIVE(){
+            return this == TeamStatus.ALIVE;
+        }
+    }
+    public static List<String> getAliveTeams(){
+        List<String> list = new ArrayList<>();
+        for(Map.Entry<String,TeamStatus> entry : teamlist.entrySet())
+        {
+            if(entry.getValue().isALIVE()){
+                list.add(entry.getKey());
+            }
+        }
+        return list;
+    }
+    public static List<UUID> getAlivePlayersUUID(){
+        List<UUID> list = new ArrayList<>();
+        for(Map.Entry<UUID,PlayerStatus> entry : playerlist.entrySet())
+        {
+            if(entry.getValue().isALIVE()){
+                list.add(entry.getKey());
+            }
+        }
+        return list;
+    }
+    public static List<ServerPlayer> getAlivePlayers(MinecraftServer server){
+        List<ServerPlayer> list = new ArrayList<>();
+        List<UUID> uuids = getAlivePlayersUUID();
+        for(UUID uuid : uuids){
+            list.add(server.getPlayerList().getPlayer(uuid));
+        }
+        return list;
+    }
+    public static List<String> getTeamPlayersName(MinecraftServer server,String teamname){
+        PlayerTeam team = server.getScoreboard().getPlayerTeam(teamname);
+        List<String> list = new ArrayList<>();
+        if(team == null)
+            return list;
+        list.addAll(team.getPlayers());
+        return list;
     }
 
     @SubscribeEvent

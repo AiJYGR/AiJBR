@@ -189,12 +189,12 @@ public class AiJBRPlayer {
                 }
                 if(flag){
                     teamcount++;
-                    System.out.println(teamname+"ALIVE");
+                    //System.out.println(teamname+"ALIVE");
                     Game.teamlist.put(teamname, Game.TeamStatus.ALIVE);
                 }
                 else
                 {
-                    System.out.println(teamname+"DEAD");
+                    //System.out.println(teamname+"DEAD");
                     Game.teamlist.put(teamname, Game.TeamStatus.DEAD);
                 }
 

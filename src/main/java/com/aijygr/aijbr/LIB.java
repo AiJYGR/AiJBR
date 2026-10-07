@@ -11,6 +11,9 @@ import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
+import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
+import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,6 +31,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -278,6 +282,25 @@ public abstract class LIB {
             if (tasks != null)
                 for (Runnable task : tasks)
                     task.run();
+        }
+    }
+
+    public static void sendTitle(@Nullable ServerPlayer player,@Nullable Component title,@Nullable Component subtitle, int fadeInTicks, int stayTicks, int fadeOutTicks) {
+        if (player == null)
+            return;
+        player.connection.send(new ClientboundSetTitlesAnimationPacket(fadeInTicks, stayTicks, fadeOutTicks));
+        if (subtitle != null) {
+            player.connection.send(new ClientboundSetSubtitleTextPacket(subtitle));
+        }
+        if (title != null) {
+            player.connection.send(new ClientboundSetTitleTextPacket(title));
+        }
+    }
+
+    public static void sendTitle(MinecraftServer server,  Component title, Component subtitle, int fadeInTicks, int stayTicks, int fadeOutTicks) {
+        for(ServerPlayer player : server.getPlayerList().getPlayers())
+        {
+            sendTitle(player, title, subtitle, fadeInTicks, stayTicks, fadeOutTicks);
         }
     }
 }

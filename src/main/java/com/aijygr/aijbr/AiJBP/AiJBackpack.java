@@ -1,20 +1,30 @@
 package com.aijygr.aijbr.AiJBP;
 
+import com.aijygr.aijbr.AiJBP.SyncConfigJSON.BP.SyncBP;
+import com.aijygr.aijbr.AiJBP.SyncConfigJSON.Tag.SyncTag;
+import com.aijygr.aijbr.AiJGame.Game;
+import com.aijygr.aijbr.Main;
+import com.aijygr.aijbr.ModConfig;
 import com.aijygr.aijbr.Network.ModMessages;
 
 import com.aijygr.aijbr.Reg;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AiJBackpack
 {
     public static class SlotwithPermissionLevel {
@@ -113,6 +123,26 @@ public class AiJBackpack
             return newlevel > oldlevel;
     }
 
+    public static void reloadPlayer(MinecraftServer server, ServerPlayer player) {
+        try{
+            SyncBP.reloadPlayer(server,player);
+            SyncTag.reloadPlayer(server,player);
+        }catch(Exception e){
+            Main.LOGGER.warn(e.getMessage());
+        }
 
-
+    }
+    @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        Game.isReloaded = false;
+        if(ModConfig.Server.Config.DEV.AUTORELOAD.get())
+        {
+            if(event.getEntity() instanceof ServerPlayer player)
+            {
+                reloadPlayer(event.getEntity().getServer(),player);
+                Game.isReloaded = true;
+            }
+        }
+        else Game.isReloaded = false;
+    }
 }

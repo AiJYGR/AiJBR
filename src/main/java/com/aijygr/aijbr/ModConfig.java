@@ -67,6 +67,7 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> SAVE_LOOTCONTAINERS_ITEMS;
                 public static ForgeConfigSpec.EnumValue<LIB.BOOL> ENABLE_MAPRESETTER;
                 public static ForgeConfigSpec.ConfigValue<List<? extends String>> MAPRESETTER_EXCLUSIONS;
+                public static ForgeConfigSpec.BooleanValue AUTORELOAD;
             }
         }
 
@@ -141,6 +142,7 @@ public abstract class ModConfig {
                 public static LIB.BOOL SAVE_LOOTCONTAINERS_ITEMS = LIB.BOOL.TRUE;
                 public static LIB.BOOL ENABLE_MAPRESETTER = LIB.BOOL.TRUE;
                 public static List<String> MAPRESETTER_EXCLUSIONS = new ArrayList<>(List.of("minecraft:command_block","aijbr:loot_container"));
+                public static LIB.BOOL AUTORELOAD = LIB.BOOL.TRUE;
             }
         }
     }
@@ -334,6 +336,7 @@ public abstract class ModConfig {
         server_builder.comment("Exclusion block list of MapResetter. Blocks that match the list will not be recorded.",
                 "Default:[minecraft:command_block,aijbr:loot_container]");
         Server.Config.DEV.MAPRESETTER_EXCLUSIONS = server_builder.defineList("MapResetterExclusions", Server.Default.DEV.MAPRESETTER_EXCLUSIONS,(obj)->{return obj instanceof String;});
+        Server.Config.DEV.AUTORELOAD = server_builder.define("AutoReload",Server.Default.DEV.AUTORELOAD.get());
         SERVER_CONFIG = server_builder.build();
     }
 }

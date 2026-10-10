@@ -165,7 +165,7 @@ public class Game {
 
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {
-        Game.isReloaded = false;
+        //Game.isReloaded = false;
         Game.isInitialized = false;
         Game.isGameStart = false;
         Game.playerlist = new HashMap<>();

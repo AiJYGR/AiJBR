@@ -40,6 +40,7 @@
   "msg.aijbr.err.command_game_started": "游戏已经开始!",
   "msg.aijbr.err.command_game_ended": "游戏未开始!",
   "msg.aijbr.err.command_executed_failed": "执行指令失败",
+  "msg.aijbr.err.command_executed_failed_during_game": "执行指令失败，在游戏时无法执行",
   "msg.aijbr.err.command_player_join_team_failed": "加入队伍%1$s失败\n队伍不存在，已满，或你已经在此队伍中",
   "msg.aijbr.err.command_player_leave_team_failed": "离开队伍失败，你不在任何队伍中",
   "msg.aijbr.err.command_game_not_initialized": "需要初始化游戏  请执行 /AiJBR init",

@@ -7,6 +7,7 @@ import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -133,7 +134,7 @@ public class SyncBP {
             generateDefault(file);
         }
     }
-    public static void reload(MinecraftServer server) throws Exception {
+    public static void reloadAll(MinecraftServer server) throws Exception {
         // world/serverconfig/AiJBP.json
         generateFile(server);
         try (FileReader reader = new FileReader(file)) {
@@ -142,6 +143,21 @@ public class SyncBP {
             int i = Reload.ReloadBP();//服务器预检查
             String hash = HASH(rawjson);
             ModMessages.ServerSendToAll(new MSGClientBPHash(hash));//////SYNC HASH!!!!!!!!
+            Main.LOGGER.info("[AiJBR][SyncBP]Read {} values. Serverside hash = {}",i , hash);
+
+        } catch (Exception e) {
+            throw new Exception("AiJBP.reload: "+e.getMessage());
+        }
+    }
+    public static void reloadPlayer(MinecraftServer server, ServerPlayer player) throws Exception {
+        // world/serverconfig/AiJBP.json
+        generateFile(server);
+        try (FileReader reader = new FileReader(file)) {
+            rawjson = Files.readString(jsonfilepath, StandardCharsets.UTF_8);
+            json = JsonParser.parseString(rawjson).getAsJsonObject();
+            int i = Reload.ReloadBP();//服务器预检查
+            String hash = HASH(rawjson);
+            ModMessages.ServerSendToPlayer(new MSGClientBPHash(hash),player);//////SYNC HASH!!!!!!!!
             Main.LOGGER.info("[AiJBR][SyncBP]Read {} values. Serverside hash = {}",i , hash);
 
         } catch (Exception e) {

@@ -121,8 +121,8 @@ public class ModCommands
 
             Game.isReloaded = false;
             try{
-                SyncTag.reload(source.getServer());
-                SyncBP.reload(source.getServer());
+                SyncTag.reloadAll(source.getServer());
+                SyncBP.reloadAll(source.getServer());
                 Game.isReloaded = true;
             }catch(Exception e){
 //                LIB.tryBroadcastMessage(player,"msg.aijbr.red","msg.server","Reload failed:");
@@ -180,7 +180,12 @@ public class ModCommands
         private int PlayerJoin(ServerPlayer player) {
             if(!Game.isInitialized){
                 LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
-                return 1;
+                return 0;
+            }
+            if(Game.isGameStart)
+            {
+                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_start_during_game");
+                return 0;
             }
             if(player!=null){
                 for(int i = 1; i <= ModConfig.Server.Config.TEAM.TEAMNUM.get();i++)
@@ -188,7 +193,7 @@ public class ModCommands
                     if(AiJBRPlayer.joinTeam(player,i))
                     {
                         LIB.tryPlayerMessage(player,Component.translatable("msg.aijbr.green"),Component.translatable("msg.aijbr.info.command_player_join_team",AiJBRPlayer.toTeamName(i)));
-                        return 0;
+                        return 1;
                     }
                 }
             }
@@ -200,6 +205,11 @@ public class ModCommands
                 LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
                 return 0;
             }
+            if(Game.isGameStart)
+            {
+                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_start_during_game");
+                return 0;
+            }
             if(player!=null){
                 if(AiJBRPlayer.joinTeam(player,team)){
                     LIB.tryPlayerMessage(player,Component.translatable("msg.aijbr.green"),Component.translatable("msg.aijbr.info.command_player_join_team",AiJBRPlayer.toTeamName(team)));
@@ -207,7 +217,7 @@ public class ModCommands
                 }
             }
             LIB.tryPlayerMessage(player,Component.translatable("msg.aijbr.red"),Component.translatable("msg.aijbr.err.command_player_join_team_failed",AiJBRPlayer.toTeamName(team)));
-            return 0;
+            return 1;
         }
         public PlayerJoinCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal(Main.MOD_DISPLAY_NAME)
@@ -224,6 +234,11 @@ public class ModCommands
         private int PlayerLeave(ServerPlayer player) {
             if(!Game.isInitialized){
                 LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_not_initialized");
+                return 0;
+            }
+            if(Game.isGameStart)
+            {
+                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_start_during_game");
                 return 0;
             }
             if(AiJBRPlayer.leaveTeam(player))

@@ -7,6 +7,7 @@ import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -187,7 +188,7 @@ public class SyncTag {
     }
 
 
-    public static void reload(MinecraftServer server) throws Exception { //  /AiJBR reload
+    public static void reloadAll(MinecraftServer server) throws Exception { //  /AiJBR reload
         // world/serverconfig/AiJTAG.json
         generateFile(server);
         try (FileReader reader = new FileReader(file)) {
@@ -195,6 +196,19 @@ public class SyncTag {
             json = JsonParser.parseString(rawjson).getAsJsonObject();
             String hash = HASH(rawjson);
             ModMessages.ServerSendToAll(new MSGClientTagHash(hash));//////SYNC HASH!!!!!!!!
+            Main.LOGGER.info("[AiJBR][SyncTag] Serverside hash = {}", hash);
+
+        } catch (Exception e) {
+            throw new Exception("AiJTAG.reload: "+e.getMessage());
+        }
+    }
+    public static void reloadPlayer(MinecraftServer server, ServerPlayer player) throws Exception {
+        generateFile(server);
+        try (FileReader reader = new FileReader(file)) {
+            rawjson = Files.readString(jsonfilepath, StandardCharsets.UTF_8);
+            json = JsonParser.parseString(rawjson).getAsJsonObject();
+            String hash = HASH(rawjson);
+            ModMessages.ServerSendToPlayer(new MSGClientTagHash(hash),player);//////SYNC HASH!!!!!!!!
             Main.LOGGER.info("[AiJBR][SyncTag] Serverside hash = {}", hash);
 
         } catch (Exception e) {

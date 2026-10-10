@@ -43,9 +43,10 @@
   "msg.aijbr.info.dbno_by": "%1$s gets knock down by %1$s §e(DBNO)§r",
 
   "msg.aijbr.err": "Unexpected ERROR occurred  Please try again",
-  "msg.aijbr.err.command_game_started":"Game had started!",
+  "msg.aijbr.err.command_game_started":"Game has started!",
   "msg.aijbr.err.command_game_ended":"Game is not started!",
   "msg.aijbr.err.command_executed_failed":"Failed to execute command",
+  "msg.aijbr.err.command_executed_failed_during_game":"Failed to execute command, cannot be executed during a game.",
   "msg.aijbr.err.command_player_join_team_failed": "Failed to join team %1$s.\nTeam does not exist, is full, or you're already in the team.",
   "msg.aijbr.err.command_player_leave_team_failed": "Failed to leave team, you are not in any",
   "msg.aijbr.err.command_game_not_initialized": "Initialization needed. Please execute /AiJBR init",

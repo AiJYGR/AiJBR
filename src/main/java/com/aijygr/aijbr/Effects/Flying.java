@@ -1,5 +1,6 @@
 package com.aijygr.aijbr.Effects;
 
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.Reg;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -10,7 +11,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Flying extends MobEffect {
     public Flying(){
         super(MobEffectCategory.NEUTRAL,0xFFFFFF);

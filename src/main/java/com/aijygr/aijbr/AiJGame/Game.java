@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.*;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Main.MODID)
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Game {
     /// 随服务器刷新的gametime
     public static long gametime;

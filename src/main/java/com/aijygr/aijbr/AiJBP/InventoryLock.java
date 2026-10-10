@@ -1,6 +1,7 @@
 package com.aijygr.aijbr.AiJBP;
 
 import com.aijygr.aijbr.Item.Lock;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.Network.ModMessages;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.BitSet;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class InventoryLock {
     private static BitSet locks = new BitSet(64);
     public static boolean isLocked(short i){

@@ -2,6 +2,7 @@ package com.aijygr.aijbr.AiJGame.Ring;
 
 import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.LIB;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.Reg;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.aijygr.aijbr.ModDamageSource.getRingDamageSource;
 
 
-@Mod.EventBusSubscriber()
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class RingDamage {
     private static final String DATA_LastHurtTick = "AiJBR_LastRingHurtTick";
     public static final double PLAYER_HITBOXFIX = 0.3d;

@@ -29,8 +29,9 @@ import java.nio.file.Path;
  * Client checks if local cache is differ from it, and sends sync request,
  * Server receives request, and send full file.
  */
-@Mod.EventBusSubscriber()
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SyncTag {
+    //TODO 需要重构石山:(
     public static final String DEFAULTFILE = """
 {
   "tacz:modern_kinetic_gun": {

@@ -4,6 +4,7 @@ import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.AiJGame.Client.MSGClientGameTime;
 import com.aijygr.aijbr.AiJGame.Client.MSGClientRingInfo;
 import com.aijygr.aijbr.LIB;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.Network.ModMessages;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -12,7 +13,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber()
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class RingMove {
     public static void PhaseChange(){
         LIB.BRLOG("PHASE CHANGE");

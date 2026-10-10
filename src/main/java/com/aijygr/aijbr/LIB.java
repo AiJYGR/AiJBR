@@ -36,7 +36,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-@Mod.EventBusSubscriber(modid = Main.MODID)
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public abstract class LIB {
     public static void tryPlayerMessage(Player player, String message) {
         if(player!=null)
@@ -68,7 +68,7 @@ public abstract class LIB {
             Main.LOGGER.info("[AiJBR]tryPlayerMessage:{}", component.getString());
     }
 
-    public static void tryBroadcastMessage(Player player, String... messages) {
+    public static void tryBroadcastMessage(@Nullable Player player, String... messages) {
         if(player!=null)
             tryBroadcastMessage(player.getServer(), messages);
         else

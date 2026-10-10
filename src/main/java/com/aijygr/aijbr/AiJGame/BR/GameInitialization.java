@@ -3,6 +3,7 @@ package com.aijygr.aijbr.AiJGame.BR;
 import com.aijygr.aijbr.AiJGame.AiJDropShip;
 import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.LIB;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.ModConfig;
 import com.aijygr.aijbr.AiJGame.Ring.RingGeneration;
 import com.aijygr.aijbr.ModEvents;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber()
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GameInitialization {
     //private static ServerPlayer player;
 

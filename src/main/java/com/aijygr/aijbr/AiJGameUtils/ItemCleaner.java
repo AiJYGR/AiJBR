@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Main.MODID)
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemCleaner {
     public static final String TAG = "ItemCleaner";
     public static long time = -1;

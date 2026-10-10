@@ -8,9 +8,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Deprecated
-@Mod.EventBusSubscriber
+//@Mod.EventBusSubscriber
 public class Damaged {
-    @SubscribeEvent
+    //@SubscribeEvent
     public static void onDamage(LivingDamageEvent event) {
 
         if(event.getEntity() instanceof Player player){

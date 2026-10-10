@@ -22,8 +22,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SyncBP {
+    //TODO 需要重构石山:(
     public static final String DEFAULTFILE = """
 {
   "Comment":"0~8Hotbars  9~35Inventory  36Feet -> 39Helmet 40 Offhand",

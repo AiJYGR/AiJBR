@@ -4,6 +4,7 @@ import com.aijygr.aijbr.AiJGame.AiJBRPlayer;
 import com.aijygr.aijbr.AiJGame.Game;
 import com.aijygr.aijbr.AiJGameUtils.ItemCleaner;
 import com.aijygr.aijbr.LIB;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.ModEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GameEnd {
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {

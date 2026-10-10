@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = Main.MODID)
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AiJDropShip {
     public static final String DROPSHIPTAG = Main.MOD_DISPLAY_NAME + "_DROPSHIP";
     public static List<UUID> dropshipPlayerlist = new ArrayList<>();

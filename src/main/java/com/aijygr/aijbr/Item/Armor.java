@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Armor extends ArmorItem
 {
     public Armor(ArmorMaterials material, Item.Properties properties)

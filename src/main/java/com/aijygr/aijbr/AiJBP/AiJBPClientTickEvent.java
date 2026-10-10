@@ -3,6 +3,7 @@ package com.aijygr.aijbr.AiJBP;
 import com.aijygr.aijbr.AiJGame.Client.ClientGame;
 import com.aijygr.aijbr.Item.Backpack;
 import com.aijygr.aijbr.Item.Lock;
+import com.aijygr.aijbr.Main;
 import com.aijygr.aijbr.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -20,7 +21,7 @@ import java.util.Map;
 import static com.aijygr.aijbr.AiJBP.AiJBackpack.*;
 
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class AiJBPClientTickEvent {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event){////////////////////

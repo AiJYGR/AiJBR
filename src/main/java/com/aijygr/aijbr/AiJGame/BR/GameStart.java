@@ -167,6 +167,10 @@ public class GameStart {
         ModCommands.RefillCommand.refill();
 
         Game.isGameStart  = true;
-        LIB.tryBroadcastMessage(event.getPlayer(), "\n","msg.aijbr.bold",event.getPlayer().getName().getString(),"msg.aijbr.info.player_started_game");
+        ServerPlayer player = event.getPlayer();
+        String name = "Server";
+        if(player!=null)
+            name = player.getName().getString();
+        LIB.tryBroadcastMessage(player, "\n","msg.aijbr.bold",name,"msg.aijbr.info.player_started_game");
     }
 }

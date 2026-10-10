@@ -61,7 +61,7 @@ public class ItemCleaner {
             }
             else if (tag.getLong(TAG) != time && time != -1)
             {
-                System.out.printf("[ItemCleaner]移除了一个过期的entity:%s %d", ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()),tag.getLong(TAG));
+                //System.out.printf("[ItemCleaner]移除了一个过期的entity:%s %d", ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()),tag.getLong(TAG));
                 entity.discard();
                 event.setCanceled(true);
             }

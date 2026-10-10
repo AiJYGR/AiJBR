@@ -184,7 +184,7 @@ public class ModCommands
             }
             if(Game.isGameStart)
             {
-                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_start_during_game");
+                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed_during_game");
                 return 0;
             }
             if(player!=null){
@@ -207,7 +207,7 @@ public class ModCommands
             }
             if(Game.isGameStart)
             {
-                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_start_during_game");
+                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed_during_game");
                 return 0;
             }
             if(player!=null){
@@ -238,7 +238,7 @@ public class ModCommands
             }
             if(Game.isGameStart)
             {
-                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_game_start_during_game");
+                LIB.tryPlayerMessage(player,"msg.aijbr.red","msg.aijbr.err.command_executed_failed_during_game");
                 return 0;
             }
             if(AiJBRPlayer.leaveTeam(player))

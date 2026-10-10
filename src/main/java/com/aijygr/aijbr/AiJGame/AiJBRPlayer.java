@@ -276,6 +276,8 @@ public class AiJBRPlayer {
         if(event.getEntity() instanceof ServerPlayer player)
         {
             setSpectator(player);
+            Game.setPlayerStatus(player.getUUID(), Game.PlayerStatus.DEAD);
+            updateAndBroadcastPlayerInfo(player.getServer());
         }
     }
     @SubscribeEvent

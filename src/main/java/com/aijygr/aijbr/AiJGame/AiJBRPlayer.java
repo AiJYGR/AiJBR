@@ -146,14 +146,14 @@ public class AiJBRPlayer {
                     .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(color))
                     );
 
-            team.setAllowFriendlyFire(ModConfig.Server.Config.TEAM.ALLOWFRIENDLYFIRE.get().get());
+            team.setAllowFriendlyFire(ModConfig.Server.Config.TEAM.ALLOWFRIENDLYFIRE.get());
             team.setCollisionRule(ModConfig.Server.Config.TEAM.COLLISION_RULE.get());
             team.setDeathMessageVisibility(ModConfig.Server.Config.TEAM.DEATHMSG_VISIBILITY.get());
             team.setDisplayName(component);
             team.setNameTagVisibility(ModConfig.Server.Config.TEAM.NAMETAG_VISIBILITY.get());
             team.setPlayerPrefix(Component.empty());
             team.setPlayerSuffix(Component.empty());
-            team.setSeeFriendlyInvisibles(ModConfig.Server.Config.TEAM.SEEFRIENTLYINVISIBLES.get().get());
+            team.setSeeFriendlyInvisibles(ModConfig.Server.Config.TEAM.SEEFRIENTLYINVISIBLES.get());
         }
     }
 
@@ -224,8 +224,8 @@ public class AiJBRPlayer {
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         BlockState blockstate = event.getState();
         Player player = event.getEntity();
-        if(!ModConfig.Server.Config.PLAYER.SURVIVALBREAK.get().get()){
-            if(ModConfig.Server.Config.PLAYER.SURVIVALBREAKGLASS.get().get()){
+        if(!ModConfig.Server.Config.PLAYER.SURVIVALBREAK.get()){
+            if(ModConfig.Server.Config.PLAYER.SURVIVALBREAKGLASS.get()){
                 if(blockstate.is(Tags.Blocks.GLASS)||blockstate.is(Tags.Blocks.GLASS_PANES)){
                     event.setNewSpeed(event.getOriginalSpeed());
                     return;
@@ -329,7 +329,7 @@ public class AiJBRPlayer {
                     inventory.setItem(i, ItemStack.EMPTY);
             }
             //设置重生点
-            if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get().get())
+            if(ModConfig.Server.Config.PLAYER.RESPAWNATDEATHPOINT.get())
                 player.setRespawnPosition(player.level().dimension(),player.blockPosition(),player.getYRot(),true,false);
         }
     }

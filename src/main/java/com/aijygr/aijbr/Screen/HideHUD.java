@@ -13,10 +13,10 @@ public class HideHUD {
     @SubscribeEvent
     public static void onRenderGuiOverlay(RenderGuiOverlayEvent.Pre event)
     {
-        if(ModConfig.Client.Config.HIDEHEALTHBAR.get().get())
+        if(ModConfig.Client.Config.HIDEHEALTHBAR.get())
             if (event.getOverlay().id().equals(VanillaGuiOverlay.PLAYER_HEALTH.id()))
                 event.setCanceled(true);
-        if(ModConfig.Client.Config.HIDEFOODLEVEL.get().get())
+        if(ModConfig.Client.Config.HIDEFOODLEVEL.get())
             if (event.getOverlay().id().equals(VanillaGuiOverlay.FOOD_LEVEL.id()))
                 event.setCanceled(true);
     }

@@ -89,12 +89,13 @@ public class MapResetter extends SavedData {
     }
 
 
-    private final String AIR = "minecraft:air";
+
     private boolean isResetTarget(BlockStateAndNBT oldStateAndNBT,BlockStateAndNBT newStateAndNBT) {
         var list = ModConfig.Server.Config.DEV.MAPRESETTER_EXCLUSIONS.get();
         boolean o = list.contains(ForgeRegistries.BLOCKS.getKey(oldStateAndNBT.getState().getBlock()).toString());
         boolean n = list.contains(ForgeRegistries.BLOCKS.getKey(newStateAndNBT.getState().getBlock()).toString());
-        return (!o)&&(!n);
+        //return ((!o)&&(!n)) || (o&&newStateAndNBT.getState().isAir());
+        return ((!o)&&(!n)) || (o && !newStateAndNBT.getState().getBlock().equals(oldStateAndNBT.getState().getBlock()));
     }
 
     public Pair<Integer,Integer> resetMap(ServerLevel level) {

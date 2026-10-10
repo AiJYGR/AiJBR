@@ -131,7 +131,7 @@ public class GameStart {
             Vec3 facing = pos2.subtract(pos1).normalize();
             Vec3 motion = facing.scale(v);
             Game.travelTick = ModConfig.Server.Config.DROPSHIP.PREWAITINGTICK.get();
-            Game.shouldTravel = ModConfig.Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD.get().get();
+            Game.shouldTravel = ModConfig.Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD.get();
             Vec3 startingpoint;
             if(Game.shouldTravel) {
                 dropship.setISTICKING(true);

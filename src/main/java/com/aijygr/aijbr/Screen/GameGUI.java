@@ -17,7 +17,7 @@ public class GameGUI {
 
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {
-        if(!ModConfig.Client.Config.SHOWCLIENTGAMEINFO.get().get())
+        if(!ModConfig.Client.Config.SHOWCLIENTGAMEINFO.get())
             return;
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null

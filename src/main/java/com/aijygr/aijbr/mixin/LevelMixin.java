@@ -19,7 +19,7 @@ public class LevelMixin {
     ///onSetBlock的钩子
     @Inject(method = "setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;II)Z", at = @At("HEAD") ,remap = true)
     private void onSetBlock(BlockPos pPos, BlockState pState, int pFlags, int pRecursionLeft, CallbackInfoReturnable<Boolean> cir) {
-        if(!ModConfig.Server.Config.DEV.ENABLE_MAPRESETTER.get().get())
+        if(!ModConfig.Server.Config.DEV.ENABLE_MAPRESETTER.get())
             return;
         if((Object)this instanceof ServerLevel level){
             BlockState oldState = level.getBlockState(pPos);

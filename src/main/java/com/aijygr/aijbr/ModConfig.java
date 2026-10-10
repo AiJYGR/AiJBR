@@ -41,7 +41,7 @@ public abstract class ModConfig {
             public static class DROPSHIP{
                 public static ForgeConfigSpec.DoubleValue SPEED;
                 public static ForgeConfigSpec.IntValue HEIGHT;
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOULDFLYTOBATTLEFIELD;
+                public static ForgeConfigSpec.BooleanValue SHOULDFLYTOBATTLEFIELD;
                 public static ForgeConfigSpec.IntValue PREWAITINGTICK;
             }
             public static class TEAM {
@@ -50,22 +50,22 @@ public abstract class ModConfig {
                 public static ForgeConfigSpec.EnumValue<Team.CollisionRule> COLLISION_RULE;
                 public static ForgeConfigSpec.EnumValue<Team.Visibility> DEATHMSG_VISIBILITY;
                 public static ForgeConfigSpec.EnumValue<Team.Visibility> NAMETAG_VISIBILITY;
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOWFRIENDLYFIRE;
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SEEFRIENTLYINVISIBLES;
+                public static ForgeConfigSpec.BooleanValue ALLOWFRIENDLYFIRE;
+                public static ForgeConfigSpec.BooleanValue SEEFRIENTLYINVISIBLES;
             }
             public static class PLAYER{
                 public static ForgeConfigSpec.IntValue MAXHEALTH;
                 public static ForgeConfigSpec.DoubleValue MOVEMENTSPEED;
                 public static ForgeConfigSpec.DoubleValue FALLDAMAGEMULTIPIER;
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAK;
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SURVIVALBREAKGLASS;
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> RESPAWNATDEATHPOINT;
+                public static ForgeConfigSpec.BooleanValue SURVIVALBREAK;
+                public static ForgeConfigSpec.BooleanValue SURVIVALBREAKGLASS;
+                public static ForgeConfigSpec.BooleanValue RESPAWNATDEATHPOINT;
                 public static ForgeConfigSpec.DoubleValue EMPTYHANDMELEEDAMAGEMULTIPLIER;
             }
             public static class DEV {
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> ALLOW_BRLOG;
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> SAVE_LOOTCONTAINERS_ITEMS;
-                public static ForgeConfigSpec.EnumValue<LIB.BOOL> ENABLE_MAPRESETTER;
+                public static ForgeConfigSpec.BooleanValue ALLOW_BRLOG;
+                public static ForgeConfigSpec.BooleanValue SAVE_LOOTCONTAINERS_ITEMS;
+                public static ForgeConfigSpec.BooleanValue ENABLE_MAPRESETTER;
                 public static ForgeConfigSpec.ConfigValue<List<? extends String>> MAPRESETTER_EXCLUSIONS;
                 public static ForgeConfigSpec.BooleanValue AUTORELOAD;
             }
@@ -116,7 +116,7 @@ public abstract class ModConfig {
             public static final class DROPSHIP{
                 public static final double SPEED = 1.0d;
                 public static final short HEIGHT = 200;
-                public static final LIB.BOOL SHOULDFLYTOBATTLEFIELD = LIB.BOOL.FALSE;
+                public static final boolean SHOULDFLYTOBATTLEFIELD = false;
                 public static final int PREWAITINGTICK = 300;
             }
             public static class TEAM {
@@ -125,41 +125,41 @@ public abstract class ModConfig {
                 public static final Team.CollisionRule COLLISION_RULE = Team.CollisionRule.ALWAYS;
                 public static final Team.Visibility DEATHMSG_VISIBILITY = Team.Visibility.ALWAYS;
                 public static final Team.Visibility NAMETAG_VISIBILITY = Team.Visibility.HIDE_FOR_OTHER_TEAMS;
-                public static final LIB.BOOL ALLOWFRIENDLYFIRE =  LIB.BOOL.TRUE;
-                public static final LIB.BOOL SEEFRIENTLYINVISIBLES = LIB.BOOL.TRUE;
+                public static final boolean ALLOWFRIENDLYFIRE =  true;
+                public static final boolean SEEFRIENTLYINVISIBLES = true;
             }
             public static class PLAYER{
                 public static final int MAXHEALTH = 40;
                 public static final double MOVEMENTSPEED = 0.10f;
                 public static final double FALLDAMAGEMULTIPIER = 1.0;
-                public static final LIB.BOOL SURVIVALBREAK = LIB.BOOL.FALSE;
-                public static final LIB.BOOL SURVIVALBREAKGLASS = LIB.BOOL.TRUE;
-                public static final LIB.BOOL RESPAWNATDEATHPOINT = LIB.BOOL.TRUE;
+                public static final boolean SURVIVALBREAK = false;
+                public static final boolean SURVIVALBREAKGLASS = true;
+                public static final boolean RESPAWNATDEATHPOINT = true;
                 public static final double EMPTYHANDMELEEDAMAGEMULTIPIER = 2.0;
             }
             public static class DEV {
-                public static LIB.BOOL ALLOW_BRLOG = LIB.BOOL.TRUE;
-                public static LIB.BOOL SAVE_LOOTCONTAINERS_ITEMS = LIB.BOOL.TRUE;
-                public static LIB.BOOL ENABLE_MAPRESETTER = LIB.BOOL.TRUE;
+                public static boolean ALLOW_BRLOG = true;
+                public static boolean SAVE_LOOTCONTAINERS_ITEMS = true;
+                public static boolean ENABLE_MAPRESETTER = true;
                 public static List<String> MAPRESETTER_EXCLUSIONS = new ArrayList<>(List.of("minecraft:command_block","aijbr:loot_container"));
-                public static LIB.BOOL AUTORELOAD = LIB.BOOL.TRUE;
+                public static boolean AUTORELOAD = true;
             }
         }
     }
     public static class Client {
         public static class Config{
-            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWRINGINDICATOR;
-            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWACCURATEHEALTH;
-            public static ForgeConfigSpec.EnumValue<LIB.BOOL> SHOWCLIENTGAMEINFO;
-            public static ForgeConfigSpec.EnumValue<LIB.BOOL> HIDEHEALTHBAR;
-            public static ForgeConfigSpec.EnumValue<LIB.BOOL> HIDEFOODLEVEL;
+            public static ForgeConfigSpec.BooleanValue SHOWRINGINDICATOR;
+            public static ForgeConfigSpec.BooleanValue SHOWACCURATEHEALTH;
+            public static ForgeConfigSpec.BooleanValue SHOWCLIENTGAMEINFO;
+            public static ForgeConfigSpec.BooleanValue HIDEHEALTHBAR;
+            public static ForgeConfigSpec.BooleanValue HIDEFOODLEVEL;
         }
         public static final class Default{
-            public static final LIB.BOOL SHOWRINGINDICATOR = LIB.BOOL.TRUE;
-            public static final LIB.BOOL SHOWACCURATEHEALTH =  LIB.BOOL.TRUE;
-            public static final LIB.BOOL SHOWCLIENTGAMEINFO =  LIB.BOOL.TRUE;
-            public static final LIB.BOOL HIDEHEALTHBAR = LIB.BOOL.FALSE;
-            public static final LIB.BOOL HIDEFOODLEVEL = LIB.BOOL.TRUE;
+            public static final boolean SHOWRINGINDICATOR = true;
+            public static final boolean SHOWACCURATEHEALTH =  true;
+            public static final boolean SHOWCLIENTGAMEINFO =  true;
+            public static final boolean HIDEHEALTHBAR = false;
+            public static final boolean HIDEFOODLEVEL = true;
         }
     }
 
@@ -168,11 +168,11 @@ public abstract class ModConfig {
         ForgeConfigSpec.Builder server_builder = new ForgeConfigSpec.Builder();//栈结构 builder
 
         //CLIENT
-        Client.Config.SHOWRINGINDICATOR = common_builder.defineEnum("ShowRingIndicator", Client.Default.SHOWRINGINDICATOR);
-        Client.Config.SHOWACCURATEHEALTH = common_builder.defineEnum("ShowAccurateHealth", Client.Default.SHOWACCURATEHEALTH);
-        Client.Config.SHOWCLIENTGAMEINFO = common_builder.defineEnum("ShowClientGameInfo", Client.Default.SHOWCLIENTGAMEINFO);
-        Client.Config.HIDEHEALTHBAR = common_builder.defineEnum("HideHealthBar", Client.Default.HIDEHEALTHBAR);
-        Client.Config.HIDEFOODLEVEL = common_builder.defineEnum("HideFoodLevel", Client.Default.HIDEFOODLEVEL);
+        Client.Config.SHOWRINGINDICATOR = common_builder.define("ShowRingIndicator", Client.Default.SHOWRINGINDICATOR);
+        Client.Config.SHOWACCURATEHEALTH = common_builder.define("ShowAccurateHealth", Client.Default.SHOWACCURATEHEALTH);
+        Client.Config.SHOWCLIENTGAMEINFO = common_builder.define("ShowClientGameInfo", Client.Default.SHOWCLIENTGAMEINFO);
+        Client.Config.HIDEHEALTHBAR = common_builder.define("HideHealthBar", Client.Default.HIDEHEALTHBAR);
+        Client.Config.HIDEFOODLEVEL = common_builder.define("HideFoodLevel", Client.Default.HIDEFOODLEVEL);
 
         CLIENT_CONFIG = common_builder.build();
 
@@ -250,7 +250,7 @@ public abstract class ModConfig {
                 "Altitude that the DropShip travels on.");
         Server.Config.DROPSHIP.HEIGHT = server_builder.defineInRange("Height", Server.Default.DROPSHIP.HEIGHT,-60,500);
         server_builder.comment("# If NOT, the DropShip will wait at the border, instead of flying into the battle field.");
-        Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD = server_builder.defineEnum("ShouldFlyToBattleField",Server.Default.DROPSHIP.SHOULDFLYTOBATTLEFIELD);
+        Server.Config.DROPSHIP.SHOULDFLYTOBATTLEFIELD = server_builder.define("ShouldFlyToBattleField",Server.Default.DROPSHIP.SHOULDFLYTOBATTLEFIELD);
         server_builder.comment("# PreWaitingTick","Ticks waited for the DropShip to enter the battle field. A low value is not recommended.");
         Server.Config.DROPSHIP.PREWAITINGTICK = server_builder.defineInRange("PreWaitingTick",Server.Default.DROPSHIP.PREWAITINGTICK,100,6000);
 
@@ -310,8 +310,8 @@ public abstract class ModConfig {
         Server.Config.TEAM.DEATHMSG_VISIBILITY = server_builder.defineEnum("DeathMessageVisibility",Server.Default.TEAM.DEATHMSG_VISIBILITY);
         Server.Config.TEAM.NAMETAG_VISIBILITY = server_builder.defineEnum("NameTagVisibility",Server.Default.TEAM.NAMETAG_VISIBILITY);
         Server.Config.TEAM.COLLISION_RULE = server_builder.defineEnum("CollisionRule",Server.Default.TEAM.COLLISION_RULE);
-        Server.Config.TEAM.ALLOWFRIENDLYFIRE = server_builder.defineEnum("FriendlyFire",Server.Default.TEAM.ALLOWFRIENDLYFIRE);
-        Server.Config.TEAM.SEEFRIENTLYINVISIBLES = server_builder.defineEnum("SeeFriendlyInvisibles",Server.Default.TEAM.SEEFRIENTLYINVISIBLES);
+        Server.Config.TEAM.ALLOWFRIENDLYFIRE = server_builder.define("FriendlyFire",Server.Default.TEAM.ALLOWFRIENDLYFIRE);
+        Server.Config.TEAM.SEEFRIENTLYINVISIBLES = server_builder.define("SeeFriendlyInvisibles",Server.Default.TEAM.SEEFRIENTLYINVISIBLES);
         server_builder.pop();
 
         server_builder.comment("Default Player Attributes");
@@ -320,23 +320,23 @@ public abstract class ModConfig {
         server_builder.comment("[Attention] This value is NOT the actual walking or sprinting speed, but merely an index for calculating your speed. You may go to see \"Minecraft Wiki : Attributes\" for more details. ");
         Server.Config.PLAYER.MOVEMENTSPEED = server_builder.defineInRange("MaxMovementSpeed",Server.Default.PLAYER.MOVEMENTSPEED,0.001,0.5);
         Server.Config.PLAYER.FALLDAMAGEMULTIPIER = server_builder.defineInRange("FallDamageMultiplier",Server.Default.PLAYER.FALLDAMAGEMULTIPIER,0.0,10);
-        Server.Config.PLAYER.SURVIVALBREAK = server_builder.defineEnum("CanSurvivalPlayerBreakBlocks",Server.Default.PLAYER.SURVIVALBREAK);
-        Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.defineEnum("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
-        Server.Config.PLAYER.RESPAWNATDEATHPOINT = server_builder.defineEnum("RespawnAtDeathPoint",Server.Default.PLAYER.RESPAWNATDEATHPOINT);
+        Server.Config.PLAYER.SURVIVALBREAK = server_builder.define("CanSurvivalPlayerBreakBlocks",Server.Default.PLAYER.SURVIVALBREAK);
+        Server.Config.PLAYER.SURVIVALBREAKGLASS = server_builder.define("CanBreakGlassBlocks",Server.Default.PLAYER.SURVIVALBREAKGLASS);
+        Server.Config.PLAYER.RESPAWNATDEATHPOINT = server_builder.define("RespawnAtDeathPoint",Server.Default.PLAYER.RESPAWNATDEATHPOINT);
         Server.Config.PLAYER.EMPTYHANDMELEEDAMAGEMULTIPLIER = server_builder.defineInRange("EmptyHandMeleeDamageMultiplier",Server.Default.PLAYER.EMPTYHANDMELEEDAMAGEMULTIPIER,0.01,100.0);
         server_builder.pop();
 
         server_builder.push("Dev Tools");
         server_builder.comment("Whether to log BR GAME Status like RingSize, Damage, AirRoute, etc.");
-        Server.Config.DEV.ALLOW_BRLOG = server_builder.defineEnum("AllowBRLOG", Server.Default.DEV.ALLOW_BRLOG);
+        Server.Config.DEV.ALLOW_BRLOG = server_builder.define("AllowBRLOG", Server.Default.DEV.ALLOW_BRLOG);
         server_builder.comment("Whether to save LootContainers' items when deleting the instances(e.g. when chunks are deleted). For Dev's use, choose false when testing the map or game. In other cases this option should be kept true.");
-        Server.Config.DEV.SAVE_LOOTCONTAINERS_ITEMS = server_builder.defineEnum("SaveLootContainersItems", Server.Default.DEV.SAVE_LOOTCONTAINERS_ITEMS);
+        Server.Config.DEV.SAVE_LOOTCONTAINERS_ITEMS = server_builder.define("SaveLootContainersItems", Server.Default.DEV.SAVE_LOOTCONTAINERS_ITEMS);
         server_builder.comment("New test feature of v1.1. Subscribes and records any BlockState(Not NBT) changes of the world. Restore all changes(include NBTs) recorded.");
-        Server.Config.DEV.ENABLE_MAPRESETTER = server_builder.defineEnum("EnableMapResetter", Server.Default.DEV.ENABLE_MAPRESETTER);
-        server_builder.comment("Exclusion block list of MapResetter. Blocks that match the list will not be recorded.",
+        Server.Config.DEV.ENABLE_MAPRESETTER = server_builder.define("EnableMapResetter", Server.Default.DEV.ENABLE_MAPRESETTER);
+        server_builder.comment("Exclusion block list of MapResetter. Ignore the BlockState changes of the blocks. Note: If the block is broken, it still will be recorded.",
                 "Default:[minecraft:command_block,aijbr:loot_container]");
         Server.Config.DEV.MAPRESETTER_EXCLUSIONS = server_builder.defineList("MapResetterExclusions", Server.Default.DEV.MAPRESETTER_EXCLUSIONS,(obj)->{return obj instanceof String;});
-        Server.Config.DEV.AUTORELOAD = server_builder.define("AutoReload",Server.Default.DEV.AUTORELOAD.get());
+        Server.Config.DEV.AUTORELOAD = server_builder.define("AutoReload",Server.Default.DEV.AUTORELOAD);
         SERVER_CONFIG = server_builder.build();
     }
 }

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 public class HealthGUI {
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {
-        if(!ModConfig.Client.Config.SHOWACCURATEHEALTH.get().get())
+        if(!ModConfig.Client.Config.SHOWACCURATEHEALTH.get())
             return;
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null

@@ -171,7 +171,7 @@ public class LootContainer extends RandomizableContainerBlockEntity{
 //            ContainerHelper.saveAllItems(tag, items);
 //        }
         trySaveLootTable(tag);//保存战利品表
-        if(ModConfig.Server.Config.DEV.SAVE_LOOTCONTAINERS_ITEMS.get().get())
+        if(ModConfig.Server.Config.DEV.SAVE_LOOTCONTAINERS_ITEMS.get())
         {
             ContainerHelper.saveAllItems(tag,items);
             tag.putLong(TAG,this.lastRefilledTick);//保存LastRefillTick
